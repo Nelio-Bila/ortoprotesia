@@ -15,7 +15,10 @@
             @blur="v$.email.$touch"
             type="email"
             class="form-control"
-            :class="v$.email.$error ? 'is-invalid' : ''"
+            :class="{
+              'is-invalid': v$.email.$error,
+              'is-valid': !v$.email.$invalid,
+            }"
             placeholder="Email"
             v-model="v$.email.$model"
           />
@@ -45,7 +48,7 @@
 <script>
 import axios from "axios";
 import useValidate from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
+import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
   name: "Forgot",
@@ -88,10 +91,7 @@ export default {
     return {
       email: {
         required: helpers.withMessage("Por favor preencha o email", required),
-        email: helpers.withMessage(
-          "Por favor preencha um email válido",
-          required
-        ),
+        email: helpers.withMessage("Por favor preencha um email válido", email),
       },
       processing: {},
       errors_exist: {},

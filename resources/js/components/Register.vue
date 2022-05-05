@@ -42,7 +42,10 @@
               @blur="v$.name.$touch"
               type="text"
               class="form-control"
-              :class="v$.name.$error ? 'is-invalid' : ''"
+              :class="{
+                'is-invalid': v$.name.$error,
+                'is-valid': !v$.name.$invalid,
+              }"
               placeholder="Nome"
               v-model="v$.name.$model"
             />
@@ -56,7 +59,10 @@
               @blur="v$.surname.$touch"
               type="text"
               class="form-control"
-              :class="v$.surname.$error ? 'is-invalid' : ''"
+              :class="{
+                'is-invalid': v$.surname.$error,
+                'is-valid': !v$.surname.$invalid,
+              }"
               placeholder="Apelido"
               v-model="v$.surname.$model"
             />
@@ -71,7 +77,10 @@
             @blur="v$.birthdate.$touch"
             type="date"
             class="form-control"
-            :class="v$.birthdate.$error ? 'is-invalid' : ''"
+            :class="{
+              'is-invalid': v$.birthdate.$error,
+              'is-valid': !v$.birthdate.$invalid,
+            }"
             placeholder="Data de nascimento"
             v-model="v$.birthdate.$model"
           />
@@ -85,7 +94,10 @@
             @blur="v$.email.$touch"
             type="email"
             class="form-control"
-            :class="v$.email.$error ? 'is-invalid' : ''"
+            :class="{
+              'is-invalid': v$.email.$error,
+              'is-valid': !v$.email.$invalid,
+            }"
             placeholder="Email"
             v-model="v$.email.$model"
           />
@@ -99,12 +111,15 @@
             @blur="v$.password.$touch"
             type="password"
             class="form-control"
-            :class="v$.password.$error ? 'is-invalid' : ''"
+            :class="{
+              'is-invalid': v$.password.$error,
+              'is-valid': !v$.password.$invalid,
+            }"
             placeholder="Palavra passe"
             v-model="v$.password.$model"
           />
           <span class="invalid-feedback" v-if="v$.password.$error">
-            {{ v$.email.$errors[0].$message }}
+            {{ v$.password.$errors[0].$message }}
           </span>
         </div>
         <div class="form-group mb-3">
@@ -113,7 +128,10 @@
             @blur="v$.password_confirm.$touch"
             type="password"
             class="form-control"
-            :class="v$.password_confirm.$error ? 'is-invalid' : ''"
+            :class="{
+              'is-invalid': v$.password_confirm.$error,
+              'is-valid': !v$.password_confirm.$invalid,
+            }"
             placeholder="Confirmação da palavra passe"
             v-model="v$.password_confirm.$model"
           />
@@ -132,6 +150,12 @@
             v-model="v$.politics_confirm.$model"
             @click="confirm_politics()"
           />
+        </div>
+        <div class="d-flex justify-content-between">
+          <router-link class="" to="login"></router-link>
+          <router-link class="" to="login"
+            >Já tenho conta, iniciar sessão</router-link
+          >
         </div>
 
         <button
@@ -155,7 +179,13 @@
 <script>
 import axios from "axios";
 import useValidate from "@vuelidate/core";
-import { required, email, sameAs, helpers } from "@vuelidate/validators";
+import {
+  required,
+  email,
+  sameAs,
+  helpers,
+  minLength,
+} from "@vuelidate/validators";
 
 export default {
   name: "Register",
@@ -214,9 +244,19 @@ export default {
     return {
       name: {
         required: helpers.withMessage("Por favor preencha o nome", required),
+        minLength: helpers.withMessage(
+          "Por favor preencha um nome válido",
+          minLength(2)
+        ),
+        minLengthValue: minLength(2),
       },
       surname: {
         required: helpers.withMessage("Por favor preencha o apelido", required),
+        minLength: helpers.withMessage(
+          "Por favor preencha um apelido válido",
+          minLength(2)
+        ),
+        minLengthValue: minLength(2),
       },
       birthdate: {
         required: helpers.withMessage(
@@ -233,8 +273,23 @@ export default {
           "Por favor preencha a palavra passe",
           required
         ),
+        minLength: helpers.withMessage(
+          "A palavra passe deve ter 6 caracteres no minímo",
+          minLength(6)
+        ),
+        minLengthValue: minLength(6),
       },
-      password_confirm: sameAs("password"),
+      password_confirm: {
+        required: helpers.withMessage(
+          "Por favor preencha a confirmação da palavra passe",
+          required
+        ),
+        password_confirm: sameAs(this.password),
+        password_confirm: helpers.withMessage(
+          "A confirmação esta incorrecta",
+          sameAs(this.password)
+        ),
+      },
       politics_confirm: {},
       processing: {},
       errors_exist: {},

@@ -25132,7 +25132,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       email: {
         required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha o email", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required),
-        email: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha um email válido", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required)
+        email: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha um email válido", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.email)
       },
       processing: {},
       errors_exist: {},
@@ -25255,7 +25255,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       email: {
         required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha o email", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required),
-        email: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha um email válido", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required)
+        email: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha um email válido", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.email)
       },
       password: {
         required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha a palavra passe", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required)
@@ -25339,6 +25339,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _vuelidate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vuelidate/core */ "./node_modules/@vuelidate/core/dist/index.esm.js");
 /* harmony import */ var _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vuelidate/validators */ "./node_modules/@vuelidate/validators/dist/index.esm.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -25428,10 +25430,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   validations: function validations() {
     return {
       name: {
-        required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha o nome", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required)
+        required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha o nome", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required),
+        minLength: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha um nome válido", (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.minLength)(2)),
+        minLengthValue: (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.minLength)(2)
       },
       surname: {
-        required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha o apelido", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required)
+        required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha o apelido", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required),
+        minLength: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha um apelido válido", (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.minLength)(2)),
+        minLengthValue: (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.minLength)(2)
       },
       birthdate: {
         required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha a data de nascimento", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required)
@@ -25441,9 +25447,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         email: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha um email válido", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.email)
       },
       password: {
-        required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha a palavra passe", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required)
+        required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha a palavra passe", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required),
+        minLength: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("A palavra passe deve ter 6 caracteres no minímo", (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.minLength)(6)),
+        minLengthValue: (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.minLength)(6)
       },
-      password_confirm: (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.sameAs)("password"),
+      password_confirm: _defineProperty({
+        required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("Por favor preencha a confirmação da palavra passe", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.required),
+        password_confirm: (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.sameAs)(this.password)
+      }, "password_confirm", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.helpers.withMessage("A confirmação esta incorrecta", (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_3__.sameAs)(this.password))),
       politics_confirm: {},
       processing: {},
       errors_exist: {},
@@ -25885,7 +25896,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.v$.email.$touch && (_$data$v$$email = $data.v$.email).$touch.apply(_$data$v$$email, arguments);
     }),
     type: "email",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", $data.v$.email.$error ? 'is-invalid' : '']),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+      'is-invalid': $data.v$.email.$error,
+      'is-valid': !$data.v$.email.$invalid
+    }]),
     placeholder: "Email",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.v$.email.$model = $event;
@@ -26086,7 +26100,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.v$.email.$touch && (_$data$v$$email = $data.v$.email).$touch.apply(_$data$v$$email, arguments);
     }),
     type: "email",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", $data.v$.email.$error ? 'is-invalid' : '']),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+      'is-invalid': $data.v$.email.$error,
+      'is-valid': !$data.v$.email.$invalid
+    }]),
     placeholder: "Email",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.v$.email.$model = $event;
@@ -26109,7 +26126,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 34
   /* CLASS, HYDRATE_EVENTS */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.v$.password.$model]]), $data.v$.password.$error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.v$.email.$errors[0].$message), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.v$.password.$model]]), $data.v$.password.$error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.v$.password.$errors[0].$message), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-check-input",
@@ -26540,22 +26557,30 @@ var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_28 = ["disabled"];
-var _hoisted_29 = {
+var _hoisted_28 = {
+  "class": "d-flex justify-content-between"
+};
+
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Já tenho conta, iniciar sessão");
+
+var _hoisted_30 = ["disabled"];
+var _hoisted_31 = {
   key: 0,
   "class": "fa-solid fa-spinner fa-spin-pulse mx-2"
 };
-var _hoisted_30 = {
+var _hoisted_32 = {
   key: 1
 };
-var _hoisted_31 = {
+var _hoisted_33 = {
   key: 2,
   "class": "fa-solid fa-user-plus mx-2"
 };
 
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Criar ");
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Criar ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[14] || (_cache[14] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.handleSubmit && $options.handleSubmit.apply($options, arguments);
@@ -26583,7 +26608,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.v$.name.$touch && (_$data$v$$name = $data.v$.name).$touch.apply(_$data$v$$name, arguments);
     }),
     type: "text",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", $data.v$.name.$error ? 'is-invalid' : '']),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+      'is-invalid': $data.v$.name.$error,
+      'is-valid': !$data.v$.name.$invalid
+    }]),
     placeholder: "Nome",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.v$.name.$model = $event;
@@ -26599,7 +26627,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.v$.surname.$touch && (_$data$v$$surname = $data.v$.surname).$touch.apply(_$data$v$$surname, arguments);
     }),
     type: "text",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", $data.v$.surname.$error ? 'is-invalid' : '']),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+      'is-invalid': $data.v$.surname.$error,
+      'is-valid': !$data.v$.surname.$invalid
+    }]),
     placeholder: "Apelido",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.v$.surname.$model = $event;
@@ -26615,7 +26646,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.v$.birthdate.$touch && (_$data$v$$birthdate = $data.v$.birthdate).$touch.apply(_$data$v$$birthdate, arguments);
     }),
     type: "date",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", $data.v$.birthdate.$error ? 'is-invalid' : '']),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+      'is-invalid': $data.v$.birthdate.$error,
+      'is-valid': !$data.v$.birthdate.$invalid
+    }]),
     placeholder: "Data de nascimento",
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.v$.birthdate.$model = $event;
@@ -26631,7 +26665,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.v$.email.$touch && (_$data$v$$email = $data.v$.email).$touch.apply(_$data$v$$email, arguments);
     }),
     type: "email",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", $data.v$.email.$error ? 'is-invalid' : '']),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+      'is-invalid': $data.v$.email.$error,
+      'is-valid': !$data.v$.email.$invalid
+    }]),
     placeholder: "Email",
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.v$.email.$model = $event;
@@ -26647,14 +26684,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.v$.password.$touch && (_$data$v$$password = $data.v$.password).$touch.apply(_$data$v$$password, arguments);
     }),
     type: "password",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", $data.v$.password.$error ? 'is-invalid' : '']),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+      'is-invalid': $data.v$.password.$error,
+      'is-valid': !$data.v$.password.$invalid
+    }]),
     placeholder: "Palavra passe",
     "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
       return $data.v$.password.$model = $event;
     })
   }, null, 34
   /* CLASS, HYDRATE_EVENTS */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.v$.password.$model]]), $data.v$.password.$error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.v$.email.$errors[0].$message), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.v$.password.$model]]), $data.v$.password.$error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.v$.password.$errors[0].$message), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     onBlur: _cache[10] || (_cache[10] = function () {
@@ -26663,7 +26703,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.v$.password_confirm.$touch && (_$data$v$$password_co = $data.v$.password_confirm).$touch.apply(_$data$v$$password_co, arguments);
     }),
     type: "password",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", $data.v$.password_confirm.$error ? 'is-invalid' : '']),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+      'is-invalid': $data.v$.password_confirm.$error,
+      'is-valid': !$data.v$.password_confirm.$invalid
+    }]),
     placeholder: "Confirmação da palavra passe",
     "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
       return $data.v$.password_confirm.$model = $event;
@@ -26683,12 +26726,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.v$.politics_confirm.$model]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.v$.politics_confirm.$model]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    "class": "",
+    to: "login"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    "class": "",
+    to: "login"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_29];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     disabled: !$data.politics_confirm,
     "class": "btn btn-primary btn-block btn-lg"
-  }, [$data.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_29)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_30, "Processando...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_31)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_32], 8
+  }, [$data.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_31)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_32, "Processando...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_33)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_34], 8
   /* PROPS */
-  , _hoisted_28)], 32
+  , _hoisted_30)], 32
   /* HYDRATE_EVENTS */
   )])]);
 }
