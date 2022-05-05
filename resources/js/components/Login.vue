@@ -1,0 +1,193 @@
+<template>
+  <div class="row">
+    <div class="col-md-5 mx-auto">
+      <form @submit.prevent="handleSubmit" class="mt-5">
+        <h3 class="text-center">Inicio de sessão</h3>
+        <div v-if="errors_exist">
+          <div
+            v-for="(field, k) in errors"
+            :key="k"
+            class="
+              alert alert-danger
+              d-flex
+              align-items-center
+              alert-dismissible
+              fade
+              show
+            "
+            role="alert"
+          >
+            <svg
+              class="bi flex-shrink-0 me-2"
+              width="24"
+              height="24"
+              role="img"
+              aria-label="Danger:"
+            >
+              <use xlink:href="#exclamation-triangle-fill" />
+            </svg>
+            <div v-for="error in field" :key="error">{{ error }}</div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
+        <div v-if="isLoginInvalid">
+          <div
+            class="
+              alert alert-danger
+              d-flex
+              align-items-center
+              alert-dismissible
+              fade
+              show
+            "
+            role="alert"
+          >
+            <svg
+              class="bi flex-shrink-0 me-2"
+              width="24"
+              height="24"
+              role="img"
+              aria-label="Danger:"
+            >
+              <use xlink:href="#exclamation-triangle-fill" />
+            </svg>
+            <div>{{ invalid_credentials }}</div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            :class="v$.email.$error ? 'is-invalid' : ''"
+            placeholder="Email"
+            v-model="email"
+          />
+          <span class="invalid-feedback" v-if="v$.email.$error">
+            {{ v$.email.$errors[0].$message }}
+          </span>
+        </div>
+        <div class="form-group mb-3">
+          <label for="password">Palavra passe</label>
+          <input
+            type="password"
+            class="form-control"
+            :class="v$.password.$error ? 'is-invalid' : ''"
+            placeholder="Palavra passe"
+            v-model="password"
+          />
+          <span class="invalid-feedback" v-if="v$.password.$error">
+            {{ v$.email.$errors[0].$message }}
+          </span>
+        </div>
+        <div class="form-check mb-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="remember_me"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Manter me logado
+          </label>
+        </div>
+
+        <button class="btn btn-primary btn-block mb-3" :disabled="processing">
+          <i
+            v-if="processing"
+            class="fa-solid fa-spinner fa-spin-pulse mx-2"
+          ></i>
+          <span v-if="processing">Entrando...</span>
+
+          <i
+            v-if="!processing"
+            class="fa-solid fa-arrow-right-to-bracket mx-2"
+          ></i>
+          <span v-if="!processing">Entrar</span></button
+        ><br />
+
+        <router-link class="" to="register">Criar conta</router-link>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+import useValidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+
+export default {
+  name: "Login",
+  data() {
+    return {
+      v$: useValidate(),
+      email: "",
+      password: "",
+      processing: false,
+      remember_me: false,
+      errors_exist: false,
+      validationErrors: [],
+      isLoginInvalid: false,
+      invalid_credentials: "",
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      this.processing = true;
+      this.v$.$validate();
+
+      if (!this.v$.$error) {
+        await axios
+          .post(
+            "login",
+
+            {
+              email: this.email,
+              password: this.password,
+              remember_me: this.remember_me,
+            },
+            { headers: { Accept: "application/json" } }
+          )
+          .then((response) => {
+            localStorage.setItem("op_token", response.data.token);
+            this.$store.commit("user", response.data.user);
+            this.processing = false;
+            this.$router.push("/");
+          })
+          .catch((ex) => {
+            this.processing = false;
+            switch (ex.response.status) {
+              case 422:
+                this.validationErrors = ex.response.data.errors;
+                this.errors_exist = true;
+                break;
+              case 401:
+                this.invalid_credentials = "Credenciais inválidas";
+                this.isLoginInvalid = true;
+                break;
+            }
+          });
+      } else {
+        this.processing = false;
+      }
+    },
+  },
+  validations() {
+    return {
+      email: { required },
+      password: { required },
+    };
+  },
+};
+</script>
