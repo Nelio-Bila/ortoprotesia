@@ -5,7 +5,7 @@
         <h3 class="text-center">Criação de conta</h3>
         <div v-if="errors_exist">
           <div
-            v-for="(field, k) in errors"
+            v-for="(field, k) in validationErrors"
             :key="k"
             class="
               alert alert-danger
@@ -138,7 +138,7 @@ export default {
       politics_confirm: false,
       processing: false,
       errors_exist: false,
-      validationErrors: [],
+      validationErrors: null,
     };
   },
   methods: {
@@ -164,12 +164,7 @@ export default {
               this.validationErrors = ex.response.data.errors;
               this.errors_exist = true;
               break;
-            case 401:
-              this.validationErrors = ex.response.data.errors;
-              this.errors_exist = true;
-              break;
           }
-          console.log(ex);
         });
     },
     confirm_politics() {

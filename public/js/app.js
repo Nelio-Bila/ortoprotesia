@@ -25128,7 +25128,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       break;
 
                     case 401:
-                      _this.invalid_credentials = "Credenciais inválidas";
+                      _this.invalid_credentials = ex.response.data.message;
                       _this.isLoginInvalid = true;
                       break;
                   }
@@ -25249,7 +25249,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       politics_confirm: false,
       processing: false,
       errors_exist: false,
-      validationErrors: []
+      validationErrors: null
     };
   },
   methods: {
@@ -25282,14 +25282,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       _this.validationErrors = ex.response.data.errors;
                       _this.errors_exist = true;
                       break;
-
-                    case 401:
-                      _this.validationErrors = ex.response.data.errors;
-                      _this.errors_exist = true;
-                      break;
                   }
-
-                  console.log(ex);
                 });
 
               case 3:
@@ -26266,7 +26259,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onSubmit: _cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.handleSubmit && $options.handleSubmit.apply($options, arguments);
     }, ["prevent"]))
-  }, [_hoisted_3, $data.errors_exist ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.errors, function (field, k) {
+  }, [_hoisted_3, $data.errors_exist ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.validationErrors, function (field, k) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: k,
       "class": "alert alert-danger d-flex align-items-center alert-dismissible fade show",

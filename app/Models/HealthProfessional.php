@@ -52,4 +52,14 @@ class HealthProfessional extends Authenticatable
     ];
 
     protected $guard = 'hp';
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

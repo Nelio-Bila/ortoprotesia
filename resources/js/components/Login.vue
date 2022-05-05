@@ -173,7 +173,7 @@ export default {
                 this.errors_exist = true;
                 break;
               case 401:
-                this.invalid_credentials = "Credenciais inválidas";
+                this.invalid_credentials = ex.response.data.message;
                 this.isLoginInvalid = true;
                 break;
             }

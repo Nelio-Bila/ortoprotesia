@@ -41,6 +41,7 @@ class RegisterRequest extends FormRequest
             'birthdate.required' => 'Por favor preencha a data de nascimento.',
             'email.required' => 'Por favor preencha o email.',
             'email.email' => 'Por favor preencha um email válido.',
+            'email.unique' => 'O email introduzido já tem conta.',
             'password.required' => 'Por favor preencha a palavra passe.',
             'password.min' => 'A palavra passe deve ter 6 caracteres no minimo.',
             'password_confirm.required' => 'Por favor preencha a confirmação da palavra passe.',

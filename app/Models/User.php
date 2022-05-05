@@ -45,4 +45,9 @@ class User extends Authenticatable
     ];
 
     protected $guard = 'api';
+
+    public function process()
+    {
+        return $this->hasOne(Process::class);
+    }
 }

@@ -24,7 +24,15 @@ class AdminForgotRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'email' => 'required|email'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required' => 'Por favor preencha o email.',
+            'email.email' => 'Por favor preencha um email válido.',
         ];
     }
 }

@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         try {
-            if (Auth::guard('api')->attempt($request->only('email', 'password'))) {
+            if (Auth::attempt($request->only('email', 'password'))) {
 
                 /** @var User $user */
                 $user = Auth::user();
@@ -30,7 +30,7 @@ class AuthController extends Controller
             }
 
             return response()->json([
-                'message' => 'Introduziste credenciais inválidas'
+                'message' => 'As credenciais introduzidas são inválidas'
             ], 401);
         } catch (\Exception $exception) {
             return response()->json([
