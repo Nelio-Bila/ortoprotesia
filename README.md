@@ -1,6 +1,6 @@
 ## About Ortoprotesia Moz
 
-Laravel is a web application written in Laravel and Vue.js, it's main objective is to be a platform to host and share data about Ortophedics services in Mozambique although it started focusing only in Maputo City.
+Ortoprotesiamoz is a web application written in Laravel and Vue.js, it's main objective is to be a platform to host and share data about Ortophedics services in Mozambique although it started focusing only in Maputo City.
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
