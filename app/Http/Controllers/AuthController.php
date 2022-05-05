@@ -30,7 +30,7 @@ class AuthController extends Controller
             }
 
             return response()->json([
-                'message' => 'As credenciais introduzidas são inválidas'
+                'message' => 'As credenciais introduzidas não são válidas'
             ], 401);
         } catch (\Exception $exception) {
             return response()->json([

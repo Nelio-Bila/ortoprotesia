@@ -4,6 +4,7 @@ import Welcome from "../components/Welcome.vue";
 import NotFound from "../components/NotFound.vue";
 import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
+import Forgot from "../components/Forgot.vue";
 
 const routes = [
     {
@@ -21,6 +22,11 @@ const routes = [
         path: "/register",
         name: "register",
         component: Register,
+    },
+    {
+        path: "/forgot",
+        name: "forgot",
+        component: Forgot,
     },
 ];
 

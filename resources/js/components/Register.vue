@@ -39,57 +39,87 @@
           <div class="col">
             <label for="name">Nome</label>
             <input
+              @blur="v$.name.$touch"
               type="text"
               class="form-control"
+              :class="v$.name.$error ? 'is-invalid' : ''"
               placeholder="Nome"
-              v-model="name"
+              v-model="v$.name.$model"
             />
+            <span class="invalid-feedback" v-if="v$.name.$error">
+              {{ v$.name.$errors[0].$message }}
+            </span>
           </div>
           <div class="col">
             <label for="surname">Apelido</label>
             <input
+              @blur="v$.surname.$touch"
               type="text"
               class="form-control"
+              :class="v$.surname.$error ? 'is-invalid' : ''"
               placeholder="Apelido"
-              v-model="surname"
+              v-model="v$.surname.$model"
             />
+            <span class="invalid-feedback" v-if="v$.surname.$error">
+              {{ v$.surname.$errors[0].$message }}
+            </span>
           </div>
         </div>
         <div class="form-group mb-3">
           <label for="birthdate">Data de nascimento</label>
           <input
+            @blur="v$.birthdate.$touch"
             type="date"
             class="form-control"
+            :class="v$.birthdate.$error ? 'is-invalid' : ''"
             placeholder="Data de nascimento"
-            v-model="birthdate"
+            v-model="v$.birthdate.$model"
           />
+          <span class="invalid-feedback" v-if="v$.birthdate.$error">
+            {{ v$.birthdate.$errors[0].$message }}
+          </span>
         </div>
         <div class="form-group mb-3">
           <label for="email">Email</label>
           <input
+            @blur="v$.email.$touch"
             type="email"
             class="form-control"
+            :class="v$.email.$error ? 'is-invalid' : ''"
             placeholder="Email"
-            v-model="email"
+            v-model="v$.email.$model"
           />
+          <span class="invalid-feedback" v-if="v$.email.$error">
+            {{ v$.email.$errors[0].$message }}
+          </span>
         </div>
         <div class="form-group mb-3">
           <label for="password">Palavra passe</label>
           <input
+            @blur="v$.password.$touch"
             type="password"
             class="form-control"
+            :class="v$.password.$error ? 'is-invalid' : ''"
             placeholder="Palavra passe"
-            v-model="password"
+            v-model="v$.password.$model"
           />
+          <span class="invalid-feedback" v-if="v$.password.$error">
+            {{ v$.email.$errors[0].$message }}
+          </span>
         </div>
         <div class="form-group mb-3">
           <label for="password_confirm">Confirma a palavra passe</label>
           <input
+            @blur="v$.password_confirm.$touch"
             type="password"
             class="form-control"
-            placeholder="Palavra passe"
-            v-model="password_confirm"
+            :class="v$.password_confirm.$error ? 'is-invalid' : ''"
+            placeholder="Confirmação da palavra passe"
+            v-model="v$.password_confirm.$model"
           />
+          <span class="invalid-feedback" v-if="v$.password_confirm.$error">
+            {{ v$.password_confirm.$errors[0].$message }}
+          </span>
         </div>
         <div class="form-check mb-3">
           <label for="password_confirm" class="form-check-label"
@@ -99,7 +129,7 @@
           <input
             type="checkbox"
             class="form-check-input"
-            v-model="politics_confirm"
+            v-model="v$.politics_confirm.$model"
             @click="confirm_politics()"
           />
         </div>
@@ -124,11 +154,14 @@
 
 <script>
 import axios from "axios";
+import useValidate from "@vuelidate/core";
+import { required, email, sameAs, helpers } from "@vuelidate/validators";
 
 export default {
   name: "Register",
   data() {
     return {
+      v$: useValidate(),
       name: "",
       surname: "",
       birthdate: "",
@@ -144,32 +177,69 @@ export default {
   methods: {
     async handleSubmit() {
       this.processing = true;
-      await axios
-        .post("register", {
-          name: this.name,
-          surname: this.surname,
-          birthdate: this.birthdate,
-          email: this.email,
-          password: this.password,
-          password_confirm: this.password_confirm,
-        })
-        .then((response) => {
-          this.processing = false;
-          this.$router.push("/login");
-        })
-        .catch((ex) => {
-          this.processing = false;
-          switch (ex.response.status) {
-            case 422:
-              this.validationErrors = ex.response.data.errors;
-              this.errors_exist = true;
-              break;
-          }
-        });
+      this.v$.$validate();
+
+      if (!this.v$.$error) {
+        await axios
+          .post("register", {
+            name: this.name,
+            surname: this.surname,
+            birthdate: this.birthdate,
+            email: this.email,
+            password: this.password,
+            password_confirm: this.password_confirm,
+          })
+          .then((response) => {
+            this.processing = false;
+            this.$router.push("/login");
+          })
+          .catch((ex) => {
+            this.processing = false;
+            switch (ex.response.status) {
+              case 422:
+                this.validationErrors = ex.response.data.errors;
+                this.errors_exist = true;
+                break;
+            }
+          });
+      } else {
+        this.processing = false;
+      }
     },
     confirm_politics() {
       this.politics_confirm = !this.politics_confirm;
     },
+  },
+  validations() {
+    return {
+      name: {
+        required: helpers.withMessage("Por favor preencha o nome", required),
+      },
+      surname: {
+        required: helpers.withMessage("Por favor preencha o apelido", required),
+      },
+      birthdate: {
+        required: helpers.withMessage(
+          "Por favor preencha a data de nascimento",
+          required
+        ),
+      },
+      email: {
+        required: helpers.withMessage("Por favor preencha o email", required),
+        email: helpers.withMessage("Por favor preencha um email válido", email),
+      },
+      password: {
+        required: helpers.withMessage(
+          "Por favor preencha a palavra passe",
+          required
+        ),
+      },
+      password_confirm: sameAs("password"),
+      politics_confirm: {},
+      processing: {},
+      errors_exist: {},
+      validationErrors: {},
+    };
   },
 };
 </script>

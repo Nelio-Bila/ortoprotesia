@@ -68,11 +68,12 @@
         <div class="form-group mb-3">
           <label for="email">Email</label>
           <input
+            @blur="v$.email.$touch"
             type="email"
             class="form-control"
             :class="v$.email.$error ? 'is-invalid' : ''"
             placeholder="Email"
-            v-model="email"
+            v-model="v$.email.$model"
           />
           <span class="invalid-feedback" v-if="v$.email.$error">
             {{ v$.email.$errors[0].$message }}
@@ -82,10 +83,11 @@
           <label for="password">Palavra passe</label>
           <input
             type="password"
+            @blur="v$.password.$touch"
             class="form-control"
             :class="v$.password.$error ? 'is-invalid' : ''"
             placeholder="Palavra passe"
-            v-model="password"
+            v-model="v$.password.$model"
           />
           <span class="invalid-feedback" v-if="v$.password.$error">
             {{ v$.email.$errors[0].$message }}
@@ -115,8 +117,12 @@
           ></i>
           <span v-if="!processing">Entrar</span></button
         ><br />
-
-        <router-link class="" to="register">Criar conta</router-link>
+        <div class="d-flex justify-content-between">
+          <router-link class="" to="register">Criar conta</router-link>
+          <router-link class="" to="forgot"
+            >Esqueci a palavra passe</router-link
+          >
+        </div>
       </form>
     </div>
   </div>
@@ -125,7 +131,7 @@
 <script>
 import axios from "axios";
 import useValidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
+import { required, helpers } from "@vuelidate/validators";
 
 export default {
   name: "Login",
@@ -185,8 +191,25 @@ export default {
   },
   validations() {
     return {
-      email: { required },
-      password: { required },
+      email: {
+        required: helpers.withMessage("Por favor preencha o email", required),
+        email: helpers.withMessage(
+          "Por favor preencha um email válido",
+          required
+        ),
+      },
+      password: {
+        required: helpers.withMessage(
+          "Por favor preencha a palavra passe",
+          required
+        ),
+      },
+      processing: {},
+      remember_me: {},
+      errors_exist: {},
+      validationErrors: {},
+      isLoginInvalid: {},
+      invalid_credentials: {},
     };
   },
 };
