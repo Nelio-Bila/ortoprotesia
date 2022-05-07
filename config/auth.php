@@ -16,6 +16,12 @@ return [
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
+        'guard' => 'api',
+        'passwords' => 'users',
+        'guard' => 'hp',
+        'passwords' => 'health_professionals',
+        'guard' => 'admin',
+        'passwords' => 'admins',
     ],
 
     /*
@@ -40,17 +46,27 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'api' => [
+        'user' => [
             'driver' => 'passport',
             'provider' => 'users',
             'hash' => false,
         ],
         'hp' => [
+            'driver' => 'session',
+            'provider' => 'health_professionals',
+            'hash' => false,
+        ],
+        'hp-api' => [
             'driver' => 'passport',
             'provider' => 'health_professionals',
             'hash' => false,
         ],
         'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+            'hash' => false,
+        ],
+        'admin-api' => [
             'driver' => 'passport',
             'provider' => 'admins',
             'hash' => false,

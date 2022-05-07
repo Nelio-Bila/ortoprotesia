@@ -83,14 +83,17 @@
           <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
             <!-- Links -->
             <h6 class="text-uppercase fw-bold mb-4">Links uteis</h6>
+
             <p>
-              <a href="#!" class="text-reset">Reportar erro</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Profissional de Saúde</a>
+              <router-link to="/hp/login" class="text-reset"
+                >Profissional de Saúde</router-link
+              >
             </p>
             <p>
               <a href="#!" class="text-reset">Administração</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">Reportar erro</a>
             </p>
           </div>
           <!-- Grid column -->

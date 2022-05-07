@@ -21,10 +21,11 @@ class HealthProfessionalController extends Controller
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'birthdate' => $request->birthdate,
-                'carrier' => $request->category,
+                'carrier' => $request->carrier,
+                'category' => $request->category,
                 'institution' => $request->institution,
                 'department' => $request->department,
-                'startingWorkDate' => $request->startingWorkDate,
+                'startingWorkDate' => $request->starting_work_date,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
@@ -39,7 +40,7 @@ class HealthProfessionalController extends Controller
 
     public function show()
     {
-        return Auth::user();
+        return Auth::guard('hp-api')->user();
     }
 
     public function login(Request $request)
@@ -48,8 +49,8 @@ class HealthProfessionalController extends Controller
             if (Auth::guard('hp')->attempt($request->only('email', 'password'))) {
 
                 /** @var User $user */
-                $user = Auth::user();
-                $token = $user->createToken('app')->accessToken;
+                $user = Auth::guard('hp')->user();
+                $token = $user->createToken('hp-token')->accessToken;
 
                 return response([
                     'message' => 'sucess',
@@ -61,11 +62,11 @@ class HealthProfessionalController extends Controller
             }
 
             return response()->json([
-                'message' => 'Introduziste credenciais inválidas'
+                'message' => 'As credenciais introduzidas não são válidas'
             ], 401);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => "Houve um erro desconhecido, por favor aguarde um pouco e tente de novo"
+                'message' => $exception->getMessage()
             ]);
         }
     }

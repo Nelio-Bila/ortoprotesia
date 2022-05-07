@@ -1,15 +1,13 @@
 <template>
-  <div class="row justify-content-center mt-2">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">Welcome</div>
-
-        <div v-if="user" class="card-body">Titulo</div>
-        <div class="card-body">
-          <h3>Image</h3>
-          <h4>Trecho</h4>
-          <div>botoes</div>
-        </div>
+  <div class="row justify-content-center mt-2 mx-1">
+    <div class="card px-0">
+      <h5 class="card-header">Titulo</h5>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">
+          With supporting text below as a natural lead-in to additional content.
+        </p>
+        <a href="#" class="btn btn-primary">Vizualizar</a>
       </div>
     </div>
   </div>
@@ -17,6 +15,6 @@
 
 <script>
 export default {
-  name: 'ArticleCard',
+  name: "ArticleCard",
 };
 </script>

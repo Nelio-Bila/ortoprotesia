@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('institution');
             $table->string('department');
             $table->date('startingWorkDate');
+            $table->boolean('verified')->default(false);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -35,7 +35,7 @@ class AdminController extends Controller
 
     public function show()
     {
-        return Auth::user();
+        return Auth::guard('admin-api')->user();
     }
 
     public function login(Request $request)

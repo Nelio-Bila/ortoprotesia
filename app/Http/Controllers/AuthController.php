@@ -14,11 +14,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         try {
-            if (Auth::attempt($request->only('email', 'password'))) {
+            if (Auth::guard('web')->attempt($request->only('email', 'password'))) {
 
                 /** @var User $user */
-                $user = Auth::user();
-                $token = $user->createToken('app')->accessToken;
+                $user = Auth::guard('web')->user();
+                $token = $user->createToken('user-token')->accessToken;
 
                 return response([
                     'message' => 'sucess',
@@ -34,14 +34,14 @@ class AuthController extends Controller
             ], 401);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => "Houve um erro desconhecido, por favor aguarde um pouco e tente de novo"
+                'message' => $exception->getMessage(),
             ]);
         }
     }
 
     public function user()
     {
-        return Auth::user();
+        return Auth::guard('user')->user();
     }
 
     public function register(RegisterRequest $request)

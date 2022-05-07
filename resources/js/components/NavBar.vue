@@ -10,7 +10,13 @@
     "
   >
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="/">Ortoprotesia</router-link>
+      <router-link class="navbar-brand" to="/"
+        ><img
+          src="/images/logo.png"
+          alt="logotipo da Ortoprotesia"
+          width="60"
+          height="80"
+      /></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -77,14 +83,12 @@
               aria-describedby="basic-addon1"
             />
             <button class="input-group-text" type="button">
-              <span class="input-group-text" id="basic-addon1">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </span>
+              <i class="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
         </form>
-        <form class="d-flex" v-if="!user">
-          <router-link class="btn btn-outline-success" to="/login">
+        <form class="d-flex justify-content-center my-2" v-if="!user">
+          <router-link class="btn btn-outline-primary" to="/login">
             Entrar | Criar Conta
           </router-link>
         </form>
@@ -106,6 +110,11 @@
               aria-labelledby="navbarDropdown"
               @click="handleLogout"
             >
+              <li>
+                <a v-if="user.carrier" class="dropdown-item" to="/hp/"
+                  >Painel</a
+                >
+              </li>
               <li>
                 <a class="dropdown-item" href="javascript:void(0)"
                   >Terminar sessão</a

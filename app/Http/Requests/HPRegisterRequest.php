@@ -24,7 +24,7 @@ class HPRegisterRequest extends FormRequest
             'birthdate' => 'required',
             'carrier' => 'required',
             'category' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:health_professionals',
             'password' => 'required|min:6',
             'password_confirm' => 'required|same:password',
         ];
@@ -40,6 +40,7 @@ class HPRegisterRequest extends FormRequest
             'category.required' => 'Por favor preencha a categoria.',
             'email.required' => 'Por favor preencha o email.',
             'email.email' => 'Por favor preencha um email válido.',
+            'email.unique' => 'Este email já esta associado a uma conta.',
             'password.required' => 'Por favor preencha a palavra passe.',
             'password.min' => 'A palavra passe deve ter 6 caracteres no minimo.',
             'password_confirm.required' => 'Por favor preencha a confirmação da palavra passe.',

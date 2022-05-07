@@ -1,10 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Welcome from "../components/Welcome.vue";
-import NotFound from "../components/NotFound.vue";
-import Login from "../components/Login.vue";
-import Register from "../components/Register.vue";
-import Forgot from "../components/Forgot.vue";
+import Welcome from "../pages/Welcome.vue";
+import NotFound from "../pages/NotFound.vue";
+import Register from "../pages/Register.vue";
+import Login from "../pages/Login.vue";
+import Forgot from "../pages/Forgot.vue";
+
+import HPHome from "../pages/hp/HPHome.vue";
+import HPLogin from "../pages/hp/HPLogin.vue";
+import HPRegister from "../pages/hp/HPRegister.vue";
+import HPForgot from "../pages/hp/HPRegister.vue";
+import HPProfile from "../pages/hp/HPProfile.vue";
 
 const routes = [
     {
@@ -27,6 +33,31 @@ const routes = [
         path: "/forgot",
         name: "forgot",
         component: Forgot,
+    },
+    {
+        path: "/hp/",
+        name: "hp",
+        component: HPHome,
+    },
+    {
+        path: "/hp/login",
+        name: "hplogin",
+        component: HPLogin,
+    },
+    {
+        path: "/hp/register",
+        name: "hpregister",
+        component: HPRegister,
+    },
+    {
+        path: "/hp/forgot",
+        name: "hpforgot",
+        component: HPForgot,
+    },
+    {
+        path: "/hp/profile",
+        name: "hpprofile",
+        component: HPProfile,
     },
 ];
 
