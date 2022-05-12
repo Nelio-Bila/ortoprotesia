@@ -14,8 +14,8 @@
         ><img
           src="/images/logo.png"
           alt="logotipo da Ortoprotesia"
-          width="60"
-          height="80"
+          width="40"
+          height="60"
       /></router-link>
       <button
         class="navbar-toggler"
@@ -131,18 +131,32 @@
 
 
 <script>
-import { mapGetters } from "vuex";
+import { mapStores, mapState, mapActions } from "pinia";
+import { useUserStore } from "../stores/UserStore";
+
 export default {
   name: "NavBar",
+  data() {
+    return {
+      user: useUserStore().$state.user,
+    };
+  },
   methods: {
+    ...mapActions(useUserStore, ["setUser", "removeUser"]),
     handleLogout() {
       localStorage.removeItem("op_token");
-      this.$store.commit("user", null);
+      this.setUser(null);
       this.$router.push("/");
     },
   },
+  created() {
+    console.log(this.user);
+  },
   computed: {
-    ...mapGetters(["user"]),
+    ...mapStores(useUserStore),
+    ...mapState(useUserStore, ["user"]),
   },
 };
 </script>
+
+

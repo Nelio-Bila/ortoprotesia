@@ -12,7 +12,10 @@
         </span>
 
         <div class="card-body mx-auto">
-          <router-link type="button" class="btn btn-sm btn-info text-white"
+          <router-link
+            type="button"
+            class="btn btn-sm btn-info text-white"
+            to="/"
             >Ir a pagina inicial</router-link
           >
         </div>

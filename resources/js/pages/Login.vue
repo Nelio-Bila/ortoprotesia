@@ -139,8 +139,11 @@
 import axios from "axios";
 import useValidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
+import { useUserStore } from "../stores/UserStore";
+import { mapStores } from "pinia";
 
 import NavBar from "../components/NavBar.vue";
+import Footer from "../components/Footer.vue";
 
 export default {
   name: "Login",
@@ -178,7 +181,12 @@ export default {
           )
           .then((response) => {
             localStorage.setItem("op_token", response.data.token);
-            this.$store.commit("user", response.data.user);
+            // this.$store.commit("user", response.data.user);
+            const userStore = useUserStore();
+            this.userStore.setUser(response.data.user);
+
+            console.log(userStore);
+
             this.processing = false;
             this.$router.push("/");
           })
@@ -219,6 +227,13 @@ export default {
       isLoginInvalid: {},
       invalid_credentials: {},
     };
+  },
+  components: {
+    NavBar,
+    Footer,
+  },
+  computed: {
+    ...mapStores(useUserStore),
   },
 };
 </script>

@@ -292,6 +292,9 @@ import {
   minValue,
 } from "@vuelidate/validators";
 
+import NavBar from "../../components/NavBar.vue";
+import Footer from "../../components/Footer.vue";
+
 export default {
   name: "HPRegister",
   data() {
@@ -449,6 +452,10 @@ export default {
       errors_exist: {},
       validationErrors: {},
     };
+  },
+  components: {
+    NavBar,
+    Footer,
   },
 };
 </script>

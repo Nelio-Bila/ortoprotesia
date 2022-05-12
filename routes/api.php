@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ForgotController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HealthProfessionalController;
 
 /*
@@ -55,3 +57,12 @@ Route::post('admin/register', [AdminController::class, 'store']);
 Route::post('admin/forgot', [AdminController::class, 'forgot']);
 Route::post('admin/reset', [AdminController::class, 'reset']);
 Route::get('admin', [AdminController::class, 'show'])->middleware('auth::admin-api');
+
+Route::get('categories', [CategoryController::class, 'index']);
+Route::post('categories/register', [CategoryController::class, 'store']);
+Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
+
+
+
+Route::post('/upload', [ImageController::class, 'store'])->name('upload');
+Route::get('/media/{post}', [ImageController::class, 'getImages'])->name('post.images');

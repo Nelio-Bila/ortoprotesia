@@ -12,6 +12,14 @@ import HPRegister from "../pages/hp/HPRegister.vue";
 import HPForgot from "../pages/hp/HPRegister.vue";
 import HPProfile from "../pages/hp/HPProfile.vue";
 
+import Users from "../pages/Admin/Users/Users.vue";
+
+import Articles from "../pages/hp/Articles/Articles.vue";
+
+import CategoriesIndex from "../pages/hp/Categories/CategoriesIndex.vue";
+import CategoriesEdit from "../pages/hp/Categories/CategoriesEdit.vue";
+import CategoriesCreate from "../pages/hp/Categories/CategoriesCreate.vue";
+
 const routes = [
     {
         path: "/",
@@ -58,6 +66,32 @@ const routes = [
         path: "/hp/profile",
         name: "hpprofile",
         component: HPProfile,
+    },
+    {
+        path: "/hp/articles",
+        name: "hparticles",
+        component: Articles,
+    },
+    {
+        path: "/admin/users",
+        name: "users",
+        component: Users,
+    },
+    {
+        path: "/categories",
+        name: "categories.index",
+        component: CategoriesIndex,
+    },
+    {
+        path: "/categories/create",
+        name: "categories.create",
+        component: CategoriesCreate,
+    },
+    {
+        path: "/categories/:id/edit",
+        name: "categories.edit",
+        component: CategoriesEdit,
+        props: true,
     },
 ];
 

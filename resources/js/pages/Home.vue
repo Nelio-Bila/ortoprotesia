@@ -1,10 +1,12 @@
 <template>
-  <router-view :user="user" />
+  <router-view />
 </template>
 
 <script>
 import axios from "axios";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
+import { mapStores } from "pinia";
+import { useUserStore } from "../stores/UserStore";
 
 export default {
   name: "Home",
@@ -15,12 +17,12 @@ export default {
       .then((res) => console.log(res))
       .catch((ex) => console.log(ex));
 
-    this.$store.commit("user", response.data);
+    // this.$store.commit("user", response.data);
 
-    this.user = this.$tore.state.user;
+    // this.user = this.$tore.state.user;
   },
   computed: {
-    ...mapGetters(["user"]),
+    ...mapStores(useUserStore),
   },
 };
 </script>

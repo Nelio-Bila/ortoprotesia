@@ -192,6 +192,7 @@ import {
   helpers,
   minLength,
 } from "@vuelidate/validators";
+
 import NavBar from "../components/NavBar.vue";
 
 export default {

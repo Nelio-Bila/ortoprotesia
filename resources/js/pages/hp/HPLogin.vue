@@ -141,6 +141,9 @@ import axios from "axios";
 import useValidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 
+import NavBar from "../../components/NavBar.vue";
+import Footer from "../../components/Footer.vue";
+
 export default {
   name: "HPLogin",
   data() {
@@ -216,6 +219,10 @@ export default {
       isLoginInvalid: {},
       invalid_credentials: {},
     };
+  },
+  components: {
+    NavBar,
+    Footer,
   },
 };
 </script>

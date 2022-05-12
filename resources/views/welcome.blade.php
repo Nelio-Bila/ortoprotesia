@@ -57,9 +57,9 @@
     <div id="app">
     </div>
 
-    <script src="/js/feather.min.js"></script>
+    {{-- <script src="/js/feather.min.js"></script>
     <script src="/js/Chart.min.js"></script>
-    <script src="/js/dashboard.js"></script>
+    <script src="/js/dashboard.js"></script> --}}
 </body>
 
 </html>

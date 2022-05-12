@@ -4,16 +4,9 @@
 
     <div class="container-fluid">
       <div class="row">
-        <HPSideBar v-if="activeSideBar" currentLink="home" />
+        <HPSideBar currentLink="users" />
 
-        <main
-          class="col-md-9 ms-sm-auto col-lg-10 px-md-4 my-container"
-          :class="{ 'active-cont': activeSideBar }"
-        >
-          <i
-            @click="toggleSidebar()"
-            class="mt-3 fa-solid fa-bars fa-2xl me-2 text-primary"
-          ></i>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
           <div
             class="
               d-flex
@@ -26,7 +19,7 @@
               border-bottom
             "
           >
-            <h1 class="h2">Bem vindo de volta</h1>
+            <h1 class="h2">Usuários</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group me-2">
                 <button type="button" class="btn btn-sm btn-outline-secondary">
@@ -47,15 +40,6 @@
           </div>
 
           <!-- <h2>Section title</h2> -->
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h5 class="card-title">Publicações</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Vizualizar todas Publicações</p>
-              <!-- <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a> -->
-            </div>
-          </div>
           <!-- <div class="table-responsive">
             <table class="table table-striped table-sm">
               <thead>
@@ -92,43 +76,7 @@
 </template>
 
 <script>
-import HPSideBar from "../../components/HPSideBar.vue";
-import HPNavBar from "../../components/HPNavBar.vue";
 export default {
-  name: "HPHome",
-  data() {
-    return {
-      activeSideBar: true,
-    };
-  },
-  methods: {
-    toggleSidebar() {
-      this.activeSideBar = !this.activeSideBar;
-    },
-  },
-  components: {
-    HPNavBar,
-    HPSideBar,
-  },
+  name: "Users",
 };
 </script>
-
-<style>
-.my-container {
-  transition: 0.4s;
-}
-/* for sidebar */
-
-.active-cont {
-  margin-left: 250px;
-}
-
-#menu-btn {
-  background-color: #7952b3;
-  color: #fff;
-}
-
-#menu-btn:focus {
-  box-shadow: 0 0 0 0.25rem #7952b344;
-}
-</style>
