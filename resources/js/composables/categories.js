@@ -21,8 +21,15 @@ export default function useCategories() {
     };
 
     const getCategory = async (id) => {
-        let response = await axios.get("/categories/" + id);
-        category.value = response.data.data;
+        await axios
+            .get("/category/" + id)
+            .then((response) => {
+                category.value = response.data[0];
+            })
+            .catch((ex) => {
+                console.log(ex.response.data.errors);
+                category.value = [];
+            });
     };
 
     const storeCategory = async (data) => {

@@ -119,9 +119,7 @@ export default {
         confirmButtonText: "Sim, Eliminar!",
         cancelButtonText: "Cancelar",
       }).then((result) => {
-        // <--
         if (result.value) {
-          // <-- if confirmed
           destroyCategory(id);
           getCategories();
         }

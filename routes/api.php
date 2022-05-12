@@ -60,6 +60,7 @@ Route::get('admin', [AdminController::class, 'show'])->middleware('auth::admin-a
 
 Route::get('categories', [CategoryController::class, 'index']);
 Route::post('categories/register', [CategoryController::class, 'store']);
+Route::get('category/{category}', [CategoryController::class, 'show']);
 Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 
 
