@@ -30,6 +30,13 @@ class CategoryController extends Controller
         }
     }
 
+    public function update(CategoryRegisterRequest $request, Category $category)
+    {
+        $category->update($request->validated());
+
+        return $category;
+    }
+
     public function show($id)
     {
         return response()->json(Category::find($id)->get());

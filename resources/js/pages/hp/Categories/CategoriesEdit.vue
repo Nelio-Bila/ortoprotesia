@@ -59,11 +59,7 @@
 
             <div class="form-group mb-3">
               <div id="app">
-                <upload-media
-                  server="/api/upload"
-                  error="@error('media'){{$message}}@enderror"
-                >
-                </upload-media>
+                <upload-media server="/upload" error=""> </upload-media>
               </div>
             </div>
 
@@ -85,9 +81,8 @@
 </template>
 
 <script>
-import { onMounted, computed, ref, reactive } from "vue";
+import { onMounted, computed } from "vue";
 import useVuelidate from "@vuelidate/core";
-import useValidate from "@vuelidate/core";
 import {
   required,
   minLength,
@@ -108,35 +103,34 @@ export default {
     },
   },
   setup(props) {
-    const { errors, category, getCategory, updateCategory } = useCategories();
+    const { processing, errors, category, getCategory, updateCategory } =
+      useCategories();
+
     onMounted(getCategory(props.id));
+
     const saveCategory = async () => {
       await updateCategory(props.id);
     };
 
-    const state = reactive({
-      name: "",
-    });
-    const rules = {
+    const rules = computed(() => ({
       name: {
         required: helpers.withMessage("Por favor preencha o nome", required),
         minLength: helpers.withMessage(
           "Por favor preencha um nome válido",
           minLength(2)
         ),
-
         minLengthValue: minLength(2),
-      }, // Matches state.name
-    };
+      },
+    }));
 
-    const v$ = useVuelidate(rules, state);
+    const v$ = useVuelidate(rules, category);
 
     return {
-      state,
-      v$,
+      processing,
       errors,
       category,
       saveCategory,
+      v$,
     };
   },
 

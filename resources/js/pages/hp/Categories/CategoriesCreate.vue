@@ -7,10 +7,6 @@
         <HPSideBar currentLink="categories" />
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <i
-            @click="toggleSidebar()"
-            class="mt-3 fa-solid fa-bars fa-2xl me-2 text-primary"
-          ></i>
           <div
             class="
               d-flex
@@ -29,13 +25,13 @@
           <router-link to="/categories" class="btn btn-primary mb-4"
             >Lista de categorias</router-link
           >
-          <!-- <div v-if="errors">
+          <div v-if="errors">
             <div v-for="(v, k) in errors" :key="k">
               <p v-for="error in v" :key="error">
                 {{ error }}
               </p>
             </div>
-          </div> -->
+          </div>
 
           <form @submit.prevent="saveCategory">
             <div class="form-group mb-3">
@@ -57,10 +53,13 @@
             </div>
 
             <div class="form-group mb-3">
+              <label for="name">Foto da categoria</label>
               <div id="app">
                 <upload-media
-                  server="/api/upload"
-                  error="@error('media'){{$message}}@enderror"
+                  server="/upload"
+                  :error="imageError"
+                  @media="form.image"
+                  v-model="v$.form.image.$model"
                 >
                 </upload-media>
               </div>
@@ -73,7 +72,7 @@
               ></i>
               <span v-if="processing">Processando...</span>
 
-              <i v-if="!processing" class="fa-solid fa-user-plus mx-2"></i>
+              <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
               Salvar
             </button>
           </form>
@@ -100,16 +99,29 @@ import HPSideBar from "../../../components/HPSideBar.vue";
 
 export default {
   setup() {
+    const { processing, errors, storeCategory } = useCategories();
+    const saveCategory = async () => {
+      await storeCategory({ ...this.form });
+    };
+
+    function Media(value) {
+      this.form.image = value;
+    }
+
     return {
+      processing,
+      errors,
+      Media,
+      saveCategory,
       v$: useVuelidate(),
     };
   },
   data() {
     return {
-      form: { name: "" },
-      processing: false,
+      form: { name: "", image: [] },
       errors_exist: false,
       validationErrors: null,
+      imageError: "",
     };
   },
   validations() {
@@ -126,17 +138,12 @@ export default {
           ),
           minLengthValue: minLength(2),
         },
+        image: {},
       },
-      processing: {},
       errors_exist: {},
       validationErrors: {},
+      imageError: {},
     };
-  },
-  methods: {
-    saveCategory: async () => {
-      const { errors, storeCategory } = useCategories();
-      await storeCategory({ ...this.form });
-    },
   },
   components: {
     HPNavBar,
