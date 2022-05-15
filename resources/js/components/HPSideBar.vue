@@ -94,7 +94,7 @@
   <!-- Sidebar -->
   <nav class="bg-primary" id="sidebar-wrapper">
     <div class="list-group list-group-flush">
-      <router-link to="/" class="text-center bg-light py-2">
+      <router-link to="/" class="text-center bg-light py-2 h-72">
         <img
           src="/images/logo.png"
           alt="logotipo da Ortoprotesia"
@@ -163,14 +163,8 @@ li:hover {
   border-right-style: solid;
   border-right-color: #f9cf00;
   border-right-width: 5px;
+  background-color: #92400e;
 }
-
-/* #sidebarMenu {
-  width: 250px;
-  height: 100vh;
-  position: fixed;
-  transition: 0.4s;
-} */
 
 .nav-link {
   font-size: 1.25em;
@@ -180,9 +174,5 @@ li:hover {
 .nav-link:focus,
 .nav-link:hover {
   background-color: #ffffff26;
-}
-
-.open-nav {
-  margin-left: 0px;
 }
 </style>

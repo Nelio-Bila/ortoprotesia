@@ -11331,3 +11331,7 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.bl-0 {
+  border-left: 0;
+}

@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex" id="wrapper">
-    <HPSideBar />
+    <HPSideBar currentLink="home" />
 
     <!-- Page Content -->
     <div id="page-content-wrapper">

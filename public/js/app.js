@@ -25816,24 +25816,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var _this = this;
+    var form = (0,vue__WEBPACK_IMPORTED_MODULE_1__.reactive)({
+      name: "",
+      image: []
+    });
 
     var _useCategories = (0,_composables_categories__WEBPACK_IMPORTED_MODULE_4__["default"])(),
         processing = _useCategories.processing,
         errors = _useCategories.errors,
-        storeCategory = _useCategories.storeCategory;
+        storeCategory = _useCategories.storeCategory,
+        imageFile = _useCategories.imageFile,
+        imageUrl = _useCategories.imageUrl,
+        handleImageSelected = _useCategories.handleImageSelected;
 
     var saveCategory = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(_this.form);
-                _context.next = 3;
-                return storeCategory(_objectSpread({}, _this.form));
+                data = new FormData();
+                data.append("image", imageFile.value);
+                _context.next = 4;
+                return storeCategory(_objectSpread({}, form));
 
-              case 3:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -25844,44 +25852,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return function saveCategory() {
         return _ref.apply(this, arguments);
       };
-    }();
+    }(); // function Media(value) {
+    //   form.image = value;
+    // }
 
-    function Media(value) {
-      this.form.image = value;
-    }
 
-    return {
-      processing: processing,
-      errors: errors,
-      Media: Media,
-      saveCategory: saveCategory,
-      v$: (0,_vuelidate_core__WEBPACK_IMPORTED_MODULE_2__["default"])()
-    };
-  },
-  data: function data() {
-    return {
-      form: {
-        name: "",
-        image: []
-      },
-      errors_exist: false,
-      validationErrors: null,
-      imageError: ""
-    };
-  },
-  validations: function validations() {
-    return {
-      form: {
+    var rules = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return {
         name: {
-          required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_7__.helpers.withMessage("Por favor preencha o nome da categoria", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_7__.required),
+          required: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_7__.helpers.withMessage("Por favor preencha o nome", _vuelidate_validators__WEBPACK_IMPORTED_MODULE_7__.required),
           minLength: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_7__.helpers.withMessage("Por favor preencha um nome válido", (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_7__.minLength)(2)),
-          minLengthValue: (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_7__.minLength)(2)
+          minLengthValue: _vuelidate_validators__WEBPACK_IMPORTED_MODULE_7__.helpers.withMessage("O nome deve ter dois caracteres no minímo", (0,_vuelidate_validators__WEBPACK_IMPORTED_MODULE_7__.minLength)(2))
         },
         image: {}
-      },
-      errors_exist: {},
-      validationErrors: {},
-      imageError: {}
+      };
+    });
+    var v$ = (0,_vuelidate_core__WEBPACK_IMPORTED_MODULE_2__["default"])(rules, form);
+    return {
+      form: form,
+      handleImageSelected: handleImageSelected,
+      imageUrl: imageUrl,
+      processing: processing,
+      errors: errors,
+      saveCategory: saveCategory,
+      v$: v$
     };
   },
   components: {
@@ -26754,7 +26748,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "navbar navbar-expand-lg navbar-light bg-light mb-1 sticky-top shadow h-72"
+  "class": "navbar navbar-expand-lg navbar-light bg-light mb-1 sticky-top shadow h-72 bl-0"
 };
 
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
@@ -26923,7 +26917,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <nav\n    class=\"\n      col-md-3 col-lg-2\n      d-md-block\n      mt-5\n      bg-primary\n      text-white\n      sidebar\n      collapse\n    \"\n    id=\"sidebar-wrapper\"\n  >\n    <div class=\"sidebar-heading bg-light text-center\">\n      <router-link class=\"navbar-brand\" to=\"/\"\n        ><img\n          src=\"/images/logo.png\"\n          alt=\"logotipo da Ortoprotesia\"\n          width=\"40\"\n          height=\"60\"\n      /></router-link>\n    </div>\n    <div class=\"position-sticky\">\n      <ul class=\"nav flex-column pt-3\">\n        <li\n          class=\"nav-item py-1\"\n          :class=\"currentLink === 'home' ? 'active-link' : ''\"\n        >\n          <router-link\n            class=\"nav-link\"\n            :class=\"currentLink === 'home' ? 'active' : ''\"\n            aria-current=\"page\"\n            to=\"/hp\"\n          >\n            <h5><i class=\"fa-solid fa-house me-2\"></i> Inicio</h5>\n          </router-link>\n        </li>\n        <li\n          class=\"nav-item py-1\"\n          :class=\"currentLink === 'articles' ? 'active-link' : ''\"\n        >\n          <router-link\n            class=\"nav-link\"\n            :class=\"currentLink === 'articles' ? 'active' : 'text-white'\"\n            to=\"/hp/articles\"\n          >\n            <h5><i class=\"fa-solid fa-newspaper me-2\"></i> Publicações</h5>\n          </router-link>\n        </li>\n        <li\n          class=\"nav-item py-1\"\n          :class=\"currentLink === 'categories' ? 'active-link' : ''\"\n        >\n          <router-link\n            class=\"nav-link\"\n            :class=\"currentLink === 'categories' ? 'active' : 'text-white'\"\n            to=\"/categories\"\n          >\n            <h5><i class=\"fa-solid fa-tags me-2\"></i> Categorias</h5>\n          </router-link>\n        </li>\n        <li\n          class=\"nav-item py-1\"\n          :class=\"currentLink === 'users' ? 'active-link' : ''\"\n        >\n          <router-link\n            class=\"nav-link\"\n            :class=\"currentLink === 'users' ? 'active' : 'text-white'\"\n            to=\"/admin/users\"\n          >\n            <h5><i class=\"fa-solid fa-users me-2\"></i> Usuários</h5>\n          </router-link>\n        </li>\n        <li\n          class=\"nav-item py-1\"\n          :class=\"currentLink === 'consults' ? 'active-link' : ''\"\n        >\n          <router-link\n            class=\"nav-link\"\n            :class=\"currentLink === 'consults' ? 'active' : 'text-white'\"\n            to=\"/hp\"\n          >\n            <h5><i class=\"fa-solid fa-calendar-check me-2\"></i> Consultas</h5>\n          </router-link>\n        </li>\n        <li class=\"nav-item py-1\">\n          <router-link class=\"nav-link text-white\" to=\"/hp\">\n            <h5><i class=\"fa-solid fa-chart-column me-2\"></i> Estatisticas</h5>\n          </router-link>\n        </li>\n      </ul>\n    </div>\n  </nav> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Sidebar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/",
-    "class": "text-center bg-light py-2"
+    "class": "text-center bg-light py-2 h-72"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_3];
@@ -28197,7 +28191,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
   "class": "h2"
-}, "Registro de nova categorias")], -1
+}, "Registro de nova categoria")], -1
 /* HOISTED */
 );
 
@@ -28216,43 +28210,33 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_9 = {
-  key: 0,
-  "class": "invalid-feedback"
-};
+var _hoisted_9 = ["src"];
 var _hoisted_10 = {
   "class": "form-group mb-3"
 };
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "name"
+  "for": "image"
 }, "Foto da categoria", -1
 /* HOISTED */
 );
 
 var _hoisted_12 = {
-  id: "app"
+  "class": "btn btn-primary btn-block btn-lg"
 };
 var _hoisted_13 = {
   key: 0,
-  "class": "invalid-feedback"
-};
-var _hoisted_14 = {
-  "class": "btn btn-primary btn-block btn-lg"
-};
-var _hoisted_15 = {
-  key: 0,
   "class": "fa-solid fa-spinner fa-spin-pulse mx-2"
 };
-var _hoisted_16 = {
+var _hoisted_14 = {
   key: 1
 };
-var _hoisted_17 = {
+var _hoisted_15 = {
   key: 2,
   "class": "fa-solid fa-plus mx-2"
 };
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Salvar ");
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Salvar ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_HPSideBar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HPSideBar");
@@ -28260,8 +28244,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_HPNavBar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HPNavBar");
 
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
-
-  var _component_upload_media = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("upload-media");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HPSideBar, {
     currentLink: "categories"
@@ -28290,41 +28272,54 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), 128
   /* KEYED_FRAGMENT */
   ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.saveCategory && $setup.saveCategory.apply($setup, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     onBlur: _cache[0] || (_cache[0] = function () {
-      var _$setup$v$$form$name;
+      var _$setup$v$$name;
 
-      return $setup.v$.form.name.$touch && (_$setup$v$$form$name = $setup.v$.form.name).$touch.apply(_$setup$v$$form$name, arguments);
+      return $setup.v$.name.$touch && (_$setup$v$$name = $setup.v$.name).$touch.apply(_$setup$v$$name, arguments);
     }),
     type: "text",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
-      'is-invalid': $setup.v$.form.name.$error,
-      'is-valid': !$setup.v$.form.name.$invalid
+      'is-invalid': $setup.v$.name.$error,
+      'is-valid': !$setup.v$.name.$invalid
     }]),
     placeholder: "Ex.: Próteses",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $setup.v$.form.name.$model = $event;
+      return $setup.form.name = $event;
     })
   }, null, 34
   /* CLASS, HYDRATE_EVENTS */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.v$.form.name.$model]]), $setup.v$.form.name.$error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.v$.form.name.$errors[0].$message), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_upload_media, {
-    server: "/upload",
-    error: $data.imageError,
-    onMedia: $data.form.image,
-    modelValue: $setup.v$.form.image.$model,
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $setup.v$.form.image.$model = $event;
-    })
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.name]]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.v$.name.$errors, function (error) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+      "class": "invalid-feedback",
+      key: error.$uid
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error.$message), 1
+    /* TEXT */
+    );
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-group mb-3\">\n            <label for=\"name\">Foto da categoria</label>\n            <div id=\"app\">\n              <upload-media\n                server=\"/upload\"\n                :error=\"imageError\"\n                @media=\"form.image\"\n                v-model=\"form.image\"\n              >\n              </upload-media>\n              <span\n                class=\"invalid-feedback\"\n                v-for=\"error of v$.image.$errors\"\n                :key=\"error.$uid\"\n              >\n                {{ error.$message }}\n              </span>\n            </div>\n            <span class=\"invalid-feedback\" v-if=\"v$.image.$error\">\n              {{ v$.image.$errors[0].$message }}\n            </span>\n          </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: $setup.imageUrl,
+    "class": "w-24 h-24 object-cover"
   }, null, 8
   /* PROPS */
-  , ["error", "onMedia", "modelValue"])]), $setup.v$.form.image.$error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.v$.form.image.$errors[0].$message), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_14, [$setup.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_16, "Processando...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$setup.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_17)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_18])], 32
+  , _hoisted_9), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.imageUrl]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control",
+    type: "file",
+    accept: "image/*",
+    onChange: [_cache[2] || (_cache[2] = function () {
+      return $setup.handleImageSelected && $setup.handleImageSelected.apply($setup, arguments);
+    }), _cache[3] || (_cache[3] = function () {
+      var _$setup$form;
+
+      return $setup.form.image && (_$setup$form = $setup.form).image.apply(_$setup$form, arguments);
+    })]
+  }, null, 32
+  /* HYDRATE_EVENTS */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_12, [$setup.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_13)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, "Processando...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$setup.processing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_16]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex flex-wrap mt-8\">\n            <img\n              v-for=\"(image, key) in images\"\n              :key=\"key\"\n              :src=\"image.image\"\n              class=\"w-48 h-46 object-cover mr-4 mb-4 shadow rounded\"\n              name=\"image\"\n            />\n          </div> ")], 32
   /* HYDRATE_EVENTS */
   )])])]);
 }
@@ -28522,7 +28517,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HPSideBar), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Page Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HPNavBar), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar End  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HPSideBar, {
+    currentLink: "categories"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Page Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HPNavBar), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar End  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/categories/create",
     "class": "btn btn-primary mb-2"
   }, {
@@ -28607,7 +28604,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_HPNavBar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HPNavBar");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HPSideBar), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Page Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HPNavBar), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar End  "), _hoisted_3]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /#page-content-wrapper ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /#wrapper ")], 2112
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HPSideBar, {
+    currentLink: "home"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Page Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HPNavBar), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar End  "), _hoisted_3]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /#page-content-wrapper ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /#wrapper ")], 2112
   /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
   );
 }
@@ -30540,6 +30539,8 @@ function useCategories() {
   var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
   var errors = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("");
   var processing = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false);
+  var imageFile = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("");
+  var imageUrl = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("");
 
   var getCategories = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -30611,7 +30612,7 @@ function useCategories() {
               errors.value = "";
               _context3.prev = 2;
               _context3.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().post("/categories", data);
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().post("/categories/register", data);
 
             case 5:
               _context3.next = 7;
@@ -30715,6 +30716,27 @@ function useCategories() {
     };
   }();
 
+  function handleImageSelected(event) {
+    if (event.target.files.length === 0) {
+      imageFile.value = "";
+      imageUrl.value = "";
+      return;
+    }
+
+    imageFile.value = event.target.files[0];
+  }
+
+  (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(imageFile, function (imageFile) {
+    if (!(imageFile instanceof File)) {
+      return;
+    }
+
+    var fileReader = new FileReader();
+    fileReader.readAsDataURL(imageFile);
+    fileReader.addEventListener("load", function () {
+      imageUrl.value = fileReader.result;
+    });
+  });
   return {
     categories: categories,
     category: category,
@@ -30724,7 +30746,10 @@ function useCategories() {
     getCategory: getCategory,
     storeCategory: storeCategory,
     updateCategory: updateCategory,
-    destroyCategory: destroyCategory
+    destroyCategory: destroyCategory,
+    imageFile: imageFile,
+    imageUrl: imageUrl,
+    handleImageSelected: handleImageSelected
   };
 }
 
@@ -36085,7 +36110,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nli[data-v-28a03959]:hover {\n  background-color: #92400e;\n  color: #fff;\n}\n.active-link[data-v-28a03959] {\n  border-right-style: solid;\n  border-right-color: #f9cf00;\n  border-right-width: 5px;\n}\n\n/* #sidebarMenu {\n  width: 250px;\n  height: 100vh;\n  position: fixed;\n  transition: 0.4s;\n} */\n.nav-link[data-v-28a03959] {\n  font-size: 1.25em;\n}\n.nav-link[data-v-28a03959]:active,\n.nav-link[data-v-28a03959]:focus,\n.nav-link[data-v-28a03959]:hover {\n  background-color: #ffffff26;\n}\n.open-nav[data-v-28a03959] {\n  margin-left: 0px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nli[data-v-28a03959]:hover {\n  background-color: #92400e;\n  color: #fff;\n}\n.active-link[data-v-28a03959] {\n  border-right-style: solid;\n  border-right-color: #f9cf00;\n  border-right-width: 5px;\n  background-color: #92400e;\n}\n.nav-link[data-v-28a03959] {\n  font-size: 1.25em;\n}\n.nav-link[data-v-28a03959]:active,\n.nav-link[data-v-28a03959]:focus,\n.nav-link[data-v-28a03959]:hover {\n  background-color: #ffffff26;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

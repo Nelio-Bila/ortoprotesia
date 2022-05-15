@@ -21,7 +21,7 @@
             border-bottom
           "
         >
-          <h1 class="h2">Registro de nova categorias</h1>
+          <h1 class="h2">Registro de nova categoria</h1>
         </div>
 
         <router-link to="/categories" class="btn btn-primary mb-4"
@@ -39,35 +39,63 @@
           <div class="form-group mb-3">
             <label for="name">Nome da categoria</label>
             <input
-              @blur="v$.form.name.$touch"
+              @blur="v$.name.$touch"
               type="text"
               class="form-control"
               :class="{
-                'is-invalid': v$.form.name.$error,
-                'is-valid': !v$.form.name.$invalid,
+                'is-invalid': v$.name.$error,
+                'is-valid': !v$.name.$invalid,
               }"
               placeholder="Ex.: Próteses"
-              v-model="v$.form.name.$model"
+              v-model="form.name"
             />
-            <span class="invalid-feedback" v-if="v$.form.name.$error">
-              {{ v$.form.name.$errors[0].$message }}
+
+            <span
+              class="invalid-feedback"
+              v-for="error of v$.name.$errors"
+              :key="error.$uid"
+            >
+              {{ error.$message }}
             </span>
           </div>
 
-          <div class="form-group mb-3">
+          <!-- <div class="form-group mb-3">
             <label for="name">Foto da categoria</label>
             <div id="app">
               <upload-media
                 server="/upload"
                 :error="imageError"
                 @media="form.image"
-                v-model="v$.form.image.$model"
+                v-model="form.image"
               >
               </upload-media>
+              <span
+                class="invalid-feedback"
+                v-for="error of v$.image.$errors"
+                :key="error.$uid"
+              >
+                {{ error.$message }}
+              </span>
             </div>
-            <span class="invalid-feedback" v-if="v$.form.image.$error">
-              {{ v$.form.image.$errors[0].$message }}
+            <span class="invalid-feedback" v-if="v$.image.$error">
+              {{ v$.image.$errors[0].$message }}
             </span>
+          </div> -->
+
+          <img
+            v-show="imageUrl"
+            :src="imageUrl"
+            class="w-24 h-24 object-cover"
+          />
+          <div class="form-group mb-3">
+            <label for="image">Foto da categoria</label>
+            <input
+              class="form-control"
+              type="file"
+              accept="image/*"
+              @change="handleImageSelected"
+              v-on:change="form.image"
+            />
           </div>
 
           <button class="btn btn-primary btn-block btn-lg">
@@ -80,6 +108,16 @@
             <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
             Salvar
           </button>
+
+          <!-- <div class="flex flex-wrap mt-8">
+            <img
+              v-for="(image, key) in images"
+              :key="key"
+              :src="image.image"
+              class="w-48 h-46 object-cover mr-4 mb-4 shadow rounded"
+              name="image"
+            />
+          </div> -->
         </form>
       </div>
     </main>
@@ -87,7 +125,7 @@
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import useVuelidate from "@vuelidate/core";
 import {
   required,
@@ -103,51 +141,55 @@ import HPSideBar from "../../../components/HPSideBar.vue";
 
 export default {
   setup() {
-    const { processing, errors, storeCategory } = useCategories();
-    const saveCategory = async () => {
-      console.log(this.form);
-      await storeCategory({ ...this.form });
-    };
+    const form = reactive({
+      name: "",
+      image: [],
+    });
 
-    function Media(value) {
-      this.form.image = value;
-    }
-
-    return {
+    const {
       processing,
       errors,
-      Media,
-      saveCategory,
-      v$: useVuelidate(),
+      storeCategory,
+      imageFile,
+      imageUrl,
+      handleImageSelected,
+    } = useCategories();
+
+    const saveCategory = async () => {
+      let data = new FormData();
+      data.append("image", imageFile.value);
+      await storeCategory({ ...form });
     };
-  },
-  data() {
-    return {
-      form: { name: "", image: [] },
-      errors_exist: false,
-      validationErrors: null,
-      imageError: "",
-    };
-  },
-  validations() {
-    return {
-      form: {
-        name: {
-          required: helpers.withMessage(
-            "Por favor preencha o nome da categoria",
-            required
-          ),
-          minLength: helpers.withMessage(
-            "Por favor preencha um nome válido",
-            minLength(2)
-          ),
-          minLengthValue: minLength(2),
-        },
-        image: {},
+
+    // function Media(value) {
+    //   form.image = value;
+    // }
+
+    const rules = computed(() => ({
+      name: {
+        required: helpers.withMessage("Por favor preencha o nome", required),
+        minLength: helpers.withMessage(
+          "Por favor preencha um nome válido",
+          minLength(2)
+        ),
+        minLengthValue: helpers.withMessage(
+          "O nome deve ter dois caracteres no minímo",
+          minLength(2)
+        ),
       },
-      errors_exist: {},
-      validationErrors: {},
-      imageError: {},
+      image: {},
+    }));
+
+    const v$ = useVuelidate(rules, form);
+
+    return {
+      form,
+      handleImageSelected,
+      imageUrl,
+      processing,
+      errors,
+      saveCategory,
+      v$,
     };
   },
   components: {

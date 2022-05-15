@@ -7,6 +7,7 @@
       sticky-top
       shadow
       h-72
+      bl-0
     "
   >
     <i

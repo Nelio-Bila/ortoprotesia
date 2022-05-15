@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
@@ -8,6 +8,8 @@ export default function useCategories() {
     const router = useRouter();
     const errors = ref("");
     const processing = ref(false);
+    let imageFile = ref("");
+    let imageUrl = ref("");
 
     const getCategories = async () => {
         processing.value = true;
@@ -45,7 +47,7 @@ export default function useCategories() {
 
         errors.value = "";
         try {
-            await axios.post("/categories", data);
+            await axios.post("/categories/register", data);
             await router.push("/categories");
             processing.value = false;
         } catch (e) {
@@ -79,6 +81,30 @@ export default function useCategories() {
         processing.value = false;
     };
 
+    function handleImageSelected(event) {
+        if (event.target.files.length === 0) {
+            imageFile.value = "";
+            imageUrl.value = "";
+            return;
+        }
+
+        imageFile.value = event.target.files[0];
+    }
+
+    watch(imageFile, (imageFile) => {
+        if (!(imageFile instanceof File)) {
+            return;
+        }
+
+        let fileReader = new FileReader();
+
+        fileReader.readAsDataURL(imageFile);
+
+        fileReader.addEventListener("load", () => {
+            imageUrl.value = fileReader.result;
+        });
+    });
+
     return {
         categories,
         category,
@@ -89,5 +115,8 @@ export default function useCategories() {
         storeCategory,
         updateCategory,
         destroyCategory,
+        imageFile,
+        imageUrl,
+        handleImageSelected,
     };
 }
