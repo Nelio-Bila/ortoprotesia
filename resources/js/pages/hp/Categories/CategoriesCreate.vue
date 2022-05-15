@@ -1,84 +1,88 @@
 <template>
-  <div>
-    <HPNavBar />
+  <div class="d-flex" id="wrapper">
+    <HPSideBar currentLink="categories" />
 
-    <div class="container-fluid">
-      <div class="row">
-        <HPSideBar currentLink="categories" />
+    <!-- Page Content -->
+    <main id="page-content-wrapper">
+      <!-- Navbar -->
+      <HPNavBar />
+      <!-- Navbar End  -->
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <div
-            class="
-              d-flex
-              justify-content-between
-              flex-wrap flex-md-nowrap
-              align-items-center
-              pt-3
-              pb-2
-              mb-3
-              border-bottom
-            "
-          >
-            <h1 class="h2">Categorias</h1>
+      <div class="container-fluid my-3">
+        <div
+          class="
+            d-flex
+            justify-content-between
+            flex-wrap flex-md-nowrap
+            align-items-center
+            pt-3
+            pb-2
+            mb-3
+            border-bottom
+          "
+        >
+          <h1 class="h2">Registro de nova categorias</h1>
+        </div>
+
+        <router-link to="/categories" class="btn btn-primary mb-4"
+          >Lista de categorias</router-link
+        >
+        <div v-if="errors">
+          <div v-for="(v, k) in errors" :key="k">
+            <p v-for="error in v" :key="error">
+              {{ error }}
+            </p>
+          </div>
+        </div>
+
+        <form @submit.prevent="saveCategory">
+          <div class="form-group mb-3">
+            <label for="name">Nome da categoria</label>
+            <input
+              @blur="v$.form.name.$touch"
+              type="text"
+              class="form-control"
+              :class="{
+                'is-invalid': v$.form.name.$error,
+                'is-valid': !v$.form.name.$invalid,
+              }"
+              placeholder="Ex.: Próteses"
+              v-model="v$.form.name.$model"
+            />
+            <span class="invalid-feedback" v-if="v$.form.name.$error">
+              {{ v$.form.name.$errors[0].$message }}
+            </span>
           </div>
 
-          <router-link to="/categories" class="btn btn-primary mb-4"
-            >Lista de categorias</router-link
-          >
-          <div v-if="errors">
-            <div v-for="(v, k) in errors" :key="k">
-              <p v-for="error in v" :key="error">
-                {{ error }}
-              </p>
+          <div class="form-group mb-3">
+            <label for="name">Foto da categoria</label>
+            <div id="app">
+              <upload-media
+                server="/upload"
+                :error="imageError"
+                @media="form.image"
+                v-model="v$.form.image.$model"
+              >
+              </upload-media>
             </div>
+            <span class="invalid-feedback" v-if="v$.form.image.$error">
+              {{ v$.form.image.$errors[0].$message }}
+            </span>
           </div>
 
-          <form @submit.prevent="saveCategory">
-            <div class="form-group mb-3">
-              <label for="name">Nome da categoria</label>
-              <input
-                @blur="v$.form.name.$touch"
-                type="text"
-                class="form-control"
-                :class="{
-                  'is-invalid': v$.form.name.$error,
-                  'is-valid': !v$.form.name.$invalid,
-                }"
-                placeholder="Ex.: Próteses"
-                v-model="v$.form.name.$model"
-              />
-              <span class="invalid-feedback" v-if="v$.form.name.$error">
-                {{ v$.form.name.$errors[0].$message }}
-              </span>
-            </div>
+          <button class="btn btn-primary btn-block btn-lg">
+            <i
+              v-if="processing"
+              class="fa-solid fa-spinner fa-spin-pulse mx-2"
+            ></i>
+            <span v-if="processing">Processando...</span>
 
-            <div class="form-group mb-3">
-              <label for="name">Foto da categoria</label>
-              <div id="app">
-                <upload-media
-                  server="/upload"
-                  :error="imageError"
-                  @media="form.image"
-                  v-model="v$.form.image.$model"
-                >
-                </upload-media>
-              </div>
-            </div>
-
-            <button class="btn btn-primary btn-block btn-lg">
-              <i
-                v-if="processing"
-                class="fa-solid fa-spinner fa-spin-pulse mx-2"
-              ></i>
-              <span v-if="processing">Processando...</span>
-
-              <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
-              Salvar
-            </button>
-          </form>
-        </main>
+            <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
+            Salvar
+          </button>
+        </form>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -91,7 +95,7 @@ import {
   helpers,
   minLengthValue,
 } from "@vuelidate/validators";
-import { UploadMedia, UpdateMedia } from "vue-media-upload";
+import { UploadMedia } from "vue-media-upload";
 
 import useCategories from "../../../composables/categories";
 import HPNavBar from "../../../components/HPNavBar.vue";
@@ -101,6 +105,7 @@ export default {
   setup() {
     const { processing, errors, storeCategory } = useCategories();
     const saveCategory = async () => {
+      console.log(this.form);
       await storeCategory({ ...this.form });
     };
 
@@ -149,7 +154,6 @@ export default {
     HPNavBar,
     HPSideBar,
     UploadMedia,
-    UpdateMedia,
   },
 };
 </script>

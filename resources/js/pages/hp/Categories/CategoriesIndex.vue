@@ -1,74 +1,60 @@
 <template>
-  <div>
-    <HPNavBar />
+  <div class="d-flex" id="wrapper">
+    <HPSideBar />
 
-    <div class="container-fluid">
-      <div class="row">
-        <HPSideBar currentLink="categories" />
+    <!-- Page Content -->
+    <main id="page-content-wrapper">
+      <!-- Navbar -->
+      <HPNavBar />
+      <!-- Navbar End  -->
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <div
-            class="
-              d-flex
-              justify-content-between
-              flex-wrap flex-md-nowrap
-              align-items-center
-              pt-3
-              pb-2
-              mb-3
-              border-bottom
-            "
-          >
-            <h1 class="h2">Categorias</h1>
-          </div>
+      <div class="container-fluid my-3">
+        <router-link to="/categories/create" class="btn btn-primary mb-2"
+          >Nova categoria</router-link
+        >
 
-          <router-link to="/categories/create" class="btn btn-primary mb-2"
-            >Nova categoria</router-link
-          >
-
-          <table
-            class="table table-striped table-responsive"
-            id="categories_datatable"
-          >
-            <thead class="table-light">
+        <table
+          class="table table-striped table-responsive"
+          id="categories_datatable"
+        >
+          <thead class="table-light">
+            <tr>
+              <th>Nome</th>
+              <th>Imagem</th>
+              <th>Criada aos</th>
+              <th>Acções</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template v-for="category in categories" :key="category.id">
               <tr>
-                <th>Nome</th>
-                <th>Imagem</th>
-                <th>Criada aos</th>
-                <th>Acções</th>
-              </tr>
-            </thead>
-            <tbody>
-              <template v-for="category in categories" :key="category.id">
-                <tr>
-                  <td>{{ category.name }}</td>
-                  <td>{{ category.image }}</td>
-                  <td>
-                    {{ new Date(category.created_at).toLocaleDateString() }}
-                  </td>
-                  <td>
-                    <router-link
-                      class="btn btn-sm btn-warning mx-2"
-                      :to="{
-                        name: 'categories.edit',
-                        params: { id: category.id },
-                      }"
-                      >Editar</router-link
-                    >
-                    <button
-                      class="btn btn-sm btn-danger"
-                      @click="deleteCategory(category.id)"
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr></template
-              >
-            </tbody>
-          </table>
-        </main>
+                <td>{{ category.name }}</td>
+                <td>{{ category.image }}</td>
+                <td>
+                  {{ new Date(category.created_at).toLocaleDateString() }}
+                </td>
+                <td>
+                  <router-link
+                    class="btn btn-sm btn-warning mx-2"
+                    :to="{
+                      name: 'categories.edit',
+                      params: { id: category.id },
+                    }"
+                    >Editar</router-link
+                  >
+                  <button
+                    class="btn btn-sm btn-danger"
+                    @click="deleteCategory(category.id)"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr></template
+            >
+          </tbody>
+        </table>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
