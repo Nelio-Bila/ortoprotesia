@@ -94,7 +94,6 @@
               type="file"
               accept="image/*"
               @change="handleImageSelected"
-              v-on:change="form.image"
             />
           </div>
 

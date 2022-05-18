@@ -62,15 +62,6 @@
               </li>
             </ul>
           </li>
-          <!-- <li class="nav-item">
-            <a
-              class="nav-link disabled"
-              href="#"
-              tabindex="-1"
-              aria-disabled="true"
-              >Disabled</a
-            >
-          </li> -->
         </ul>
 
         <form class="form-inline mx-5">
@@ -93,8 +84,8 @@
           </router-link>
         </form>
         <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
-        <ul class="navbar-nav me-5 mb-2 mb-lg-0">
-          <li class="nav-item dropdown" v-if="user">
+        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="user">
+          <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -103,20 +94,33 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              {{ user.name }} {{ user.surname }}
+              <div
+                class="
+                  rounded-full
+                  border border-secondary
+                  rounded-full
+                  inline-block
+                  p-2
+                "
+              >
+                <i class="fa-solid fa-user fa-2x m-2"></i>
+                <img src="`${images/profiles/}`+`${user.avatar}`" alt="" />
+              </div>
+              <!-- {{ user.name }} {{ user.surname }} -->
             </a>
-            <ul
-              class="dropdown-menu"
-              aria-labelledby="navbarDropdown"
-              @click="handleLogout"
-            >
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a v-if="user.carrier" class="dropdown-item" to="/hp/"
+                <a v-if="user.carrier" class="dropdown-item me-5" to="/hp/"
                   >Painel</a
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="javascript:void(0)"
+                <router-link to="/account" class="dropdown-item me-5"
+                  >Definições da conta</router-link
+                >
+              </li>
+              <li @click="handleLogout">
+                <a class="dropdown-item me-5" href="javascript:void(0)"
                   >Terminar sessão</a
                 >
               </li>
@@ -136,25 +140,34 @@ import { useUserStore } from "../stores/UserStore";
 
 export default {
   name: "NavBar",
-  data() {
-    return {
-      user: useUserStore().$state.user,
-    };
-  },
   methods: {
     ...mapActions(useUserStore, ["setUser", "removeUser"]),
+
     handleLogout() {
       localStorage.removeItem("op_token");
       this.setUser(null);
       this.$router.push("/");
     },
   },
-  created() {
-    console.log(this.user);
-  },
   computed: {
     ...mapStores(useUserStore),
     ...mapState(useUserStore, ["user"]),
+  },
+  data() {
+    return {
+      user: null,
+    };
+  },
+  async created() {
+    await axios
+      .get("user")
+      .then((response) => {
+        this.user = response.data;
+        this.setUser(this.user);
+      })
+      .catch((ex) => {
+        // this.$router.push("/");
+      });
   },
 };
 </script>

@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Welcome from "../pages/Welcome.vue";
-import NotFound from "../pages/NotFound.vue";
-import Register from "../pages/Register.vue";
-import Login from "../pages/Login.vue";
-import Forgot from "../pages/Forgot.vue";
+
+import NotFound from "../pages/Errors/NotFound.vue";
+
+import Register from "../pages/Account/Register.vue";
+import Login from "../pages/Account/Login.vue";
+import Forgot from "../pages/Account/Forgot.vue";
+import Account from "../pages/Account/Account.vue";
 
 import HPHome from "../pages/hp/HPHome.vue";
 import HPLogin from "../pages/hp/HPLogin.vue";
@@ -13,6 +16,8 @@ import HPForgot from "../pages/hp/HPRegister.vue";
 import HPProfile from "../pages/hp/HPProfile.vue";
 
 import Users from "../pages/Admin/Users/Users.vue";
+
+import Health_pros from "../pages/Admin/Health_pros/health_pros.vue";
 
 import Articles from "../pages/hp/Articles/Articles.vue";
 
@@ -41,6 +46,11 @@ const routes = [
         path: "/forgot",
         name: "forgot",
         component: Forgot,
+    },
+    {
+        path: "/account",
+        name: "account",
+        component: Account,
     },
     {
         path: "/hp/",
@@ -76,6 +86,11 @@ const routes = [
         path: "/admin/users",
         name: "users",
         component: Users,
+    },
+    {
+        path: "/admin/health_pros",
+        name: "health_pros",
+        component: Health_pros,
     },
     {
         path: "/categories",

@@ -11335,3 +11335,89 @@ body {
 .bl-0 {
   border-left: 0;
 }
+
+.hidden {
+  display: none;
+}
+
+.h-24 {
+  height: 6rem;
+  /* 96px */
+}
+
+.w-24 {
+  width: 6rem;
+  /* 96px */
+}
+
+.w-full {
+  width: 100%;
+}
+
+.relative {
+  position: relative;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.bg-black {
+  background-color: rgb(0, 0, 0);
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.bg-opacity-25 {
+  --bg-opacity: 0.25;
+}
+
+.top-0 {
+  top: 0px;
+}
+
+.hover\:white:hover {
+  color: #fff;
+}
+
+.h-52 {
+  height: 13rem;
+  /* 208px */
+}
+
+.w-52 {
+  width: 13rem;
+  /* 208px */
+}
+
+.horizontal-centered {
+  display: flex;
+  justify-content: center;
+}

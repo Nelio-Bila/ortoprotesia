@@ -22,10 +22,10 @@
         Entrar | Criar Conta
       </router-link>
     </form>
-    <ul class="navbar-nav me-5 mb-2 mb-lg-0">
-      <li class="nav-item dropdown" v-if="user">
+    <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="user">
+      <li class="nav-item dropdown me-5">
         <a
-          class="nav-link dropdown-toggle"
+          class="nav-link dropdown-toggle me-5"
           href="#"
           id="navbarDropdown"
           role="button"
@@ -34,15 +34,11 @@
         >
           {{ user.name }} {{ user.surname }}
         </a>
-        <ul
-          class="dropdown-menu"
-          aria-labelledby="navbarDropdown"
-          @click="handleLogout"
-        >
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li>
             <a v-if="user.carrier" class="dropdown-item" to="/hp/">Painel</a>
           </li>
-          <li>
+          <li @click="handleLogout">
             <a class="dropdown-item" href="javascript:void(0)"
               >Terminar sessão</a
             >
@@ -61,9 +57,31 @@ export default {
       document.getElementById("wrapper").classList.toggle("toggled");
     };
 
+    const handleLogout = () => {
+      localStorage.removeItem("op_token");
+      setUser(null);
+      $router.push("/");
+    };
+
     return {
       toggleMenu,
+      handleLogout,
     };
+  },
+  data() {
+    return {
+      user: null,
+    };
+  },
+  async created() {
+    await axios
+      .get("user")
+      .then((response) => {
+        this.user = response.data;
+      })
+      .catch((ex) => {
+        this.$router.push("/");
+      });
   },
 };
 </script>

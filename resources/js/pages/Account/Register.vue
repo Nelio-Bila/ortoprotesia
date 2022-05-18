@@ -193,7 +193,8 @@ import {
   minLength,
 } from "@vuelidate/validators";
 
-import NavBar from "../components/NavBar.vue";
+import NavBar from "../../components/NavBar.vue";
+import Footer from "../../components/Footer.vue";
 
 export default {
   name: "Register",
@@ -303,6 +304,6 @@ export default {
       validationErrors: {},
     };
   },
-  components: { NavBar },
+  components: { NavBar, Footer },
 };
 </script>

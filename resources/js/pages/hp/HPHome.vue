@@ -26,9 +26,6 @@ import HPNavBar from "../../components/HPNavBar.vue";
 
 export default {
   name: "HPHome",
-  setup() {
-    return {};
-  },
   components: {
     HPNavBar,
     HPSideBar,

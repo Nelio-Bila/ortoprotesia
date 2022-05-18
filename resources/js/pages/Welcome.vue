@@ -29,10 +29,10 @@ export default {
     };
   },
   async created() {
-    // const response = await axios.get("user");
-    // this.user = useUserStore();
-    // this.user.setUser(response.data);
-    // this.user = user.getUser();
+    const response = await axios.get("user");
+    this.user = useUserStore();
+    this.user.setUser(response.data);
+    this.user = user.getUser();
   },
   components: {
     NavBar,

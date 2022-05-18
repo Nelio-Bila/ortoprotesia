@@ -62,4 +62,27 @@ class AuthController extends Controller
             ], 400);
         }
     }
+
+
+    public function update(RegisterRequest $request, $id)
+    {
+
+        $user = User::find($id);
+
+        try {
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->birthdate = $request->birthdate;
+            $user->email = $request->email;
+
+            $user->save();
+
+
+            return $user;
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], 400);
+        }
+    }
 }
