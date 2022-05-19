@@ -17,6 +17,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string("maritalState");
+            $table->string("genre");
+            $table->string("race");
+            $table->string("profession")->default("None");
+            $table->string("workPlace")->default("None");
+            $table->string("naturality");
+            $table->string("phoneNumber");
+            $table->string("fatherName");
+            $table->string("motherName");
             $table->timestamps();
         });
     }

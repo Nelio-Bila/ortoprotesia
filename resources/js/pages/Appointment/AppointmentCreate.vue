@@ -5,7 +5,7 @@
       <div class="row my-2">
         <div class="col-md-7 mx-auto">
           <form @submit.prevent="handleSubmit">
-            <h3 class="text-center">Criação de conta</h3>
+            <h3 class="text-center">Marcação de consulta</h3>
             <div v-if="errors_exist">
               <div
                 v-for="(field, k) in validationErrors"
@@ -38,29 +38,6 @@
                 ></button>
               </div>
             </div>
-
-            <div class="row mb-3">
-              <div class="col text-center">
-                <button class="btn btn-outline-primary">
-                  <img
-                    src="images/icons/Google.svg"
-                    class="mx-2"
-                    alt="Google"
-                  />
-                  Atravês do Google
-                </button>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col">
-                <hr />
-              </div>
-              OU
-              <div class="col">
-                <hr />
-              </div>
-            </div>
-
             <div class="row mb-3">
               <div class="col">
                 <label for="name">Nome</label>
@@ -195,7 +172,7 @@
               <span v-if="processing">Processando...</span>
 
               <i v-if="!processing" class="fa-solid fa-user-plus mx-2"></i>
-              <span v-if="!processing">Criar</span>
+              Criar
             </button>
           </form>
         </div>
@@ -220,7 +197,7 @@ import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 
 export default {
-  name: "Register",
+  name: "AppointmentCreate",
   data() {
     return {
       v$: useValidate(),

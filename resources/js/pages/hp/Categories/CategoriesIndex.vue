@@ -29,7 +29,13 @@
             <template v-for="category in categories" :key="category.id">
               <tr>
                 <td>{{ category.name }}</td>
-                <td>{{ category.image }}</td>
+                <td class="text-center">
+                  <img
+                    :src="'images/icons/' + category.image"
+                    alt="categoria"
+                    style="height: 30px; width: 30px"
+                  />
+                </td>
                 <td>
                   {{ new Date(category.created_at).toLocaleDateString() }}
                 </td>
@@ -87,6 +93,9 @@ export default {
             [5, 10, 25, 50, "All"],
           ],
           pageLength: 5,
+          language: {
+            url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/pt-PT.json",
+          },
         });
       }, 250);
     });

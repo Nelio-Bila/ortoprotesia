@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('consults', function (Blueprint $table) {
             $table->id();
             $table->string("type");
+            $table->date("data");
             $table->unsignedBigInteger('processe_id');
             $table->foreign('processe_id')->references('id')->on('processes');
             $table->timestamps();

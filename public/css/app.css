@@ -11350,6 +11350,14 @@ body {
   /* 96px */
 }
 
+.h-12 {
+  height: 3rem;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
 .w-full {
   width: 100%;
 }
@@ -11420,4 +11428,8 @@ body {
 .horizontal-centered {
   display: flex;
   justify-content: center;
+}
+
+.primary-color {
+  color: #273a7e;
 }

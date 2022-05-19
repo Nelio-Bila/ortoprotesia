@@ -11,6 +11,8 @@ class Process extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', "identification_id", "maritalState", "genre", "race", "profession", "workPlace", "naturality", "phoneNumber", "fatherName", "motherName", 'address_id'];
+
     public function identification()
     {
         return $this->hasMany(Identification::class);

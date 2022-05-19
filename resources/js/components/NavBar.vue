@@ -51,7 +51,9 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" href="#">Marcar</a>
+                <router-link to="/appointment" class="dropdown-item" href="#"
+                  >Marcar</router-link
+                >
               </li>
               <li>
                 <a class="dropdown-item" href="#">Informações</a>
@@ -84,7 +86,7 @@
           </router-link>
         </form>
         <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
-        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="user">
+        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="user !== null">
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -103,8 +105,15 @@
                   p-2
                 "
               >
-                <i class="fa-solid fa-user fa-2x m-2"></i>
-                <img src="`${images/profiles/}`+`${user.avatar}`" alt="" />
+                <i
+                  v-if="user.avatar === 'avatar.png'"
+                  class="fa-solid fa-user fa-2x m-2"
+                ></i>
+                <img
+                  v-else
+                  src="`${images/profiles/}`+`${user.avatar}`"
+                  alt=""
+                />
               </div>
               <!-- {{ user.name }} {{ user.surname }} -->
             </a>

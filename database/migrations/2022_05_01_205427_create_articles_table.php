@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('metaDescription', 300);
             $table->unsignedBigInteger('health_professional_id');
             $table->foreign('health_professional_id')->references('id')->on('health_professionals');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedInteger('views')->default(0);
             $table->timestamps();
         });

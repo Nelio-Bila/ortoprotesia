@@ -72,6 +72,13 @@ body {
   .w-24{
     width: 6rem; /* 96px */
   }
+  .h-12{
+    height: 3rem;
+  }
+
+  .w-12{
+    width: 3rem; 
+  }
   .w-full{width: 100%;}
 
   .relative	{position: relative;}
@@ -111,4 +118,8 @@ body {
     display: flex;
     justify-content: center;
 
+}
+
+.primary-color{
+    color: #273a7e;
 }

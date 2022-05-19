@@ -80,7 +80,7 @@ export default {
         this.user = response.data;
       })
       .catch((ex) => {
-        this.$router.push("/");
+        // this.$router.push("/");
       });
   },
 };

@@ -25,6 +25,8 @@ import CategoriesIndex from "../pages/hp/Categories/CategoriesIndex.vue";
 import CategoriesEdit from "../pages/hp/Categories/CategoriesEdit.vue";
 import CategoriesCreate from "../pages/hp/Categories/CategoriesCreate.vue";
 
+import AppointmentCreate from "../pages/Appointment/AppointmentCreate.vue";
+
 const routes = [
     {
         path: "/",
@@ -107,6 +109,11 @@ const routes = [
         name: "categories.edit",
         component: CategoriesEdit,
         props: true,
+    },
+    {
+        path: "/appointment",
+        name: "appointment.create",
+        component: AppointmentCreate,
     },
 ];
 

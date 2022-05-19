@@ -67,6 +67,23 @@
               ></button>
             </div>
           </div>
+          <div class="row mb-3">
+            <div class="col text-center">
+              <button class="btn btn-outline-primary">
+                <img src="images/icons/Google.svg" class="mx-2" alt="Google" />
+                Atravês do Google
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <hr />
+            </div>
+            OU
+            <div class="col">
+              <hr />
+            </div>
+          </div>
           <div class="form-group mb-3">
             <label for="email">Email</label>
             <input

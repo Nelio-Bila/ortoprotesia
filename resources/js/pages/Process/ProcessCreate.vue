@@ -5,7 +5,7 @@
       <div class="row my-2">
         <div class="col-md-7 mx-auto">
           <form @submit.prevent="handleSubmit">
-            <h3 class="text-center">Criação de conta</h3>
+            <h3 class="text-center">Abertura de processo</h3>
             <div v-if="errors_exist">
               <div
                 v-for="(field, k) in validationErrors"
@@ -40,37 +40,15 @@
             </div>
 
             <div class="row mb-3">
-              <div class="col text-center">
-                <button class="btn btn-outline-primary">
-                  <img
-                    src="images/icons/Google.svg"
-                    class="mx-2"
-                    alt="Google"
-                  />
-                  Atravês do Google
-                </button>
-              </div>
-            </div>
-            <div class="row mb-3">
               <div class="col">
-                <hr />
-              </div>
-              OU
-              <div class="col">
-                <hr />
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <div class="col">
-                <label for="name">Nome</label>
+                <label for="name">Bilhete de identidade</label>
                 <input
-                  @blur="v$.name.$touch"
+                  @blur="v$.id.$touch"
                   type="text"
                   class="form-control"
                   :class="{
-                    'is-invalid': v$.name.$error,
-                    'is-valid': !v$.name.$invalid,
+                    'is-invalid': v$.id.$error,
+                    'is-valid': !v$.id.$invalid,
                   }"
                   placeholder="Nome"
                   v-model="v$.name.$model"

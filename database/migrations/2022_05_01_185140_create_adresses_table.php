@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('adresses', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->default('category_default');
-            $table->string('image')->default('category_default');
+            $table->string("province");
+            $table->string("district");
+            $table->string("neighbourhood");
+            $table->unsignedBigInteger('processe_id');
+            $table->foreign('processe_id')->references('id')->on('processes');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('adresses');
     }
 };

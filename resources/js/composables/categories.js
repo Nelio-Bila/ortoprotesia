@@ -47,6 +47,8 @@ export default function useCategories() {
 
         errors.value = "";
         try {
+            let config = { headers: { "Content-Type": "multipart/form-data" } };
+
             await axios.post("/categories/register", data);
             await router.push("/categories");
             processing.value = false;

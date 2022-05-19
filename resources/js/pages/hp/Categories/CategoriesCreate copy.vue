@@ -27,6 +27,13 @@
         <router-link to="/categories" class="btn btn-primary mb-4"
           >Lista de categorias</router-link
         >
+        <!-- <div v-if="errors">
+          <div v-for="(v, k) in errors" :key="k">
+            <p v-for="error in v" :key="error">
+              {{ error }}
+            </p>
+          </div>
+        </div> -->
         <div v-if="errors">
           <div
             v-for="(field, k) in errors"
@@ -63,61 +70,10 @@
         <form @submit.prevent="saveCategory">
           <div class="form-group mb-3 text-center">
             <label for="name">Icone da categoria</label>
-            <!-- <image-input
+            <image-input
               @input="getImage"
               defaultSrc="/images/icons/category_default.png"
-            ></image-input> -->
-            <div>
-              <input
-                type="file"
-                accept="image/*"
-                class="hidden"
-                ref="input"
-                @change="change"
-              />
-              <div class="relative inline-block rounded-3">
-                <img
-                  :src="src"
-                  alt=""
-                  class="h-52 w-52 object-cover rounded-3"
-                />
-                <div
-                  class="
-                    absolute
-                    top-0
-                    h-full
-                    w-full
-                    bg-black bg-opacity-25
-                    flex
-                    items-center
-                    justify-center
-                    rounded-3
-                  "
-                >
-                  <i
-                    @click.prevent="browse()"
-                    class="
-                      fa-solid fa-camera fa-2xl
-                      primary-color
-                      cursor-pointer
-                      hover:white
-                      mx-2
-                    "
-                  ></i>
-                  <i
-                    v-if="form.file"
-                    @click.prevent="remove()"
-                    class="
-                      fa-solid fa-xmark fa-2xl
-                      primary-color
-                      cursor-pointer
-                      hover:white
-                      mx-2
-                    "
-                  ></i>
-                </div>
-              </div>
-            </div>
+            ></image-input>
           </div>
           <div class="form-group mb-3">
             <label for="name">Nome da categoria</label>
@@ -159,7 +115,7 @@
 </template>
 
 <script>
-import { reactive, computed, ref, onMounted, nextTick } from "vue";
+import { reactive, computed } from "vue";
 import useVuelidate from "@vuelidate/core";
 import {
   required,
@@ -167,6 +123,7 @@ import {
   helpers,
   minLengthValue,
 } from "@vuelidate/validators";
+import { UploadMedia } from "vue-media-upload";
 
 import useCategories from "../../../composables/categories";
 import HPNavBar from "../../../components/HPNavBar.vue";
@@ -177,32 +134,14 @@ export default {
   setup() {
     const form = reactive({
       name: "",
-      file: null,
+      image: null,
     });
 
-    const src = ref("/images/icons/category_default.png");
-    const input = ref(null);
-
-    function browse() {
-      input.value.click();
-    }
-
-    function remove() {
-      form.file = null;
-      src.value = "/images/icons/category_default.png";
-    }
-    function change(e) {
-      form.file = e.target.files[0];
-
-      let reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = (e) => {
-        src.value = e.target.result;
-      };
-      nextTick();
-    }
-
     const { processing, errors, storeCategory } = useCategories();
+
+    function getImage(value) {
+      form.image = value;
+    }
 
     const rules = computed(() => ({
       name: {
@@ -216,7 +155,7 @@ export default {
           minLength(2)
         ),
       },
-      file: {},
+      image: {},
     }));
 
     const v$ = useVuelidate(rules, form);
@@ -231,21 +170,18 @@ export default {
     };
 
     return {
+      form,
       processing,
       errors,
       saveCategory,
+      getImage,
       v$,
-      src,
-      form,
-      input,
-      browse,
-      remove,
-      change,
     };
   },
   components: {
     HPNavBar,
     HPSideBar,
+    UploadMedia,
     ImageInput,
   },
 };

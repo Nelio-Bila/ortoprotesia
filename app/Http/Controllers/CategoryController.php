@@ -15,11 +15,15 @@ class CategoryController extends Controller
     }
     public function store(CategoryRegisterRequest $request)
     {
-        $imageName = time() . '.' . $request->file('image')->getClientOriginalName();
 
-        $request->file('image')->storeAs('images/categories', $imageName);
-        // $request->image->move(public_path('images/categories'), $imageName);
         try {
+            $imageName = "category_default.png";
+            if ($request->hasFile("image")) {
+                $imageName = time() . '.' . $request->image->getClientOriginalName();
+
+                // $request->file('image')->storeAs('images/categories', $imageName);
+                $request->image->move(public_path('images/categories'), $imageName);
+            }
             $category = Category::create([
                 'name' => $request->name,
                 'image' => $imageName,
