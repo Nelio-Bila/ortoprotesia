@@ -10,31 +10,55 @@
 
       <div class="container-fluid my-3">
         <router-link to="/categories/create" class="btn btn-primary mb-2"
-          >Novo profissional de Saúde</router-link
+          >Registar profissional de Saúde</router-link
         >
 
         <table
           class="table table-striped table-responsive"
-          id="categories_datatable"
+          id="hpros_datatable"
         >
           <thead class="table-light">
             <tr>
               <th>Nome</th>
-              <th>Imagem</th>
-              <th>Criada aos</th>
+              <th>Data de nascimento</th>
+              <th>Foto</th>
+              <th>Carreira</th>
+              <th>Categoria</th>
+              <th>Instituição</th>
+              <th>Departamento</th>
+              <th>Data de inicio de funções</th>
+              <th>Verificado aos</th>
               <th>Acções</th>
             </tr>
           </thead>
           <tbody>
-            <template v-for="category in categories" :key="category.id">
+            <template v-for="hpro in hpros" :key="hpro.id">
               <tr>
-                <td>{{ category.name }}</td>
+                <td>{{ hpro.name }} {{ hpro.surname }}</td>
+                <td>
+                  {{ new Date(category.birthdate).toLocaleDateString() }}
+                </td>
                 <td class="text-center">
                   <img
-                    :src="'images/icons/' + category.image"
-                    alt="categoria"
+                    :src="'images/icons/' + hpro.avatar"
+                    :alt="`${hpro.name} ${hpro.surname}`"
                     style="height: 30px; width: 30px"
                   />
+                </td>
+                <td>
+                  {{ category.carrier }}
+                </td>
+                <td>
+                  {{ category.category }}
+                </td>
+                <td>
+                  {{ category.institution }}
+                </td>
+                <td>
+                  {{ category.department }}
+                </td>
+                <td>
+                  {{ category.startingWorkDate }}
                 </td>
                 <td>
                   {{ new Date(category.created_at).toLocaleDateString() }}
@@ -43,14 +67,14 @@
                   <router-link
                     class="btn btn-sm btn-warning mx-2"
                     :to="{
-                      name: 'categories.edit',
-                      params: { id: category.id },
+                      name: 'hpros.edit',
+                      params: { id: hpro.id },
                     }"
                     >Editar</router-link
                   >
                   <button
                     class="btn btn-sm btn-danger"
-                    @click="deleteCategory(category.id)"
+                    @click="deleteHPro(hpro.id)"
                   >
                     Eliminar
                   </button>
@@ -68,12 +92,11 @@
 import { onMounted } from "vue";
 import Swal from "sweetalert2";
 import "jquery/dist/jquery.min.js";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
 
-import useCategories from "../../../composables/categories";
+import useHPros from "../../../composables/hpros";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
@@ -83,11 +106,11 @@ export default {
     HPSideBar,
   },
   setup() {
-    const { categories, getCategories, destroyCategory } = useCategories();
+    const { hpros, getHPros, destroyHpro } = useHPros();
     onMounted(() => {
-      getCategories();
+      getHPros();
       setTimeout(() => {
-        $("#categories_datatable").DataTable({
+        $("#hpros_datatable").DataTable({
           lengthMenu: [
             [5, 10, 25, 50, -1],
             [5, 10, 25, 50, "All"],
@@ -100,9 +123,9 @@ export default {
       }, 250);
     });
 
-    const deleteCategory = async (id) => {
+    const deleteHpro = async (id) => {
       new Swal({
-        title: "Eliminar esta categoria?",
+        title: "Eliminar este profissional de Saúde?",
         text: "Tens certeza? Não poderás reverter esta acção!",
         type: "warning",
         showCancelButton: true,
@@ -111,14 +134,14 @@ export default {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.value) {
-          destroyCategory(id);
-          getCategories();
+          destroyHpro(id);
+          getHPros();
         }
       });
     };
     return {
-      categories,
-      deleteCategory,
+      hpros,
+      deleteHpro,
     };
   },
 };

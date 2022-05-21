@@ -17,7 +17,7 @@
 
     <div class="me-auto"></div>
 
-    <form class="d-flex justify-content-center my-2" v-if="!user">
+    <form class="d-flex justify-content-center m-2" v-if="!user">
       <router-link class="btn btn-outline-primary" to="/login">
         Entrar | Criar Conta
       </router-link>

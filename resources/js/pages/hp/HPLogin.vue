@@ -140,6 +140,7 @@
 import axios from "axios";
 import useValidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
+import { useUserStore } from "../../stores/UserStore";
 
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
@@ -178,11 +179,13 @@ export default {
           )
           .then((response) => {
             localStorage.setItem("op_token", response.data.token);
-            this.$store.commit("user", response.data.user);
+            const userStore = useUserStore();
+            userStore.setUser(response.data.user);
             this.processing = false;
             this.$router.push("/hp");
           })
           .catch((ex) => {
+            console.log(ex);
             this.processing = false;
             switch (ex.response.status) {
               case 422:

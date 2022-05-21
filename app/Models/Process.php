@@ -22,6 +22,10 @@ class Process extends Model
     {
         return $this->hasOne(Adress::class);
     }
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 
     public function consults()
     {

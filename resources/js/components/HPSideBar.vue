@@ -41,7 +41,7 @@
       <router-link
         class="nav-link text-white"
         :class="currentLink === 'health_pros' ? 'active-link' : 'text-white'"
-        to="/admin/health_pros"
+        to="/admin/hpros"
       >
         <h5><i class="fa-solid fa-users me-2"></i> Prof. de Saúde</h5>
       </router-link>

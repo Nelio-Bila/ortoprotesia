@@ -70,6 +70,7 @@ Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 
 // Process
 Route::post('process/register', [ProcessController::class, 'store']);
+Route::get('processes', [ProcessController::class, 'index']);
 
 
 // Files

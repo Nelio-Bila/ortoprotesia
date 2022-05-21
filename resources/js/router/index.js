@@ -15,13 +15,13 @@ import HPRegister from "../pages/hp/HPRegister.vue";
 import HPForgot from "../pages/hp/HPRegister.vue";
 import HPProfile from "../pages/hp/HPProfile.vue";
 
-import Users from "../pages/Admin/Users/Users.vue";
-
 import Articles from "../pages/hp/Articles/Articles.vue";
 
 import UsersIndex from "../pages/Admin/Users/UsersIndex.vue";
 import UsersEdit from "../pages/Admin/Users/UsersEdit.vue";
 import UsersCreate from "../pages/Admin/Users/UsersEdit.vue";
+
+import HealthProsIndex from "../pages/Admin/Health_pros/HealthProsIndex.vue";
 
 import CategoriesIndex from "../pages/hp/Categories/CategoriesIndex.vue";
 import CategoriesEdit from "../pages/hp/Categories/CategoriesEdit.vue";
@@ -91,11 +91,6 @@ const routes = [
         component: Articles,
     },
     {
-        path: "/admin/users",
-        name: "users",
-        component: Users,
-    },
-    {
         path: "/categories",
         name: "categories.index",
         component: CategoriesIndex,
@@ -147,6 +142,11 @@ const routes = [
         name: "users.edit",
         component: UsersEdit,
         props: true,
+    },
+    {
+        path: "/admin/hpros",
+        name: "hpros.index",
+        component: HealthProsIndex,
     },
 ];
 

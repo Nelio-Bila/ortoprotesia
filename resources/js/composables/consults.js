@@ -2,51 +2,51 @@ import { ref, watch } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-export default function useAppointments() {
-    const appointments = ref([]);
-    const appointment = ref([]);
+export default function useConsults() {
+    const consults = ref([]);
+    const consult = ref([]);
     const router = useRouter();
     const errors = ref("");
     const processing = ref(false);
 
-    const getAppointments = async () => {
+    const getConsults = async () => {
         processing.value = true;
         await axios
-            .get("/appointments")
+            .get("/consults")
             .then((response) => {
-                appointments.value = response.data;
+                consults.value = response.data;
                 processing.value = false;
             })
             .catch((ex) => {
                 console.log(ex.response.data.errors);
-                appointments.value = [];
+                consults.value = [];
                 processing.value = false;
             });
     };
 
-    const getAppointment = async (id) => {
+    const getConsult = async (id) => {
         processing.value = true;
 
         await axios
-            .get("/appointment/" + id)
+            .get("/consult/" + id)
             .then((response) => {
-                appointment.value = response.data[0];
+                consult.value = response.data[0];
                 processing.value = false;
             })
             .catch((ex) => {
                 console.log(ex.response.data.errors);
-                appointment.value = [];
+                consult.value = [];
                 processing.value = false;
             });
     };
 
-    const storeAppointment = async (data) => {
+    const storeConsult = async (data) => {
         processing.value = true;
 
         errors.value = "";
         try {
-            await axios.post("/appointments/register", data);
-            await router.push("/appointments");
+            await axios.post("/consults/register", data);
+            await router.push("/consults");
             processing.value = false;
         } catch (e) {
             if (e.response.status === 422) {
@@ -56,13 +56,13 @@ export default function useAppointments() {
         }
     };
 
-    const updateAppointment = async (id) => {
+    const updateConsult = async (id) => {
         processing.value = true;
 
         errors.value = "";
         try {
-            await axios.put("/appointments/" + id, appointment.value);
-            await router.push("/appointments");
+            await axios.put("/consults/" + id, consult.value);
+            await router.push("/consults");
             processing.value = false;
         } catch (e) {
             if (e.response.status === 422) {
@@ -72,22 +72,22 @@ export default function useAppointments() {
         }
     };
 
-    const destroyAppointment = async (id) => {
+    const destroyConsult = async (id) => {
         processing.value = true;
 
-        await axios.delete("/appointments/" + id);
+        await axios.delete("/consults/" + id);
         processing.value = false;
     };
 
     return {
-        appointments,
-        appointment,
+        consults,
+        consult,
         errors,
         processing,
-        getAppointments,
-        getAppointment,
-        storeAppointment,
-        updateAppointment,
-        destroyAppointment,
+        getConsults,
+        getConsult,
+        storeConsult,
+        updateConsult,
+        destroyConsult,
     };
 }

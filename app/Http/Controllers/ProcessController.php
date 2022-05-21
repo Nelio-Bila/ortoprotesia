@@ -17,7 +17,7 @@ class ProcessController extends Controller
      */
     public function index()
     {
-        //
+        return Process::with(['identification', 'address', 'user', 'consults'])->get();
     }
 
     /**

@@ -1,4 +1,4 @@
-import { nextTick, ref } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/UserStore";
@@ -42,7 +42,6 @@ export default function useAuth() {
     const logout = () => {
         localStorage.removeItem("op_token");
         userStore.removeUser();
-        nextTick();
         router.push("/");
     };
 
