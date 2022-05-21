@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('identifications', function (Blueprint $table) {
+        Schema::create('adresses', function (Blueprint $table) {
             $table->id();
-            $table->string("number");
-            $table->string("archive");
-            $table->date("issueDate");
-            $table->unsignedBigInteger('processe_id');
-            $table->foreign('processe_id')->references('id')->on('processes');
+            $table->string("province");
+            $table->string("district");
+            $table->string("neighbourhood");
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('identifications');
+        Schema::dropIfExists('adresses');
     }
 };

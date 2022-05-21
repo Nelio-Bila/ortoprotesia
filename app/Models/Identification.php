@@ -10,7 +10,7 @@ class Identification extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["number", "archive", "issueDate", 'processe_id'];
+    protected $fillable = ["number", "archive", "issueDate"];
 
     public function processe()
     {

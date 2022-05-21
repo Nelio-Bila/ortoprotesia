@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string("type");
             $table->date("data");
-            $table->unsignedBigInteger('processe_id');
-            $table->foreign('processe_id')->references('id')->on('processes');
+            $table->unsignedBigInteger('process_id');
+            $table->foreign('process_id')->references('id')->on('processes');
             $table->timestamps();
             $table->softDeletes();
         });

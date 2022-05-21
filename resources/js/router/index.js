@@ -27,6 +27,9 @@ import CategoriesCreate from "../pages/hp/Categories/CategoriesCreate.vue";
 
 import AppointmentCreate from "../pages/Appointment/AppointmentCreate.vue";
 
+import ProcessCreate from "../pages/Process/ProcessCreate.vue";
+import ProcessDetails from "../pages/Process/ProcessDetails.vue";
+
 const routes = [
     {
         path: "/",
@@ -114,6 +117,16 @@ const routes = [
         path: "/appointment",
         name: "appointment.create",
         component: AppointmentCreate,
+    },
+    {
+        path: "/process/create",
+        name: "process.create",
+        component: ProcessCreate,
+    },
+    {
+        path: "/process",
+        name: "process.show",
+        component: ProcessDetails,
     },
 ];
 

@@ -11,15 +11,20 @@ class Process extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', "identification_id", "maritalState", "genre", "race", "profession", "workPlace", "naturality", "phoneNumber", "fatherName", "motherName", 'address_id'];
+    protected $fillable = ['user_id', "address_id", "identification_id", "maritalState", "genre", "race", "profession", "workPlace", "naturality", "phoneNumber", "fatherName", "motherName"];
 
     public function identification()
     {
-        return $this->hasMany(Identification::class);
+        return $this->hasOne(Identification::class);
     }
 
     public function address()
     {
         return $this->hasOne(Adress::class);
+    }
+
+    public function consults()
+    {
+        return $this->hasMany(Consult::class);
     }
 }

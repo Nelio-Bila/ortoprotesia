@@ -19,7 +19,6 @@
               >Dados do processo</router-link
             >
           </li>
-
           <li>
             <a href="#" class="nav-link text-white">Consultas</a>
           </li>
@@ -46,7 +45,7 @@
         <div class="row m-2">
           <div class="col mx-auto">
             <form @submit.prevent="handleSubmit">
-              <h3 class="text-center">Abertura de processo</h3>
+              <h3 class="text-center">Dados do processo</h3>
               <div v-if="errors_exist">
                 <div
                   v-for="(field, k) in validationErrors"
@@ -445,7 +444,7 @@ import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 
 export default {
-  name: "ProcesseCreate",
+  name: "ProcesseDetails",
   data() {
     return {
       v$: useValidate(),

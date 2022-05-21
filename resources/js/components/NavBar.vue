@@ -62,6 +62,11 @@
               <li>
                 <a class="dropdown-item" href="#">Estado da minha consulta</a>
               </li>
+              <li>
+                <router-link to="/process" class="dropdown-item"
+                  >Processo clínico</router-link
+                >
+              </li>
             </ul>
           </li>
         </ul>

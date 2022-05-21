@@ -12,7 +12,7 @@
   >
     <i
       @click="toggleMenu"
-      class="mx-3 fa-solid fa-bars fa-2xl text-primary cursor-pointer"
+      class="mx-3 fas fa-align-left fa-2xl text-primary cursor-pointer"
     ></i>
 
     <div class="me-auto"></div>

@@ -1,23 +1,32 @@
 <template>
-  <div class="row justify-content-center">
-    <div class="col-md-12 col-sm-12">
-      <div
-        class="card shadow-lg border-0 rounded-lg mt-5 mx-auto"
-        style="width: 30rem"
-      >
-        <h3 class="card-header display-1 text-muted text-center">404</h3>
+  <div class="px-4 py-2 my-2 text-center">
+    <img
+      class="d-block mx-auto mb-4"
+      src="/images/logo.png"
+      alt=""
+      width="100"
+      height="120"
+    />
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-sm-12">
+        <div
+          class="card shadow-lg border-0 rounded-lg mt-5 mx-auto"
+          style="width: 30rem"
+        >
+          <h3 class="card-header display-1 text-muted text-center">404</h3>
 
-        <span class="card-subtitle mb-2 text-muted text-center">
-          Infelizmente a página não foi encontrada
-        </span>
+          <span class="card-subtitle mb-2 text-muted text-center">
+            Infelizmente a página não foi encontrada
+          </span>
 
-        <div class="card-body mx-auto">
-          <router-link
-            type="button"
-            class="btn btn-sm btn-info text-white"
-            to="/"
-            >Ir a pagina inicial</router-link
-          >
+          <div class="card-body mx-auto">
+            <router-link
+              type="button"
+              class="btn btn-sm btn-primary text-white"
+              to="/"
+              >Ir a pagina inicial</router-link
+            >
+          </div>
         </div>
       </div>
     </div>

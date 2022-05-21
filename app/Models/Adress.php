@@ -10,7 +10,7 @@ class Adress extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["province", "district", "neighbourhood", 'processe_id'];
+    protected $fillable = ["province", "district", "neighbourhood"];
 
     public function process()
     {

@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ForgotController;
+use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HealthProfessionalController;
 
@@ -59,13 +60,17 @@ Route::post('admin/forgot', [AdminController::class, 'forgot']);
 Route::post('admin/reset', [AdminController::class, 'reset']);
 Route::get('admin', [AdminController::class, 'show'])->middleware('auth::admin-api');
 
+// Category
 Route::get('categories', [CategoryController::class, 'index']);
 Route::post('categories/register', [CategoryController::class, 'store']);
 Route::get('category/{category}', [CategoryController::class, 'show']);
 Route::put('categories/{category}', [CategoryController::class, 'update']);
 Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 
+// Process
+Route::post('process/register', [ProcessController::class, 'store']);
 
 
+// Files
 Route::post('/upload', [ImageController::class, 'store'])->name('upload');
 Route::get('/media/{post}', [ImageController::class, 'getImages'])->name('post.images');
