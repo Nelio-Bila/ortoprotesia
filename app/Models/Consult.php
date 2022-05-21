@@ -10,7 +10,7 @@ class Consult extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['type', 'data', 'process_id'];
+    protected $fillable = ['type', 'date', 'process_id', 'accomplished'];
 
     public function process()
     {

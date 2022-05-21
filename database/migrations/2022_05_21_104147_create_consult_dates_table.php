@@ -13,15 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('consults', function (Blueprint $table) {
+        Schema::create('consult_dates', function (Blueprint $table) {
             $table->id();
-            $table->string("type");
-            $table->date("date");
-            $table->boolean("accomplished")->default(false);
-            $table->unsignedBigInteger('process_id');
-            $table->foreign('process_id')->references('id')->on('processes');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -32,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consults');
+        Schema::dropIfExists('consult_dates');
     }
 };

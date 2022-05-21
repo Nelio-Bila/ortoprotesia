@@ -21,11 +21,16 @@ import Health_pros from "../pages/Admin/Health_pros/health_pros.vue";
 
 import Articles from "../pages/hp/Articles/Articles.vue";
 
+import UsersIndex from "../pages/Admin/Users/UsersIndex.vue";
+import UsersEdit from "../pages/Admin/Users/UsersEdit.vue";
+import UsersCreate from "../pages/Admin/Users/UsersEdit.vue";
+
 import CategoriesIndex from "../pages/hp/Categories/CategoriesIndex.vue";
 import CategoriesEdit from "../pages/hp/Categories/CategoriesEdit.vue";
 import CategoriesCreate from "../pages/hp/Categories/CategoriesCreate.vue";
 
-import AppointmentCreate from "../pages/Appointment/AppointmentCreate.vue";
+import ConsultCreate from "../pages/Consult/ConsultCreate.vue";
+import ConsultIndex from "../pages/Consult/ConsultIndex.vue";
 
 import ProcessCreate from "../pages/Process/ProcessCreate.vue";
 import ProcessDetails from "../pages/Process/ProcessDetails.vue";
@@ -114,9 +119,14 @@ const routes = [
         props: true,
     },
     {
-        path: "/appointment",
-        name: "appointment.create",
-        component: AppointmentCreate,
+        path: "/consult/create",
+        name: "consult.create",
+        component: ConsultCreate,
+    },
+    {
+        path: "/consults",
+        name: "consult.index",
+        component: ConsultIndex,
     },
     {
         path: "/process/create",
@@ -127,6 +137,23 @@ const routes = [
         path: "/process",
         name: "process.show",
         component: ProcessDetails,
+    },
+
+    {
+        path: "/users",
+        name: "users.index",
+        component: UsersIndex,
+    },
+    {
+        path: "/users/create",
+        name: "users.create",
+        component: UsersCreate,
+    },
+    {
+        path: "/users/:id/edit",
+        name: "users.edit",
+        component: UsersEdit,
+        props: true,
     },
 ];
 

@@ -75,8 +75,5 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Users",
-};
+<script setup>
 </script>

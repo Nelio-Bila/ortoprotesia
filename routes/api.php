@@ -32,6 +32,7 @@ Route::post('forgot', [ForgotController::class, 'forgot']);
 Route::post('reset', [ForgotController::class, 'reset']);
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:user');
 Route::put('update', [AuthController::class, 'update'])->middleware('auth:user');
+Route::get('users', [AuthController::class, 'index']);
 
 //
 

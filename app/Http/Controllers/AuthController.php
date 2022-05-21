@@ -85,4 +85,9 @@ class AuthController extends Controller
             ], 400);
         }
     }
+
+    public function index()
+    {
+        return User::all();
+    }
 }

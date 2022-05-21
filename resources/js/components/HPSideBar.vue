@@ -127,7 +127,7 @@
       <router-link
         class="nav-link text-white"
         :class="currentLink === 'users' ? 'active-link' : 'text-white'"
-        to="/admin/users"
+        to="/users"
       >
         <h5><i class="fa-solid fa-users me-2"></i> Usuários</h5>
       </router-link>
