@@ -3,8 +3,16 @@
     <NavBar />
     <div class="row my-2">
       <div class="col-md-5 mx-auto">
-        <form @submit.prevent="handleSubmit" class="mt-5">
+        <form @submit.prevent="handleLogin" class="mt-5">
           <h3 class="text-center">Inicio de sessão</h3>
+          <div class="row mb-3">
+            <div class="col text-center">
+              <button class="btn btn-outline-primary">
+                <img src="images/icons/Google.svg" class="mx-2" alt="Google" />
+                Atravês do Google
+              </button>
+            </div>
+          </div>
           <div v-if="errors_exist">
             <div
               v-for="(field, k) in errors"
@@ -67,14 +75,7 @@
               ></button>
             </div>
           </div>
-          <div class="row mb-3">
-            <div class="col text-center">
-              <button class="btn btn-outline-primary">
-                <img src="images/icons/Google.svg" class="mx-2" alt="Google" />
-                Atravês do Google
-              </button>
-            </div>
-          </div>
+
           <div class="row mb-3">
             <div class="col">
               <hr />
@@ -95,7 +96,7 @@
                 'is-valid': !v$.email.$invalid,
               }"
               placeholder="Email"
-              v-model="v$.email.$model"
+              v-model="form.email"
             />
             <span class="invalid-feedback" v-if="v$.email.$error">
               {{ v$.email.$errors[0].$message }}
@@ -109,7 +110,7 @@
               class="form-control"
               :class="v$.password.$error ? 'is-invalid' : ''"
               placeholder="Palavra passe"
-              v-model="v$.password.$model"
+              v-model="form.password"
             />
             <span class="invalid-feedback" v-if="v$.password.$error">
               {{ v$.password.$errors[0].$message }}
@@ -119,7 +120,7 @@
             <input
               class="form-check-input"
               type="checkbox"
-              v-model="remember_me"
+              v-model="form.remember_me"
             />
             <label class="form-check-label" for="flexCheckDefault">
               Manter me logado
@@ -152,102 +153,54 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-import useValidate from "@vuelidate/core";
+<script setup>
+import { reactive, computed } from "vue";
+import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
-import { useUserStore } from "../../stores/UserStore";
-import { mapStores } from "pinia";
 
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 
-export default {
-  name: "Login",
-  data() {
-    return {
-      v$: useValidate(),
-      email: "",
-      password: "",
-      processing: false,
-      remember_me: false,
-      errors_exist: false,
-      validationErrors: [],
-      isLoginInvalid: false,
-      invalid_credentials: "",
-    };
-  },
-  components: {
-    NavBar,
-  },
-  methods: {
-    async handleSubmit() {
-      this.processing = true;
-      this.v$.$validate();
+import useAuth from "../../composables/auth";
 
-      if (!this.v$.$error) {
-        await axios
-          .post(
-            "login",
-            {
-              email: this.email,
-              password: this.password,
-              remember_me: this.remember_me,
-            },
-            { headers: { Accept: "application/json" } }
-          )
-          .then((response) => {
-            localStorage.setItem("op_token", response.data.token);
-            const userStore = useUserStore();
-            this.userStore.setUser(response.data.user);
+const form = reactive({
+  email: "",
+  password: "",
+  remember_me: false,
+});
 
-            this.processing = false;
-            this.$router.push("/");
-          })
-          .catch((ex) => {
-            this.processing = false;
-            switch (ex.response.status) {
-              case 422:
-                this.validationErrors = ex.response.data.errors;
-                this.errors_exist = true;
-                break;
-              case 401:
-                this.invalid_credentials = ex.response.data.message;
-                this.isLoginInvalid = true;
-                break;
-            }
-          });
-      } else {
-        this.processing = false;
-      }
-    },
+const {
+  login,
+  errors_exist,
+  errors,
+  processing,
+  validationErrors,
+  invalid_credentials,
+  isLoginInvalid,
+} = useAuth();
+
+const rules = computed(() => ({
+  email: {
+    required: helpers.withMessage("Por favor preencha o email", required),
+    email: helpers.withMessage("Por favor preencha um email válido", email),
   },
-  validations() {
-    return {
-      email: {
-        required: helpers.withMessage("Por favor preencha o email", required),
-        email: helpers.withMessage("Por favor preencha um email válido", email),
-      },
-      password: {
-        required: helpers.withMessage(
-          "Por favor preencha a palavra passe",
-          required
-        ),
-      },
-      processing: {},
-      remember_me: {},
-      errors_exist: {},
-      validationErrors: {},
-      isLoginInvalid: {},
-      invalid_credentials: {},
-    };
+  password: {
+    required: helpers.withMessage(
+      "Por favor preencha a palavra passe",
+      required
+    ),
   },
-  components: {
-    NavBar,
-    Footer,
-  },
-  computed: {
-    ...mapStores(useUserStore),
-  },
+  remember_me: {},
+}));
+
+const v$ = useVuelidate(rules, form);
+
+const handleLogin = async () => {
+  v$._value.$validate();
+  if (!v$._value.$invalid) {
+    await login({ ...form });
+  } else {
+    processing.value = false;
+  }
 };
 </script>

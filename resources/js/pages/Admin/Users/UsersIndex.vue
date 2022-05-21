@@ -11,7 +11,7 @@
       <div class="container-fluid my-3">
         <table
           class="table table-striped table-responsive"
-          id="categories_datatable"
+          id="users_datatable"
         >
           <thead class="table-light">
             <tr>

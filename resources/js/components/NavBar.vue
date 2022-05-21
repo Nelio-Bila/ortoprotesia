@@ -51,7 +51,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <router-link to="/appointment" class="dropdown-item" href="#"
+                <router-link to="/consult/create" class="dropdown-item"
                   >Marcar</router-link
                 >
               </li>
@@ -85,13 +85,13 @@
             </button>
           </div>
         </form>
-        <form class="d-flex justify-content-center my-2" v-if="!user">
+        <form class="d-flex justify-content-center my-2" v-if="!userStore.user">
           <router-link class="btn btn-outline-primary" to="/login">
             Entrar | Criar Conta
           </router-link>
         </form>
         <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
-        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="user !== null">
+        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="userStore.user != null">
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -101,7 +101,10 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <div
+              <span class="mx-2">
+                {{ userStore.user.name }}
+              </span>
+              <!-- <div
                 class="
                   rounded-full
                   border border-secondary
@@ -109,22 +112,20 @@
                   inline-block
                   p-2
                 "
-              >
-                <i
-                  v-if="user.avatar === 'avatar.png'"
-                  class="fa-solid fa-user fa-2x m-2"
-                ></i>
-                <img
-                  v-else
-                  src="`${images/profiles/}`+`${user.avatar}`"
-                  alt=""
-                />
-              </div>
-              <!-- {{ user.name }} {{ user.surname }} -->
+              > -->
+              <i
+                v-if="userStore.user.avatar === 'avatar.png'"
+                class="fa-solid fa-user fa-2x m-2"
+              ></i>
+              <img v-else src="`${images/profiles/}`+`${user.avatar}`" alt="" />
+              <!-- </div> -->
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a v-if="user.carrier" class="dropdown-item me-5" to="/hp/"
+                <a
+                  v-if="userStore.user.carrier"
+                  class="dropdown-item me-5"
+                  to="/hp/"
                   >Painel</a
                 >
               </li>
@@ -148,42 +149,27 @@
 </template>
 
 
-<script>
-import { mapStores, mapState, mapActions } from "pinia";
+<script setup>
+import { onMounted } from "vue";
 import { useUserStore } from "../stores/UserStore";
+import useAuth from "../composables/auth";
 
-export default {
-  name: "NavBar",
-  methods: {
-    ...mapActions(useUserStore, ["setUser", "removeUser"]),
+const { logout } = useAuth();
 
-    handleLogout() {
-      localStorage.removeItem("op_token");
-      this.setUser(null);
-      this.$router.push("/");
-    },
-  },
-  computed: {
-    ...mapStores(useUserStore),
-    ...mapState(useUserStore, ["user"]),
-  },
-  data() {
-    return {
-      user: null,
-    };
-  },
-  async created() {
-    await axios
-      .get("user")
-      .then((response) => {
-        this.user = response.data;
-        this.setUser(this.user);
-      })
-      .catch((ex) => {
-        // this.$router.push("/");
-      });
-  },
+const userStore = useUserStore();
+
+const handleLogout = () => {
+  logout();
 };
+
+onMounted(async () => {
+  await axios
+    .get("user")
+    .then((response) => {
+      userStore.setUser(response.data);
+    })
+    .catch((ex) => {});
+});
 </script>
 
 

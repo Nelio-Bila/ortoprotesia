@@ -17,8 +17,6 @@ import HPProfile from "../pages/hp/HPProfile.vue";
 
 import Users from "../pages/Admin/Users/Users.vue";
 
-import Health_pros from "../pages/Admin/Health_pros/health_pros.vue";
-
 import Articles from "../pages/hp/Articles/Articles.vue";
 
 import UsersIndex from "../pages/Admin/Users/UsersIndex.vue";
@@ -96,11 +94,6 @@ const routes = [
         path: "/admin/users",
         name: "users",
         component: Users,
-    },
-    {
-        path: "/admin/health_pros",
-        name: "health_pros",
-        component: Health_pros,
     },
     {
         path: "/categories",
