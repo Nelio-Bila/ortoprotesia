@@ -63,7 +63,41 @@
         <form @submit.prevent="saveArticle">
           <div class="form-group mb-3 text-center">
             <label for="title">Foto do cabecalho</label>
+            <!-- <input
+              @blur="v$.featuredImage.$touch"
+              type="file"
+              class="form-control"
+              :class="{
+                'is-invalid': v$.featuredImage.$error,
+                'is-valid': !v$.featuredImage.$invalid,
+              }"
+              placeholder="Foto de cabeçalho do artigo"
+              v-on:change="changeFeaturedImage"
+            /> -->
+
+            <!-- <div class="cropper"> -->
+            <vue-anka-cropper
+              :options="options"
+              @cropper-mounted="debug($event, 'cropper-mounted')"
+              @cropper-error="debug($event, 'cropper-error')"
+              @cropper-file-selected="debug($event, 'cropper-file-selected')"
+              @cropper-preview="debug($event, 'cropper-preview')"
+              @cropper-saved="debug($event, 'cropper-saved')"
+              @cropper-cancelled="debug($event, 'cropper-cancelled')"
+              @cropper-uploaded="debug($event, 'cropper-uploaded')"
+              @cropper-before-destroy="debug($event, 'cropper-before-destroy')"
+            ></vue-anka-cropper>
+            <!-- </div> -->
+
+            <span
+              class="invalid-feedback"
+              v-for="error of v$.featuredImage.$errors"
+              :key="error.$uid"
+            >
+              {{ error.$message }}
+            </span>
           </div>
+
           <div class="form-group mb-3">
             <label for="title">Titulo do artigo</label>
             <input
@@ -86,6 +120,7 @@
               {{ error.$message }}
             </span>
           </div>
+
           <div class="form-group mb-3">
             <label for="title">Trecho introdutório do artigo</label>
             <input
@@ -108,6 +143,7 @@
               {{ error.$message }}
             </span>
           </div>
+
           <div class="form-group mb-3">
             <label for="title">Corpo do artigo</label>
             <ckeditor
@@ -185,6 +221,9 @@ import {
 } from "@vuelidate/validators";
 import "@ckeditor/ckeditor5-build-classic/build/translations/pt";
 import "../../../components/editor/ckeditor";
+// import { Cropper } from "vue-advanced-cropper";
+// import "vue-advanced-cropper/dist/style.css";
+import VueAnkaCropper from "../../../components/VueAnkaCropper.vue";
 
 import useArticles from "../../../composables/categories";
 import useCategories from "../../../composables/categories";
@@ -199,6 +238,134 @@ const form = reactive({
   category_id: null,
 });
 
+const crop = reactive({
+  closeOnSave: true,
+  cropArea: "box",
+  croppedHeight: 400,
+  croppedWidth: 400,
+  dropareaMessage: "Drop file here or use the button below.",
+  frameLineDash: [5, 3],
+  frameStrokeColor: "rgba(255, 255, 255, 0.8)",
+  handleFillColor: "rgba(255, 255, 255, 0.2)",
+  handleHoverFillColor: "rgba(255, 255, 255, 0.4)",
+  handleHoverStrokeColor: "rgba(255, 255, 255, 1)",
+  handleSize: 10,
+  handleStrokeColor: "rgba(255, 255, 255, 0.8)",
+  layoutBreakpoint: 850,
+  maxCropperHeight: 768,
+  maxFileSize: 4000000, // 8MB
+  overlayFill: "rgba(0, 0, 0, 0.5)",
+  previewOnDrag: true,
+  previewQuality: 0.65,
+  resultQuality: 0.8,
+  resultMimeType: "image/jpeg",
+  selectButtonLabel: "Select File",
+  showPreview: true,
+  skin: "light",
+  uploadData: {},
+  uploadTo: false,
+  // demo, internal
+  cropperH: 500,
+  useCropperH: false,
+  dash: "",
+  upl: "/api/upload-file.php",
+  useAr: true,
+  ar: 1,
+  events: [],
+});
+
+computed(() => {
+  function options() {
+    return {
+      aspectRatio: crop.aspectRatio,
+      closeOnSave: crop.closeOnSave,
+      cropArea: crop.cropArea,
+      croppedHeight: crop.croppedHeight,
+      croppedWidth: crop.croppedWidth,
+      cropperHeight: crop.cropperHeight,
+      dropareaMessage: crop.dropareaMessage,
+      frameLineDash: crop.frameLineDash,
+      frameStrokeColor: crop.frameStrokeColor,
+      handleFillColor: crop.handleFillColor,
+      handleHoverFillColor: crop.handleHoverFillColor,
+      handleHoverStrokeColor: crop.handleHoverStrokeColor,
+      handleSize: crop.handleSize,
+      handleStrokeColor: crop.handleStrokeColor,
+      layoutBreakpoint: crop.layoutBreakpoint,
+      maxCropperHeight: crop.maxCropperHeight,
+      maxFileSize: crop.maxFileSize,
+      overlayFill: crop.overlayFill,
+      previewOnDrag: crop.previewOnDrag,
+      previewQuality: crop.previewQuality,
+      resultQuality: crop.resultQuality,
+      resultMimeType: crop.resultMimeType,
+      selectButtonLabel: crop.selectButtonLabel,
+      showPreview: crop.showPreview,
+      skin: crop.skin,
+      uploadData: crop.uploadData,
+      uploadTo: crop.uploadTo,
+    };
+  }
+  function cropperHeight() {
+    return crop.useCropperH ? crop.cropperH : false;
+  }
+  function aspectRatio() {
+    return crop.useAr ? crop.ar : false;
+  }
+});
+
+const debug = (ev, name) => {
+  crop.events.unshift({ name: name, payload: ev });
+  if (crop.events.lenght > 10) {
+    crop.events.pop();
+  }
+};
+const printEv = (e) => {
+  if (e.payload === undefined) return "No payload";
+  if (e.name === "cropper-preview") {
+    return (
+      'Image data URI<br/><img src="' +
+      e.payload +
+      '" alt="" style="max-width: 100px;"/>'
+    );
+  }
+  if (e.name === "cropper-error") {
+    return e.payload;
+  }
+  if (e.name === "cropper-file-selected") {
+    return "Payload: selected file";
+  }
+  if (e.name === "cropper-saved") {
+    let d = e.payload;
+    let output = "<div><strong>cropCoords</strong><br/>";
+    for (let p in d.cropCoords) {
+      output += p + ": " + d.cropCoords[p] + "<br/>";
+    }
+    output += "</div>";
+    output += "<div><strong>croppedFile</strong><br/>Blob</div>";
+    output +=
+      '<div><strong>croppedImageURI</strong><br/><img src="' +
+      d.croppedImageURI +
+      '" alt="" style="max-width: 100px;"/></div>';
+    output += "<div><strong>filename</strong><br/>" + d.filename + "</div>";
+    output += "<div><strong>flippedH</strong><br/>" + d.flippedH + "</div>";
+    output += "<div><strong>flippedV</strong><br/>" + d.flippedV + "</div>";
+    output += "<div><strong>originalFile</strong><br/>File</div>";
+    output += "<div><strong>rotation</strong><br/>" + d.rotation + "</div>";
+    return output;
+  }
+};
+const addDash = (ev) => {
+  let num = parseInt(ev.target.value.trim());
+  if (!isNaN(num)) {
+    crop.frameLineDash.push(num);
+  }
+  crop.dash = "";
+};
+const removeDash = (i) => {
+  crop.frameLineDash.splice(i, 1);
+};
+
 const { categories, getCategories } = useCategories();
 
 onMounted(() => {
@@ -206,7 +373,7 @@ onMounted(() => {
 });
 
 const editor = ref(ClassicEditor);
-const editorData = ref("<p>Content of the editor.</p>");
+const editorData = ref("");
 const editorConfig = reactive({
   language: "pt",
   fontFamily: {
@@ -406,7 +573,12 @@ const rules = computed(() => ({
       required
     ),
   },
+  featuredImage: {},
 }));
+
+const changeFeaturedImage = ({ coordinates, canvas }) => {
+  //   form.featuredImage = event.target.files[0];
+};
 
 const v$ = useVuelidate(rules, form);
 
@@ -420,60 +592,161 @@ const saveArticle = async () => {
 };
 </script>
 
-<style>
-.document-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  flex-grow: 1;
-  max-width: 1280px;
-  margin: 0 auto;
+<style lang="scss" scoped>
+/* @import "../node_modules/vue-anka-cropper/dist/VueAnkaCropper.css"; */
+@import "../../../../../node_modules/vue-anka-cropper/dist/VueAnkaCropper.css";
+
+// .document-container {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   position: relative;
+//   flex-grow: 1;
+//   max-width: 1280px;
+//   margin: 0 auto;
+// }
+
+// .toolbar-container {
+//   width: 100%;
+// }
+
+// .minimap-wrapper {
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: nowrap;
+//   max-height: calc(100vh - 400px);
+//   width: 100%;
+//   position: relative;
+//   top: -1px;
+// }
+
+// .editor-container {
+//   width: 100%;
+//   border: 1px solid hsl(0, 0%, 80%);
+//   border-right: 0;
+//   background: hsl(0, 0%, 95%);
+//   box-sizing: border-box;
+//   position: relative;
+//   overflow: auto;
+// }
+
+// .minimap-container {
+//   width: 120px;
+//   flex: 0 0 auto;
+//   border: 1px solid var(--ck-color-toolbar-border);
+//   position: relative;
+//   overflow: hidden;
+//   max-height: 100%;
+// }
+
+// #editor-content {
+//   width: calc(180mm + 2px);
+//   min-height: calc(210mm + 2px);
+//   height: auto;
+//   padding: 20mm 12mm;
+//   box-sizing: border-box;
+//   background: hsl(0, 0%, 100%);
+//   border: 1px solid hsl(0, 0%, 88%);
+//   box-shadow: 0 2px 8px hsla(0, 0%, 0%, 0.08);
+//   margin: 40px auto;
+//   overflow: hidden;
+// }
+
+/* .cropper {
+  height: 600px;
+  background: #ddd;
+} */
+
+// body {
+//   background: #111;
+//   color: #eee;
+// }
+// #app {
+//   font-family: "Avenir", Helvetica, Arial, sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   margin-top: 60px;
+// }
+// a {
+//   color: #0cf;
+// }
+// h1 {
+//   text-align: center;
+// }
+
+.options,
+.cropper,
+.events {
+  padding: 2em 0;
 }
 
-.toolbar-container {
-  width: 100%;
+@media (min-width: 600px) {
+  .options,
+  .cropper,
+  .events {
+    float: left;
+    padding: 2em;
+    box-sizing: border-box;
+  }
+  .options {
+    width: 30%;
+  }
+  .cropper {
+    width: 70%;
+  }
+  .events {
+    width: 70%;
+  }
 }
 
-.minimap-wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  max-height: calc(100vh - 400px);
-  width: 100%;
-  position: relative;
-  top: -1px;
+@media (min-width: 1260px) {
+  .options {
+    width: 20%;
+  }
+  .cropper {
+    width: 60%;
+  }
+  .events {
+    width: 20%;
+  }
 }
 
-.editor-container {
-  width: 100%;
-  border: 1px solid hsl(0, 0%, 80%);
-  border-right: 0;
-  background: hsl(0, 0%, 95%);
-  box-sizing: border-box;
-  position: relative;
-  overflow: auto;
+.form-group {
+  padding: 5px 0;
+  margin-bottom: 10px;
 }
 
-.minimap-container {
-  width: 120px;
-  flex: 0 0 auto;
-  border: 1px solid var(--ck-color-toolbar-border);
-  position: relative;
-  overflow: hidden;
-  max-height: 100%;
-}
+// input,
+// select,
+// label {
+//   width: 100%;
+//   display: block;
+//   margin-bottom: 5px;
+// }
 
-#editor-content {
-  width: calc(180mm + 2px);
-  min-height: calc(210mm + 2px);
-  height: auto;
-  padding: 20mm 12mm;
-  box-sizing: border-box;
-  background: hsl(0, 0%, 100%);
-  border: 1px solid hsl(0, 0%, 88%);
-  box-shadow: 0 2px 8px hsla(0, 0%, 0%, 0.08);
-  margin: 40px auto;
-  overflow: hidden;
+// input[type="checkbox"] {
+//   width: auto;
+//   margin-right: 10px;
+//   float: left;
+// }
+
+// input,
+// select {
+//   box-sizing: border-box;
+//   border: none;
+//   padding: 6px 12px;
+//   border-radius: 3px;
+// }
+
+.chip {
+  display: inline-block;
+  background: #234e72;
+  padding: 5px 10px;
+  margin: 0 10px 10px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background: #6f1414;
+  }
 }
 </style>
