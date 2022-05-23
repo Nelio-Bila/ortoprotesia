@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ForgotController;
 use App\Http\Controllers\ProcessController;
@@ -67,6 +68,10 @@ Route::post('categories/register', [CategoryController::class, 'store']);
 Route::get('category/{category}', [CategoryController::class, 'show']);
 Route::put('categories/{category}', [CategoryController::class, 'update']);
 Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
+
+
+// Articles
+Route::get('articles', [ArticleController::class, 'index']);
 
 // Process
 Route::post('process/register', [ProcessController::class, 'store']);
