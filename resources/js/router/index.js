@@ -16,6 +16,7 @@ import HPForgot from "../pages/hp/HPRegister.vue";
 import HPProfile from "../pages/hp/HPProfile.vue";
 
 import ArticlesIndex from "../pages/hp/Articles/ArticlesIndex.vue";
+import ArticlesEdit from "../pages/hp/Articles/ArticlesEdit.vue";
 import ArticlesCreate from "../pages/hp/Articles/ArticlesCreate.vue";
 
 import UsersIndex from "../pages/Admin/Users/UsersIndex.vue";
@@ -88,13 +89,19 @@ const routes = [
     },
     {
         path: "/hp/articles",
-        name: "hparticles",
+        name: "articles",
         component: ArticlesIndex,
     },
     {
         path: "/hp/articles/create",
-        name: "hparticles.create",
+        name: "articles.create",
         component: ArticlesCreate,
+    },
+    {
+        path: "/hp/articles/:id/edit",
+        name: "articles.edit",
+        component: ArticlesEdit,
+        props: true,
     },
     {
         path: "/categories",

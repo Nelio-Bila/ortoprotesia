@@ -54,7 +54,6 @@
               v-for="error of v$.name.$errors"
               :key="error.$uid"
             >
-              <!-- {{ v$.name.$errors[0].$message }} -->
               {{ error.$message }}
             </span>
           </div>
@@ -84,12 +83,7 @@
 <script>
 import { onMounted, computed } from "vue";
 import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  minLength,
-  helpers,
-  minLengthValue,
-} from "@vuelidate/validators";
+import { required, minLength, helpers, minValue } from "@vuelidate/validators";
 import { UploadMedia, UpdateMedia } from "vue-media-upload";
 
 import useCategories from "../../../composables/categories";
@@ -120,7 +114,7 @@ export default {
           "Por favor preencha um nome válido",
           minLength(2)
         ),
-        minLengthValue: minLength(2),
+        minValue: minLength(2),
       },
     }));
 

@@ -44,10 +44,14 @@ export default function useArticles() {
 
         errors.value = "";
         try {
-            let config = { headers: { "Content-Type": "multipart/form-data" } };
+            const config = {
+                headers: {
+                    "content-type": "multipart/form-data",
+                },
+            };
 
-            await axios.post("/articles/register", data);
-            await router.push("/articles");
+            await axios.post("/articles/register", data, config);
+            await router.push("/hp/articles");
             processing.value = false;
         } catch (e) {
             if (e.response.status === 422) {

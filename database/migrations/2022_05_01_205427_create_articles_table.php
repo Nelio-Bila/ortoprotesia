@@ -20,7 +20,6 @@ return new class extends Migration
             $table->text('jsonData')->nullable();
             $table->string('postExcerpt');
             $table->string('slug')->unique()->default('');
-            $table->unsignedBigInteger('user_id');
             $table->string('featuredImage')->nullable();
             $table->string('metaDescription', 300);
             $table->unsignedBigInteger('health_professional_id');

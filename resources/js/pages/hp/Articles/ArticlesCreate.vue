@@ -60,10 +60,10 @@
           </div>
         </div>
 
-        <form @submit.prevent="saveArticle">
+        <form @submit.prevent="saveArticle" enctype="multipart/form-data">
           <div class="form-group mb-3 text-center">
             <label for="title">Foto do cabecalho</label>
-            <!-- <input
+            <input
               @blur="v$.featuredImage.$touch"
               type="file"
               class="form-control"
@@ -73,21 +73,19 @@
               }"
               placeholder="Foto de cabeçalho do artigo"
               v-on:change="changeFeaturedImage"
-            /> -->
+            />
 
-            <!-- <div class="cropper"> -->
-            <vue-anka-cropper
+            <!-- <vue-anka-cropper
               :options="options"
               @cropper-mounted="debug($event, 'cropper-mounted')"
               @cropper-error="debug($event, 'cropper-error')"
               @cropper-file-selected="debug($event, 'cropper-file-selected')"
               @cropper-preview="debug($event, 'cropper-preview')"
-              @cropper-saved="debug($event, 'cropper-saved')"
+              @cropper-saved="debug($event, 'cropperSaved')"
               @cropper-cancelled="debug($event, 'cropper-cancelled')"
               @cropper-uploaded="debug($event, 'cropper-uploaded')"
               @cropper-before-destroy="debug($event, 'cropper-before-destroy')"
-            ></vue-anka-cropper>
-            <!-- </div> -->
+            ></vue-anka-cropper> -->
 
             <span
               class="invalid-feedback"
@@ -213,19 +211,12 @@
 <script setup>
 import { reactive, computed, ref, onMounted, nextTick } from "vue";
 import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  minLength,
-  helpers,
-  minLengthValue,
-} from "@vuelidate/validators";
+import { required, minLength, helpers, minValue } from "@vuelidate/validators";
 import "@ckeditor/ckeditor5-build-classic/build/translations/pt";
 import "../../../components/editor/ckeditor";
-// import { Cropper } from "vue-advanced-cropper";
-// import "vue-advanced-cropper/dist/style.css";
 import VueAnkaCropper from "../../../components/VueAnkaCropper.vue";
 
-import useArticles from "../../../composables/categories";
+import useArticles from "../../../composables/articles";
 import useCategories from "../../../composables/categories";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
@@ -242,10 +233,10 @@ const crop = reactive({
   closeOnSave: true,
   cropArea: "box",
   croppedHeight: 400,
-  croppedWidth: 400,
-  dropareaMessage: "Drop file here or use the button below.",
+  croppedWidth: 800,
+  dropareaMessage: "Arraste e solte uma imagem aqui ou use o botão abaixo.",
   frameLineDash: [5, 3],
-  frameStrokeColor: "rgba(255, 255, 255, 0.8)",
+  frameStrokeColor: "#273a7e",
   handleFillColor: "rgba(255, 255, 255, 0.2)",
   handleHoverFillColor: "rgba(255, 255, 255, 0.4)",
   handleHoverStrokeColor: "rgba(255, 255, 255, 1)",
@@ -259,7 +250,7 @@ const crop = reactive({
   previewQuality: 0.65,
   resultQuality: 0.8,
   resultMimeType: "image/jpeg",
-  selectButtonLabel: "Select File",
+  selectButtonLabel: "Seleciona uma imagem",
   showPreview: true,
   skin: "light",
   uploadData: {},
@@ -268,50 +259,49 @@ const crop = reactive({
   cropperH: 500,
   useCropperH: false,
   dash: "",
-  upl: "/api/upload-file.php",
+  upl: "/api/uploadarticleheaderimage",
   useAr: true,
   ar: 1,
   events: [],
 });
 
-computed(() => {
-  function options() {
-    return {
-      aspectRatio: crop.aspectRatio,
-      closeOnSave: crop.closeOnSave,
-      cropArea: crop.cropArea,
-      croppedHeight: crop.croppedHeight,
-      croppedWidth: crop.croppedWidth,
-      cropperHeight: crop.cropperHeight,
-      dropareaMessage: crop.dropareaMessage,
-      frameLineDash: crop.frameLineDash,
-      frameStrokeColor: crop.frameStrokeColor,
-      handleFillColor: crop.handleFillColor,
-      handleHoverFillColor: crop.handleHoverFillColor,
-      handleHoverStrokeColor: crop.handleHoverStrokeColor,
-      handleSize: crop.handleSize,
-      handleStrokeColor: crop.handleStrokeColor,
-      layoutBreakpoint: crop.layoutBreakpoint,
-      maxCropperHeight: crop.maxCropperHeight,
-      maxFileSize: crop.maxFileSize,
-      overlayFill: crop.overlayFill,
-      previewOnDrag: crop.previewOnDrag,
-      previewQuality: crop.previewQuality,
-      resultQuality: crop.resultQuality,
-      resultMimeType: crop.resultMimeType,
-      selectButtonLabel: crop.selectButtonLabel,
-      showPreview: crop.showPreview,
-      skin: crop.skin,
-      uploadData: crop.uploadData,
-      uploadTo: crop.uploadTo,
-    };
-  }
-  function cropperHeight() {
-    return crop.useCropperH ? crop.cropperH : false;
-  }
-  function aspectRatio() {
-    return crop.useAr ? crop.ar : false;
-  }
+const options = computed(() => {
+  return {
+    aspectRatio: crop.aspectRatio,
+    closeOnSave: crop.closeOnSave,
+    cropArea: crop.cropArea,
+    croppedHeight: crop.croppedHeight,
+    croppedWidth: crop.croppedWidth,
+    cropperHeight: crop.cropperHeight,
+    dropareaMessage: crop.dropareaMessage,
+    frameLineDash: crop.frameLineDash,
+    frameStrokeColor: crop.frameStrokeColor,
+    handleFillColor: crop.handleFillColor,
+    handleHoverFillColor: crop.handleHoverFillColor,
+    handleHoverStrokeColor: crop.handleHoverStrokeColor,
+    handleSize: crop.handleSize,
+    handleStrokeColor: crop.handleStrokeColor,
+    layoutBreakpoint: crop.layoutBreakpoint,
+    maxCropperHeight: crop.maxCropperHeight,
+    maxFileSize: crop.maxFileSize,
+    overlayFill: crop.overlayFill,
+    previewOnDrag: crop.previewOnDrag,
+    previewQuality: crop.previewQuality,
+    resultQuality: crop.resultQuality,
+    resultMimeType: crop.resultMimeType,
+    selectButtonLabel: crop.selectButtonLabel,
+    showPreview: crop.showPreview,
+    skin: crop.skin,
+    uploadData: crop.uploadData,
+    uploadTo: crop.uploadTo,
+  };
+});
+const cropperHeight = computed(() => {
+  return crop.useCropperH ? crop.cropperH : false;
+});
+
+const aspectRatio = computed(() => {
+  return crop.useAr ? crop.ar : false;
 });
 
 const debug = (ev, name) => {
@@ -364,6 +354,10 @@ const addDash = (ev) => {
 };
 const removeDash = (i) => {
   crop.frameLineDash.splice(i, 1);
+};
+
+const cropperSaved = (ev) => {
+  console.log(ev);
 };
 
 const { categories, getCategories } = useCategories();
@@ -542,7 +536,7 @@ const rules = computed(() => ({
       "Por favor preencha um titulo válido",
       minLength(2)
     ),
-    minLengthValue: helpers.withMessage(
+    minValue: helpers.withMessage(
       "O titulo deve ter dois caracteres no minímo",
       minLength(2)
     ),
@@ -556,7 +550,7 @@ const rules = computed(() => ({
       "Por favor preencha um contéudo válido",
       minLength(2)
     ),
-    minLengthValue: helpers.withMessage(
+    minValue: helpers.withMessage(
       "O titulo deve ter trinta caracteres no minímo",
       minLength(30)
     ),
@@ -576,16 +570,26 @@ const rules = computed(() => ({
   featuredImage: {},
 }));
 
-const changeFeaturedImage = ({ coordinates, canvas }) => {
-  //   form.featuredImage = event.target.files[0];
+const changeFeaturedImage = (event) => {
+  form.featuredImage = event.target.files[0];
 };
 
 const v$ = useVuelidate(rules, form);
 
 const saveArticle = async () => {
   v$._value.$validate();
+
   if (!v$._value.$invalid) {
-    await storeArticle({ ...form });
+    let data = new FormData();
+    data.append("title", form.title);
+    data.append("body", form.body);
+    data.append("postExcerpt", form.postExcerpt);
+    data.append("featuredImage", form.featuredImage);
+    data.append("category_id", form.category_id);
+    data.append("metaDescription", "metaDescription");
+    data.append("health_professional_id", 1);
+    data.append("slug", form.title.replace(/\s/g, ""));
+    await storeArticle(data);
   } else {
     processing.value = false;
   }

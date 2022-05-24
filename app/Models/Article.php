@@ -11,11 +11,16 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'text', 'views', 'shares', 'excerpt', 'health_worker_id', 'category_id',];
+    protected $fillable = ['title', 'body', 'jsonData', 'postExcerpt', 'slug', 'featuredImage', 'metaDescription', 'health_professional_id', 'views'];
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class);
+    }
+
+    public function hpro()
+    {
+        return $this->belongsTo(HealthProfessional::class);
     }
 
     public function images()

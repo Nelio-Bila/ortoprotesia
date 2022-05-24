@@ -34,8 +34,8 @@
                 <td>{{ article.category.name }}</td>
                 <td>{{ article.views }}</td>
                 <td>
-                  {{ article.health_professional.name }}
-                  {{ article.health_professional.surname }}
+                  <!-- {{ article.hpro.name }}
+                  {{ article.hpro.surname }} -->
                 </td>
                 <td>
                   {{ new Date(article.created_at).toLocaleDateString() }}

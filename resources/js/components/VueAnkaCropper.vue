@@ -1182,14 +1182,14 @@ export default {
   background: #e3eaf0;
   color: #0f1114;
   .ankaCropper__droparea {
-    border: dashed 2px #367bb7;
+    border: dashed 2px #273a7e;
   }
   .ankaCropper__selectButton,
   .ankaCropper__saveButton {
-    background: #1c6bd6;
+    background: #273a7e;
     color: #fff;
     &:hover {
-      background: #1b5bb2;
+      background: #902f37;
     }
   }
   .ankaCropper__navigation {
@@ -1208,14 +1208,14 @@ export default {
   background: #0f1114;
   color: #eee;
   .ankaCropper__droparea {
-    border: dashed 2px #3e424b;
+    border: dashed 2px #273a7e;
   }
   .ankaCropper__selectButton,
   .ankaCropper__saveButton {
-    background: #334f90;
+    background: #273a7e;
     color: #fff;
     &:hover {
-      background: #335dbe;
+      background: #902f37;
     }
   }
   .ankaCropper__navigation {
