@@ -85,7 +85,7 @@
             <h6 class="text-uppercase fw-bold mb-4">Links uteis</h6>
 
             <p>
-              <router-link to="/hp/login" class="text-reset"
+              <router-link to="/hp" class="text-reset"
                 >Profissional de Saúde</router-link
               >
             </p>

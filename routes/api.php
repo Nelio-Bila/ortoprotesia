@@ -72,6 +72,7 @@ Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 
 // Articles
 Route::get('articles', [ArticleController::class, 'index']);
+Route::get('article/{id}', [ArticleController::class, 'show']);
 Route::post('/articles/register', [ArticleController::class, 'store']);
 
 // Process

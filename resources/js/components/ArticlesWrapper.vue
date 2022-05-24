@@ -2,18 +2,11 @@
   <div class="my-2">
     <h1 class="text-center">Artigos</h1>
     <div class="row">
-      <div class="col-md-3">
-        <ArticleCard />
-      </div>
-      <div class="col-md-3">
-        <ArticleCard />
-      </div>
-      <div class="col-md-3">
-        <ArticleCard />
-      </div>
-      <div class="col-md-3">
-        <ArticleCard />
-      </div>
+      <ArticleCard
+        :article="article"
+        v-for="article in articles"
+        :key="article.id"
+      />
     </div>
     <nav aria-label="Page navigation">
       <ul class="pagination my-2 d-flex justify-content-center">
@@ -35,12 +28,14 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted } from "vue";
 import ArticleCard from "./ArticleCard.vue";
-export default {
-  name: "ArticlesWrapper",
-  components: {
-    ArticleCard,
-  },
-};
+import useArticles from "../composables/articles";
+
+const { articles, getArticles } = useArticles();
+
+onMounted(() => {
+  getArticles();
+});
 </script>

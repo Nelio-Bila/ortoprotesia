@@ -19,6 +19,8 @@ import ArticlesIndex from "../pages/hp/Articles/ArticlesIndex.vue";
 import ArticlesEdit from "../pages/hp/Articles/ArticlesEdit.vue";
 import ArticlesCreate from "../pages/hp/Articles/ArticlesCreate.vue";
 
+import ArticleView from "../pages/Articles/ArticleView.vue";
+
 import UsersIndex from "../pages/Admin/Users/UsersIndex.vue";
 import UsersEdit from "../pages/Admin/Users/UsersEdit.vue";
 import UsersCreate from "../pages/Admin/Users/UsersEdit.vue";
@@ -101,6 +103,12 @@ const routes = [
         path: "/hp/articles/:id/edit",
         name: "articles.edit",
         component: ArticlesEdit,
+        props: true,
+    },
+    {
+        path: "/articles/:id",
+        name: "articles.view",
+        component: ArticleView,
         props: true,
     },
     {
