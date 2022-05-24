@@ -21,24 +21,26 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-10" v-html="article.body"></div>
-      <div class="col-md-2">
+      <div class="col-md-9" v-html="article.body"></div>
+      <div class="col-md-3">
         <div
-          class="btn-group-vertical me-2"
+          class="btn-group-vertical w-100"
           role="group"
           aria-label="First group"
         >
-          <h5 class="text-white bg-primary rounded text-center">
-            Artigos relacionados
-          </h5>
-          <button
+          <div class="btn btn-primary p-3">Artigos relacionados</div>
+
+          <router-link
             v-for="article in articles"
             :key="article.id"
-            type="button"
-            class="btn btn-outline-secondary"
+            :to="`/articles/${article.id}`"
+            class="btn btn-outline-secondary p-1 mb-0 w-100"
           >
-            {{ article.title }}
-          </button>
+            <h4>{{ article.title }}</h4>
+            <p class="text-small">
+              {{ new Date(article.created_at).toLocaleDateString() }}
+            </p>
+          </router-link>
         </div>
       </div>
     </div>
@@ -47,7 +49,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { watch, onMounted, computed } from "vue";
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 import { useRoute } from "vue-router";
@@ -60,5 +62,9 @@ onMounted(() => {
   getArticle(route.params.id);
 });
 
-onMounted(getRelatedArticles(article.value.category_id));
+watch(article, async (newArticle, oldArticle) => {
+  if (newArticle) {
+    getRelatedArticles(article.value.category_id, article.value.id);
+  }
+});
 </script>

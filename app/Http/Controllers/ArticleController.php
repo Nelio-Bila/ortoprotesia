@@ -16,9 +16,9 @@ class ArticleController extends Controller
         }
     }
 
-    public function related($id)
+    public function related($id, $article)
     {
-        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $id)->limit(5)->get());
+        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $id)->where('id', '!=', $article)->limit(5)->get());
     }
 
     public function show($id)

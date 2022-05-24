@@ -24,10 +24,10 @@ export default function useArticles() {
             });
     };
 
-    const getRelatedArticles = async (id) => {
+    const getRelatedArticles = async (id, article) => {
         processing.value = true;
         await axios
-            .get("/articles/related/" + id)
+            .get("/articles/related/" + id + "/" + article)
             .then((response) => {
                 articles.value = response.data;
                 processing.value = false;
