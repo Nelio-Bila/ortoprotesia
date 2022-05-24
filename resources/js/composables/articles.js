@@ -24,13 +24,27 @@ export default function useArticles() {
             });
     };
 
+    const getRelatedArticles = async (id) => {
+        processing.value = true;
+        await axios
+            .get("/articles/related/" + id)
+            .then((response) => {
+                articles.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                articles.value = [];
+                processing.value = false;
+            });
+    };
+
     const getArticle = async (id) => {
         processing.value = true;
 
         await axios
             .get("/article/" + id)
             .then((response) => {
-                article.value = response.data[0];
+                article.value = response.data;
                 processing.value = false;
             })
             .catch((ex) => {
@@ -90,6 +104,7 @@ export default function useArticles() {
         errors,
         processing,
         getArticles,
+        getRelatedArticles,
         getArticle,
         storeArticle,
         updateArticle,

@@ -16,9 +16,14 @@ class ArticleController extends Controller
         }
     }
 
+    public function related($id)
+    {
+        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $id)->limit(5)->get());
+    }
+
     public function show($id)
     {
-        return Article::find($id);
+        return Article::with(['category', 'hpro'])->find($id);
     }
 
     public function store(Request $request)

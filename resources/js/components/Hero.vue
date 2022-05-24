@@ -13,7 +13,10 @@
         Nesta plataforma podes obter várias informações relacionadas com a
         Ortoprotesia em Moçambique e a Medicina Fisica e Reabilitação no geral.
       </p>
-      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <div
+        v-if="!auth.user"
+        class="d-grid gap-2 d-sm-flex justify-content-sm-center"
+      >
         <router-link to="/login" class="btn btn-primary btn-lg px-4 gap-3">
           Entrar
         </router-link>
@@ -28,8 +31,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Hero",
-};
+<script setup>
+import { useUserStore } from "../stores/UserStore";
+
+const auth = useUserStore();
 </script>
