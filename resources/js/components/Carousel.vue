@@ -31,13 +31,16 @@
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img
-            src="https://picsum.photos/id/176/200/50"
+            src="/images/various/hcm.jpeg"
             class="d-block w-100"
             alt="Outra"
           />
           <div class="carousel-caption d-none d-md-block">
-            <h5>First slide label</h5>
-            <p>Some representative placeholder content for the first slide.</p>
+            <h5>Conheça o Centro Ortopédico do HCM</h5>
+            <p>
+              Saiba o que é e como funciona esse sector do Hospital Central de
+              Maputo.
+            </p>
           </div>
         </div>
         <div class="carousel-item">
