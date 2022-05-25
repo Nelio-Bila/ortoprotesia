@@ -10,6 +10,10 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
+
     <!-- Styles -->
     @if (config('app.env') === 'local')
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -24,6 +28,8 @@
 
     <link href="https://unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" />
     <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js" defer></script>
+
+
 
     <!-- Scripts -->
     @if (config('app.env') === 'local')
