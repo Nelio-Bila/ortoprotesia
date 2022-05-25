@@ -9,8 +9,10 @@
       <!-- Navbar End  -->
 
       <div class="container-fluid">
-        <h1 class="mt-4">Simple Sidebar</h1>
-        <p>Add your content</p>
+        <h1 class="mt-4">Bem vindo(a)</h1>
+        <p>
+          Nesta area podes gerir publicações, categorias, etiquetas e muito mais
+        </p>
       </div>
     </div>
     <!-- /#page-content-wrapper -->
@@ -18,17 +20,9 @@
   <!-- /#wrapper -->
 </template>
 
-<script>
+<script setup>
 import { onMounted } from "vue";
 
 import HPSideBar from "../../components/HPSideBar.vue";
 import HPNavBar from "../../components/HPNavBar.vue";
-
-export default {
-  name: "HPHome",
-  components: {
-    HPNavBar,
-    HPSideBar,
-  },
-};
 </script>
