@@ -11303,18 +11303,6 @@ body {
   margin-left: -250px;
 }
 
-a[data-toggle=collapse] {
-  position: relative;
-}
-
-.dropdown-toggle::after {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-}
-
 #sidebar .sidebar-header {
   padding: 20px;
 }
