@@ -64,17 +64,22 @@
         </div>
 
         <div
-          class="btn-group-vertical w-100 mb-5"
+          class="list-group-vertical w-100 mb-5 rounded"
           role="group"
           aria-label="First group"
         >
-          <div class="btn btn-primary p-3">Partilhar este artigo</div>
-
-          <router-link to="#" class="btn btn-outline-secondary p-1 mb-0 w-100">
-            <i class="fa-brands fa-facebook-square fa-2xl"></i>
-            <i class="fa-solid fa-square-envelope fa-2xl"></i>
-            <i class="fa-brands fa-twitter-square fa-2xl"></i>
-          </router-link>
+          <div class="list-group-item active p-3">Partilhar este artigo</div>
+          <div class="list-group-item p-3 text-center">
+            <router-link to="#">
+              <i class="fa-brands fa-facebook-square fa-4x mx-2"></i>
+            </router-link>
+            <router-link to="#">
+              <i class="fa-solid fa-square-envelope fa-4x mx-2"></i>
+            </router-link>
+            <router-link to="#">
+              <i class="fa-brands fa-twitter-square fa-4x mx-2"></i>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -103,3 +108,10 @@ watch(article, async (newArticle, oldArticle) => {
 });
 </script>
 
+<style scoped>
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+</style>
