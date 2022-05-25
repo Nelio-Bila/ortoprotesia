@@ -31,7 +31,7 @@
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img
-            src="/images/various/hcm.jpeg"
+            :src="'/images/various/hcm.jpg'"
             class="d-block w-100"
             alt="Outra"
           />
@@ -45,24 +45,27 @@
         </div>
         <div class="carousel-item">
           <img
-            src="https://picsum.photos/id/342/200/50"
+            :src="'/images/various/hcm.jpg'"
             class="d-block w-100"
             alt="Terceira"
           />
           <div class="carousel-caption d-none d-md-block">
-            <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p>
+            <h5>O que é Ortoprotesia</h5>
+            <p>Saiba o que é e o que trata esta area da Saúde.</p>
           </div>
         </div>
         <div class="carousel-item">
           <img
-            src="https://picsum.photos/id/1/200/50"
+            :src="'/images/various/hcm.jpg'"
             class="d-block w-100"
             alt="Primeira foto"
           />
           <div class="carousel-caption d-none d-md-block">
-            <h5>Third slide label</h5>
-            <p>Some representative placeholder content for the third slide.</p>
+            <h5>Como usar esta plataforma</h5>
+            <p>
+              Saiba como usar e tirar máximo proveito desta plataforma, como
+              utente, acompanhante, profissinal ou entusiasta.
+            </p>
           </div>
         </div>
       </div>
@@ -73,7 +76,7 @@
         data-bs-slide="prev"
       >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="visually-hidden">Anterior</span>
       </button>
       <button
         class="carousel-control-next"
@@ -82,7 +85,7 @@
         data-bs-slide="next"
       >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <span class="visually-hidden">Proxima</span>
       </button>
     </div>
   </div>
