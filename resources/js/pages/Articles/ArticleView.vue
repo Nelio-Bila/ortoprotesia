@@ -24,7 +24,7 @@
       <div class="col-md-9" v-html="article.body"></div>
       <div class="col-md-3">
         <div
-          class="btn-group-vertical w-100"
+          class="btn-group-vertical w-100 mb-5"
           role="group"
           aria-label="First group"
         >
@@ -40,6 +40,40 @@
             <p class="text-small">
               {{ new Date(article.created_at).toLocaleDateString() }}
             </p>
+          </router-link>
+        </div>
+
+        <div
+          class="btn-group-vertical w-100 mb-5"
+          role="group"
+          aria-label="First group"
+        >
+          <div class="btn btn-primary p-3">Artigos recentes</div>
+
+          <router-link
+            v-for="article in articles"
+            :key="article.id"
+            :to="`/articles/${article.id}`"
+            class="btn btn-outline-secondary p-1 mb-0 w-100"
+          >
+            <h4>{{ article.title }}</h4>
+            <p class="text-small">
+              {{ new Date(article.created_at).toLocaleDateString() }}
+            </p>
+          </router-link>
+        </div>
+
+        <div
+          class="btn-group-vertical w-100 mb-5"
+          role="group"
+          aria-label="First group"
+        >
+          <div class="btn btn-primary p-3">Partilhar este artigo</div>
+
+          <router-link to="#" class="btn btn-outline-secondary p-1 mb-0 w-100">
+            <i class="fa-brands fa-facebook-square fa-2xl"></i>
+            <i class="fa-solid fa-square-envelope fa-2xl"></i>
+            <i class="fa-brands fa-twitter-square fa-2xl"></i>
           </router-link>
         </div>
       </div>
@@ -68,3 +102,4 @@ watch(article, async (newArticle, oldArticle) => {
   }
 });
 </script>
+
