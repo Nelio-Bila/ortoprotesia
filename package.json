@@ -10,7 +10,7 @@
         "production": "mix --production",
         "postinstall": "npm run prod",
         "heroku-prebuild": "npm install -f",
-    "heroku-postbuild": "npm run production"
+        "heroku-postbuild": "npm run production"
     },
     "devDependencies": {
         "@popperjs/core": "^2.10.2",
@@ -37,6 +37,7 @@
         "@fortawesome/vue-fontawesome": "^3.0.0-5",
         "@vuelidate/core": "^2.0.0-alpha.41",
         "@vuelidate/validators": "^2.0.0-alpha.29",
+        "animate.css": "^4.1.1",
         "datatables.net-dt": "^1.12.0",
         "dropzone-vue": "^0.1.11",
         "jquery": "^3.6.0",
@@ -54,5 +55,4 @@
         "node": "16.13.1",
         "npm": "8.9.0"
     }
-
 }
