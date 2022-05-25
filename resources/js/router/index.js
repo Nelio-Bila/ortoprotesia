@@ -25,7 +25,7 @@ import UsersIndex from "../pages/Admin/Users/UsersIndex.vue";
 import UsersEdit from "../pages/Admin/Users/UsersEdit.vue";
 import UsersCreate from "../pages/Admin/Users/UsersEdit.vue";
 
-import HealthProsIndex from "../pages/Admin/Health_pros/HealthProsIndex.vue";
+// import HealthProsIndex from "../pages/Admin/Health_pros/HealthProsIndex.vue";
 
 import CategoriesIndex from "../pages/hp/Categories/CategoriesIndex.vue";
 import CategoriesEdit from "../pages/hp/Categories/CategoriesEdit.vue";
@@ -164,11 +164,11 @@ const routes = [
         component: UsersEdit,
         props: true,
     },
-    {
-        path: "/admin/hpros",
-        name: "hpros.index",
-        component: HealthProsIndex,
-    },
+    // {
+    //     path: "/admin/hpros",
+    //     name: "hpros.index",
+    //     component: HealthProsIndex,
+    // },
 ];
 
 const router = createRouter({
