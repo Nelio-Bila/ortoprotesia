@@ -11,25 +11,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
+    @if (config('app.env') === 'local')
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @else
+        <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
+    @endif
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Scripts -->
-    <script src="{{ secure_asset('js/app.js') }}" defer></script>
+    @if (config('app.env') === 'local')
+        <script src="{{ asset('js/app.js') }}" defer></script>
+    @else
+        <script src="{{ secure_asset('js/app.js') }}" defer></script>
+    @endif
 
-    {{-- <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-            height: 100vh;
-        }
-
-        .container {
-            height: 100%;
-        }
-
-    </style> --}}
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -56,10 +53,6 @@
 <body class="antialiased">
     <div id="app">
     </div>
-
-    {{-- <script src="/js/feather.min.js"></script>
-    <script src="/js/Chart.min.js"></script>
-    <script src="/js/dashboard.js"></script> --}}
 </body>
 
 </html>
