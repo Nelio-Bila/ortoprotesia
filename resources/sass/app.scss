@@ -172,7 +172,9 @@ body {
   }
 
   .hover\:bg-primary:hover {
-    background-color: $primary;
+    background-color: $medium;
+    border-radius: 12px;
+    color: #fff !important;
   }
 
   .h-52	{height: 13rem; /* 208px */}

@@ -11471,7 +11471,9 @@ body {
 }
 
 .hover\:bg-primary:hover {
-  background-color: #273a7e;
+  background-color: #7182be;
+  border-radius: 12px;
+  color: #fff !important;
 }
 
 .h-52 {
