@@ -6,6 +6,14 @@ import { createPinia } from "pinia";
 import "./config/axios";
 import CKEditor from "@ckeditor/ckeditor5-vue";
 
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
+
+const toastOptions = {
+    // You can set your default options here
+};
+
 import Home from "./pages/Home";
 
 const app = createApp(Home);
@@ -15,4 +23,5 @@ app.config.warnHandler = function (msg, vm, trace) {
 app.use(createPinia()); // Create the root store
 app.use(router);
 app.use(CKEditor);
+app.use(Toast, toastOptions);
 app.mount("#app");
