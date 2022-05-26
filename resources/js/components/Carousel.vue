@@ -1,5 +1,5 @@
 <template>
-  <div class="my-2">
+  <div class="my-2" id="news">
     <h1 class="text-center my-2">Noticias</h1>
     <div
       id="carouselExampleCaptions"

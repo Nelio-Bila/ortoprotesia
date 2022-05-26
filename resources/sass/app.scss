@@ -22,21 +22,14 @@ body {
     transition: all 0.3s;
 }
 
+.bar{
+    background-color: $primary !important;
+    height: 5px !important;
+}
+
 #sidebar.active {
     margin-left: -250px;
 }
-
-// a[data-toggle="collapse"] {
-//     position: relative;
-// }
-
-// .dropdown-toggle::after {
-//     display: block;
-//     position: absolute;
-//     top: 50%;
-//     right: 20px;
-//     transform: translateY(-50%);
-// }
 
 #sidebar .sidebar-header {
     padding: 20px;
@@ -62,11 +55,6 @@ body {
     color: #273a7e;
     background: #535e85;
 }
-
-// #sidebar ul li.active > a, a[aria-expanded="true"] {
-//     color: #fff;
-//     background: #6d7fcc;
-// }
 
 @media (max-width: 768px) {
     #sidebar {
@@ -181,6 +169,10 @@ body {
   .hover\:white:hover {
     // background-color: #fff;
     color: #fff;
+  }
+
+  .hover\:bg-primary:hover {
+    background-color: $primary;
   }
 
   .h-52	{height: 13rem; /* 208px */}

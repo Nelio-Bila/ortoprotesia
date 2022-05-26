@@ -36,6 +36,12 @@
             >
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#news">Noticias</a>
+          </li>
+          <li class="nav-item hover:bg-primary">
+            <a class="nav-link" href="#articles">Artigos</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#">Forum</a>
           </li>
           <li class="nav-item dropdown">

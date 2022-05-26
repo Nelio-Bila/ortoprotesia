@@ -50,7 +50,7 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg-rgb: 248, 250, 252;
-  --bs-font-sans-serif: "Raleway", sans-serif;
+  --bs-font-sans-serif: "Raleway", "Nunito", sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
@@ -11299,6 +11299,11 @@ body {
   transition: all 0.3s;
 }
 
+.bar {
+  background-color: #273a7e !important;
+  height: 5px !important;
+}
+
 #sidebar.active {
   margin-left: -250px;
 }
@@ -11463,6 +11468,10 @@ body {
 
 .hover\:white:hover {
   color: #fff;
+}
+
+.hover\:bg-primary:hover {
+  background-color: #273a7e;
 }
 
 .h-52 {

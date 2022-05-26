@@ -1,5 +1,5 @@
 <template>
-  <div class="my-2">
+  <div class="my-2" id="articles">
     <h1 class="text-center">Artigos</h1>
     <div class="row">
       <ArticleCard

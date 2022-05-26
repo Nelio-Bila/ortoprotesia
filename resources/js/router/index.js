@@ -176,6 +176,8 @@ const router = createRouter({
     routes,
 });
 
+NProgress.configure({ showSpinner: false });
+
 router.beforeResolve((to, from, next) => {
     // If this isn't an initial page load.
     if (to.name) {
