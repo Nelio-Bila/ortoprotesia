@@ -28,6 +28,9 @@
   </div>
   <div class="my-2" id="articles" v-if="criteria">
     <h1 class="text-center">Resultados</h1>
+    <h2 class="text-center" v-if="!searchedArticles">
+      Infelimente não foi encontrado algo relacionado a pesquisa
+    </h2>
     <h2 class="text-center">Artigos</h2>
     <div class="row">
       <ArticleCard

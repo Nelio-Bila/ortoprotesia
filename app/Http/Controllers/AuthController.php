@@ -44,6 +44,11 @@ class AuthController extends Controller
         return Auth::guard('user')->user();
     }
 
+    public function details($id)
+    {
+        return User::find($id);
+    }
+
     public function register(RegisterRequest $request)
     {
         try {

@@ -30,11 +30,10 @@ export default function useUsers() {
         await axios
             .get("/user/" + id)
             .then((response) => {
-                user.value = response.data[0];
+                user.value = response.data;
                 processing.value = false;
             })
             .catch((ex) => {
-                console.log(ex.response.data.errors);
                 user.value = [];
                 processing.value = false;
             });
