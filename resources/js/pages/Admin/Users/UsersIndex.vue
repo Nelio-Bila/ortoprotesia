@@ -86,7 +86,7 @@ onMounted(() => {
         url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/pt-PT.json",
       },
     });
-  }, 250);
+  }, 500);
 });
 
 const deleteUser = async (id) => {
