@@ -16,7 +16,7 @@
           <thead class="table-light">
             <tr>
               <th>Nome Completo</th>
-              <th>Data de nascimento</th>
+              <th>Idade</th>
               <th>Registado aos</th>
               <th>Acções</th>
             </tr>
@@ -26,7 +26,8 @@
               <tr>
                 <td>{{ user.name }} {{ user.surname }}</td>
                 <td>
-                  {{ new Date(user.birthdate).toLocaleDateString() }}
+                  <!-- {{ new Date(user.birthdate).toLocaleDateString() }} -->
+                  {{ getAge(user.birthdate) }} anos
                 </td>
                 <td>
                   {{ new Date(user.created_at).toLocaleDateString() }}
@@ -69,6 +70,11 @@ import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
 const { users, getUsers, destroyUser } = useUsers();
+
+const getAge = (dateString) => {
+  const ageInMilliseconds = new Date() - new Date(dateString);
+  return Math.floor(ageInMilliseconds / 1000 / 60 / 60 / 24 / 365); // convert to years
+};
 
 onMounted(() => {
   getUsers();
