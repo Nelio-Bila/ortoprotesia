@@ -77,7 +77,7 @@
           </li>
         </ul>
 
-        <form class="form-inline mx-5">
+        <form class="form-inline mx-5" @submit.prevent="search">
           <div class="input-group">
             <input
               type="text"
@@ -85,8 +85,9 @@
               placeholder="Pesquisar"
               aria-label="Search"
               aria-describedby="basic-addon1"
+              v-model="criteria"
             />
-            <button class="input-group-text" type="button">
+            <button class="input-group-text cursor-pointer" type="submit">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
@@ -156,13 +157,23 @@
 
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+
 import { useUserStore } from "../stores/UserStore";
 import useAuth from "../composables/auth";
+
+const router = useRouter();
 
 const { logout } = useAuth();
 
 const userStore = useUserStore();
+
+const criteria = ref("");
+
+const search = () => {
+  router.push("/results/" + criteria.value);
+};
 
 const handleLogout = () => {
   logout();

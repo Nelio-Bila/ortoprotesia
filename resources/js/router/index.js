@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Welcome from "../pages/Welcome.vue";
+import Results from "../pages/Results.vue";
 
 import NotFound from "../pages/Errors/NotFound.vue";
 
@@ -42,6 +43,12 @@ const routes = [
         path: "/",
         name: "Welcome",
         component: Welcome,
+    },
+    {
+        path: "/results/:criteria",
+        name: "Results",
+        component: Results,
+        props: true,
     },
     { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
     {

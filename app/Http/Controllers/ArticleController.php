@@ -21,6 +21,11 @@ class ArticleController extends Controller
         return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $id)->where('id', '!=', $article)->limit(5)->get());
     }
 
+    public function search($criteria)
+    {
+        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('title', 'like', '%' . $criteria . '%')->get());
+    }
+
     public function latest()
     {
         return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->limit(5)->get());

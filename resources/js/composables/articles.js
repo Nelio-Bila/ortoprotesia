@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 export default function useArticles() {
     const articles = ref([]);
     const latestArticles = ref([]);
+    const searchedArticles = ref([]);
     const article = ref([]);
     const router = useRouter();
     const errors = ref("");
@@ -113,6 +114,20 @@ export default function useArticles() {
         processing.value = false;
     };
 
+    const searchArticles = async (criteria) => {
+        processing.value = true;
+        await axios
+            .get("/articles/search/" + criteria)
+            .then((response) => {
+                searchedArticles.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                searchedArticles.value = [];
+                processing.value = false;
+            });
+    };
+
     return {
         articles,
         article,
@@ -122,6 +137,8 @@ export default function useArticles() {
         getRelatedArticles,
         latestArticles,
         getLatestArticles,
+        searchedArticles,
+        searchArticles,
         getArticle,
         storeArticle,
         updateArticle,

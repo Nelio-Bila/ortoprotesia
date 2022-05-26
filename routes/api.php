@@ -74,6 +74,7 @@ Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 Route::get('articles', [ArticleController::class, 'index']);
 Route::get('article/{id}', [ArticleController::class, 'show']);
 Route::get('articles/related/{id}/{article}', [ArticleController::class, 'related']);
+Route::get('/articles/search/{criteria}', [ArticleController::class, 'search']);
 Route::get('/articles/latest', [ArticleController::class, 'latest']);
 Route::post('/articles/register', [ArticleController::class, 'store']);
 
