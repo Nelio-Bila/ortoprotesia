@@ -19,6 +19,10 @@
         <i class="fa-solid fa-tag fa-2xl mx-3"></i>Categoria:
         {{ article.category.name }}
       </div>
+      <div class="col text-primary">
+        <i class="fa-solid fa-eye fa-xl mx-3"></i>:
+        {{ article.views }} Visualizações
+      </div>
     </div>
     <div class="row">
       <div class="col-md-9" v-html="article.body"></div>
@@ -38,7 +42,12 @@
           >
             <h4>{{ article.title }}</h4>
             <p class="text-small">
+              <i class="fa-solid fa-calendar-days mx-2"></i>
               {{ new Date(article.created_at).toLocaleDateString() }}
+            </p>
+            <p class="text-small">
+              <i class="fa-solid fa-eye mx-2"></i>
+              {{ article.views }}
             </p>
           </router-link>
         </div>
@@ -51,14 +60,19 @@
           <div class="btn btn-primary p-3">Artigos recentes</div>
 
           <router-link
-            v-for="article in articles"
+            v-for="article in latestArticles"
             :key="article.id"
             :to="`/articles/${article.id}`"
             class="btn btn-outline-secondary p-1 mb-0 w-100"
           >
             <h4>{{ article.title }}</h4>
             <p class="text-small">
+              <i class="fa-solid fa-calendar-days mx-2"></i>
               {{ new Date(article.created_at).toLocaleDateString() }}
+            </p>
+            <p class="text-small">
+              <i class="fa-solid fa-eye mx-2"></i>
+              {{ article.views }}
             </p>
           </router-link>
         </div>
@@ -94,11 +108,19 @@ import Footer from "../../components/Footer.vue";
 import { useRoute } from "vue-router";
 import useArticles from "../../composables/articles";
 
-const { article, getArticle, articles, getRelatedArticles } = useArticles();
+const {
+  article,
+  getArticle,
+  latestArticles,
+  getLatestArticles,
+  articles,
+  getRelatedArticles,
+} = useArticles();
 const route = useRoute();
 
 onMounted(() => {
   getArticle(route.params.id);
+  getLatestArticles();
 });
 
 watch(article, async (newArticle, oldArticle) => {

@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 
 export default function useArticles() {
     const articles = ref([]);
+    const latestArticles = ref([]);
     const article = ref([]);
     const router = useRouter();
     const errors = ref("");
@@ -34,6 +35,20 @@ export default function useArticles() {
             })
             .catch((ex) => {
                 articles.value = [];
+                processing.value = false;
+            });
+    };
+
+    const getLatestArticles = async () => {
+        processing.value = true;
+        await axios
+            .get("/articles/latest")
+            .then((response) => {
+                latestArticles.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                latestArticles.value = [];
                 processing.value = false;
             });
     };
@@ -105,6 +120,8 @@ export default function useArticles() {
         processing,
         getArticles,
         getRelatedArticles,
+        latestArticles,
+        getLatestArticles,
         getArticle,
         storeArticle,
         updateArticle,
