@@ -23,10 +23,7 @@ import ArticlesCreate from "../pages/hp/Articles/ArticlesCreate.vue";
 import ArticleView from "../pages/Articles/ArticleView.vue";
 
 import UsersIndex from "../pages/Admin/Users/UsersIndex.vue";
-import UsersEdit from "../pages/Admin/Users/UsersEdit.vue";
-import UsersCreate from "../pages/Admin/Users/UsersEdit.vue";
-
-// import HealthProsIndex from "../pages/Admin/Health_pros/HealthProsIndex.vue";
+import UserDetails from "../pages/Admin/Users/UserDetails.vue";
 
 import CategoriesIndex from "../pages/hp/Categories/CategoriesIndex.vue";
 import CategoriesEdit from "../pages/hp/Categories/CategoriesEdit.vue";
@@ -161,21 +158,11 @@ const routes = [
         component: UsersIndex,
     },
     {
-        path: "/users/create",
-        name: "users.create",
-        component: UsersCreate,
-    },
-    {
-        path: "/users/:id/edit",
-        name: "users.edit",
-        component: UsersEdit,
+        path: "/user/:id/details",
+        name: "user.details",
+        component: UserDetails,
         props: true,
     },
-    // {
-    //     path: "/admin/hpros",
-    //     name: "hpros.index",
-    //     component: HealthProsIndex,
-    // },
 ];
 
 const router = createRouter({

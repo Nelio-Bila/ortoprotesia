@@ -25,10 +25,7 @@
             <template v-for="user in users" :key="user.id">
               <tr>
                 <td>{{ user.name }} {{ user.surname }}</td>
-                <td>
-                  <!-- {{ new Date(user.birthdate).toLocaleDateString() }} -->
-                  {{ getAge(user.birthdate) }} anos
-                </td>
+                <td>{{ getAge(user.birthdate) }} anos</td>
                 <td>
                   {{ new Date(user.created_at).toLocaleDateString() }}
                 </td>
@@ -36,10 +33,10 @@
                   <router-link
                     class="btn btn-sm btn-warning mx-2"
                     :to="{
-                      name: 'users.edit',
+                      name: 'user.details',
                       params: { id: user.id },
                     }"
-                    >Editar</router-link
+                    >Detalhes</router-link
                   >
                   <button
                     class="btn btn-sm btn-danger"
