@@ -60,7 +60,9 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
+import { useOnline } from "@vueuse/core";
+
 import ArticleCard from "./ArticleCard.vue";
 import useArticles from "../composables/articles";
 
@@ -68,6 +70,14 @@ const { articles, getArticles, searchedArticles, searchArticles } =
   useArticles();
 
 const props = defineProps(["criteria"]);
+
+const online = useOnline();
+
+watch(online, (on, off) => {
+  if (on) {
+    getArticles();
+  }
+});
 
 onMounted(() => {
   getArticles();

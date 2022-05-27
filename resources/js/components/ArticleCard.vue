@@ -1,7 +1,7 @@
 <template>
   <div class="col-lg-6">
     <div class="row justify-content-center mt-2 mx-1">
-      <div class="card px-0 box">
+      <!-- <div class="card px-0 box">
         <h5 class="card-header">{{ article.title }}</h5>
         <div class="card-body">
           <h5 class="card-title">{{ article.title }}</h5>
@@ -13,6 +13,42 @@
               >Ler mais...</router-link
             >
             <span>{{ new Date(article.created_at).toLocaleDateString() }}</span>
+          </div>
+        </div>
+      </div> -->
+      <div class="card mb-3" style="max-width: 540px">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img
+              :src="`/articles/headers/${article.featuredImage}`"
+              class="img-fluid rounded-start"
+              :alt="article.title"
+            />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ article.title }}</h5>
+              <p class="card-text">
+                {{ article.postExcerpt }}
+              </p>
+              <p class="card-text">
+                <small class="text-primary"
+                  >Por: {{ article.hpro.name }}
+                  {{ article.hpro.surname }}</small
+                >
+                <small class="text-muted mx-3">{{
+                  new Date(article.created_at).toLocaleDateString()
+                }}</small>
+              </p>
+              <p><i class="fa-solid fa-eye"></i> {{ article.views }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <router-link
+                  :to="`/articles/${article.id}`"
+                  class="btn btn-primary"
+                  >Ler mais...</router-link
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>

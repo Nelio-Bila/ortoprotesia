@@ -36,6 +36,14 @@ class ArticleController extends Controller
         return Article::with(['category', 'hpro'])->find($id);
     }
 
+    public function incrementViews($id)
+    {
+        $article =  Article::find($id);
+        $article->views++;
+
+        $article->save();
+    }
+
     public function store(Request $request)
     {
         $request->validate([

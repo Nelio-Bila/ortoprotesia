@@ -20,8 +20,9 @@
         {{ article.category.name }}
       </div>
       <div class="col text-primary">
-        <i class="fa-solid fa-eye fa-xl mx-3"></i>:
-        {{ article.views }} Visualizações
+        <i class="fa-solid fa-eye fa-xl mx-3"></i> {{ article.views }}
+        <span v-if="article.views === 1">Visualização</span>
+        <span v-else>Visualizações</span>
       </div>
     </div>
     <div class="row">
@@ -115,12 +116,14 @@ const {
   getLatestArticles,
   articles,
   getRelatedArticles,
+  incrementArticleViews,
 } = useArticles();
 const route = useRoute();
 
 onMounted(() => {
   getArticle(route.params.id);
   getLatestArticles();
+  incrementArticleViews(route.params.id);
 });
 
 watch(article, async (newArticle, oldArticle) => {

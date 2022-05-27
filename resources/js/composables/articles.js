@@ -128,6 +128,17 @@ export default function useArticles() {
             });
     };
 
+    const incrementArticleViews = async (id) => {
+        errors.value = "";
+        try {
+            await axios.put("/articles/increment/" + id);
+        } catch (e) {
+            if (e.response.status === 422) {
+                errors.value = e.response.data.errors;
+            }
+        }
+    };
+
     return {
         articles,
         article,
@@ -143,5 +154,6 @@ export default function useArticles() {
         storeArticle,
         updateArticle,
         destroyArticle,
+        incrementArticleViews,
     };
 }

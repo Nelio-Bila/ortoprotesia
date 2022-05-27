@@ -21,7 +21,7 @@ class Article extends Model
 
     public function hpro()
     {
-        return $this->belongsTo(HealthProfessional::class);
+        return $this->belongsTo(HealthProfessional::class, 'health_professional_id', 'id');
     }
 
     public function images()

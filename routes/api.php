@@ -78,6 +78,7 @@ Route::get('articles/related/{id}/{article}', [ArticleController::class, 'relate
 Route::get('/articles/search/{criteria}', [ArticleController::class, 'search']);
 Route::get('/articles/latest', [ArticleController::class, 'latest']);
 Route::post('/articles/register', [ArticleController::class, 'store']);
+Route::put('/articles/increment/{id}', [ArticleController::class, 'incrementViews']);
 
 // Process
 Route::post('process/register', [ProcessController::class, 'store']);
