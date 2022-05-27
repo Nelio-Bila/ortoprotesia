@@ -5,6 +5,7 @@
       ><i class="fa-solid fa-chevron-left"></i
     ></router-link>
     <h1 class="text-center mb-5">{{ article.title }}</h1>
+
     <div class="row mb-3">
       <div class="col text-primary">
         <i class="fa-solid fa-calendar-days fa-2xl mx-3"></i>Publicado aos
@@ -23,6 +24,17 @@
         <i class="fa-solid fa-eye fa-xl mx-3"></i> {{ article.views }}
         <span v-if="article.views === 1">Visualização</span>
         <span v-else>Visualizações</span>
+      </div>
+    </div>
+    <div class="row my-4">
+      <div class="col text-center">
+        <img
+          :src="`/storage/articles/headers/${article.featuredImage}`"
+          :alt="article.featuredImage"
+          class="img"
+          width="600"
+          height="500"
+        />
       </div>
     </div>
     <div class="row">
