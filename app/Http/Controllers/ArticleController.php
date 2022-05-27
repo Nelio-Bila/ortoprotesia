@@ -44,6 +44,11 @@ class ArticleController extends Controller
         $article->save();
     }
 
+    public function byCategory($category_id)
+    {
+        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $category_id)->get());
+    }
+
     public function store(Request $request)
     {
         $request->validate([

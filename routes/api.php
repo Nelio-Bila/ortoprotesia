@@ -77,6 +77,7 @@ Route::get('article/{id}', [ArticleController::class, 'show']);
 Route::get('articles/related/{id}/{article}', [ArticleController::class, 'related']);
 Route::get('/articles/search/{criteria}', [ArticleController::class, 'search']);
 Route::get('/articles/latest', [ArticleController::class, 'latest']);
+Route::get('/articles/category/{category_id}', [ArticleController::class, 'byCategory']);
 Route::post('/articles/register', [ArticleController::class, 'store']);
 Route::put('/articles/increment/{id}', [ArticleController::class, 'incrementViews']);
 

@@ -24,10 +24,10 @@ const route = useRoute();
 const toast = useToast();
 
 watch(online, async (on, off) => {
-  if (on) {
+  if (!on) {
     toast.error("Sem conexão a internet", {
       position: "bottom-left",
-      timeout: false,
+      timeout: 3000,
       hideProgressBar: true,
       closeButton: "button",
       rtl: false,

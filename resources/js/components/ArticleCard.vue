@@ -3,7 +3,7 @@
     <div class="row justify-content-center mt-2 mx-1">
       <div class="card mb-3" style="max-width: 540px">
         <div class="row g-0">
-          <div class="col-md-4 -flex vertical-center">
+          <div class="col-md-4 vertical-center">
             <img
               :src="`/storage/articles/headers/${article.featuredImage}`"
               class="img-thumbnail rounded"
@@ -12,20 +12,23 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{ article.title }}</h5>
+              <h5 class="card-title fw-bolder">{{ article.title }}</h5>
               <p class="card-text">
                 {{ article.postExcerpt }}
               </p>
-              <p class="card-text">
+              <p class="card-text m-0">
                 <small class="text-primary"
                   >Por: {{ article.hpro.name }}
                   {{ article.hpro.surname }}</small
                 >
-                <small class="text-muted mx-3">{{
-                  new Date(article.created_at).toLocaleDateString()
-                }}</small>
+                <small class="text-muted mx-3"
+                  >aos
+                  {{ new Date(article.created_at).toLocaleDateString() }}</small
+                >
               </p>
-              <p><i class="fa-solid fa-eye"></i> {{ article.views }}</p>
+              <p class="mt-0">
+                <i class="fa-solid fa-eye"></i> {{ article.views }}
+              </p>
               <div class="d-flex justify-content-between align-items-center">
                 <router-link
                   :to="`/articles/${article.id}`"

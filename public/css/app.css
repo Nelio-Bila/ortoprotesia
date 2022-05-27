@@ -207,7 +207,7 @@ strong {
 }
 
 small, .small {
-  font-size: 0.875em;
+  font-size: 0.675em;
 }
 
 mark, .mark {
@@ -259,7 +259,7 @@ pre {
   margin-top: 0;
   margin-bottom: 1rem;
   overflow: auto;
-  font-size: 0.875em;
+  font-size: 0.675em;
 }
 pre code {
   font-size: inherit;
@@ -268,7 +268,7 @@ pre code {
 }
 
 code {
-  font-size: 0.875em;
+  font-size: 0.675em;
   color: #d63384;
   word-wrap: break-word;
 }
@@ -278,7 +278,7 @@ a > code {
 
 kbd {
   padding: 0.2rem 0.4rem;
-  font-size: 0.875em;
+  font-size: 0.675em;
   color: #fff;
   background-color: #212529;
   border-radius: 0.2rem;
@@ -573,7 +573,7 @@ progress {
 }
 
 .initialism {
-  font-size: 0.875em;
+  font-size: 0.675em;
   text-transform: uppercase;
 }
 
@@ -588,7 +588,7 @@ progress {
 .blockquote-footer {
   margin-top: -1rem;
   margin-bottom: 1rem;
-  font-size: 0.875em;
+  font-size: 0.675em;
   color: #6c757d;
 }
 .blockquote-footer::before {
@@ -619,7 +619,7 @@ progress {
 }
 
 .figure-caption {
-  font-size: 0.875em;
+  font-size: 0.675em;
   color: #6c757d;
 }
 
@@ -2178,7 +2178,7 @@ progress {
 
 .form-text {
   margin-top: 0.25rem;
-  font-size: 0.875em;
+  font-size: 0.675em;
   color: #6c757d;
 }
 
@@ -2814,7 +2814,7 @@ textarea.form-control-lg {
   display: none;
   width: 100%;
   margin-top: 0.25rem;
-  font-size: 0.875em;
+  font-size: 0.675em;
   color: #198754;
 }
 
@@ -2903,7 +2903,7 @@ textarea.form-control-lg {
   display: none;
   width: 100%;
   margin-top: 0.25rem;
-  font-size: 0.875em;
+  font-size: 0.675em;
   color: #902f37;
 }
 

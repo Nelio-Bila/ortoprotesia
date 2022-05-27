@@ -11,7 +11,7 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 const toastOptions = {
-    // You can set your default options here
+    maxToasts: 1,
 };
 
 import Home from "./pages/Home";

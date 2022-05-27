@@ -1,6 +1,27 @@
 <template>
   <div class="my-2" id="articles" v-if="!criteria">
     <h1 class="text-center">Artigos</h1>
+    <div class="row mx-1">
+      <div class="col-md-4">
+        <label for="categorySelect">Categorias</label>
+        <select
+          @change="filterCategory"
+          name="categorySelect"
+          id="categorySelect"
+          class="form-control"
+          v-model="categoryFilter"
+        >
+          <option disabled>Selecione uma categoria</option>
+          <option
+            v-for="category in categories"
+            :key="category.id"
+            :value="category.id"
+          >
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+    </div>
     <div class="row">
       <ArticleCard
         :article="article"
@@ -27,11 +48,14 @@
     </nav>
   </div>
   <div class="my-2" id="articles" v-if="criteria">
+    <router-link to="/" class="btn btn-outline-primary"
+      ><i class="fa-solid fa-chevron-left"></i
+    ></router-link>
     <h1 class="text-center">Resultados</h1>
-    <h2 class="text-center" v-if="!searchedArticles">
+    <h2 class="text-center" v-if="!searchedArticles.length">
       Infelimente não foi encontrado algo relacionado a pesquisa
     </h2>
-    <h2 class="text-center">Artigos</h2>
+    <h2 class="text-center" v-if="searchedArticles.length">Artigos</h2>
     <div class="row">
       <ArticleCard
         :article="article"
@@ -60,14 +84,24 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from "vue";
+import { onMounted, watch, ref } from "vue";
 import { useOnline } from "@vueuse/core";
 
 import ArticleCard from "./ArticleCard.vue";
 import useArticles from "../composables/articles";
+import useCategories from "../composables/categories";
 
-const { articles, getArticles, searchedArticles, searchArticles } =
-  useArticles();
+const categoryFilter = ref("");
+
+const {
+  articles,
+  getArticles,
+  searchedArticles,
+  searchArticles,
+  getArticlesByCategory,
+} = useArticles();
+
+const { categories, getCategories } = useCategories();
 
 const props = defineProps(["criteria"]);
 
@@ -80,7 +114,12 @@ watch(online, (on, off) => {
 });
 
 onMounted(() => {
+  getCategories();
   getArticles();
   searchArticles(props.criteria);
 });
+
+const filterCategory = async () => {
+  getArticlesByCategory(categoryFilter.value);
+};
 </script>

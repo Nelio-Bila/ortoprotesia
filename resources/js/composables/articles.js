@@ -26,6 +26,20 @@ export default function useArticles() {
             });
     };
 
+    const getArticlesByCategory = async (category_id) => {
+        processing.value = true;
+        await axios
+            .get("/articles/category/" + category_id)
+            .then((response) => {
+                articles.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                articles.value = [];
+                processing.value = false;
+            });
+    };
+
     const getRelatedArticles = async (id, article) => {
         processing.value = true;
         await axios
@@ -155,5 +169,6 @@ export default function useArticles() {
         updateArticle,
         destroyArticle,
         incrementArticleViews,
+        getArticlesByCategory,
     };
 }

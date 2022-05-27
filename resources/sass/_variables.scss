@@ -13,3 +13,31 @@ $danger: #902f37;
 $warning: #f9cf00;
 // $success: lime;
 // $info: aqua;
+
+
+$vt-toast-background: #ffffff !default;
+
+$vt-color-default: $primary !default;
+
+$vt-color-info:  $primary !default;
+
+$vt-color-success: #4caf50 !default;
+
+$vt-color-warning: $warning !default;
+
+$vt-color-error: $danger !default;
+
+
+$vt-color-progress-default: linear-gradient(
+  to right,
+  #4cd964,
+  $primary,
+  $primary,
+  $primary,
+  $primary,
+  $danger
+) !default;
+
+$small-font-size:             .675em;
+
+

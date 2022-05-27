@@ -53,15 +53,34 @@
             :to="`/articles/${article.id}`"
             class="btn btn-outline-secondary p-1 mb-0 w-100"
           >
-            <h4>{{ article.title }}</h4>
-            <p class="text-small">
-              <i class="fa-solid fa-calendar-days mx-2"></i>
-              {{ new Date(article.created_at).toLocaleDateString() }}
-            </p>
-            <p class="text-small">
-              <i class="fa-solid fa-eye mx-2"></i>
-              {{ article.views }}
-            </p>
+            <div class="row">
+              <div class="col vertical-center">
+                <img
+                  :src="`/storage/articles/headers/${article.featuredImage}`"
+                  alt=""
+                  class="img img-thumbnail"
+                />
+              </div>
+              <div class="col text-start">
+                <h4 class="fw-bolder">{{ article.title }}</h4>
+                <p class="text-small m-0">
+                  <i class="fa-solid fa-user-nurse mx-2"></i>
+                  <small
+                    >{{ article.hpro.name }} {{ article.hpro.surname }}</small
+                  >
+                </p>
+                <p class="text-small m-0">
+                  <i class="fa-solid fa-calendar-days mx-2"></i>
+                  <small>{{
+                    new Date(article.created_at).toLocaleDateString()
+                  }}</small>
+                </p>
+                <p class="text-small m-0">
+                  <i class="fa-solid fa-eye mx-2"></i>
+                  {{ article.views }}
+                </p>
+              </div>
+            </div>
           </router-link>
         </div>
 
@@ -71,22 +90,40 @@
           aria-label="First group"
         >
           <div class="btn btn-primary p-3">Artigos recentes</div>
-
           <router-link
             v-for="article in latestArticles"
             :key="article.id"
             :to="`/articles/${article.id}`"
             class="btn btn-outline-secondary p-1 mb-0 w-100"
           >
-            <h4>{{ article.title }}</h4>
-            <p class="text-small">
-              <i class="fa-solid fa-calendar-days mx-2"></i>
-              {{ new Date(article.created_at).toLocaleDateString() }}
-            </p>
-            <p class="text-small">
-              <i class="fa-solid fa-eye mx-2"></i>
-              {{ article.views }}
-            </p>
+            <div class="row">
+              <div class="col vertical-center">
+                <img
+                  :src="`/storage/articles/headers/${article.featuredImage}`"
+                  alt=""
+                  class="img img-thumbnail"
+                />
+              </div>
+              <div class="col text-start">
+                <h4 class="fw-bolder">{{ article.title }}</h4>
+                <p class="text-small m-0">
+                  <i class="fa-solid fa-user-nurse mx-2"></i>
+                  <small
+                    >{{ article.hpro.name }} {{ article.hpro.surname }}</small
+                  >
+                </p>
+                <p class="text-small m-0">
+                  <i class="fa-solid fa-calendar-days mx-2"></i>
+                  <small>{{
+                    new Date(article.created_at).toLocaleDateString()
+                  }}</small>
+                </p>
+                <p class="text-small m-0">
+                  <i class="fa-solid fa-eye mx-2"></i>
+                  {{ article.views }}
+                </p>
+              </div>
+            </div>
           </router-link>
         </div>
 
