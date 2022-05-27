@@ -8,8 +8,9 @@
           @change="filterCategory"
           name="categorySelect"
           id="categorySelect"
-          class="form-control"
+          class="form-select"
           v-model="categoryFilter"
+          aria-label="Filtrar artigos por categoria"
         >
           <option disabled>Selecione uma categoria</option>
           <option
