@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
-        $this->app['request']->server->set('HTTPS', 'on');
+
+
+        if (env('APP_ENV') === 'production') {
+            $this->app['request']->server->set('HTTPS', 'on'); // this line
+
+            URL::forceSchema('https');
+        }
     }
 }
