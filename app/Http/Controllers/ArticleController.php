@@ -11,9 +11,13 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         if ($request->total) {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate($request->total));
+            $articles = Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate($request->total);
+            $articles->setPath('/');
+            response()->json($articles);
         } else {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate(10));
+            $articles = Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate(2);
+            $articles->setPath('/');
+            return response()->json($articles);
         }
     }
 
