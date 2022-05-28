@@ -57,7 +57,7 @@ export default function useArticles() {
         await axios
             .get("/articles/popularity/" + popularity)
             .then((response) => {
-                articles.value = response.data;
+                articles.value = response.data.data;
                 processing.value = false;
             })
             .catch((ex) => {

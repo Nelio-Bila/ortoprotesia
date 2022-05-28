@@ -79,7 +79,7 @@ Route::get('/articles/search/{criteria}', [ArticleController::class, 'search']);
 Route::get('/articles/latest', [ArticleController::class, 'latest']);
 Route::get('/articles/category/{category_id}', [ArticleController::class, 'byCategory']);
 Route::get('/articles/period/{period}', [ArticleController::class, 'byPeriod']);
-Route::get('/articles/popularity/{views}', [ArticleController::class, 'byViews']);
+Route::get('/articles/popularity/{popularity}', [ArticleController::class, 'byViews']);
 Route::post('/articles/register', [ArticleController::class, 'store']);
 Route::put('/articles/increment/{id}', [ArticleController::class, 'incrementViews']);
 

@@ -50,8 +50,8 @@
           class="form-select"
         >
           <option disabled>Selecione uma opção</option>
-          <option value="most">Mais lidos</option>
-          <option value="least">Menos lidos</option>
+          <option value="most">Top 10 Mais lidos</option>
+          <option value="least">Top 10 Menos lidos</option>
         </select>
       </div>
     </div>
