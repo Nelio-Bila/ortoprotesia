@@ -125,7 +125,7 @@
 </template>
 
 <script setup>
-import { onMounted, watch, ref } from "vue";
+import { onMounted, watch, ref, nextTick } from "vue";
 import { useOnline } from "@vueuse/core";
 
 import Spinner from "./Spinner.vue";
@@ -165,7 +165,6 @@ onMounted(() => {
   getCategories();
   getArticles();
   searchArticles(props.criteria);
-  loading.value = false;
 });
 
 const filterCategory = async () => {
@@ -179,4 +178,6 @@ const filterDate = async () => {
 const filterPopularity = async () => {
   getArticlesByPopularity(popularityFilter.value);
 };
+
+loading.value = processing.value;
 </script>
