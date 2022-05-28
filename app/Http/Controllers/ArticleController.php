@@ -13,7 +13,7 @@ class ArticleController extends Controller
         if ($request->total) {
             return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate($request->total));
         } else {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate(2));
+            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate(10));
         }
     }
 
@@ -47,7 +47,7 @@ class ArticleController extends Controller
 
     public function byCategory($category_id)
     {
-        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $category_id)->get());
+        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $category_id)->paginate(10));
     }
     public function byPeriod($period)
     {
@@ -55,11 +55,11 @@ class ArticleController extends Controller
             return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereBetween(
                 'created_at',
                 [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
-            ));
+            )->paginate(10));
         } elseif (strcmp($period, "month") === 0) {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('created_at', '>=', Carbon::now()->subdays(30))->get());
+            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('created_at', '>=', Carbon::now()->subdays(30))->paginate(10));
         } elseif (strcmp($period, "year") === 0) {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereYear('created_at', date('Y'))->get());
+            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereYear('created_at', date('Y'))->paginate(10));
         } else {
         }
     }

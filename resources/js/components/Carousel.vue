@@ -32,7 +32,7 @@
         <div class="carousel-item active">
           <img
             :src="'/images/various/hcm.jpg'"
-            class="d-block w-100"
+            class="d-block w-100 img"
             alt="Outra"
           />
           <div class="carousel-caption d-none d-md-block">
@@ -46,7 +46,7 @@
         <div class="carousel-item">
           <img
             :src="'/images/various/hcm.jpg'"
-            class="d-block w-100"
+            class="d-block w-100 img"
             alt="Terceira"
           />
           <div class="carousel-caption d-none d-md-block">
@@ -57,7 +57,7 @@
         <div class="carousel-item">
           <img
             :src="'/images/various/hcm.jpg'"
-            class="d-block w-100"
+            class="d-block w-100 img"
             alt="Primeira foto"
           />
           <div class="carousel-caption d-none d-md-block">
@@ -96,3 +96,12 @@ export default {
   name: "Carousel",
 };
 </script>
+
+<style scoped>
+.img {
+  /* height: 15em; */
+  object-fit: cover;
+  width: 100%;
+  height: 250px;
+}
+</style>
