@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    @if (config('app.env') === 'local')
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
+    @else
+        <link rel="icon" type="image/x-icon" href="{{ secure_asset('images/logo.png') }}">
+    @endif
+
+
     <title>Ortoprotesia</title>
 
     <!-- Fonts -->
