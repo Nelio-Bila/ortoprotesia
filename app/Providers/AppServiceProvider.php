@@ -29,9 +29,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        if (env('APP_ENV') === 'production') {
-            //register your services you require for production
-            $this->app['request']->server->set('HTTPS', true);
+        // if (env('APP_ENV') === 'production') {
+        //     //register your services you require for production
+        //     $this->app['request']->server->set('HTTPS', true);
+        // }
+
+        if ($this->app->environment('production')) {
+            $this->app['request']->server->set('HTTPS', 'on');
         }
 
         // if (env('APP_ENV') === 'production') {
