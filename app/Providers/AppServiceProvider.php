@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,16 +25,18 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
         //
         Schema::defaultStringLength(191);
 
 
-        if (env('APP_ENV') === 'production') {
-            $this->app['request']->server->set('HTTPS', 'on'); // this line
+        // if (env('APP_ENV') === 'production') {
+        if (App::environment('production')) {
+            // $this->app['request']->server->set('HTTPS', 'on'); // this line
 
-            URL::forceScheme('https');
+            // URL::forceScheme('https');
+            $url->forceScheme('https');
         }
     }
 }
