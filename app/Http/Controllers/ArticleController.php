@@ -12,7 +12,8 @@ class ArticleController extends Controller
     {
         if ($request->total) {
             $articles = Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate($request->total);
-            $articles->setPath('/');
+            // $articles->setPath('/');
+            $articles->setBaseUrl('https://' . Request::getHttpHost() . '/' . Request::path());
             response()->json($articles);
         } else {
             $articles = Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate(2);
