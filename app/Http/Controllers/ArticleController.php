@@ -12,12 +12,11 @@ class ArticleController extends Controller
     {
         if ($request->total) {
             $articles = Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate($request->total);
-            // $articles->setPath('/');
-            $articles->setBaseUrl('https://' . $request->getHost() . '/' . $request->path());
+            // $articles->setBaseUrl('https://' . $request->getHost() . '/' . $request->path());
             response()->json($articles);
         } else {
             $articles = Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate(2);
-            $articles->setPath('/');
+            // $articles->setBaseUrl('https://' . $request->getHost() . '/' . $request->path());
             return response()->json($articles);
         }
     }
