@@ -13,7 +13,7 @@ class ArticleController extends Controller
         if ($request->total) {
             return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate($request->total));
         } else {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->get());
+            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate(2));
         }
     }
 

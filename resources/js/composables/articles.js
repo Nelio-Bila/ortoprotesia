@@ -11,10 +11,10 @@ export default function useArticles() {
     const errors = ref("");
     const processing = ref(false);
 
-    const getArticles = async () => {
+    const getArticles = async (page) => {
         processing.value = true;
         await axios
-            .get("/articles")
+            .get("/articles/?page=" + page)
             .then((response) => {
                 articles.value = response.data;
                 processing.value = false;

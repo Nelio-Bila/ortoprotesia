@@ -42,6 +42,7 @@
         "datatables.net-dt": "^1.12.0",
         "dropzone-vue": "^0.1.11",
         "jquery": "^3.6.0",
+        "laravel-vue-pagination": "^3.0.0",
         "pinia": "^2.0.13",
         "vue-advanced-cropper": "^2.8.1",
         "vue-anka-cropper": "^1.1.0",

@@ -72,7 +72,7 @@ Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 
 
 // Articles
-Route::get('articles', [ArticleController::class, 'index']);
+Route::get('articles/{page?}', [ArticleController::class, 'index']);
 Route::get('article/{id}', [ArticleController::class, 'show']);
 Route::get('articles/related/{id}/{article}', [ArticleController::class, 'related']);
 Route::get('/articles/search/{criteria}', [ArticleController::class, 'search']);
