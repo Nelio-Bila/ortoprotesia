@@ -26,19 +26,20 @@
         <span v-else>Visualizações</span>
       </div>
     </div>
-    <div class="row my-4">
-      <div class="col text-center">
-        <img
-          :src="`/storage/articles/headers/${article.featuredImage}`"
-          :alt="article.featuredImage"
-          class="img"
-          width="600"
-          height="500"
-        />
-      </div>
-    </div>
+    <!-- <div class="row my-4"></div> -->
     <div class="row">
-      <div class="col-md-9" v-html="article.body"></div>
+      <div class="col-md-9">
+        <div class="col text-center my-3">
+          <img
+            :src="`/storage/articles/headers/${article.featuredImage}`"
+            :alt="article.featuredImage"
+            class="img"
+            width="600"
+            height="500"
+          />
+        </div>
+        <div v-html="article.body"></div>
+      </div>
       <div class="col-md-3">
         <div
           class="btn-group-vertical w-100 mb-5"
