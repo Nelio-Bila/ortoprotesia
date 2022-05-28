@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Spinner v-if="loading" />
+  <div v-else>
     <NavBar />
     <div class="container align-items-center justify-content-center">
       <div class="row my-2">
@@ -168,7 +169,7 @@
             <div class="form-check mb-3">
               <label for="password_confirm" class="form-check-label"
                 >Li e aceito a <a href="#">Politica de privacidade</a> e os
-                <a href="#">termos e condiçoes</a></label
+                <a href="#">termos e condições</a></label
               >
               <input
                 type="checkbox"
@@ -234,6 +235,7 @@ export default {
       processing: false,
       errors_exist: false,
       validationErrors: null,
+      loading: true,
     };
   },
   methods: {
@@ -325,7 +327,11 @@ export default {
       processing: {},
       errors_exist: {},
       validationErrors: {},
+      loading: {},
     };
+  },
+  mounted() {
+    this.loading = false;
   },
   components: { NavBar, Footer },
 };

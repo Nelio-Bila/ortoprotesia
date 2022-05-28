@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Spinner v-if="loading" />
+  <div v-else>
     <NavBar />
     <div class="row my-2">
       <div class="col-md-5 mx-auto">
@@ -45,6 +46,15 @@
               ></button>
             </div>
           </div>
+          <div class="row mb-3">
+            <div class="col">
+              <hr />
+            </div>
+            OU
+            <div class="col">
+              <hr />
+            </div>
+          </div>
           <div v-if="isLoginInvalid">
             <div
               class="
@@ -76,15 +86,6 @@
             </div>
           </div>
 
-          <div class="row mb-3">
-            <div class="col">
-              <hr />
-            </div>
-            OU
-            <div class="col">
-              <hr />
-            </div>
-          </div>
           <div class="form-group mb-3">
             <label for="email">Email</label>
             <input
@@ -127,19 +128,21 @@
             </label>
           </div>
 
-          <button class="btn btn-primary btn-block mb-3" :disabled="processing">
-            <i
+          <button class="btn btn-primary tn-block mb-3" :disabled="processing">
+            <span
               v-if="processing"
-              class="fa-solid fa-spinner fa-spin-pulse mx-2"
-            ></i>
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
             <span v-if="processing">Entrando...</span>
-
             <i
               v-if="!processing"
               class="fa-solid fa-arrow-right-to-bracket mx-2"
             ></i>
-            <span v-if="!processing">Entrar</span></button
-          ><br />
+            <span v-if="!processing">Entrar</span>
+          </button>
+          <br />
           <div class="d-flex justify-content-between">
             <router-link class="" to="register">Criar conta</router-link>
             <router-link class="" to="forgot"
@@ -154,14 +157,20 @@
 </template>
 
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive, computed, onMounted, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 
+import Spinner from "../../components/Spinner.vue";
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 
 import useAuth from "../../composables/auth";
+
+const loading = ref(true);
+onMounted(() => {
+  loading.value = false;
+});
 
 const form = reactive({
   email: "",

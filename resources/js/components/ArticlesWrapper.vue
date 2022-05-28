@@ -92,6 +92,7 @@ import ArticleCard from "./ArticleCard.vue";
 import useArticles from "../composables/articles";
 import useCategories from "../composables/categories";
 
+const loading = ref("");
 const categoryFilter = ref("");
 
 const {
@@ -100,6 +101,7 @@ const {
   searchedArticles,
   searchArticles,
   getArticlesByCategory,
+  processing,
 } = useArticles();
 
 const { categories, getCategories } = useCategories();
@@ -118,6 +120,7 @@ onMounted(() => {
   getCategories();
   getArticles();
   searchArticles(props.criteria);
+  loading.value = processing.value;
 });
 
 const filterCategory = async () => {
