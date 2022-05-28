@@ -39,6 +39,32 @@ export default function useArticles() {
                 processing.value = false;
             });
     };
+    const getArticlesByDate = async (period) => {
+        processing.value = true;
+        await axios
+            .get("/articles/period/" + period)
+            .then((response) => {
+                articles.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                articles.value = [];
+                processing.value = false;
+            });
+    };
+    const getArticlesByPopularity = async (popularity) => {
+        processing.value = true;
+        await axios
+            .get("/articles/popularity/" + popularity)
+            .then((response) => {
+                articles.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                articles.value = [];
+                processing.value = false;
+            });
+    };
 
     const getRelatedArticles = async (id, article) => {
         processing.value = true;
@@ -170,5 +196,7 @@ export default function useArticles() {
         destroyArticle,
         incrementArticleViews,
         getArticlesByCategory,
+        getArticlesByDate,
+        getArticlesByPopularity,
     };
 }
