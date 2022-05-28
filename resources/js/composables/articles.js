@@ -14,7 +14,7 @@ export default function useArticles() {
     const getArticles = async (page) => {
         processing.value = true;
         await axios
-            .get("/articles/?page=" + page)
+            .get("https://ortoprotesia.herokuapp.com/articles/?page=" + page)
             .then((response) => {
                 articles.value = response.data;
                 processing.value = false;
