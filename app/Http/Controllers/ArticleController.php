@@ -52,12 +52,10 @@ class ArticleController extends Controller
     public function byPeriod($period)
     {
         if (strcmp($period, "week") === 0) {
-            $previous_week = strtotime("-1 week +1 day");
-            $start_week = strtotime("last sunday midnight", $previous_week);
-            $end_week = strtotime("next saturday", $start_week);
-            $start_week = date("Y-m-d", $start_week);
-            $end_week = date("Y-m-d", $end_week);
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereBetween('created_at', [$start_week, $end_week])->get());
+            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereBetween(
+                'created_at',
+                [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
+            ));
         } elseif (strcmp($period, "month") === 0) {
             return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('created_at', '>=', Carbon::now()->subdays(30))->get());
         } elseif (strcmp($period, "year") === 0) {
