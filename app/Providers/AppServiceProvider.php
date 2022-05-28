@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Routing\UrlGenerator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,18 +25,23 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
         Schema::defaultStringLength(191);
+
+        if (env('APP_ENV') !== 'local') {
+
+            $url->forceScheme('https');
+        }
 
         // if (env('APP_ENV') === 'production') {
         //     //register your services you require for production
         //     $this->app['request']->server->set('HTTPS', true);
         // }
 
-        if ($this->app->environment('production')) {
-            $this->app['request']->server->set('HTTPS', 'on');
-        }
+        // if ($this->app->environment('production')) {
+        //     $this->app['request']->server->set('HTTPS', 'on');
+        // }
 
         // if (env('APP_ENV') === 'production') {
         // if (App::environment('production')) {
