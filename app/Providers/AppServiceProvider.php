@@ -25,18 +25,25 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(UrlGenerator $url)
+    public function boot()
     {
         //
         Schema::defaultStringLength(191);
 
+        if ($this->app->isLocal()) {
+            //if local register your services you require for development
+
+        } else {
+            //else register your services you require for production
+            $this->app['request']->server->set('HTTPS', true);
+        }
 
         // if (env('APP_ENV') === 'production') {
-        if (App::environment('production')) {
-            // $this->app['request']->server->set('HTTPS', 'on'); // this line
+        // if (App::environment('production')) {
+        // $this->app['request']->server->set('HTTPS', 'on'); // this line
 
-            // URL::forceScheme('https');
-            $url->forceScheme('https');
-        }
+        // URL::forceScheme('https');
+        // $url->forceScheme('https');
+        // }
     }
 }
