@@ -27,14 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
         Schema::defaultStringLength(191);
 
-        if ($this->app->isLocal()) {
-            //if local register your services you require for development
-
-        } else {
-            //else register your services you require for production
+        if (env('APP_ENV') === 'production') {
+            //register your services you require for production
             $this->app['request']->server->set('HTTPS', true);
         }
 
