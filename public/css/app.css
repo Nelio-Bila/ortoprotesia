@@ -11513,3 +11513,8 @@ body {
   display: flex;
   align-items: center;
 }
+
+.horizontal-center {
+  margin: auto;
+  width: 50%;
+}
