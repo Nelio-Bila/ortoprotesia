@@ -10,15 +10,12 @@ class ArticleController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->total) {
-            $articles = Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate($request->total);
-            // $articles->setBaseUrl('https://' . $request->getHost() . '/' . $request->path());
-            response()->json($articles);
-        } else {
-            $articles = Article::with(['category', 'hpro'])->orderBy('id', 'desc')->paginate(2);
-            // $articles->setBaseUrl('https://' . $request->getHost() . '/' . $request->path());
-            return response()->json($articles);
-        }
+        return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->get();
+        // if ($request->total) {
+        // } else {
+        //     return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->get();
+
+        // }
     }
 
     public function related($id, $article)

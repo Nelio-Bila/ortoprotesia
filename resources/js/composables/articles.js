@@ -1,8 +1,9 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { usePagination } from "../components/pagination/useClientSidePagination";
 
-export default function useArticles() {
+export default function useArticles(currentPage, rowsPerPage = 2) {
     const articles = ref([]);
     const latestArticles = ref([]);
     const searchedArticles = ref([]);
@@ -11,16 +12,21 @@ export default function useArticles() {
     const errors = ref("");
     const processing = ref(false);
 
+    const { paginatedArray, numberOfPages } = usePagination({
+        rowsPerPage,
+        arrayToPaginate: articles,
+        currentPage,
+    });
+
     const getArticles = async (page) => {
         processing.value = true;
         await axios
-            .get("/articles/?page=" + page)
+            .get("/articles")
             .then((response) => {
                 articles.value = response.data;
                 processing.value = false;
             })
             .catch((ex) => {
-                console.log(ex.response.data.errors);
                 articles.value = [];
                 processing.value = false;
             });
@@ -180,10 +186,11 @@ export default function useArticles() {
     };
 
     return {
-        articles,
+        articles: paginatedArray,
         article,
         errors,
         processing,
+        numberOfPages,
         getArticles,
         getRelatedArticles,
         latestArticles,

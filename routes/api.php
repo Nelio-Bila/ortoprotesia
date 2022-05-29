@@ -26,9 +26,9 @@ use App\Http\Controllers\HealthProfessionalController;
 //     return $request->user();
 // });
 
-header('Access-Control-Allow-Origin:  *');
-header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, PATCH, DELETE');
-header('Access-Control-Allow-Headers: Accept, Content-Type, X-Auth-Token, Origin, Authorization');
+// header('Access-Control-Allow-Origin:  *');
+// header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, PATCH, DELETE');
+// header('Access-Control-Allow-Headers: Accept, Content-Type, X-Auth-Token, Origin, Authorization');
 
 // Users
 Route::post('login', [AuthController::class, 'login']);
@@ -76,7 +76,7 @@ Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 
 
 // Articles
-Route::get('articles/{page?}', [ArticleController::class, 'index']);
+Route::get('articles', [ArticleController::class, 'index']);
 Route::get('article/{id}', [ArticleController::class, 'show']);
 Route::get('articles/related/{id}/{article}', [ArticleController::class, 'related']);
 Route::get('/articles/search/{criteria}', [ArticleController::class, 'search']);

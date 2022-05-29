@@ -1,5 +1,5 @@
 <template>
-  <div class="row" v-if="loading">
+  <div class="row" v-if="processing">
     <div class="col text-center">
       <Spinner />
     </div>
@@ -63,17 +63,19 @@
       </div>
       <div class="row">
         <ArticleCard
+          v-for="article in articles"
           :article="article"
-          v-for="article in articles.data"
           :key="article.id"
         />
       </div>
 
-      <Pagination
-        :data="articles"
-        @pagination-change-page="getArticles"
-        class="my-2 d-flex justify-content-center"
-      />
+      <div class="justify-content-center">
+        <pagination-component
+          class="pagination-component"
+          v-model="currentPage"
+          :numberOfPages="numberOfPages"
+        />
+      </div>
     </div>
 
     <div class="my-2" id="articles" v-if="criteria">
@@ -114,22 +116,29 @@
 </template>
 
 <script setup>
-import { onMounted, watch, ref, nextTick } from "vue";
+import { onMounted, watch, ref, computed } from "vue";
 import { useOnline } from "@vueuse/core";
-import Pagination from "laravel-vue-pagination";
+import { useRoute } from "vue-router";
 
 import Spinner from "./Spinner.vue";
 import ArticleCard from "./ArticleCard.vue";
+import PaginationComponent from "../components/pagination/PaginationComponent.vue";
+
 import useArticles from "../composables/articles";
 import useCategories from "../composables/categories";
 
-const loading = ref(true);
 const categoryFilter = ref("");
 const dateFilter = ref("");
 const popularityFilter = ref("");
 
+const { route } = useRoute();
+
+const currentPage = ref(1);
+const rowsPerPage = ref(30);
+
 const {
   articles,
+  numberOfPages,
   getArticles,
   searchedArticles,
   searchArticles,
@@ -137,7 +146,7 @@ const {
   getArticlesByDate,
   getArticlesByPopularity,
   processing,
-} = useArticles();
+} = useArticles(currentPage, rowsPerPage);
 
 const { categories, getCategories } = useCategories();
 
@@ -168,6 +177,4 @@ const filterDate = async () => {
 const filterPopularity = async () => {
   getArticlesByPopularity(popularityFilter.value);
 };
-
-loading.value = processing.value;
 </script>
