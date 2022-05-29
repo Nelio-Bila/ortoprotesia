@@ -48,7 +48,7 @@ class ArticleController extends Controller
 
     public function byCategory($category_id)
     {
-        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $category_id)->paginate(10));
+        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $category_id)->get());
     }
     public function byPeriod($period)
     {
@@ -56,20 +56,20 @@ class ArticleController extends Controller
             return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereBetween(
                 'created_at',
                 [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
-            )->paginate(10));
+            )->get());
         } elseif (strcmp($period, "month") === 0) {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('created_at', '>=', Carbon::now()->subdays(30))->paginate(10));
+            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('created_at', '>=', Carbon::now()->subdays(30))->get());
         } elseif (strcmp($period, "year") === 0) {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereYear('created_at', date('Y'))->paginate(10));
+            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereYear('created_at', date('Y'))->get());
         } else {
         }
     }
     public function byViews($popularity)
     {
         if (strcmp($popularity, "most") === 0)
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('views', 'desc')->paginate(10));
+            return response()->json(Article::with(['category', 'hpro'])->orderBy('views', 'desc')->get());
         elseif (strcmp($popularity, "least") === 0)
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('views', 'asc')->paginate(10));
+            return response()->json(Article::with(['category', 'hpro'])->orderBy('views', 'asc')->get());
     }
 
     public function store(Request $request)

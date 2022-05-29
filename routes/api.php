@@ -49,17 +49,6 @@ Route::post('hp/forgot', [HealthProfessionalController::class, 'forgot']);
 Route::post('hp/reset', [HealthProfessionalController::class, 'reset']);
 Route::get('hp', [HealthProfessionalController::class, 'store'])->middleware('auth:hp-api');
 
-// Route::prefix('article')->group(function () {
-//     Route::middleware(['auth:hp', 'auth:admin'])->group(function () {
-//         Route::post('/store', [ArticleController::class, 'store']);
-//         Route::put('/update/{article}', [ArticleController::class, 'update']);
-//         Route::delete('/destroy/{article}', [ArticleController::class, 'destroy']);
-//     });
-//     Route::group(function () {
-//         Route::get('/index', [ArticleController::class, 'index']);
-//     });
-// });
-
 // Administrator
 Route::post('admin/login', [AdminController::class, 'login']);
 Route::post('admin/register', [AdminController::class, 'store']);

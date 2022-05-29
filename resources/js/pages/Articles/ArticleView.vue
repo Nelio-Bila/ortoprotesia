@@ -153,11 +153,14 @@
 </template>
 
 <script setup>
-import { watch, onMounted, computed } from "vue";
+import { watch, onMounted, computed, ref } from "vue";
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 import { useRoute } from "vue-router";
 import useArticles from "../../composables/articles";
+
+const currentPage = ref(1);
+const rowsPerPage = ref(2);
 
 const {
   article,
@@ -167,7 +170,7 @@ const {
   articles,
   getRelatedArticles,
   incrementArticleViews,
-} = useArticles();
+} = useArticles(currentPage, rowsPerPage);
 const route = useRoute();
 
 onMounted(() => {

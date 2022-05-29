@@ -69,12 +69,14 @@
         />
       </div>
 
-      <div class="justify-content-center">
-        <pagination-component
-          class="pagination-component"
-          v-model="currentPage"
-          :numberOfPages="numberOfPages"
-        />
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 d-flex justify-content-center">
+          <pagination-component
+            class="pagination-component"
+            v-model="currentPage"
+            :numberOfPages="numberOfPages"
+          />
+        </div>
       </div>
     </div>
 
@@ -134,7 +136,7 @@ const popularityFilter = ref("");
 const { route } = useRoute();
 
 const currentPage = ref(1);
-const rowsPerPage = ref(30);
+const rowsPerPage = ref(6);
 
 const {
   articles,
