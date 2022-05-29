@@ -4,6 +4,7 @@
     <router-link to="/" class="btn btn-outline-primary"
       ><i class="fa-solid fa-chevron-left"></i
     ></router-link>
+
     <h1 class="text-center mb-5">{{ article.title }}</h1>
 
     <div class="row mb-3">
@@ -26,9 +27,14 @@
         <span v-else>Visualizações</span>
       </div>
     </div>
-    <!-- <div class="row my-4"></div> -->
+
     <div class="row">
-      <div class="col-md-9">
+      <div class="row" v-if="processing">
+        <div class="col text-center">
+          <Spinner />
+        </div>
+      </div>
+      <div v-else class="col-md-9">
         <div class="col text-center my-3">
           <img
             :src="`/storage/articles/headers/${article.featuredImage}`"
@@ -48,41 +54,48 @@
         >
           <div class="btn btn-primary p-3">Artigos relacionados</div>
 
-          <router-link
-            v-for="article in articles"
-            :key="article.id"
-            :to="`/articles/${article.id}`"
-            class="btn btn-outline-secondary p-1 mb-0 w-100"
-          >
-            <div class="row">
-              <div class="col vertical-center">
-                <img
-                  :src="`/storage/articles/headers/${article.featuredImage}`"
-                  alt=""
-                  class="img img-thumbnail"
-                />
-              </div>
-              <div class="col text-start">
-                <h4 class="fw-bolder">{{ article.title }}</h4>
-                <p class="text-small m-0">
-                  <i class="fa-solid fa-user-nurse mx-2"></i>
-                  <small
-                    >{{ article.hpro.name }} {{ article.hpro.surname }}</small
-                  >
-                </p>
-                <p class="text-small m-0">
-                  <i class="fa-solid fa-calendar-days mx-2"></i>
-                  <small>{{
-                    new Date(article.created_at).toLocaleDateString()
-                  }}</small>
-                </p>
-                <p class="text-small m-0">
-                  <i class="fa-solid fa-eye mx-2"></i>
-                  {{ article.views }}
-                </p>
-              </div>
+          <div class="row" v-if="processing">
+            <div class="col text-center">
+              <Spinner />
             </div>
-          </router-link>
+          </div>
+          <div v-else>
+            <router-link
+              v-for="article in articles"
+              :key="article.id"
+              :to="`/articles/${article.id}`"
+              class="btn btn-outline-secondary p-1 mb-0 w-100"
+            >
+              <div class="row">
+                <div class="col vertical-center">
+                  <img
+                    :src="`/storage/articles/headers/${article.featuredImage}`"
+                    alt=""
+                    class="img img-thumbnail"
+                  />
+                </div>
+                <div class="col text-start">
+                  <h4 class="fw-bolder">{{ article.title }}</h4>
+                  <p class="text-small m-0">
+                    <i class="fa-solid fa-user-nurse mx-2"></i>
+                    <small
+                      >{{ article.hpro.name }} {{ article.hpro.surname }}</small
+                    >
+                  </p>
+                  <p class="text-small m-0">
+                    <i class="fa-solid fa-calendar-days mx-2"></i>
+                    <small>{{
+                      new Date(article.created_at).toLocaleDateString()
+                    }}</small>
+                  </p>
+                  <p class="text-small m-0">
+                    <i class="fa-solid fa-eye mx-2"></i>
+                    {{ article.views }}
+                  </p>
+                </div>
+              </div>
+            </router-link>
+          </div>
         </div>
 
         <div
@@ -91,41 +104,48 @@
           aria-label="First group"
         >
           <div class="btn btn-primary p-3">Artigos recentes</div>
-          <router-link
-            v-for="article in latestArticles"
-            :key="article.id"
-            :to="`/articles/${article.id}`"
-            class="btn btn-outline-secondary p-1 mb-0 w-100"
-          >
-            <div class="row">
-              <div class="col vertical-center">
-                <img
-                  :src="`/storage/articles/headers/${article.featuredImage}`"
-                  alt=""
-                  class="img img-thumbnail"
-                />
-              </div>
-              <div class="col text-start">
-                <h4 class="fw-bolder">{{ article.title }}</h4>
-                <p class="text-small m-0">
-                  <i class="fa-solid fa-user-nurse mx-2"></i>
-                  <small
-                    >{{ article.hpro.name }} {{ article.hpro.surname }}</small
-                  >
-                </p>
-                <p class="text-small m-0">
-                  <i class="fa-solid fa-calendar-days mx-2"></i>
-                  <small>{{
-                    new Date(article.created_at).toLocaleDateString()
-                  }}</small>
-                </p>
-                <p class="text-small m-0">
-                  <i class="fa-solid fa-eye mx-2"></i>
-                  {{ article.views }}
-                </p>
-              </div>
+          <div class="row" v-if="processing">
+            <div class="col text-center">
+              <Spinner />
             </div>
-          </router-link>
+          </div>
+          <div v-else>
+            <router-link
+              v-for="article in latestArticles"
+              :key="article.id"
+              :to="`/articles/${article.id}`"
+              class="btn btn-outline-secondary p-1 mb-0 w-100"
+            >
+              <div class="row">
+                <div class="col vertical-center">
+                  <img
+                    :src="`/storage/articles/headers/${article.featuredImage}`"
+                    alt=""
+                    class="img img-thumbnail"
+                  />
+                </div>
+                <div class="col text-start">
+                  <h4 class="fw-bolder">{{ article.title }}</h4>
+                  <p class="text-small m-0">
+                    <i class="fa-solid fa-user-nurse mx-2"></i>
+                    <small
+                      >{{ article.hpro.name }} {{ article.hpro.surname }}</small
+                    >
+                  </p>
+                  <p class="text-small m-0">
+                    <i class="fa-solid fa-calendar-days mx-2"></i>
+                    <small>{{
+                      new Date(article.created_at).toLocaleDateString()
+                    }}</small>
+                  </p>
+                  <p class="text-small m-0">
+                    <i class="fa-solid fa-eye mx-2"></i>
+                    {{ article.views }}
+                  </p>
+                </div>
+              </div>
+            </router-link>
+          </div>
         </div>
 
         <div
@@ -149,6 +169,7 @@
       </div>
     </div>
   </div>
+
   <Footer />
 </template>
 
@@ -156,6 +177,7 @@
 import { watch, onMounted, computed, ref } from "vue";
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
+import Spinner from "../../components/Spinner.vue";
 import { useRoute } from "vue-router";
 import useArticles from "../../composables/articles";
 
@@ -170,7 +192,9 @@ const {
   articles,
   getRelatedArticles,
   incrementArticleViews,
+  processing,
 } = useArticles(currentPage, rowsPerPage);
+
 const route = useRoute();
 
 onMounted(() => {
