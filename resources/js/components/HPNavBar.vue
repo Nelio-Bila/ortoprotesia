@@ -57,10 +57,13 @@
               >Definições da conta</router-link
             >
           </li>
-          <li @click="handleLogout">
-            <a class="dropdown-item me-5" href="javascript:void(0)"
-              >Terminar sessão</a
+          <li>
+            <button
+              class="dropdown-item me-5 cursor-pointer"
+              @click.prevent="handleLogout"
             >
+              Terminar sessão
+            </button>
           </li>
         </ul>
       </li>

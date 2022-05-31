@@ -59,20 +59,29 @@
 
                 <div class="input-group">
                   <input
+                    :disabled="!editName"
                     type="text"
                     class="form-control"
-                    disabled="editName"
                     placeholder="Nome"
                     v-model="form.name"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
                   />
                   <button
-                    @click.prevent="toggleName"
+                    @click="editName = !editName"
                     class="input-group-text"
                     type="button"
                   >
                     <i
+                      v-if="editName"
+                      class="
+                        fa-solid fa-floppy-disk
+                        cursor-pointer
+                        text-primary
+                      "
+                    ></i>
+                    <i
+                      v-if="!editName"
                       class="fa-solid fa-pencil cursor-pointer text-primary"
                     ></i>
                   </button>
@@ -190,14 +199,15 @@ import { useUserStore } from "../../stores/UserStore";
 const userStore = useUserStore();
 const { user, getUser, updateUser, processing } = useUsers();
 
-getUser(userStore.user.id);
-console.log(user);
+// getUser(userStore.user.id);
+// console.log(user);
+
+const editName = ref(false);
 
 onMounted(() => {
   //   getUser(userStore.user.id);
 });
 
-const editName = ref(false);
 const editSurname = ref(false);
 const editBirthdate = ref(false);
 const editEmail = ref(false);
