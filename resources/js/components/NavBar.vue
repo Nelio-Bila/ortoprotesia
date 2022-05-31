@@ -112,7 +112,7 @@
                 {{ userStore.user.name }}
               </span>
               <img
-                :src="`/storage/profile_imgs/` + `${userStore.user.avatar}`"
+                :src="`/images/profile_imgs/` + `${userStore.user.avatar}`"
                 :alt="`${userStore.user.name} ${userStore.user.surname}`"
                 class="rounded-circle mx-1"
                 style="width: 40px"
