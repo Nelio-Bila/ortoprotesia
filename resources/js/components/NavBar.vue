@@ -111,14 +111,6 @@
               <span class="mx-2">
                 {{ userStore.user.name }}
               </span>
-
-              <!-- <img
-                v-if="userStore.user.avatar === 'avatar.png'"
-                src="/storage/profile_imgs/avatar.png"
-                class="rounded-circle"
-                style="width: 40px"
-                alt="Avatar"
-              /> -->
               <img
                 :src="`/storage/profile_imgs/` + `${userStore.user.avatar}`"
                 :alt="`${userStore.user.name} ${userStore.user.surname}`"

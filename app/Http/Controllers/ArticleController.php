@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticleRequest;
 use Carbon\Carbon;
 use App\Models\Article;
 use Illuminate\Http\Request;
@@ -67,11 +68,11 @@ class ArticleController extends Controller
             return response()->json(Article::with(['category', 'hpro'])->orderBy('views', 'asc')->get());
     }
 
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
-        $request->validate([
-            'featuredImage' => 'required|mimes:jpg,jpeg,png|max:20048'
-        ]);
+        // $request->validate([
+        //     'featuredImage' => 'required|mimes:jpg,jpeg,png|max:20048'
+        // ]);
 
         $article = new Article();
 
@@ -95,10 +96,37 @@ class ArticleController extends Controller
             return response()->json(['success' => 'Article posted successfully.']);
         }
     }
-    public function update()
+    public function update(ArticleRequest $request, $id)
     {
+        $request->validate([
+            'featuredImage' => 'required|mimes:jpg,jpeg,png|max:20048'
+        ]);
+
+        $article = Article::find($id);
+
+        if ($request->file()) {
+            $image_name = time() . '_' . $request->featuredImage->getClientOriginalName();
+            $image_path = $request->file('featuredImage')->storeAs('articles/headers', $image_name, 'public');
+
+            $article->title = $request->title;
+            $article->body = $request->body;
+            $article->jsonData = $request->jsonData;
+            $article->postExcerpt = $request->postExcerpt;
+            $article->slug = $request->slug;
+            $article->featuredImage = time() . '_' . $request->featuredImage->getClientOriginalName();
+            $article->metaDescription = $request->metaDescription;
+            $article->health_professional_id = 1;
+            $article->category_id = $request->category_id;
+
+            $article->save();
+
+            return response()->json(['success' => 'Article updated successfully.']);
+        }
     }
-    public function destroy()
+    public function destroy(Article $article)
     {
+        $article->delete();
+
+        return response()->noContent();
     }
 }

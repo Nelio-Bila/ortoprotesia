@@ -29,21 +29,14 @@
           <span class="mx-2">
             {{ userStore.user.name }}
           </span>
-
           <img
-            v-if="userStore.user.avatar === 'avatar.png'"
-            src="/storage/profile_imgs/avatar.png"
-            class="rounded-circle"
+            :src="`/storage/profile_imgs/` + `${userStore.user.avatar}`"
+            :alt="`${userStore.user.name} ${userStore.user.surname}`"
+            class="rounded-circle mx-1"
             style="width: 40px"
-            alt="Avatar"
-          />
-          <img
-            v-else
-            src="`${/storage/profile_imgs/}`+`${user.avatar}`"
-            alt=""
           />
         </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown">
           <li>
             <a
               v-if="userStore.user.carrier"

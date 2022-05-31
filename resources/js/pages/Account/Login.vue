@@ -131,7 +131,7 @@
           <button class="btn btn-primary tn-block mb-3" :disabled="processing">
             <span
               v-if="processing"
-              class="spinner-border spinner-border-sm"
+              class="spinner-border spinner-border-sm mx-2"
               role="status"
               aria-hidden="true"
             ></span>

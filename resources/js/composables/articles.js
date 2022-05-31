@@ -142,7 +142,7 @@ export default function useArticles(currentPage, rowsPerPage = 2) {
 
         errors.value = "";
         try {
-            await axios.put("/articles/" + id, article.value);
+            await axios.put("/articles/update/" + id, article.value);
             await router.push("/articles");
             processing.value = false;
         } catch (e) {

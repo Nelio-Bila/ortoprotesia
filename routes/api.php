@@ -75,6 +75,7 @@ Route::get('/articles/period/{period}', [ArticleController::class, 'byPeriod']);
 Route::get('/articles/popularity/{popularity}', [ArticleController::class, 'byViews']);
 Route::post('/articles/register', [ArticleController::class, 'store']);
 Route::put('/articles/increment/{id}', [ArticleController::class, 'incrementViews']);
+Route::put('/articles/update/{id}', [ArticleController::class, 'update']);
 
 // Process
 Route::post('process/register', [ProcessController::class, 'store']);
