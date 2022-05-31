@@ -231,7 +231,13 @@ import useUsers from "../../composables/users";
 const userStore = useUserStore();
 const { user, getUser, updateUser, processing } = useUsers();
 
-console.log(userStore.user);
+onMounted(() => {
+  form.avatar = userStore.user.avatar;
+  form.name = userStore.user.name;
+  form.surname = userStore.user.surname;
+  form.birthdate = userStore.user.birthdate;
+  form.email = userStore.user.email;
+});
 
 const editName = ref(false);
 const editSurname = ref(false);
