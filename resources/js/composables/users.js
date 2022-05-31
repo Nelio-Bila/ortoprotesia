@@ -60,9 +60,10 @@ export default function useUsers() {
 
         errors.value = "";
         try {
-            await axios.put("/users/" + id, user.value);
-            await router.push("/users");
-            processing.value = false;
+            await axios.put("/users/" + id, user.value).then((response) => {
+                user = response.data;
+                processing.value = false;
+            });
         } catch (e) {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors;

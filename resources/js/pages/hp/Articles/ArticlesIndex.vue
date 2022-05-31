@@ -34,13 +34,21 @@
                 <td>{{ article.category.name }}</td>
                 <td>{{ article.views }}</td>
                 <td>
-                  <!-- {{ article.hpro.name }}
-                  {{ article.hpro.surname }} -->
+                  {{ article.hpro.name }}
+                  {{ article.hpro.surname }}
                 </td>
                 <td>
                   {{ new Date(article.created_at).toLocaleDateString() }}
                 </td>
                 <td>
+                  <router-link
+                    class="btn btn-sm btn-success mx-2"
+                    :to="{
+                      name: 'articles.view',
+                      params: { id: article.id },
+                    }"
+                    >Visualizar</router-link
+                  >
                   <router-link
                     class="btn btn-sm btn-warning mx-2"
                     :to="{
@@ -49,6 +57,7 @@
                     }"
                     >Editar</router-link
                   >
+
                   <button
                     class="btn btn-sm btn-danger"
                     @click="deleteArticle(article.id)"
@@ -66,7 +75,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import Swal from "sweetalert2";
 import "jquery/dist/jquery.min.js";
 import "datatables.net-dt/js/dataTables.dataTables";
@@ -77,9 +86,16 @@ import useArticles from "../../../composables/articles";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
-const { articles, getArticles, destroyArticle } = useArticles();
+const currentPage = ref(1);
+const rowsPerPage = ref(20);
+
+const { articles, getArticles, destroyArticle } = useArticles(
+  currentPage,
+  rowsPerPage
+);
 onMounted(() => {
   getArticles();
+  console.log(articles.value);
   setTimeout(() => {
     $("#articles_datatable").DataTable({
       lengthMenu: [

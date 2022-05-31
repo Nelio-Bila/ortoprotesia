@@ -1,9 +1,9 @@
 <template>
   <NavBar />
   <div class="container my-3">
-    <router-link to="/" class="btn btn-outline-primary"
-      ><i class="fa-solid fa-chevron-left"></i
-    ></router-link>
+    <button @click.prevent="goBack" class="btn btn-outline-primary">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
 
     <h1 class="text-center mb-5">{{ article.title }}</h1>
 
@@ -180,6 +180,8 @@ import Spinner from "../../components/Spinner.vue";
 import { useRoute } from "vue-router";
 import useArticles from "../../composables/articles";
 
+import { useRouter } from "vue-router";
+
 const currentPage = ref(1);
 const rowsPerPage = ref(2);
 
@@ -207,6 +209,11 @@ watch(article, async (newArticle, oldArticle) => {
     getRelatedArticles(article.value.category_id, article.value.id);
   }
 });
+
+const router = useRouter();
+const goBack = () => {
+  router.go(-1);
+};
 </script>
 
 <style scoped>

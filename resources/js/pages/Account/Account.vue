@@ -3,11 +3,13 @@
     <NavBar />
     <div class="container align-items-center justify-content-center">
       <div class="row my-2">
-        <div class="btn-group-vertical col-md-3">
-          <button class="btn btn-secondary block">Dados pessoais</button>
-          <button class="btn btn-outline-secondary block">Segurança</button>
-          <button class="btn btn-outline-secondary block">Privacidade</button>
-          <button class="btn btn-outline-secondary block">Conta</button>
+        <div class="col-md-3 vertical-center">
+          <div class="btn-group-vertical w-100 my-2">
+            <button class="btn btn-primary block">Dados pessoais</button>
+            <button class="btn btn-outline-secondary block">Segurança</button>
+            <button class="btn btn-outline-secondary block">Privacidade</button>
+            <button class="btn btn-outline-secondary block">Conta</button>
+          </div>
         </div>
         <div class="col-md-7 mx-auto">
           <form @submit.prevent="handleSubmit">
@@ -47,8 +49,8 @@
 
             <div class="row mb-3 text-center">
               <avatar-input
-                v-model="avatar"
-                default-src="https://picsum.photos/200"
+                v-model="form.avatar"
+                default-src="/storage/profile_imgs/avatar.png"
               ></avatar-input>
             </div>
             <div class="row mb-3">
@@ -57,38 +59,36 @@
 
                 <div class="input-group">
                   <input
-                    @blur="v$.name.$touch"
                     type="text"
                     class="form-control"
-                    :class="{
-                      'is-invalid': v$.name.$error,
-                      'is-valid': !v$.name.$invalid,
-                    }"
                     disabled="editName"
                     placeholder="Nome"
-                    v-model="v$.name.$model"
+                    v-model="form.name"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
                   />
-                  <button class="input-group-text" type="button">
+                  <button
+                    @click.prevent="toggleName"
+                    class="input-group-text"
+                    type="button"
+                  >
                     <i
-                      @click="toggleName"
                       class="fa-solid fa-pencil cursor-pointer text-primary"
                     ></i>
                   </button>
                 </div>
 
-                <span class="invalid-feedback" v-if="v$.name.$error">
+                <!-- <span class="invalid-feedback" v-if="v$.name.$error">
                   {{ v$.name.$errors[0].$message }}
-                </span>
+                </span> -->
               </div>
 
-              <div class="col">
+              <!-- <div class="col">
                 <label for="surname">Apelido</label>
                 <div class="input-group">
                   <input
                     @blur="v$.surname.$touch"
-                    disabled
+                    disabled="editSurname"
                     type="text"
                     class="form-control"
                     :class="{
@@ -96,7 +96,7 @@
                       'is-valid': !v$.surname.$invalid,
                     }"
                     placeholder="Apelido"
-                    v-model="v$.surname.$model"
+                    v-model="v$.form.surname.$model"
                   />
                   <button class="input-group-text" type="button">
                     <i
@@ -107,15 +107,15 @@
                 <span class="invalid-feedback" v-if="v$.surname.$error">
                   {{ v$.surname.$errors[0].$message }}
                 </span>
-              </div>
+              </div> -->
             </div>
             <div class="row mb-3">
-              <div class="col">
+              <!-- <div class="col">
                 <label for="birthdate">Data de nascimento</label>
                 <div class="input-group">
                   <input
                     @blur="v$.birthdate.$touch"
-                    disabled
+                    disabled="editBirthdate"
                     type="date"
                     class="form-control"
                     :class="{
@@ -123,7 +123,7 @@
                       'is-valid': !v$.birthdate.$invalid,
                     }"
                     placeholder="Data de nascimento"
-                    v-model="v$.birthdate.$model"
+                    v-model="v$.form.birthdate.$model"
                   />
                   <button class="input-group-text" type="button">
                     <i
@@ -139,7 +139,7 @@
                 <label for="email">Email</label>
                 <input
                   @blur="v$.email.$touch"
-                  disabled
+                  disabled="editEmail"
                   type="email"
                   class="form-control"
                   :class="{
@@ -147,12 +147,12 @@
                     'is-valid': !v$.email.$invalid,
                   }"
                   placeholder="Email"
-                  v-model="v$.email.$model"
+                  v-model="v$.form.email.$model"
                 />
                 <span class="invalid-feedback" v-if="v$.email.$error">
                   {{ v$.email.$errors[0].$message }}
                 </span>
-              </div>
+              </div> -->
             </div>
 
             <button class="btn btn-primary btn-block btn-lg">
@@ -173,135 +173,81 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
+<script setup>
+import { onMounted, ref, reactive, computed } from "vue";
+// import useVuelidate from "@vuelidate/core";
 import useValidate from "@vuelidate/core";
-import {
-  required,
-  email,
-  sameAs,
-  helpers,
-  minLength,
-} from "@vuelidate/validators";
+import { required, email, helpers, minLength } from "@vuelidate/validators";
 
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 import AvatarInput from "../../components/AvatarInput.vue";
 
-export default {
-  name: "Account",
-  data() {
-    return {
-      v$: useValidate(),
-      name: "",
-      surname: "",
-      birthdate: "",
-      email: "",
-      avatar: "",
-      password: "",
-      password_confirm: "",
-      politics_confirm: false,
-      processing: false,
-      errors_exist: false,
-      validationErrors: null,
-      editName: false,
-    };
+import useUsers from "../../composables/users";
+// import useUserStore from "../../stores/UserStore";
+import { useUserStore } from "../../stores/UserStore";
+
+const userStore = useUserStore();
+const { user, getUser, updateUser, processing } = useUsers();
+
+getUser(userStore.user.id);
+console.log(user);
+
+onMounted(() => {
+  //   getUser(userStore.user.id);
+});
+
+const editName = ref(false);
+const editSurname = ref(false);
+const editBirthdate = ref(false);
+const editEmail = ref(false);
+
+const form = reactive({
+  avatar: "",
+  name: "",
+  surname: "",
+  birthdate: "",
+  email: "",
+});
+
+const rules = computed(() => ({
+  avatar: {},
+  name: {
+    required: helpers.withMessage("Por favor preencha o nome", required),
+    minLength: helpers.withMessage(
+      "Por favor preencha um nome válido",
+      minLength(2)
+    ),
+    minLengthValue: minLength(2),
   },
-  methods: {
-    async handleSubmit() {
-      this.processing = true;
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        await axios
-          .post("register", {
-            name: this.name,
-            surname: this.surname,
-            birthdate: this.birthdate,
-            email: this.email,
-            password: this.password,
-            password_confirm: this.password_confirm,
-          })
-          .then((response) => {
-            this.processing = false;
-            this.$router.push("/login");
-          })
-          .catch((ex) => {
-            this.processing = false;
-            switch (ex.response.status) {
-              case 422:
-                this.validationErrors = ex.response.data.errors;
-                this.errors_exist = true;
-                break;
-            }
-          });
-      } else {
-        this.processing = false;
-      }
-    },
-    confirm_politics() {
-      this.politics_confirm = !this.politics_confirm;
-    },
-    toggleName() {
-      editName = !editName;
-    },
+  surname: {
+    required: helpers.withMessage("Por favor preencha o apelido", required),
+    minLength: helpers.withMessage(
+      "Por favor preencha um apelido válido",
+      minLength(2)
+    ),
+    minLengthValue: minLength(2),
   },
-  validations() {
-    return {
-      name: {
-        required: helpers.withMessage("Por favor preencha o nome", required),
-        minLength: helpers.withMessage(
-          "Por favor preencha um nome válido",
-          minLength(2)
-        ),
-        minLengthValue: minLength(2),
-      },
-      surname: {
-        required: helpers.withMessage("Por favor preencha o apelido", required),
-        minLength: helpers.withMessage(
-          "Por favor preencha um apelido válido",
-          minLength(2)
-        ),
-        minLengthValue: minLength(2),
-      },
-      birthdate: {
-        required: helpers.withMessage(
-          "Por favor preencha a data de nascimento",
-          required
-        ),
-      },
-      email: {
-        required: helpers.withMessage("Por favor preencha o email", required),
-        email: helpers.withMessage("Por favor preencha um email válido", email),
-      },
-      avatar: {},
-      password: {
-        required: helpers.withMessage(
-          "Por favor preencha a palavra passe",
-          required
-        ),
-        minLength: helpers.withMessage(
-          "A palavra passe deve ter 6 caracteres no minímo",
-          minLength(6)
-        ),
-        minLengthValue: minLength(6),
-      },
-      password_confirm: {
-        required: helpers.withMessage(
-          "Por favor preencha a confirmação da palavra passe",
-          required
-        ),
-        password_confirm: sameAs(this.password),
-        password_confirm: helpers.withMessage(
-          "A confirmação esta incorrecta",
-          sameAs(this.password)
-        ),
-      },
-      politics_confirm: {},
-      processing: {},
-      errors_exist: {},
-      validationErrors: {},
-    };
+  birthdate: {
+    required: helpers.withMessage(
+      "Por favor preencha a data de nascimento",
+      required
+    ),
   },
-  components: { NavBar, Footer, AvatarInput },
+  email: {
+    required: helpers.withMessage("Por favor preencha o email", required),
+    email: helpers.withMessage("Por favor preencha um email válido", email),
+  },
+}));
+
+const v$ = useValidate(rules, form);
+
+const handleSubmit = async () => {
+  v$._value.$validate();
+  if (!v$._value.$invalid) {
+    await updateUser({ ...form });
+  } else {
+    processing.value = false;
+  }
 };
 </script>

@@ -2,7 +2,20 @@
   <div class="my-2" id="articles" v-if="!criteria">
     <h1 class="text-center">Artigos</h1>
     <div class="row mx-1">
-      <h4><i class="fa-solid fa-filter mx-3 text-primary"></i>Filtros</h4>
+      <div class="row my-2">
+        <div class="col-md-6 text-sm-start text-center">
+          <h4><i class="fa-solid fa-filter mx-3 text-primary"></i>Filtros</h4>
+        </div>
+        <div class="col-md-6 text-sm-end text-center">
+          <button
+            class="btn btn-outline-secondary btn-sm"
+            @click.prevent="resetFilters"
+          >
+            <i class="fa-solid fa-trash mx-3"></i>
+            Limpar todos filtros
+          </button>
+        </div>
+      </div>
       <div class="col-md-4">
         <label for="categorySelect">Categorias</label>
         <select
@@ -177,5 +190,9 @@ const filterDate = async () => {
 
 const filterPopularity = async () => {
   getArticlesByPopularity(popularityFilter.value);
+};
+
+const resetFilters = async () => {
+  getArticles();
 };
 </script>

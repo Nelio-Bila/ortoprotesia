@@ -11,11 +11,6 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->get();
-        // if ($request->total) {
-        // } else {
-        //     return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->get();
-
-        // }
     }
 
     public function related($id, $article)

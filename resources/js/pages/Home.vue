@@ -27,7 +27,7 @@ watch(online, async (on, off) => {
   if (!on) {
     toast.error("Sem conexão a internet", {
       position: "bottom-left",
-      timeout: 3000,
+      timeout: 5000,
       hideProgressBar: true,
       closeButton: "button",
       rtl: false,
@@ -42,6 +42,9 @@ watch(online, async (on, off) => {
     });
   }
 });
+
+// Add meta info
+// The object passed into useMeta is user configurable
 </script>
 
 <style>

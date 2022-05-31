@@ -177,7 +177,6 @@ body {
   .hover\:bg-primary:hover {
     background-color: $medium;
     border-radius: 12px;
-    color: #fff !important;
   }
 
   .h-52	{height: 13rem; /* 208px */}
@@ -219,3 +218,18 @@ align-items: center;
     width: 50%;
 
 }
+
+
+// Scroll indicator
+/* play with some lines below */
+#progress-container-el {
+    /* background */
+    background-color: transparent !important;
+    // top: calc(100% - 4px) !important; /* remove if Vue 3.x */
+  }
+  #progress-el {
+    /* progress bar */
+    background-color: $primary !important;
+  }
+
+//   scroll indicator

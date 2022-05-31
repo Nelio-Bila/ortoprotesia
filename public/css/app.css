@@ -11471,9 +11471,8 @@ body {
 }
 
 .hover\:bg-primary:hover {
-  background-color: #7182be;
+  background-color: #5072A7;
   border-radius: 12px;
-  color: #fff !important;
 }
 
 .h-52 {
@@ -11517,4 +11516,15 @@ body {
 .horizontal-center {
   margin: auto;
   width: 50%;
+}
+
+/* play with some lines below */
+#progress-container-el {
+  /* background */
+  background-color: transparent !important;
+}
+
+#progress-el {
+  /* progress bar */
+  background-color: #273a7e !important;
 }

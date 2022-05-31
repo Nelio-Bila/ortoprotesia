@@ -16,30 +16,49 @@
     ></i>
 
     <div class="me-auto"></div>
-
-    <form class="d-flex justify-content-center m-2" v-if="!user">
-      <router-link class="btn btn-outline-primary" to="/login">
-        Entrar | Criar Conta
-      </router-link>
-    </form>
-    <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="user">
-      <li class="nav-item dropdown me-5">
+    <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="userStore.user != null">
+      <li class="nav-item dropdown">
         <a
-          class="nav-link dropdown-toggle me-5"
+          class="nav-link dropdown-toggle"
           href="#"
           id="navbarDropdown"
           role="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          {{ user.name }} {{ user.surname }}
+          <span class="mx-2">
+            {{ userStore.user.name }}
+          </span>
+
+          <img
+            v-if="userStore.user.avatar === 'avatar.png'"
+            src="/storage/profile_imgs/avatar.png"
+            class="rounded-circle"
+            style="width: 40px"
+            alt="Avatar"
+          />
+          <img
+            v-else
+            src="`${/storage/profile_imgs/}`+`${user.avatar}`"
+            alt=""
+          />
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li>
-            <a v-if="user.carrier" class="dropdown-item" to="/hp/">Painel</a>
+            <a
+              v-if="userStore.user.carrier"
+              class="dropdown-item me-5"
+              to="/hp/"
+              >Painel</a
+            >
+          </li>
+          <li>
+            <router-link to="/account" class="dropdown-item me-5"
+              >Definições da conta</router-link
+            >
           </li>
           <li @click="handleLogout">
-            <a class="dropdown-item" href="javascript:void(0)"
+            <a class="dropdown-item me-5" href="javascript:void(0)"
               >Terminar sessão</a
             >
           </li>
@@ -49,40 +68,40 @@
   </nav>
 </template>
 
-<script>
-export default {
-  name: "HPNavbar",
-  setup() {
-    const toggleMenu = () => {
-      document.getElementById("wrapper").classList.toggle("toggled");
-    };
+<script setup>
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
-    const handleLogout = () => {
-      localStorage.removeItem("op_token");
-      setUser(null);
-      $router.push("/");
-    };
+import { useUserStore } from "../stores/UserStore";
+import useAuth from "../composables/auth";
 
-    return {
-      toggleMenu,
-      handleLogout,
-    };
-  },
-  data() {
-    return {
-      user: null,
-    };
-  },
-  async created() {
-    await axios
-      .get("user")
-      .then((response) => {
-        this.user = response.data;
-      })
-      .catch((ex) => {
-        // this.$router.push("/");
-      });
-  },
+const router = useRouter();
+
+const { logout } = useAuth();
+
+const userStore = useUserStore();
+
+const criteria = ref("");
+
+const search = () => {
+  router.push("/results/" + criteria.value);
+};
+
+const handleLogout = () => {
+  logout();
+};
+
+onMounted(async () => {
+  await axios
+    .get("user")
+    .then((response) => {
+      userStore.setUser(response.data);
+    })
+    .catch((ex) => {});
+});
+
+const toggleMenu = () => {
+  document.getElementById("wrapper").classList.toggle("toggled");
 };
 </script>
 

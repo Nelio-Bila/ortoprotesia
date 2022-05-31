@@ -97,7 +97,7 @@
             Entrar | Criar Conta
           </router-link>
         </form>
-        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+
         <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="userStore.user != null">
           <li class="nav-item dropdown">
             <a
@@ -111,21 +111,19 @@
               <span class="mx-2">
                 {{ userStore.user.name }}
               </span>
-              <!-- <div
-                class="
-                  rounded-full
-                  border border-secondary
-                  rounded-full
-                  inline-block
-                  p-2
-                "
-              > -->
-              <i
+
+              <img
                 v-if="userStore.user.avatar === 'avatar.png'"
-                class="fa-solid fa-user fa-2x m-2"
-              ></i>
-              <img v-else src="`${images/profiles/}`+`${user.avatar}`" alt="" />
-              <!-- </div> -->
+                src="/storage/profile_imgs/avatar.png"
+                class="rounded-circle"
+                style="width: 40px"
+                alt="Avatar"
+              />
+              <img
+                v-else
+                src="`${/storage/profile_imgs/}`+`${user.avatar}`"
+                alt=""
+              />
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
@@ -149,7 +147,6 @@
             </ul>
           </li>
         </ul>
-        <!-- </div> -->
       </div>
     </div>
   </nav>
