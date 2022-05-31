@@ -66,6 +66,11 @@
                     v-model="form.name"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
+                    :class="{
+                      'is-invalid': v$.name.$error,
+                      'is-valid': !v$.name.$invalid,
+                    }"
+                    @blur="v$.name.$touch"
                   />
                   <button
                     @click="editName = !editName"
@@ -73,6 +78,7 @@
                     type="button"
                   >
                     <i
+                      @click="v$.name.$touch"
                       v-if="editName"
                       class="
                         fa-solid fa-floppy-disk
@@ -87,17 +93,17 @@
                   </button>
                 </div>
 
-                <!-- <span class="invalid-feedback" v-if="v$.name.$error">
+                <span class="invalid-feedback" v-if="v$.name.$error">
                   {{ v$.name.$errors[0].$message }}
-                </span> -->
+                </span>
               </div>
 
-              <!-- <div class="col">
+              <div class="col">
                 <label for="surname">Apelido</label>
                 <div class="input-group">
                   <input
                     @blur="v$.surname.$touch"
-                    disabled="editSurname"
+                    :disabled="!editSurname"
                     type="text"
                     class="form-control"
                     :class="{
@@ -105,10 +111,24 @@
                       'is-valid': !v$.surname.$invalid,
                     }"
                     placeholder="Apelido"
-                    v-model="v$.form.surname.$model"
+                    v-model="form.surname"
                   />
-                  <button class="input-group-text" type="button">
+                  <button
+                    @click="editSurname = !editSurname"
+                    class="input-group-text"
+                    type="button"
+                  >
                     <i
+                      @click="v$.surname.$touch"
+                      v-if="editSurname"
+                      class="
+                        fa-solid fa-floppy-disk
+                        cursor-pointer
+                        text-primary
+                      "
+                    ></i>
+                    <i
+                      v-if="!editSurname"
                       class="fa-solid fa-pencil cursor-pointer text-primary"
                     ></i>
                   </button>
@@ -116,15 +136,15 @@
                 <span class="invalid-feedback" v-if="v$.surname.$error">
                   {{ v$.surname.$errors[0].$message }}
                 </span>
-              </div> -->
+              </div>
             </div>
             <div class="row mb-3">
-              <!-- <div class="col">
+              <div class="col">
                 <label for="birthdate">Data de nascimento</label>
                 <div class="input-group">
                   <input
                     @blur="v$.birthdate.$touch"
-                    disabled="editBirthdate"
+                    :disabled="!editBirthdate"
                     type="date"
                     class="form-control"
                     :class="{
@@ -132,10 +152,24 @@
                       'is-valid': !v$.birthdate.$invalid,
                     }"
                     placeholder="Data de nascimento"
-                    v-model="v$.form.birthdate.$model"
+                    v-model="form.birthdate"
                   />
-                  <button class="input-group-text" type="button">
+                  <button
+                    @click="editBirthdate = !editBirthdate"
+                    class="input-group-text"
+                    type="button"
+                  >
                     <i
+                      @click="v$.birthdate.$touch"
+                      v-if="editBirthdate"
+                      class="
+                        fa-solid fa-floppy-disk
+                        cursor-pointer
+                        text-primary
+                      "
+                    ></i>
+                    <i
+                      v-if="!editBirthdate"
                       class="fa-solid fa-pencil cursor-pointer text-primary"
                     ></i>
                   </button>
@@ -156,12 +190,12 @@
                     'is-valid': !v$.email.$invalid,
                   }"
                   placeholder="Email"
-                  v-model="v$.form.email.$model"
+                  v-model="form.email"
                 />
                 <span class="invalid-feedback" v-if="v$.email.$error">
                   {{ v$.email.$errors[0].$message }}
                 </span>
-              </div> -->
+              </div>
             </div>
 
             <button class="btn btn-primary btn-block btn-lg">
@@ -183,9 +217,9 @@
 </template>
 
 <script setup>
+import { useUserStore } from "../../stores/UserStore";
 import { onMounted, ref, reactive, computed } from "vue";
-// import useVuelidate from "@vuelidate/core";
-import useValidate from "@vuelidate/core";
+import useVuelidate from "@vuelidate/core";
 import { required, email, helpers, minLength } from "@vuelidate/validators";
 
 import NavBar from "../../components/NavBar.vue";
@@ -193,21 +227,13 @@ import Footer from "../../components/Footer.vue";
 import AvatarInput from "../../components/AvatarInput.vue";
 
 import useUsers from "../../composables/users";
-// import useUserStore from "../../stores/UserStore";
-import { useUserStore } from "../../stores/UserStore";
 
 const userStore = useUserStore();
 const { user, getUser, updateUser, processing } = useUsers();
 
-// getUser(userStore.user.id);
-// console.log(user);
+console.log(userStore.user);
 
 const editName = ref(false);
-
-onMounted(() => {
-  //   getUser(userStore.user.id);
-});
-
 const editSurname = ref(false);
 const editBirthdate = ref(false);
 const editEmail = ref(false);
@@ -250,7 +276,7 @@ const rules = computed(() => ({
   },
 }));
 
-const v$ = useValidate(rules, form);
+const v$ = useVuelidate(rules, form);
 
 const handleSubmit = async () => {
   v$._value.$validate();
