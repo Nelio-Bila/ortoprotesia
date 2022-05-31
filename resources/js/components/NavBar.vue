@@ -112,17 +112,18 @@
                 {{ userStore.user.name }}
               </span>
 
-              <img
+              <!-- <img
                 v-if="userStore.user.avatar === 'avatar.png'"
                 src="/storage/profile_imgs/avatar.png"
                 class="rounded-circle"
                 style="width: 40px"
                 alt="Avatar"
-              />
+              /> -->
               <img
-                v-else
-                src="`${/storage/profile_imgs/}`+`${user.avatar}`"
-                alt=""
+                :src="`/storage/profile_imgs/` + `${userStore.user.avatar}`"
+                :alt="`${userStore.user.name} ${userStore.user.surname}`"
+                class="rounded-circle mx-1"
+                style="width: 40px"
               />
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

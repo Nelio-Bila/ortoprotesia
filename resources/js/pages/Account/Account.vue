@@ -49,7 +49,7 @@
 
             <div class="row mb-3 text-center">
               <avatar-input
-                v-model="form.avatar"
+                v-model="user.avatar"
                 default-src="/storage/profile_imgs/avatar.png"
               ></avatar-input>
             </div>
@@ -63,7 +63,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Nome"
-                    v-model="form.name"
+                    v-model="user.name"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
                     :class="{
@@ -111,7 +111,7 @@
                       'is-valid': !v$.surname.$invalid,
                     }"
                     placeholder="Apelido"
-                    v-model="form.surname"
+                    v-model="user.surname"
                   />
                   <button
                     @click="editSurname = !editSurname"
@@ -152,7 +152,7 @@
                       'is-valid': !v$.birthdate.$invalid,
                     }"
                     placeholder="Data de nascimento"
-                    v-model="form.birthdate"
+                    v-model="user.birthdate"
                   />
                   <button
                     @click="editBirthdate = !editBirthdate"
@@ -190,7 +190,7 @@
                     'is-valid': !v$.email.$invalid,
                   }"
                   placeholder="Email"
-                  v-model="form.email"
+                  v-model="user.email"
                 />
                 <span class="invalid-feedback" v-if="v$.email.$error">
                   {{ v$.email.$errors[0].$message }}
@@ -218,7 +218,7 @@
 
 <script setup>
 import { useUserStore } from "../../stores/UserStore";
-import { onMounted, ref, reactive, computed } from "vue";
+import { onMounted, ref, computed } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers, minLength } from "@vuelidate/validators";
 
@@ -229,14 +229,10 @@ import AvatarInput from "../../components/AvatarInput.vue";
 import useUsers from "../../composables/users";
 
 const userStore = useUserStore();
-const { user, getUser, updateUser, processing } = useUsers();
+const { user, getUser, updateUser, processing, errors } = useUsers();
 
 onMounted(() => {
-  form.avatar = userStore.user.avatar;
-  form.name = userStore.user.name;
-  form.surname = userStore.user.surname;
-  form.birthdate = userStore.user.birthdate;
-  form.email = userStore.user.email;
+  getUser(userStore.user.id);
 });
 
 const editName = ref(false);
@@ -244,16 +240,22 @@ const editSurname = ref(false);
 const editBirthdate = ref(false);
 const editEmail = ref(false);
 
-const form = reactive({
-  avatar: "",
-  name: "",
-  surname: "",
-  birthdate: "",
-  email: "",
-});
-
 const rules = computed(() => ({
   avatar: {},
+  birthdate: {
+    required: helpers.withMessage(
+      "Por favor preencha a data de nascimento",
+      required
+    ),
+  },
+  created_at: {},
+  deleted_at: {},
+  email: {
+    required: helpers.withMessage("Por favor preencha o email", required),
+    email: helpers.withMessage("Por favor preencha um email válido", email),
+  },
+  email_verified_at: {},
+  id: {},
   name: {
     required: helpers.withMessage("Por favor preencha o nome", required),
     minLength: helpers.withMessage(
@@ -270,24 +272,15 @@ const rules = computed(() => ({
     ),
     minLengthValue: minLength(2),
   },
-  birthdate: {
-    required: helpers.withMessage(
-      "Por favor preencha a data de nascimento",
-      required
-    ),
-  },
-  email: {
-    required: helpers.withMessage("Por favor preencha o email", required),
-    email: helpers.withMessage("Por favor preencha um email válido", email),
-  },
+  updated_at: {},
 }));
 
-const v$ = useVuelidate(rules, form);
+const v$ = useVuelidate(rules, user);
 
 const handleSubmit = async () => {
   v$._value.$validate();
   if (!v$._value.$invalid) {
-    await updateUser({ ...form });
+    await updateUser(user.id);
   } else {
     processing.value = false;
   }
