@@ -40,6 +40,9 @@ const routes = [
         path: "/",
         name: "Welcome",
         component: Welcome,
+        meta: {
+            layout: "MainLayout",
+        },
     },
     {
         path: "/results/:criteria",

@@ -24,9 +24,16 @@
           <h1 class="h2">Novo artigo</h1>
         </div>
 
-        <router-link to="/categories" class="btn btn-primary mb-4"
-          >Lista de artigos</router-link
-        >
+        <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <router-link to="/hp/articles">Artigos</router-link>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Editar artigo
+            </li>
+          </ol>
+        </nav>
         <div v-if="errors">
           <div
             v-for="(field, k) in errors"

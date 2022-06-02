@@ -24,9 +24,19 @@
           <h1 class="h2">Editar Categoria</h1>
         </div>
 
-        <router-link to="/categories" class="btn btn-primary mb-4"
+        <!-- <router-link to="/categories" class="btn btn-primary mb-4"
           >Lista de categorias</router-link
-        >
+        > -->
+        <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <router-link to="/categories">Categorias</router-link>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Editar categoria
+            </li>
+          </ol>
+        </nav>
         <div v-if="errors">
           <div v-for="(v, k) in errors" :key="k">
             <p v-for="error in v" :key="error">

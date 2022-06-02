@@ -70,15 +70,14 @@ class ArticleController extends Controller
 
     public function store(ArticleRequest $request)
     {
-        // $request->validate([
-        //     'featuredImage' => 'required|mimes:jpg,jpeg,png|max:20048'
-        // ]);
-
         $article = new Article();
 
         if ($request->file()) {
             $image_name = time() . '_' . $request->featuredImage->getClientOriginalName();
-            $image_path = $request->file('featuredImage')->storeAs('articles/headers', $image_name, 'public');
+            // $image_path = $request->file('featuredImage')->storeAs('articles/headers', $image_name, 'public');
+            // $image_path = $request->file('featuredImage')->storeAs('images/articles/headers', $image_name, 'public_uploads');
+
+            $request->featuredImage->move(public_path('/images/articles/headers'), $image_name);
 
             $article->title = $request->title;
             $article->body = $request->body;

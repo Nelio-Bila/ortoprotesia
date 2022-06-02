@@ -50,9 +50,7 @@
           <!-- Grid column -->
           <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
             <!-- Content -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              <i class="fas fa-gem me-3"></i>Ortoprotesia
-            </h6>
+            <h6 class="text-uppercase fw-bold mb-4">Ortoprotesia</h6>
             <p>
               Corrigir, estabilizar ou modificar uma função muscular,
               esquelética ou neurológica através da construção, adaptação ou
@@ -64,16 +62,15 @@
           <!-- Grid column -->
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
             <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">Informações</h6>
+            <h6 class="text-uppercase fw-bold mb-4">Informações legais</h6>
             <p>
-              <router-link to="/" class="text-reset">Próteses</router-link>
-            </p>
-            <p>
-              <router-link to="/" class="text-reset">Orteses</router-link>
+              <router-link to="/" class="text-reset"
+                >Política de privacidade</router-link
+              >
             </p>
             <p>
               <router-link to="/" class="text-reset"
-                >Auxiliares de marcha</router-link
+                >Termos e condições de uso</router-link
               >
             </p>
           </div>

@@ -98,7 +98,7 @@
           </router-link>
         </form>
 
-        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="userStore.user != null">
+        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="userStore.user">
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -132,13 +132,11 @@
                   >Definições da conta</router-link
                 >
               </li>
-              <li>
-                <button
-                  class="dropdown-item me-5 cursor-pointer"
-                  @click.prevent="handleLogout"
-                >
-                  Terminar sessão
-                </button>
+              <li
+                class="dropdown-item me-5 cursor-pointer"
+                @click.prevent="handleLogout"
+              >
+                Terminar sessão
               </li>
             </ul>
           </li>

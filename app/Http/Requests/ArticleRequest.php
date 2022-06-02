@@ -32,4 +32,17 @@ class ArticleRequest extends FormRequest
             'category_id' => 'required',
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'featuredImage.mimes' => 'Por favor carrega uma imagem válida.',
+            'title.required' => 'Por favor preencha o titulo.',
+            'body.required' => 'Por favor preencha o conteúdo.',
+            'postExcerpt.required' => 'Por favor preencha um trecho introdutório.',
+            'slug.required' => 'Indica o slug.',
+            'category_id.required' => 'Por favor preencha a categoria.',
+        ];
+    }
 }

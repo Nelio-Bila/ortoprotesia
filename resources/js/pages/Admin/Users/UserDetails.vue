@@ -8,12 +8,17 @@
       <HPNavBar />
       <!-- Navbar End  -->
       <div class="container-fluid my-3">
-        <router-link
-          to="/users"
-          class="btn btn-outline-primary d-inline-block me-3"
-          ><i class="fa-solid fa-chevron-left"></i
-        ></router-link>
         <span class="fs-2"> Detalhes do usuário {{ user.name }} </span>
+        <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <router-link to="/users">Usuários</router-link>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Detalhes de usuário
+            </li>
+          </ol>
+        </nav>
 
         <div class="row my-5">
           <div class="col-md-8">

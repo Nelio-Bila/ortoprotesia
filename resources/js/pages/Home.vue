@@ -42,9 +42,6 @@ watch(online, async (on, off) => {
     });
   }
 });
-
-// Add meta info
-// The object passed into useMeta is user configurable
 </script>
 
 <style>

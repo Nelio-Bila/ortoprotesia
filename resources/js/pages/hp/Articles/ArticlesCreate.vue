@@ -129,7 +129,7 @@
                 'is-invalid': v$.postExcerpt.$error,
                 'is-valid': !v$.postExcerpt.$invalid,
               }"
-              placeholder="Titulo"
+              placeholder="Resumo"
               v-model="form.postExcerpt"
             />
 

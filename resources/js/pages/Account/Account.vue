@@ -50,7 +50,7 @@
             <div class="row mb-3 text-center">
               <avatar-input
                 v-model="user.avatar"
-                default-src="/storage/profile_imgs/avatar.png"
+                default-src="/images/profile_imgs/avatar.png"
               ></avatar-input>
             </div>
             <div class="row mb-3">
