@@ -154,15 +154,36 @@
         >
           <div class="list-group-item active p-3">Partilhar este artigo</div>
           <div class="list-group-item p-3 text-center">
-            <router-link to="#">
+            <ShareNetwork
+              network="facebook"
+              :url="`${host}${route.path}`"
+              :title="article.title"
+              :description="article.title"
+              :quote="article.postExcerpt"
+              hashtags="MedicinaFisicaEReabilitação,Ortoprotesia"
+            >
               <i class="fa-brands fa-facebook-square fa-4x mx-2"></i>
-            </router-link>
-            <router-link to="#">
-              <i class="fa-solid fa-square-envelope fa-4x mx-2"></i>
-            </router-link>
-            <router-link to="#">
+            </ShareNetwork>
+            <ShareNetwork
+              network="twitter"
+              :url="`${host}${route.path}`"
+              :title="article.title"
+              :description="article.title"
+              :quote="article.postExcerpt"
+              hashtags="MedicinaFisicaEReabilitação,Ortoprotesia"
+            >
               <i class="fa-brands fa-twitter-square fa-4x mx-2"></i>
-            </router-link>
+            </ShareNetwork>
+            <ShareNetwork
+              network="Email"
+              :url="`${host}${route.path}`"
+              :title="article.title"
+              :description="article.title"
+              :quote="article.postExcerpt"
+              hashtags="MedicinaFisicaEReabilitação,Ortoprotesia"
+            >
+              <i class="fa-solid fa-square-envelope fa-4x mx-2"></i>
+            </ShareNetwork>
           </div>
         </div>
       </div>
@@ -184,6 +205,8 @@ import { useRouter } from "vue-router";
 
 const currentPage = ref(1);
 const rowsPerPage = ref(2);
+
+const host = ref(process.env.MIX_APP_URL);
 
 const {
   article,

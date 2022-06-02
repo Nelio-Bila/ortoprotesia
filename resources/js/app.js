@@ -13,6 +13,8 @@ const toastOptions = {
     maxToasts: 1,
 };
 
+import VueSocialSharing from "vue-social-sharing";
+
 const metaManager = createMetaManager();
 
 import Home from "./pages/Home";
@@ -26,4 +28,5 @@ app.use(router);
 app.use(metaManager);
 app.use(CKEditor);
 app.use(Toast, toastOptions);
+app.use(VueSocialSharing);
 app.mount("#app");
