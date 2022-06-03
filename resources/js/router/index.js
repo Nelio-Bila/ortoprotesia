@@ -35,6 +35,9 @@ import ConsultIndex from "../pages/Consult/ConsultIndex.vue";
 import ProcessCreate from "../pages/Process/ProcessCreate.vue";
 import ProcessDetails from "../pages/Process/ProcessDetails.vue";
 
+import HealthProsIndex from "../pages/Admin/Health_pros/HealthProsIndex.vue";
+import HProDetails from "../pages/Admin/Health_pros/HProDetails.vue";
+
 const routes = [
     {
         path: "/",
@@ -164,6 +167,17 @@ const routes = [
         path: "/user/:id/details",
         name: "user.details",
         component: UserDetails,
+        props: true,
+    },
+    {
+        path: "/admin/hpros",
+        name: "hpros.index",
+        component: HealthProsIndex,
+    },
+    {
+        path: "/admin/hpro/:id/details",
+        name: "hpro.details",
+        component: HProDetails,
         props: true,
     },
 ];

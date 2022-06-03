@@ -14,6 +14,11 @@ use App\Http\Requests\HPRegisterRequest;
 
 class HealthProfessionalController extends Controller
 {
+    public function index()
+    {
+        return HealthProfessional::all();
+    }
+
     public function store(HPRegisterRequest $request)
     {
         try {
@@ -38,9 +43,9 @@ class HealthProfessionalController extends Controller
         }
     }
 
-    public function show()
+    public function show($id)
     {
-        return Auth::guard('hp-api')->user();
+        return HealthProfessional::find($id);
     }
 
     public function login(Request $request)

@@ -9,10 +9,6 @@
       <!-- Navbar End  -->
 
       <div class="container-fluid my-3">
-        <router-link to="/categories/create" class="btn btn-primary mb-2"
-          >Registar profissional de Saúde</router-link
-        >
-
         <table
           class="table table-striped table-responsive"
           id="hpros_datatable"
@@ -20,14 +16,14 @@
           <thead class="table-light">
             <tr>
               <th>Nome</th>
-              <th>Data de nascimento</th>
+              <th>Verificado</th>
+              <th>Idade</th>
               <th>Foto</th>
               <th>Carreira</th>
               <th>Categoria</th>
               <th>Instituição</th>
               <th>Departamento</th>
-              <th>Data de inicio de funções</th>
-              <th>Verificado aos</th>
+              <th>Inscrito aos</th>
               <th>Acções</th>
             </tr>
           </thead>
@@ -35,45 +31,50 @@
             <template v-for="hpro in hpros" :key="hpro.id">
               <tr>
                 <td>{{ hpro.name }} {{ hpro.surname }}</td>
-                <td>
-                  {{ new Date(category.birthdate).toLocaleDateString() }}
+                <td class="text-center">
+                  <i v-if="hpro.verified" class="fa fa-solid fa-check"></i>
+                  <i v-else class="fa fa-solid fa-x"></i>
                 </td>
+                <td>{{ getAge(hpro.birthdate) }} anos</td>
                 <td class="text-center">
                   <img
-                    :src="'images/icons/' + hpro.avatar"
+                    :src="`/images/profile_imgs/` + `${hpro.avatar}`"
                     :alt="`${hpro.name} ${hpro.surname}`"
                     style="height: 30px; width: 30px"
                   />
                 </td>
                 <td>
-                  {{ category.carrier }}
+                  {{ hpro.carrier }}
                 </td>
                 <td>
-                  {{ category.category }}
+                  {{ hpro.category }}
                 </td>
                 <td>
-                  {{ category.institution }}
+                  {{ hpro.institution }}
                 </td>
                 <td>
-                  {{ category.department }}
+                  {{ hpro.department }}
                 </td>
                 <td>
-                  {{ category.startingWorkDate }}
+                  {{ new Date(hpro.created_at).toLocaleDateString() }}
                 </td>
-                <td>
-                  {{ new Date(category.created_at).toLocaleDateString() }}
-                </td>
-                <td>
+                <td class="text-center">
+                  <button
+                    v-if="!hpro.verified"
+                    class="btn btn-sm btn-primary m-1"
+                  >
+                    Marcar como verificado
+                  </button>
                   <router-link
                     class="btn btn-sm btn-warning mx-2"
                     :to="{
-                      name: 'hpros.edit',
+                      name: 'hpro.details',
                       params: { id: hpro.id },
                     }"
-                    >Editar</router-link
+                    >Detalhes</router-link
                   >
                   <button
-                    class="btn btn-sm btn-danger"
+                    class="btn btn-sm btn-danger m-1"
                     @click="deleteHPro(hpro.id)"
                   >
                     Eliminar
@@ -88,7 +89,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { onMounted } from "vue";
 import Swal from "sweetalert2";
 import "jquery/dist/jquery.min.js";
@@ -100,49 +101,42 @@ import useHPros from "../../../composables/hpros";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
-export default {
-  components: {
-    HPNavBar,
-    HPSideBar,
-  },
-  setup() {
-    const { hpros, getHPros, destroyHpro } = useHPros();
-    onMounted(() => {
-      getHPros();
-      setTimeout(() => {
-        $("#hpros_datatable").DataTable({
-          lengthMenu: [
-            [5, 10, 25, 50, -1],
-            [5, 10, 25, 50, "All"],
-          ],
-          pageLength: 5,
-          language: {
-            url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/pt-PT.json",
-          },
-        });
-      }, 250);
+const { hpros, getHPros, destroyHpro } = useHPros();
+onMounted(() => {
+  getHPros();
+  setTimeout(() => {
+    $("#hpros_datatable").DataTable({
+      lengthMenu: [
+        [5, 10, 25, 50, -1],
+        [5, 10, 25, 50, "All"],
+      ],
+      pageLength: 5,
+      language: {
+        url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/pt-PT.json",
+      },
     });
+  }, 500);
+});
 
-    const deleteHpro = async (id) => {
-      new Swal({
-        title: "Eliminar este profissional de Saúde?",
-        text: "Tens certeza? Não poderás reverter esta acção!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#902f37",
-        confirmButtonText: "Sim, Eliminar!",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        if (result.value) {
-          destroyHpro(id);
-          getHPros();
-        }
-      });
-    };
-    return {
-      hpros,
-      deleteHpro,
-    };
-  },
+const getAge = (dateString) => {
+  const ageInMilliseconds = new Date() - new Date(dateString);
+  return Math.floor(ageInMilliseconds / 1000 / 60 / 60 / 24 / 365); // convert to years
+};
+
+const deleteHpro = async (id) => {
+  new Swal({
+    title: "Eliminar este profissional de Saúde?",
+    text: "Tens certeza? Não poderás reverter esta acção!",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#902f37",
+    confirmButtonText: "Sim, Eliminar!",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.value) {
+      destroyHpro(id);
+      getHPros();
+    }
+  });
 };
 </script>

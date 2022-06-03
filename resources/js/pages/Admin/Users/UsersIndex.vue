@@ -100,8 +100,8 @@ const deleteUser = async (id) => {
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.value) {
-      destroyCategory(id);
-      getCategories();
+      destroyUser(id);
+      getUsers();
     }
   });
 };

@@ -20,9 +20,17 @@
           </span>
 
           <div class="card-body mx-auto">
+            <button
+              @click.prevent="goBack"
+              class="btn btn-sm btn-secondary text-white mx-2"
+            >
+              <i class="fa-solid fa-chevron-left mx-2"></i>Voltar a pagina
+              anterior
+            </button>
+
             <router-link
               type="button"
-              class="btn btn-sm btn-primary text-white"
+              class="btn btn-sm btn-primary text-white mx-2"
               to="/"
               >Ir a pagina inicial</router-link
             >
@@ -33,9 +41,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "NotFound",
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const goBack = () => {
+  router.go(-1);
 };
 </script>
 

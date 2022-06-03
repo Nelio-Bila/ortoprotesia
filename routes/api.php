@@ -10,6 +10,7 @@ use App\Http\Controllers\ForgotController;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HealthProfessionalController;
+use App\Models\HealthProfessional;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,9 @@ Route::post('hp/register', [HealthProfessionalController::class, 'store']);
 Route::post('hp/forgot', [HealthProfessionalController::class, 'forgot']);
 Route::post('hp/reset', [HealthProfessionalController::class, 'reset']);
 Route::get('hp', [HealthProfessionalController::class, 'store'])->middleware('auth:hp-api');
+// dashboard
+Route::get('hpros', [HealthProfessionalController::class, 'index']);
+Route::get('hpro/{id}', [HealthProfessionalController::class, 'show']);
 
 // Administrator
 Route::post('admin/login', [AdminController::class, 'login']);
