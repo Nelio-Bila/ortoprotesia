@@ -39,6 +39,15 @@ class AuthController extends Controller
         }
     }
 
+    public function logout()
+    {
+        if (Auth::guard('web')->check()) {
+            Auth::guard('web')->user()->AauthAcessToken()->delete();
+        }
+
+        return "Logged out sucessfully";
+    }
+
     public function user()
     {
         return Auth::guard('user')->user();

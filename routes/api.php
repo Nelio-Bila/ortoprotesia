@@ -40,11 +40,13 @@ Route::get('user', [AuthController::class, 'user'])->middleware('auth:user');
 Route::get('user/{id}', [AuthController::class, 'details'])->middleware('auth:user');
 Route::put('user/update/{id}', [AuthController::class, 'update'])->middleware('auth:user');
 Route::get('users', [AuthController::class, 'index']);
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:user');;
 
 //
 
 // Health professional
 Route::post('hp/login', [HealthProfessionalController::class, 'login']);
+Route::post('hp/logout', [HealthProfessionalController::class, 'logout'])->middleware('auth:hp-api');;
 Route::post('hp/register', [HealthProfessionalController::class, 'store']);
 Route::post('hp/forgot', [HealthProfessionalController::class, 'forgot']);
 Route::post('hp/reset', [HealthProfessionalController::class, 'reset']);

@@ -134,4 +134,14 @@ class HealthProfessionalController extends Controller
             'message' => 'sucesso'
         ]);
     }
+
+
+    public function logout()
+    {
+        if (Auth::guard('hp')->check()) {
+            Auth::guard('hp')->user()->AauthAcessToken()->delete();
+        }
+
+        return "Health Professional Logged out sucessfully";
+    }
 }

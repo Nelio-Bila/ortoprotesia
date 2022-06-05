@@ -30,6 +30,7 @@ class HealthProfessional extends Authenticatable
         'category',
         'email',
         'password',
+        'is_hp'
     ];
 
     /**

@@ -42,13 +42,11 @@
               >Definições da conta</router-link
             >
           </li>
-          <li>
-            <button
-              class="dropdown-item me-5 cursor-pointer"
-              @click.prevent="handleLogout"
-            >
-              Terminar sessão
-            </button>
+          <li
+            class="dropdown-item me-5 cursor-pointer"
+            @click.prevent="handleLogout"
+          >
+            Terminar sessão
           </li>
         </ul>
       </li>
@@ -65,7 +63,7 @@ import useAuth from "../composables/auth";
 
 const router = useRouter();
 
-const { logout } = useAuth();
+const { hplogout } = useAuth();
 
 const userStore = useUserStore();
 
@@ -76,7 +74,7 @@ const search = () => {
 };
 
 const handleLogout = () => {
-  logout();
+  hplogout();
 };
 
 onMounted(async () => {

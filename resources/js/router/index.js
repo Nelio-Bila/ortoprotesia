@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, useRouter } from "vue-router";
 import { useUserStore } from "../stores/UserStore";
 
 import Welcome from "../pages/Welcome.vue";
@@ -59,11 +59,17 @@ const routes = [
         path: "/login",
         name: "login",
         component: Login,
+        meta: {
+            hideForAuth: true,
+        },
     },
     {
         path: "/register",
         name: "register",
         component: Register,
+        meta: {
+            hideForAuth: true,
+        },
     },
     {
         path: "/forgot",
@@ -79,22 +85,43 @@ const routes = [
         path: "/hp/",
         name: "hp",
         component: HPHome,
-        beforeEnter: (to) => {
-            const userStore = useUserStore();
-            if (!userStore.user && to.name !== "hplogin") {
-                return { name: "hplogin" };
-            }
+        meta: {
+            requireHPAuth: true,
         },
+        // beforeEnter: (to) => {
+        //     const userStore = useUserStore();
+        //     if (!userStore.user && to.name !== "hplogin") {
+        //         return { name: "hplogin" };
+        //     }
+        // },
     },
     {
         path: "/hp/login",
         name: "hplogin",
         component: HPLogin,
+        meta: {
+            hideForAuth: true,
+        },
+        // beforeEnter: (to) => {
+        //     const userStore = useUserStore();
+        //     if (userStore.user !== null) {
+        //         return { name: "hp" };
+        //     }
+        // },
     },
     {
         path: "/hp/register",
         name: "hpregister",
         component: HPRegister,
+        meta: {
+            hideForAuth: true,
+        },
+        // beforeEnter: (to) => {
+        //     const userStore = useUserStore();
+        //     if (userStore.user !== null) {
+        //         return { name: "hp" };
+        //     }
+        // },
     },
     {
         path: "/hp/forgot",
@@ -105,6 +132,12 @@ const routes = [
         path: "/hp/profile",
         name: "hpprofile",
         component: HPProfile,
+        // beforeEnter: (to) => {
+        //     const userStore = useUserStore();
+        //     if (!userStore.user && to.name !== "hplogin") {
+        //         return { name: "hplogin" };
+        //     }
+        // },
     },
     {
         path: "/hp/articles",
@@ -169,6 +202,9 @@ const routes = [
         path: "/users",
         name: "users.index",
         component: UsersIndex,
+        meta: {
+            requireAdminAuth: true,
+        },
     },
     {
         path: "/user/:id/details",
@@ -192,6 +228,46 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+    const userStore = useUserStore();
+
+    // if (to.matched.some((record) => record.meta.requireHPAuth)) {
+    if (to.meta.requireHPAuth) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+
+        if (!userStore.user && to.name !== "hplogin") {
+            if (!userStore.user.is_hp) {
+                return { name: "hplogin" };
+            }
+        } else {
+            next(); // go to wherever I'm going
+        }
+    } else if (to.meta.requireAdminAuth) {
+        // if (!userStore.user && to.name !== "adminlogin") {
+        //     if (!userStore.user.is_admin) {
+        //         return { name: "adminlogin" };
+        //     }
+        // } else {
+        //     next(); // go to wherever I'm going
+        // }
+    } else if (to.meta.hideForAuth) {
+        if (userStore.user && (to.name !== "login" || to.name !== "register")) {
+            next({ path: "/" });
+        }
+        if (
+            userStore.user &&
+            (to.name !== "hplogin" || to.name !== "hpregister")
+        ) {
+            next({ path: "/hp" });
+        } else {
+            next();
+        }
+    } else {
+        next(); // does not require auth, make sure to always call next()!
+    }
 });
 
 NProgress.configure({ showSpinner: false });
