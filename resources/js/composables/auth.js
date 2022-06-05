@@ -27,6 +27,7 @@ export default function useAuth() {
             })
             .catch((ex) => {
                 processing.value = false;
+                localStorage.removeItem("op_token");
                 switch (ex.response.status) {
                     case 422:
                         errors.value = ex.response.data.errors;

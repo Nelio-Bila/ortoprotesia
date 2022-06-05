@@ -38,6 +38,7 @@ import ProcessDetails from "../pages/Process/ProcessDetails.vue";
 
 import HProsIndex from "../pages/Admin/Health_pros/HProsIndex.vue";
 import HProDetails from "../pages/Admin/Health_pros/HProDetails.vue";
+import { useUserStore } from "../stores/UserStore";
 
 const routes = [
     {
@@ -59,8 +60,18 @@ const routes = [
         path: "/login",
         name: "login",
         component: Login,
-        meta: {
-            hideForAuth: true,
+        async beforeEnter(to, from, next) {
+            let user = null;
+            await axios
+                .get("user")
+                .then((response) => {
+                    user = response.data;
+                    if (user) router.push("/");
+                })
+                .catch((ex) => {
+                    next();
+                });
+            next();
         },
     },
     {
@@ -69,6 +80,19 @@ const routes = [
         component: Register,
         meta: {
             hideForAuth: true,
+        },
+        async beforeEnter(to, from, next) {
+            let user = null;
+            await axios
+                .get("user")
+                .then((response) => {
+                    user = response.data;
+                    if (user) router.push("/");
+                })
+                .catch((ex) => {
+                    next();
+                });
+            next();
         },
     },
     {
@@ -85,24 +109,59 @@ const routes = [
         path: "/hp/",
         name: "hp",
         component: HPHome,
-        meta: {
-            requireHPAuth: true,
+        async beforeEnter(to, from, next) {
+            // let user = null;
+            // await axios
+            //     .get("user")
+            //     .then((response) => {
+            //         user = response.data;
+            //         if (user.is_hp) next();
+            //     })
+            //     .catch((ex) => {
+            //         router.push("/hp/login");
+            //     });
+            // router.push("/hp/login");
+            const userStore = useUserStore();
+            if (to.name !== "hplogin" && !userStore.user.is_hp)
+                next({ name: "hplogin" });
+            // if the user is not authenticated, `next` is called twice
+            next();
         },
     },
     {
         path: "/hp/login",
         name: "hplogin",
         component: HPLogin,
-        meta: {
-            hideForAuth: true,
+        async beforeEnter(to, from, next) {
+            let user = null;
+            await axios
+                .get("user")
+                .then((response) => {
+                    user = response.data;
+                    if (user.is_hp) router.push("/hp");
+                })
+                .catch((ex) => {
+                    next();
+                });
+            next();
         },
     },
     {
         path: "/hp/register",
         name: "hpregister",
         component: HPRegister,
-        meta: {
-            hideForAuth: true,
+        async beforeEnter(to, from, next) {
+            let user = null;
+            await axios
+                .get("user")
+                .then((response) => {
+                    user = response.data;
+                    if (user.is_hp) router.push("/hp");
+                })
+                .catch((ex) => {
+                    next();
+                });
+            next();
         },
     },
     {
@@ -206,42 +265,44 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to, from, next) => {
-    let user = null;
-    await axios
-        .get("user")
-        .then((response) => {
-            user = response.data;
-            if (to.meta.requireHPAuth) {
-                if (
-                    // make sure the user is authenticated
-                    user.is_hp === undefined &&
-                    to.name !== "hplogin"
-                ) {
-                    // redirect the user to the login page
-                    router.push({ name: "hplogin" });
-                }
-            }
+// router.beforeEach(async (to, from, next) => {
+//     let user = null;
+//     await axios
+//         .get("user")
+//         .then((response) => {
+//             user = response.data;
+//             if (to.meta.requireHPAuth) {
+//                 if (user === null) {
+//                     if (
+//                         // make sure the user is authenticated
+//                         user.is_hp === undefined &&
+//                         to.name !== "hplogin"
+//                     ) {
+//                         // redirect the user to the login page
+//                         router.push({ name: "hplogin" });
+//                     }
+//                 }
+//             }
 
-            if (to.meta.hideForAuth) {
-                if (
-                    to.name.toString() === "login" ||
-                    to.name.toString() === "register"
-                ) {
-                    router.push("/");
-                } else if (
-                    user.is_hp !== undefined &&
-                    (to.name === "hplogin" || to.name === "hpregister")
-                ) {
-                    router.push("/hp");
-                }
-            }
-        })
-        .catch((ex) => {
-            next();
-        });
-    next();
-});
+//             if (to.meta.hideForAuth) {
+//                 if (
+//                     to.name.toString() === "login" ||
+//                     to.name.toString() === "register"
+//                 ) {
+//                     router.push("/");
+//                 } else if (
+//                     user.is_hp !== undefined &&
+//                     (to.name === "hplogin" || to.name === "hpregister")
+//                 ) {
+//                     router.push("/hp");
+//                 }
+//             }
+//         })
+//         .catch((ex) => {
+//             next();
+//         });
+//     next();
+// });
 
 NProgress.configure({ showSpinner: false });
 

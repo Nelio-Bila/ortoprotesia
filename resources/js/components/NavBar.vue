@@ -120,11 +120,11 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a
-                  v-if="userStore.user.carrier"
+                <router-link
+                  v-if="userStore.user.is_hp"
                   class="dropdown-item me-5"
                   to="/hp/"
-                  >Painel</a
+                  >Painel</router-link
                 >
               </li>
               <li>

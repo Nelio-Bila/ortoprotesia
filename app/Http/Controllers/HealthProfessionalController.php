@@ -33,6 +33,7 @@ class HealthProfessionalController extends Controller
                 'startingWorkDate' => $request->starting_work_date,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'is_hp' => true,
             ]);
 
             return $hp;

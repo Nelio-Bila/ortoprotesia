@@ -186,6 +186,7 @@ export default {
           })
           .catch((ex) => {
             this.processing = false;
+            localStorage.removeItem("op_token");
             switch (ex.response.status) {
               case 422:
                 this.validationErrors = ex.response.data.errors;
