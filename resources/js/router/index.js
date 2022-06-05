@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory, useRouter } from "vue-router";
-import { useUserStore } from "../stores/UserStore";
+import { createRouter, createWebHistory } from "vue-router";
+import axios from "axios";
 
 import Welcome from "../pages/Welcome.vue";
 import Results from "../pages/Results.vue";
@@ -88,12 +88,6 @@ const routes = [
         meta: {
             requireHPAuth: true,
         },
-        // beforeEnter: (to) => {
-        //     const userStore = useUserStore();
-        //     if (!userStore.user && to.name !== "hplogin") {
-        //         return { name: "hplogin" };
-        //     }
-        // },
     },
     {
         path: "/hp/login",
@@ -102,12 +96,6 @@ const routes = [
         meta: {
             hideForAuth: true,
         },
-        // beforeEnter: (to) => {
-        //     const userStore = useUserStore();
-        //     if (userStore.user !== null) {
-        //         return { name: "hp" };
-        //     }
-        // },
     },
     {
         path: "/hp/register",
@@ -116,12 +104,6 @@ const routes = [
         meta: {
             hideForAuth: true,
         },
-        // beforeEnter: (to) => {
-        //     const userStore = useUserStore();
-        //     if (userStore.user !== null) {
-        //         return { name: "hp" };
-        //     }
-        // },
     },
     {
         path: "/hp/forgot",
@@ -132,12 +114,6 @@ const routes = [
         path: "/hp/profile",
         name: "hpprofile",
         component: HPProfile,
-        // beforeEnter: (to) => {
-        //     const userStore = useUserStore();
-        //     if (!userStore.user && to.name !== "hplogin") {
-        //         return { name: "hplogin" };
-        //     }
-        // },
     },
     {
         path: "/hp/articles",
@@ -231,43 +207,40 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-    const userStore = useUserStore();
-
-    // if (to.matched.some((record) => record.meta.requireHPAuth)) {
-    if (to.meta.requireHPAuth) {
-        // this route requires auth, check if logged in
-        // if not, redirect to login page.
-
-        if (!userStore.user && to.name !== "hplogin") {
-            if (!userStore.user.is_hp) {
-                return { name: "hplogin" };
+    let user = null;
+    await axios
+        .get("user")
+        .then((response) => {
+            user = response.data;
+            if (to.meta.requireHPAuth) {
+                if (
+                    // make sure the user is authenticated
+                    user.is_hp === undefined &&
+                    to.name !== "hplogin"
+                ) {
+                    // redirect the user to the login page
+                    router.push({ name: "hplogin" });
+                }
             }
-        } else {
-            next(); // go to wherever I'm going
-        }
-    } else if (to.meta.requireAdminAuth) {
-        // if (!userStore.user && to.name !== "adminlogin") {
-        //     if (!userStore.user.is_admin) {
-        //         return { name: "adminlogin" };
-        //     }
-        // } else {
-        //     next(); // go to wherever I'm going
-        // }
-    } else if (to.meta.hideForAuth) {
-        if (userStore.user && (to.name !== "login" || to.name !== "register")) {
-            next({ path: "/" });
-        }
-        if (
-            userStore.user &&
-            (to.name !== "hplogin" || to.name !== "hpregister")
-        ) {
-            next({ path: "/hp" });
-        } else {
+
+            if (to.meta.hideForAuth) {
+                if (
+                    to.name.toString() === "login" ||
+                    to.name.toString() === "register"
+                ) {
+                    router.push("/");
+                } else if (
+                    user.is_hp !== undefined &&
+                    (to.name === "hplogin" || to.name === "hpregister")
+                ) {
+                    router.push("/hp");
+                }
+            }
+        })
+        .catch((ex) => {
             next();
-        }
-    } else {
-        next(); // does not require auth, make sure to always call next()!
-    }
+        });
+    next();
 });
 
 NProgress.configure({ showSpinner: false });
