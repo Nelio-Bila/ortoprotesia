@@ -1,14 +1,6 @@
 <template>
   <nav
-    class="
-      navbar navbar-expand-lg navbar-light
-      bg-light
-      mb-1
-      sticky-top
-      shadow
-      h-72
-      bl-0
-    "
+    class="navbar navbar-expand-lg navbar-light bg-light mb-1 shadow h-72 bl-0"
   >
     <i
       @click="toggleMenu"

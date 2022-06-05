@@ -24,7 +24,7 @@
           <h1 class="h2">Novo artigo</h1>
         </div>
 
-        <router-link to="/categories" class="btn btn-primary mb-4"
+        <router-link to="/hp/articles" class="btn btn-primary mb-4"
           >Lista de artigos</router-link
         >
         <div v-if="errors">
@@ -215,6 +215,8 @@ import { required, minLength, helpers, minValue } from "@vuelidate/validators";
 import "@ckeditor/ckeditor5-build-classic/build/translations/pt";
 import "../../../components/editor/ckeditor";
 import VueAnkaCropper from "../../../components/VueAnkaCropper.vue";
+import { onBeforeRouteLeave } from "vue-router";
+import Swal from "sweetalert2";
 
 import useArticles from "../../../composables/articles";
 import useCategories from "../../../composables/categories";
@@ -594,89 +596,31 @@ const saveArticle = async () => {
     processing.value = false;
   }
 };
+
+onBeforeRouteLeave((to, from) => {
+  const answer = window.confirm("Tens certeza que desejas sair desta pagina?");
+  // cancel the navigation and stay on the same page
+  if (!answer) return false;
+
+  //   new Swal({
+  //     title: "Sair da criação de Artigo?",
+  //     text: "Tens certeza? Não poderás recuperar suas edições!",
+  //     type: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#902f37",
+  //     confirmButtonText: "Sim, sair!",
+  //     cancelButtonText: "Cancelar",
+  //   }).then((result) => {
+  //     if (result.value) {
+  //       return false;
+  //     }
+  //   });
+});
 </script>
 
 <style lang="scss" scoped>
 /* @import "../node_modules/vue-anka-cropper/dist/VueAnkaCropper.css"; */
 @import "../../../../../node_modules/vue-anka-cropper/dist/VueAnkaCropper.css";
-
-// .document-container {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   position: relative;
-//   flex-grow: 1;
-//   max-width: 1280px;
-//   margin: 0 auto;
-// }
-
-// .toolbar-container {
-//   width: 100%;
-// }
-
-// .minimap-wrapper {
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: nowrap;
-//   max-height: calc(100vh - 400px);
-//   width: 100%;
-//   position: relative;
-//   top: -1px;
-// }
-
-// .editor-container {
-//   width: 100%;
-//   border: 1px solid hsl(0, 0%, 80%);
-//   border-right: 0;
-//   background: hsl(0, 0%, 95%);
-//   box-sizing: border-box;
-//   position: relative;
-//   overflow: auto;
-// }
-
-// .minimap-container {
-//   width: 120px;
-//   flex: 0 0 auto;
-//   border: 1px solid var(--ck-color-toolbar-border);
-//   position: relative;
-//   overflow: hidden;
-//   max-height: 100%;
-// }
-
-// #editor-content {
-//   width: calc(180mm + 2px);
-//   min-height: calc(210mm + 2px);
-//   height: auto;
-//   padding: 20mm 12mm;
-//   box-sizing: border-box;
-//   background: hsl(0, 0%, 100%);
-//   border: 1px solid hsl(0, 0%, 88%);
-//   box-shadow: 0 2px 8px hsla(0, 0%, 0%, 0.08);
-//   margin: 40px auto;
-//   overflow: hidden;
-// }
-
-/* .cropper {
-  height: 600px;
-  background: #ddd;
-} */
-
-// body {
-//   background: #111;
-//   color: #eee;
-// }
-// #app {
-//   font-family: "Avenir", Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   margin-top: 60px;
-// }
-// a {
-//   color: #0cf;
-// }
-// h1 {
-//   text-align: center;
-// }
 
 .options,
 .cropper,
@@ -719,28 +663,6 @@ const saveArticle = async () => {
   padding: 5px 0;
   margin-bottom: 10px;
 }
-
-// input,
-// select,
-// label {
-//   width: 100%;
-//   display: block;
-//   margin-bottom: 5px;
-// }
-
-// input[type="checkbox"] {
-//   width: auto;
-//   margin-right: 10px;
-//   float: left;
-// }
-
-// input,
-// select {
-//   box-sizing: border-box;
-//   border: none;
-//   padding: 6px 12px;
-//   border-radius: 3px;
-// }
 
 .chip {
   display: inline-block;

@@ -185,7 +185,6 @@ export default {
             this.$router.push("/hp");
           })
           .catch((ex) => {
-            console.log(ex);
             this.processing = false;
             switch (ex.response.status) {
               case 422:

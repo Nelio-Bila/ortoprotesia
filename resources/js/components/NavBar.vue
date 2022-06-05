@@ -64,11 +64,11 @@
               <li>
                 <a class="dropdown-item" href="#">Informações</a>
               </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
+              <li v-if="userStore.user"><hr class="dropdown-divider" /></li>
+              <li v-if="userStore.user">
                 <a class="dropdown-item" href="#">Estado da minha consulta</a>
               </li>
-              <li>
+              <li v-if="userStore.user">
                 <router-link to="/process" class="dropdown-item"
                   >Processo clínico</router-link
                 >

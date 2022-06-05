@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useUserStore } from "../stores/UserStore";
 
 import Welcome from "../pages/Welcome.vue";
 import Results from "../pages/Results.vue";
@@ -78,6 +79,12 @@ const routes = [
         path: "/hp/",
         name: "hp",
         component: HPHome,
+        beforeEnter: (to) => {
+            const userStore = useUserStore();
+            if (!userStore.user && to.name !== "hplogin") {
+                return { name: "hplogin" };
+            }
+        },
     },
     {
         path: "/hp/login",
