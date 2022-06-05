@@ -46,7 +46,7 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:user'
 
 // Health professional
 Route::post('hp/login', [HealthProfessionalController::class, 'login']);
-Route::post('hp/logout', [HealthProfessionalController::class, 'logout'])->middleware('auth:hp-api');;
+Route::post('hp/logout', [HealthProfessionalController::class, 'logout'])->middleware('auth:hp-api');
 Route::post('hp/register', [HealthProfessionalController::class, 'store']);
 Route::post('hp/forgot', [HealthProfessionalController::class, 'forgot']);
 Route::post('hp/reset', [HealthProfessionalController::class, 'reset']);
@@ -57,10 +57,15 @@ Route::get('hpro/{id}', [HealthProfessionalController::class, 'show']);
 
 // Administrator
 Route::post('admin/login', [AdminController::class, 'login']);
-Route::post('admin/register', [AdminController::class, 'store']);
+Route::post('admin/logout', [AdminController::class, 'logout'])->middleware('auth:admin-api');
+Route::post('admin/register', [AdminController::class, 'store'])->middleware('auth::admin-api');
+Route::post('admin/update/{id}', [AdminController::class, 'update'])->middleware('auth::admin-api');
 Route::post('admin/forgot', [AdminController::class, 'forgot']);
 Route::post('admin/reset', [AdminController::class, 'reset']);
 Route::get('admin', [AdminController::class, 'show'])->middleware('auth::admin-api');
+Route::get('admin/{id}', [AdminController::class, 'getAdmin'])->middleware('auth::admin-api');
+Route::delete('admin/{category}', [AdminController::class, 'destroy'])->middleware('auth::admin-api');
+Route::get('admins', [AdminController::class, 'index'])->middleware('auth::admin-api');
 
 // Category
 Route::get('categories', [CategoryController::class, 'index']);

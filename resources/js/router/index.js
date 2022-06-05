@@ -38,6 +38,11 @@ import ProcessDetails from "../pages/Process/ProcessDetails.vue";
 
 import HProsIndex from "../pages/Admin/Health_pros/HProsIndex.vue";
 import HProDetails from "../pages/Admin/Health_pros/HProDetails.vue";
+
+import AdminsIndex from "../pages/Admin/AdminsIndex.vue";
+import AdminDetails from "../pages/Admin/AdminDetails.vue";
+import AdminLogin from "../pages/Admin/AdminLogin.vue";
+
 import { useUserStore } from "../stores/UserStore";
 
 const routes = [
@@ -245,6 +250,22 @@ const routes = [
         path: "/user/:id/details",
         name: "user.details",
         component: UserDetails,
+        props: true,
+    },
+    {
+        path: "/admins",
+        name: "admins.index",
+        component: AdminsIndex,
+    },
+    {
+        path: "/admin/login",
+        name: "admin.login",
+        component: AdminLogin,
+    },
+    {
+        path: "/admin/:id/details",
+        name: "admin.details",
+        component: AdminDetails,
         props: true,
     },
     {

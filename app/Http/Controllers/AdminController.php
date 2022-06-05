@@ -14,6 +14,11 @@ use App\Http\Requests\AdminRegisterRequest;
 
 class AdminController extends Controller
 {
+    public function index()
+    {
+        return Admin::all();
+    }
+
     public function store(AdminRegisterRequest $request)
     {
         try {
@@ -32,10 +37,40 @@ class AdminController extends Controller
             ], 400);
         }
     }
+    public function update(AdminRegisterRequest $request, $id)
+    {
+        try {
+            $admin = Admin::find($id);
+            $admin->name = $request->name;
+            $admin->surname = $request->surname;
+            $admin->birthdate = $request->birthdate;
+
+            $admin->save();
+
+
+            return $admin;
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], 400);
+        }
+    }
 
     public function show()
     {
         return Auth::guard('admin-api')->user();
+    }
+
+    public function getAdmin($id)
+    {
+        return Admin::find($id);
+    }
+
+    public function destroy(Admin $admin)
+    {
+        $admin->delete();
+
+        return response()->noContent();
     }
 
     public function login(Request $request)
@@ -123,5 +158,14 @@ class AdminController extends Controller
         return response([
             'message' => 'sucesso'
         ]);
+    }
+
+    public function logout()
+    {
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin-api')->user()->AauthAcessToken()->delete();
+        }
+
+        return "Admin Logged out sucessfully";
     }
 }
