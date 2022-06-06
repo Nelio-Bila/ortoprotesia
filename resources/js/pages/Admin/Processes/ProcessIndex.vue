@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex" id="wrapper">
-    <HPSideBar currentLink="users" />
+    <HPSideBar currentLink="processes" />
 
     <!-- Page Content -->
     <main id="page-content-wrapper">

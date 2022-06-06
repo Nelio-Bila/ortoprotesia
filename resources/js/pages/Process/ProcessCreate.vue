@@ -19,7 +19,7 @@
               >Dados do processo</router-link
             >
           </li>
-<li>
+          <li>
             <router-link to="/consults" class="nav-link text-white"
               >Consultas</router-link
             >
@@ -48,11 +48,11 @@
         <!-- <div class="container align-items-center justify-content-center"> -->
         <div class="row m-2">
           <div class="col mx-auto">
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="saveProcess">
               <h3 class="text-center">Abertura de processo</h3>
-              <div v-if="errors_exist">
+              <div v-if="errors">
                 <div
-                  v-for="(field, k) in validationErrors"
+                  v-for="(field, k) in errors"
                   :key="k"
                   class="
                     alert alert-danger
@@ -96,7 +96,7 @@
                       'is-valid': !v$.address.province.$invalid,
                     }"
                     placeholder="Provincia"
-                    v-model="v$.address.province.$model"
+                    v-model="form.address.province"
                   />
                   <span
                     class="invalid-feedback"
@@ -117,7 +117,7 @@
                       'is-valid': !v$.address.district.$invalid,
                     }"
                     placeholder="Distrito"
-                    v-model="v$.address.district.$model"
+                    v-model="form.address.district"
                   />
                   <span
                     class="invalid-feedback"
@@ -138,7 +138,7 @@
                       'is-valid': !v$.address.neighbourhood.$invalid,
                     }"
                     placeholder="Bairro"
-                    v-model="v$.address.neighbourhood.$model"
+                    v-model="form.address.neighbourhood"
                   />
                   <span
                     class="invalid-feedback"
@@ -163,7 +163,7 @@
                       'is-valid': !v$.identification.number.$invalid,
                     }"
                     placeholder="Numero"
-                    v-model="v$.identification.number.$model"
+                    v-model="form.identification.number"
                   />
                   <span
                     class="invalid-feedback"
@@ -184,7 +184,7 @@
                       'is-valid': !v$.identification.archive.$invalid,
                     }"
                     placeholder="Arquivo de identificação civil"
-                    v-model="v$.identification.archive.$model"
+                    v-model="form.identification.archive"
                   />
                   <span
                     class="invalid-feedback"
@@ -205,7 +205,7 @@
                       'is-valid': !v$.identification.issueDate.$invalid,
                     }"
                     placeholder="Data de registo"
-                    v-model="v$.identification.issueDate.$model"
+                    v-model="form.identification.issueDate"
                   />
                   <span
                     class="invalid-feedback"
@@ -221,14 +221,14 @@
                   <label for="archive">Estado civil</label>
                   <select
                     id="maritalState"
-                    @blur="v$.process.genre.$touch"
+                    @blur="v$.genre.$touch"
                     class="form-select"
                     :class="{
-                      'is-invalid': v$.process.maritalState.$error,
-                      'is-valid': !v$.process.maritalState.$invalid,
+                      'is-invalid': v$.maritalState.$error,
+                      'is-valid': !v$.maritalState.$invalid,
                     }"
                     aria-label="Selecção de estado civil"
-                    v-model="v$.process.maritalState.$model"
+                    v-model="form.maritalState"
                   >
                     <option selected disabled>Selecione o estado civil</option>
                     <option value="Solteiro(a)">Solteiro(a)</option>
@@ -236,49 +236,43 @@
                     <option value="Divorciado(a)">Divorciado(a)</option>
                     <option value="Viuvo(a)">Viuvo(a)</option>
                   </select>
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$.process.maritalState.$error"
-                  >
-                    {{ v$.process.maritalState.$errors[0].$message }}
+                  <span class="invalid-feedback" v-if="v$.maritalState.$error">
+                    {{ v$.maritalState.$errors[0].$message }}
                   </span>
                 </div>
                 <div class="col">
                   <label for="archive">Genero</label>
                   <select
                     id="genre"
-                    @blur="v$.process.genre.$touch"
+                    @blur="v$.genre.$touch"
                     class="form-select"
                     :class="{
-                      'is-invalid': v$.process.genre.$error,
-                      'is-valid': !v$.process.genre.$invalid,
+                      'is-invalid': v$.genre.$error,
+                      'is-valid': !v$.genre.$invalid,
                     }"
                     aria-label="Selecção de genero"
-                    v-model="v$.process.genre.$model"
+                    v-model="form.genre"
                   >
                     <option selected disabled>Selecione o seu genero</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
                   </select>
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$.process.maritalState.$error"
-                  >
-                    {{ v$.process.maritalState.$errors[0].$message }}
+                  <span class="invalid-feedback" v-if="v$.maritalState.$error">
+                    {{ v$.maritalState.$errors[0].$message }}
                   </span>
                 </div>
                 <div class="col">
                   <label for="archive">Raça</label>
                   <select
                     id="race"
-                    @blur="v$.process.race.$touch"
+                    @blur="v$.race.$touch"
                     class="form-select"
                     :class="{
-                      'is-invalid': v$.process.race.$error,
-                      'is-valid': !v$.process.race.$invalid,
+                      'is-invalid': v$.race.$error,
+                      'is-valid': !v$.race.$invalid,
                     }"
                     aria-label="Selecção de raça"
-                    v-model="v$.process.race.$model"
+                    v-model="v$.race.$model"
                   >
                     <option selected disabled>Selecione a sua raça</option>
                     <option value="Negro">Negro</option>
@@ -287,8 +281,8 @@
                     <option value="Asiático">Asiático</option>
                     <option value="Outro">Outro</option>
                   </select>
-                  <span class="invalid-feedback" v-if="v$.process.race.$error">
-                    {{ v$.process.race.$errors[0].$message }}
+                  <span class="invalid-feedback" v-if="v$.race.$error">
+                    {{ v$.race.$errors[0].$message }}
                   </span>
                 </div>
               </div>
@@ -297,42 +291,36 @@
                   <label for="phoneNumber">Telefone</label>
                   <input
                     id="phoneNumber"
-                    @blur="v$.process.phoneNumber.$touch"
+                    @blur="v$.phoneNumber.$touch"
                     type="text"
                     class="form-control"
                     :class="{
-                      'is-invalid': v$.process.phoneNumber.$error,
-                      'is-valid': !v$.process.phoneNumber.$invalid,
+                      'is-invalid': v$.phoneNumber.$error,
+                      'is-valid': !v$.phoneNumber.$invalid,
                     }"
                     placeholder="Telefone"
-                    v-model="v$.process.phoneNumber.$model"
+                    v-model="form.phoneNumber"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$.process.phoneNumber.$error"
-                  >
-                    {{ v$.process.phoneNumber.$errors[0].$message }}
+                  <span class="invalid-feedback" v-if="v$.phoneNumber.$error">
+                    {{ v$.phoneNumber.$errors[0].$message }}
                   </span>
                 </div>
                 <div class="col">
                   <label for="profession">Profissão</label>
                   <input
                     id="profession"
-                    @blur="v$.process.profession.$touch"
+                    @blur="v$.profession.$touch"
                     type="text"
                     class="form-control"
                     :class="{
-                      'is-invalid': v$.process.profession.$error,
-                      'is-valid': !v$.process.profession.$invalid,
+                      'is-invalid': v$.profession.$error,
+                      'is-valid': !v$.profession.$invalid,
                     }"
                     placeholder="profissão"
-                    v-model="v$.process.profession.$model"
+                    v-model="form.profession"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$.process.profession.$error"
-                  >
-                    {{ v$.process.profession.$errors[0].$message }}
+                  <span class="invalid-feedback" v-if="v$.profession.$error">
+                    {{ v$.profession.$errors[0].$message }}
                   </span>
                 </div>
 
@@ -340,21 +328,18 @@
                   <label for="workPlace">Local de trabalho</label>
                   <input
                     id="workPlace"
-                    @blur="v$.process.workPlace.$touch"
+                    @blur="v$.workPlace.$touch"
                     type="text"
                     class="form-control"
                     :class="{
-                      'is-invalid': v$.process.workPlace.$error,
-                      'is-valid': !v$.process.workPlace.$invalid,
+                      'is-invalid': v$.workPlace.$error,
+                      'is-valid': !v$.workPlace.$invalid,
                     }"
                     placeholder="Local de trabalho"
-                    v-model="v$.process.workPlace.$model"
+                    v-model="form.workPlace"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$.process.workPlace.$error"
-                  >
-                    {{ v$.process.workPlace.$errors[0].$message }}
+                  <span class="invalid-feedback" v-if="v$.workPlace.$error">
+                    {{ v$.workPlace.$errors[0].$message }}
                   </span>
                 </div>
               </div>
@@ -363,66 +348,70 @@
                   <label for="naturality">Naturalidade</label>
                   <input
                     id="naturality"
-                    @blur="v$.process.naturality.$touch"
+                    @blur="v$.naturality.$touch"
                     type="text"
                     class="form-control"
                     :class="{
-                      'is-invalid': v$.process.naturality.$error,
-                      'is-valid': !v$.process.naturality.$invalid,
+                      'is-invalid': v$.naturality.$error,
+                      'is-valid': !v$.naturality.$invalid,
                     }"
                     placeholder="Naturalidade"
-                    v-model="v$.process.naturality.$model"
+                    v-model="form.naturality"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$.process.naturality.$error"
-                  >
-                    {{ v$.process.naturality.$errors[0].$message }}
+                  <span class="invalid-feedback" v-if="v$.naturality.$error">
+                    {{ v$.naturality.$errors[0].$message }}
                   </span>
                 </div>
                 <div class="col">
                   <label for="fatherName">Nome do pai</label>
                   <input
                     id="fatherName"
-                    @blur="v$.process.fatherName.$touch"
+                    @blur="v$.fatherName.$touch"
                     type="text"
                     class="form-control"
                     :class="{
-                      'is-invalid': v$.process.fatherName.$error,
-                      'is-valid': !v$.process.fatherName.$invalid,
+                      'is-invalid': v$.fatherName.$error,
+                      'is-valid': !v$.fatherName.$invalid,
                     }"
                     placeholder="Nome do pai"
-                    v-model="v$.process.fatherName.$model"
+                    v-model="form.fatherName"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$.process.fatherName.$error"
-                  >
-                    {{ v$.process.fatherName.$errors[0].$message }}
+                  <span class="invalid-feedback" v-if="v$.fatherName.$error">
+                    {{ v$.fatherName.$errors[0].$message }}
                   </span>
                 </div>
                 <div class="col">
                   <label for="motherName">Nome do mãe</label>
                   <input
                     id="motherName"
-                    @blur="v$.process.motherName.$touch"
+                    @blur="v$.motherName.$touch"
                     type="text"
                     class="form-control"
                     :class="{
-                      'is-invalid': v$.process.motherName.$error,
-                      'is-valid': !v$.process.motherName.$invalid,
+                      'is-invalid': v$.motherName.$error,
+                      'is-valid': !v$.motherName.$invalid,
                     }"
                     placeholder="Nome do mãe"
-                    v-model="v$.process.motherName.$model"
+                    v-model="form.motherName"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$.process.motherName.$error"
-                  >
-                    {{ v$.process.motherName.$errors[0].$message }}
+                  <span class="invalid-feedback" v-if="v$.motherName.$error">
+                    {{ v$.motherName.$errors[0].$message }}
                   </span>
                 </div>
               </div>
+
+              <button class="btn btn-primary btn-block btn-lg">
+                <span
+                  v-if="processing"
+                  class="spinner-border spinner-border-sm mx-2"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span v-if="processing">Processando...</span>
+
+                <i v-if="!processing" class="fa-solid fa-floppy-disk mx-2"></i>
+                <span v-if="!processing">Salvar</span>
+              </button>
             </form>
           </div>
         </div>
@@ -433,7 +422,126 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { reactive, computed, onMounted } from "vue";
+import useVuelidate from "@vuelidate/core";
+import {
+  required,
+  helpers,
+  minLength,
+  minLengthValue,
+} from "@vuelidate/validators";
+
+import useProcesses from "../../composables/processes";
+import { useUserStore } from "../../stores/UserStore";
+import NavBar from "../../components/NavBar.vue";
+import Footer from "../../components/Footer.vue";
+
+const form = reactive({
+  user_id: "",
+  maritalState: "",
+  genre: "",
+  race: "",
+  profession: "",
+  workPlace: "",
+  naturality: "",
+  phoneNumber: "",
+  fatherName: "",
+  motherName: "",
+  address: {
+    province: "",
+    district: "",
+    neighbourhood: "",
+  },
+  identification: {
+    number: "",
+    archive: "",
+    issueDate: "",
+  },
+});
+
+onMounted(() => {});
+
+const toggleSideMenu = () => {
+  document.getElementById("sidebar").classList.toggle("active");
+};
+
+const { processing, errors, storeProcess } = useProcesses();
+
+const rules = computed(() => ({
+  user_id: { required },
+  maritalState: {},
+  genre: {
+    required: helpers.withMessage("Por favor preencha o seu genero", required),
+  },
+  race: {
+    required: helpers.withMessage("Por favor preencha a sua raça", required),
+  },
+  profession: {},
+  workPlace: {},
+  naturality: {
+    required: helpers.withMessage(
+      "Por favor preencha a sua nacionalidade",
+      required
+    ),
+  },
+  phoneNumber: {
+    required: helpers.withMessage(
+      "Por favor preencha o seu numero de telefone",
+      required
+    ),
+  },
+  fatherName: {},
+  motherName: {},
+  address: {
+    province: {
+      required: helpers.withMessage("Por favor preencha a provincia", required),
+    },
+    district: {
+      required: helpers.withMessage("Por favor preencha o distrito", required),
+    },
+    neighbourhood: {
+      required: helpers.withMessage("Por favor preencha o bairro", required),
+    },
+    process_id: { required },
+  },
+  identification: {
+    number: {
+      required: helpers.withMessage(
+        "Por favor preencha o numero do BI",
+        required
+      ),
+    },
+    archive: {
+      required: helpers.withMessage(
+        "Por favor preencha o arquivo de identificação",
+        required
+      ),
+    },
+    issueDate: {
+      required: helpers.withMessage(
+        "Por favor preencha a data de registo do BI",
+        required
+      ),
+    },
+  },
+}));
+
+const v$ = useVuelidate(rules, form);
+
+const saveProcess = async () => {
+  const userStore = useUserStore();
+  form.user_id = userStore.user.id;
+  v$._value.$validate();
+
+  if (!v$._value.$invalid) {
+    await storeProcess({ ...form });
+  } else {
+    processing.value = false;
+  }
+};
+</script>
+<!-- <script>
 import axios from "axios";
 import useValidate from "@vuelidate/core";
 import {
@@ -609,4 +717,4 @@ export default {
   },
   components: { NavBar, Footer },
 };
-</script>
+</script> -->

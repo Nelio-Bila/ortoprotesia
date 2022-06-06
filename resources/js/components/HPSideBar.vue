@@ -47,8 +47,8 @@
       </router-link>
       <router-link
         class="nav-link text-white"
-        :class="currentLink === 'consults' ? 'active-link' : 'text-white'"
-        to="/hp"
+        :class="currentLink === 'processes' ? 'active-link' : 'text-white'"
+        to="/processes"
       >
         <h5><i class="fa-solid fa-box-archive me-2"></i> Processos Clinícos</h5>
       </router-link>
