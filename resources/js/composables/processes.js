@@ -2,7 +2,7 @@ import { ref, watch } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-export default function useCategories() {
+export default function useProcesses() {
     const processes = ref([]);
     const process = ref([]);
     const router = useRouter();
@@ -44,7 +44,7 @@ export default function useCategories() {
 
         errors.value = "";
         try {
-            await axios.post("/processes/register", data);
+            await axios.post("/process/register", data);
             await router.push("/processes");
             processing.value = false;
         } catch (e) {
@@ -60,7 +60,7 @@ export default function useCategories() {
 
         errors.value = "";
         try {
-            await axios.put("/processes/" + id, process.value);
+            await axios.put("/process/" + id, process.value);
             await router.push("/processes");
             processing.value = false;
         } catch (e) {
@@ -74,7 +74,7 @@ export default function useCategories() {
     const destroyProcess = async (id) => {
         processing.value = true;
 
-        await axios.delete("/processes/" + id);
+        await axios.delete("/process/" + id);
         processing.value = false;
     };
 

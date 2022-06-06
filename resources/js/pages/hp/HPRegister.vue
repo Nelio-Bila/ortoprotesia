@@ -243,7 +243,7 @@
           <div class="form-check mb-3">
             <label for="password_confirm" class="form-check-label"
               >Li e aceito a <a href="#">Politica de privacidade</a> e os
-              <a href="#">termos e condiçoes</a></label
+              <a href="#">termos e condiçoes de uso</a></label
             >
             <input
               type="checkbox"
@@ -263,10 +263,12 @@
             :disabled="!politics_confirm"
             class="btn btn-primary btn-block btn-lg"
           >
-            <i
+            <span
               v-if="processing"
-              class="fa-solid fa-spinner fa-spin-pulse mx-2"
-            ></i>
+              class="spinner-border spinner-border-sm mx-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
             <span v-if="processing">Processando...</span>
 
             <i v-if="!processing" class="fa-solid fa-user-plus mx-2"></i>

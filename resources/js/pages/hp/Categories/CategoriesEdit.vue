@@ -45,7 +45,61 @@
           </div>
         </div>
 
-        <form @submit.prevent="saveCategory">
+        <form @submit.prevent="saveCategory" enctype="multipart/form-data">
+          <div class="form-group mb-3 text-center">
+            <label for="name">Icone da categoria</label>
+            <div>
+              <input
+                type="file"
+                accept="image/*"
+                class="hidden"
+                ref="input"
+                @change="change"
+              />
+              <div class="relative inline-block rounded-3">
+                <img
+                  :src="src"
+                  alt=""
+                  class="h-52 w-52 object-cover rounded-3"
+                />
+                <div
+                  class="
+                    absolute
+                    top-0
+                    h-full
+                    w-full
+                    bg-black bg-opacity-25
+                    flex
+                    items-center
+                    justify-center
+                    rounded-3
+                  "
+                >
+                  <i
+                    @click.prevent="browse()"
+                    class="
+                      fa-solid fa-camera fa-2xl
+                      primary-color
+                      cursor-pointer
+                      hover:white
+                      mx-2
+                    "
+                  ></i>
+                  <i
+                    v-if="category.image"
+                    @click.prevent="remove()"
+                    class="
+                      fa-solid fa-xmark fa-2xl
+                      primary-color
+                      cursor-pointer
+                      hover:white
+                      mx-2
+                    "
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="form-group mb-3">
             <label for="name">Nome da categoria</label>
             <input
@@ -68,12 +122,6 @@
             </span>
           </div>
 
-          <div class="form-group mb-3">
-            <div id="app">
-              <upload-media server="/upload" error=""> </upload-media>
-            </div>
-          </div>
-
           <button class="btn btn-primary btn-block btn-lg">
             <i
               v-if="processing"
@@ -90,60 +138,71 @@
   </div>
 </template>
 
-<script>
-import { onMounted, computed } from "vue";
+<script setup>
+import { onMounted, computed, ref, reactive, nextTick } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, helpers, minValue } from "@vuelidate/validators";
-import { UploadMedia, UpdateMedia } from "vue-media-upload";
+import { useRoute } from "vue-router";
 
 import useCategories from "../../../composables/categories";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
-export default {
-  props: {
-    id: {
-      required: true,
-      type: String,
-    },
-  },
-  setup(props) {
-    const { processing, errors, category, getCategory, updateCategory } =
-      useCategories();
+const route = useRoute();
+const { processing, errors, category, getCategory, updateCategory } =
+  useCategories();
 
-    onMounted(getCategory(props.id));
+onMounted(() => {
+  getCategory(route.params.id);
+});
 
-    const saveCategory = async () => {
-      await updateCategory(props.id);
-    };
+const src = ref("/images/icons/category_default.png");
+const input = ref(null);
 
-    const rules = computed(() => ({
-      name: {
-        required: helpers.withMessage("Por favor preencha o nome", required),
-        minLength: helpers.withMessage(
-          "Por favor preencha um nome válido",
-          minLength(2)
-        ),
-        minValue: minLength(2),
-      },
-    }));
+const form = reactive({
+  file: null,
+});
 
-    const v$ = useVuelidate(rules, category);
+function browse() {
+  input.value.click();
+}
 
-    return {
-      processing,
-      errors,
-      category,
-      saveCategory,
-      v$,
-    };
-  },
+function remove() {
+  form.file = null;
+  src.value = "/images/icons/category_default.png";
+}
+function change(e) {
+  form.file = e.target.files[0];
+  category.value.image = e.target.files[0];
 
-  components: {
-    HPNavBar,
-    HPSideBar,
-    UploadMedia,
-    UpdateMedia,
-  },
+  let reader = new FileReader();
+  reader.readAsDataURL(e.target.files[0]);
+  reader.onload = (e) => {
+    src.value = e.target.result;
+  };
+  nextTick();
+}
+
+const saveCategory = async () => {
+  //   let data = new FormData();
+  //   data.append("name", "ghoust");
+  //   data.append("image", form.file);
+  await updateCategory(route.params.id, { ...category });
 };
+
+const rules = computed(() => ({
+  name: {
+    required: helpers.withMessage("Por favor preencha o nome", required),
+    minLength: helpers.withMessage(
+      "Por favor preencha um nome válido",
+      minLength(2)
+    ),
+    minValue: minLength(2),
+  },
+  image: {},
+  created_at: {},
+  updated_at: {},
+}));
+
+const v$ = useVuelidate(rules, category);
 </script>

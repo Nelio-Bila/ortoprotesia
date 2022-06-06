@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Category as ArticleCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\CategoryRegisterRequest;
@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return response()->json(Category::orderBy('id', 'desc')->get());
+        return response()->json(ArticleCategory::orderBy('id', 'desc')->get());
     }
     public function store(CategoryRegisterRequest $request)
     {
@@ -21,10 +21,10 @@ class CategoryController extends Controller
             if ($request->hasFile("image")) {
                 $imageName = time() . '.' . $request->image->getClientOriginalName();
 
-                // $request->file('image')->storeAs('images/categories', $imageName);
-                $request->image->move(public_path('images/categories'), $imageName);
+                $request->file('image')->storeAs('images/categories', $imageName);
+                // $request->image->move(public_path('images/categories'), $imageName);
             }
-            $category = Category::create([
+            $category = ArticleCategory::create([
                 'name' => $request->name,
                 'image' => $imageName,
             ]);
@@ -51,19 +51,22 @@ class CategoryController extends Controller
         // }
     }
 
-    public function update(CategoryRegisterRequest $request, Category $category)
+    // CategoryRegisterRequest $request
+    public function update(Request $request, $id)
     {
-        $category->update($request->validated());
+        return $request;
 
-        return $category;
+        // $category->update($request->validated());
+
+        // return $category;
     }
 
     public function show($id)
     {
-        return response()->json(Category::find($id)->get());
+        return ArticleCategory::where('id', $id)->get();
     }
 
-    public function destroy(Category $category)
+    public function destroy(ArticleCategory $category)
     {
         $category->delete();
 

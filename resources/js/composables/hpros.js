@@ -29,7 +29,7 @@ export default function useHPros() {
         await axios
             .get("/hpro/" + id)
             .then((response) => {
-                hpro.value = response.data[0];
+                hpro.value = response.data;
                 processing.value = false;
             })
             .catch((ex) => {

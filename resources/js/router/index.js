@@ -42,6 +42,7 @@ import HProDetails from "../pages/Admin/Health_pros/HProDetails.vue";
 import AdminsIndex from "../pages/Admin/AdminsIndex.vue";
 import AdminDetails from "../pages/Admin/AdminDetails.vue";
 import AdminLogin from "../pages/Admin/AdminLogin.vue";
+import AdminCreate from "../pages/Admin/AdminCreate.vue";
 
 import { useUserStore } from "../stores/UserStore";
 
@@ -261,6 +262,11 @@ const routes = [
         path: "/admin/login",
         name: "admin.login",
         component: AdminLogin,
+    },
+    {
+        path: "/admin/create",
+        name: "admin.create",
+        component: AdminCreate,
     },
     {
         path: "/admin/:id/details",

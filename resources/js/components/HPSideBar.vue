@@ -64,10 +64,7 @@
         :class="currentLink === 'admins' ? 'active-link' : 'text-white'"
         to="/admins"
       >
-        <h5>
-          <i class="fa-solid fa-calendar-check me-2"></i> Administradores do
-          sistema
-        </h5>
+        <h5><i class="fa-solid fa-shield me-2"></i> Admins</h5>
       </router-link>
       <router-link class="nav-link text-white" to="/hp">
         <h5><i class="fa-solid fa-chart-column me-2"></i> Estatisticas</h5>

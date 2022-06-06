@@ -9,6 +9,9 @@
       <!-- Navbar End  -->
 
       <div class="container-fluid my-3">
+        <router-link to="/admin/create" class="btn btn-primary mb-2"
+          >Novo usuário admin</router-link
+        >
         <table
           class="table table-striped table-responsive"
           id="admins_datatable"
@@ -17,6 +20,7 @@
             <tr>
               <th>Nome Completo</th>
               <th>Idade</th>
+              <th>Status</th>
               <th>Registado aos</th>
               <th>Acções</th>
             </tr>
@@ -26,6 +30,8 @@
               <tr>
                 <td>{{ admin.name }} {{ admin.surname }}</td>
                 <td>{{ getAge(admin.birthdate) }} anos</td>
+                <td v-if="admin.is_admin">Activo</td>
+                <td v-else>Inactivo</td>
                 <td>
                   {{ new Date(admin.created_at).toLocaleDateString() }}
                 </td>

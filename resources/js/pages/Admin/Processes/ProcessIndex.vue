@@ -24,27 +24,27 @@
             </tr>
           </thead>
           <tbody>
-            <template v-for="hpro in hpros" :key="hpro.id">
+            <template v-for="process in processes" :key="process.id">
               <tr>
-                <td>{{ hpro.name }} {{ hpro.surname }}</td>
-                <td>{{ hpro.naturality }}</td>
-                <td>{{ hpro.fatherName }} e {{ hpro.motherName }}</td>
-                <td>{{ hpro.phoneNumber }}</td>
+                <td>{{ process.user.name }} {{ process.user.surname }}</td>
+                <td>{{ process.naturality }}</td>
+                <td>{{ process.fatherName }} e {{ process.motherName }}</td>
+                <td>{{ process.phoneNumber }}</td>
                 <td>
-                  {{ new Date(hpro.created_at).toLocaleDateString() }}
+                  {{ new Date(process.created_at).toLocaleDateString() }}
                 </td>
                 <td>
                   <router-link
                     class="btn btn-sm btn-warning mx-2"
                     :to="{
-                      name: 'hpros.edit',
+                      name: 'process.edit',
                       params: { id: hpro.id },
                     }"
                     >Editar</router-link
                   >
                   <button
                     class="btn btn-sm btn-danger"
-                    @click="deleteUser(hpro.id)"
+                    @click="deleteProcess(process.id)"
                   >
                     Eliminar
                   </button>
@@ -66,16 +66,16 @@ import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
 
-import useHPros from "../../../composables/hpros";
+import useProcesses from "../../../composables/processes";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
-const { hpros, getHPros, destroyHPro } = useHPros();
+const { processes, getProcesses, destroyProcess } = useProcesses();
 
 onMounted(() => {
-  getUsers();
+  getProcesses();
   setTimeout(() => {
-    $("#users_datatable").DataTable({
+    $("#processes_datatable").DataTable({
       lengthMenu: [
         [5, 10, 25, 50, -1],
         [5, 10, 25, 50, "All"],
@@ -88,10 +88,10 @@ onMounted(() => {
   }, 250);
 });
 
-const deleteUser = async (id) => {
+const deleteProcess = async (id) => {
   new Swal({
-    title: "Eliminar este profissional?",
-    text: "Tens certeza? Não poderás reverter esta acção!",
+    title: "Eliminar este processo?",
+    text: "Tens certeza?",
     type: "warning",
     showCancelButton: true,
     confirmButtonColor: "#902f37",
@@ -99,8 +99,8 @@ const deleteUser = async (id) => {
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.value) {
-      destroyCategory(id);
-      getCategories();
+      destroyProcess(id);
+      getProcesses();
     }
   });
 };

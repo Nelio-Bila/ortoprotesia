@@ -49,7 +49,7 @@ export default function useCategories() {
         try {
             let config = { headers: { "Content-Type": "multipart/form-data" } };
 
-            await axios.post("/categories/register", data);
+            await axios.post("/category/register", data, config);
             await router.push("/categories");
             processing.value = false;
         } catch (e) {
@@ -60,12 +60,14 @@ export default function useCategories() {
         }
     };
 
-    const updateCategory = async (id) => {
+    const updateCategory = async (id, data) => {
         processing.value = true;
+        console.log(data);
 
         errors.value = "";
         try {
-            await axios.put("/categories/" + id, category.value);
+            let config = { headers: { "Content-Type": "multipart/form-data" } };
+            await axios.put("/category/" + id, data, config);
             await router.push("/categories");
             processing.value = false;
         } catch (e) {
@@ -79,7 +81,7 @@ export default function useCategories() {
     const destroyCategory = async (id) => {
         processing.value = true;
 
-        await axios.delete("/categories/" + id);
+        await axios.delete("/category/" + id);
         processing.value = false;
     };
 

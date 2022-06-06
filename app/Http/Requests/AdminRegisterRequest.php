@@ -27,7 +27,7 @@ class AdminRegisterRequest extends FormRequest
             'name' => 'required',
             'surname' => 'required',
             'birthdate' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:admins',
             'password' => 'required|min:6',
             'password_confirm' => 'required|same:password',
         ];
@@ -41,6 +41,7 @@ class AdminRegisterRequest extends FormRequest
             'birthdate.required' => 'Por favor preencha a data de nascimento.',
             'email.required' => 'Por favor preencha o email.',
             'email.email' => 'Por favor preencha um email válido.',
+            'email.unique' => 'Este email já possui uma conta.',
             'password.required' => 'Por favor preencha a palavra passe.',
             'password.min' => 'A palavra passe deve ter 6 caracteres no minimo.',
             'password_confirm.required' => 'Por favor preencha a confirmação da palavra passe.',

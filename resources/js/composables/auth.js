@@ -53,7 +53,7 @@ export default function useAuth() {
                 userStore.setUser(response.data.user);
 
                 processing.value = false;
-                router.push("/");
+                router.push("/hp");
             })
             .catch((ex) => {
                 processing.value = false;
@@ -123,7 +123,7 @@ export default function useAuth() {
                 const userStore = useUserStore();
                 userStore.removeUser();
                 processing.value = false;
-                router.push("/hp/login");
+                router.push("/");
             })
             .catch((ex) => {
                 processing.value = false;
@@ -139,7 +139,7 @@ export default function useAuth() {
                 const userStore = useUserStore();
                 userStore.removeUser();
                 processing.value = false;
-                router.push("/hp/login");
+                router.push("/");
             })
             .catch((ex) => {
                 processing.value = false;

@@ -111,10 +111,12 @@
           </div>
 
           <button class="btn btn-primary btn-block mb-3" :disabled="processing">
-            <i
+                       <span
               v-if="processing"
-              class="fa-solid fa-spinner fa-spin-pulse mx-2"
-            ></i>
+              class="spinner-border spinner-border-sm mx-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
             <span v-if="processing">Entrando...</span>
 
             <i

@@ -63,10 +63,6 @@
         <form @submit.prevent="saveCategory">
           <div class="form-group mb-3 text-center">
             <label for="name">Icone da categoria</label>
-            <!-- <image-input
-              @input="getImage"
-              defaultSrc="/images/icons/category_default.png"
-            ></image-input> -->
             <div>
               <input
                 type="file"

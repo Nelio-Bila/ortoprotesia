@@ -189,10 +189,12 @@
               :disabled="!politics_confirm"
               class="btn btn-primary btn-block btn-lg"
             >
-              <i
+              <span
                 v-if="processing"
-                class="fa-solid fa-spinner fa-spin-pulse mx-2"
-              ></i>
+                class="spinner-border spinner-border-sm mx-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
               <span v-if="processing">Processando...</span>
 
               <i v-if="!processing" class="fa-solid fa-user-plus mx-2"></i>

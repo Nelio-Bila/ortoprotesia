@@ -32,7 +32,6 @@ class CategoryRegisterRequest extends FormRequest
     {
         return [
             'name.required' => 'Por favor preencha o nome da categoria.',
-
         ];
     }
 }
