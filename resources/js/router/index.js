@@ -48,7 +48,7 @@ import AdminDetails from "../pages/Admin/AdminDetails.vue";
 import AdminLogin from "../pages/Admin/AdminLogin.vue";
 import AdminCreate from "../pages/Admin/AdminCreate.vue";
 
-import { useUserStore } from "../stores/UserStore";
+import useAuth from "../composables/auth";
 
 const routes = [
     {
@@ -71,18 +71,8 @@ const routes = [
         name: "login",
         component: Login,
         async beforeEnter(to, from, next) {
-            // let user = null;
-            // await axios
-            //     .get("user")
-            //     .then((response) => {
-            //         user = response.data;
-            //         if (user) router.push("/");
-            //     })
-            //     .catch((ex) => {
-            //         next();
-            //     });
-            const userStore = useUserStore();
-            if (userStore.user) router.push("/");
+            const { auth } = useAuth();
+            if (auth) router.push("/");
             else next();
         },
     },
@@ -122,20 +112,8 @@ const routes = [
         name: "hp",
         component: HPHome,
         async beforeEnter(to, from, next) {
-            // let user = null;
-            // await axios
-            //     .get("user")
-            //     .then((response) => {
-            //         user = response.data;
-            //         if (user.is_hp) next();
-            //     })
-            //     .catch((ex) => {
-            //         router.push("/hp/login");
-            //     });
-            // router.push("/hp/login");
-            const userStore = useUserStore();
-            if (to.name !== "hplogin" && !userStore.user.is_hp)
-                next({ name: "hplogin" });
+            const { auth } = useAuth();
+            if (to.name !== "hplogin" && !auth.is_hp) next({ name: "hplogin" });
             // if the user is not authenticated, `next` is called twice
             next();
         },

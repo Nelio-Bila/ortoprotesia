@@ -154,7 +154,6 @@ import { reactive, computed, onMounted, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
-import { useUserStore } from "../../stores/UserStore";
 
 import Spinner from "../../components/Spinner.vue";
 import NavBar from "../../components/NavBar.vue";

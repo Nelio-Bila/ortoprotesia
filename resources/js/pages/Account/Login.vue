@@ -161,23 +161,13 @@ import { reactive, computed, onMounted, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
-import { useUserStore } from "../../stores/UserStore";
 
 import Spinner from "../../components/Spinner.vue";
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
-
 import useAuth from "../../composables/auth";
 
 const router = useRouter();
-
-// beforeRouteEnter((to, from) => {
-//   const userStore = useUserStore();
-//   console.log(userStore.user.name);
-//   if (userStore.user !== null) {
-//     router.push("/");
-//   }
-// });
 
 const loading = ref(true);
 onMounted(() => {

@@ -49,7 +49,7 @@
 
             <div class="row mb-3 text-center">
               <avatar-input
-                v-model="user.avatar"
+                v-model="auth.avatar"
                 default-src="/images/profile_imgs/avatar.png"
               ></avatar-input>
             </div>
@@ -63,7 +63,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Nome"
-                    v-model="user.name"
+                    v-model="auth.name"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
                     :class="{
@@ -111,7 +111,7 @@
                       'is-valid': !v$.surname.$invalid,
                     }"
                     placeholder="Apelido"
-                    v-model="user.surname"
+                    v-model="auth.surname"
                   />
                   <button
                     @click="editSurname = !editSurname"
@@ -152,7 +152,7 @@
                       'is-valid': !v$.birthdate.$invalid,
                     }"
                     placeholder="Data de nascimento"
-                    v-model="user.birthdate"
+                    v-model="auth.birthdate"
                   />
                   <button
                     @click="editBirthdate = !editBirthdate"
@@ -190,7 +190,7 @@
                     'is-valid': !v$.email.$invalid,
                   }"
                   placeholder="Email"
-                  v-model="user.email"
+                  v-model="auth.email"
                 />
                 <span class="invalid-feedback" v-if="v$.email.$error">
                   {{ v$.email.$errors[0].$message }}
@@ -217,8 +217,7 @@
 </template>
 
 <script setup>
-import { useUserStore } from "../../stores/UserStore";
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, isProxy, toRaw } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers, minLength } from "@vuelidate/validators";
 
@@ -226,14 +225,16 @@ import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 import AvatarInput from "../../components/AvatarInput.vue";
 
+import useAuth from "../../composables/auth";
 import useUsers from "../../composables/users";
 
-const userStore = useUserStore();
-const { user, getUser, updateUser, processing, errors } = useUsers();
+const { auth, getUser } = useAuth();
 
 onMounted(() => {
-  getUser(userStore.user.id);
+  getUser();
 });
+
+const { user, updateUser, setUSer, processing, errors } = useUsers();
 
 const editName = ref(false);
 const editSurname = ref(false);
@@ -280,7 +281,8 @@ const v$ = useVuelidate(rules, user);
 const handleSubmit = async () => {
   v$._value.$validate();
   if (!v$._value.$invalid) {
-    await updateUser(user.id);
+    setUSer(auth);
+    await updateUser(auth.id);
   } else {
     processing.value = false;
   }

@@ -433,7 +433,8 @@ import {
 } from "@vuelidate/validators";
 
 import useProcesses from "../../composables/processes";
-import { useUserStore } from "../../stores/UserStore";
+import useAuth from "../../composables/auth";
+
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 
@@ -530,8 +531,9 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, form);
 
 const saveProcess = async () => {
-  const userStore = useUserStore();
-  form.user_id = userStore.user.id;
+  const { auth } = useAuth();
+
+  form.user_id = auth.id;
   v$._value.$validate();
 
   if (!v$._value.$invalid) {

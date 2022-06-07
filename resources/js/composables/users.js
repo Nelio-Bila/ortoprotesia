@@ -63,7 +63,7 @@ export default function useUsers() {
             await axios
                 .put("/user/update/" + id, user.value)
                 .then((response) => {
-                    user = response.data;
+                    user.value = response.data;
                     processing.value = false;
                 });
         } catch (e) {
@@ -81,6 +81,10 @@ export default function useUsers() {
         processing.value = false;
     };
 
+    const setUSer = (auth) => {
+        user.value = auth;
+    };
+
     return {
         users,
         user,
@@ -91,5 +95,6 @@ export default function useUsers() {
         storeUser,
         updateUser,
         destroyUser,
+        setUSer,
     };
 }

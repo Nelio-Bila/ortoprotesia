@@ -8,7 +8,7 @@
     ></i>
 
     <div class="me-auto"></div>
-    <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="userStore.user != null">
+    <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="auth">
       <li class="nav-item dropdown">
         <a
           class="nav-link dropdown-toggle"
@@ -19,21 +19,18 @@
           aria-expanded="false"
         >
           <span class="mx-2">
-            {{ userStore.user.name }}
+            {{ auth.name }}
           </span>
           <img
-            :src="`/images/profile_imgs/` + `${userStore.user.avatar}`"
-            :alt="`${userStore.user.name} ${userStore.user.surname}`"
+            :src="`/images/profile_imgs/` + `${auth.avatar}`"
+            :alt="`${auth.name} ${auth.surname}`"
             class="rounded-circle mx-1"
             style="width: 40px"
           />
         </a>
         <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown">
           <li>
-            <a
-              v-if="userStore.user.carrier"
-              class="dropdown-item me-5"
-              to="/hp/"
+            <a v-if="auth.carrier" class="dropdown-item me-5" to="/hp/"
               >Painel</a
             >
           </li>
@@ -58,14 +55,13 @@
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
-import { useUserStore } from "../stores/UserStore";
 import useAuth from "../composables/auth";
 
 const router = useRouter();
 
-const { hplogout } = useAuth();
 
-const userStore = useUserStore();
+
+const { hplogout, auth, getUser } = useAuth();
 
 const criteria = ref("");
 
@@ -78,12 +74,7 @@ const handleLogout = () => {
 };
 
 onMounted(async () => {
-  await axios
-    .get("user")
-    .then((response) => {
-      userStore.setUser(response.data);
-    })
-    .catch((ex) => {});
+  getUser();
 });
 
 const toggleMenu = () => {

@@ -142,8 +142,8 @@
 import axios from "axios";
 import useValidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
-import { useUserStore } from "../../stores/UserStore";
 
+import useAuth from "../../composables/auth";
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 
@@ -181,8 +181,8 @@ export default {
           )
           .then((response) => {
             localStorage.setItem("op_token", response.data.token);
-            const userStore = useUserStore();
-            userStore.setUser(response.data.user);
+            const {auth} = useAuth();
+            auth.setUser(response.data.user);
             this.processing = false;
             this.$router.push("/hp");
           })

@@ -41,33 +41,13 @@
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 
 import HPSideBar from "../../components/HPSideBar.vue";
 import HPNavBar from "../../components/HPNavBar.vue";
-import { useUserStore } from "../../stores/UserStore";
-import { useRouter } from "vue-router";
+
 
 const router = useRouter();
-
-// if (!userStore.user) {
-//   router.push("/hp/login");
-// }
-
-// router.beforeEach((to, from) => {
-//   const userStore = useUserStore();
-//   console.log(userStore.user);
-//   console.log(from);
-//   console.log(to);
-//   //   if (
-//   //     // make sure the user is authenticated
-//   //     !userStore.user &&
-//   //     // ❗️ Avoid an infinite redirect
-//   //     to.name !== "login"
-//   //   ) {
-//   //     // redirect the user to the login page
-//   //     return { name: "login" };
-//   //   }
-// });
 
 const traficOptions = reactive({
   chart: {

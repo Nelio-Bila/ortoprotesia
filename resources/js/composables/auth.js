@@ -1,10 +1,9 @@
 import { reactive, ref, toRefs } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { useUserStore } from "../stores/UserStore";
 
 const state = reactive({
-    auth: null,
+    auth: {},
 });
 export default function useAuth() {
     const router = useRouter();
@@ -16,13 +15,23 @@ export default function useAuth() {
     const isLoginInvalid = ref(false);
 
     const getUser = async () => {
+        processing.value = true;
+
         await axios
-            .get("user")
+            .get(
+                "user",
+                {},
+                {
+                    Authorization: "Bearer " + localStorage.getItem("op_token"),
+                }
+            )
             .then((response) => {
                 state.auth = response.data;
+                processing.value = false;
             })
             .catch((ex) => {
                 console.log("Sem autorização");
+                processing.value = false;
             });
 
         return state.auth;
@@ -34,8 +43,6 @@ export default function useAuth() {
             .post("login", data, { headers: { Accept: "application/json" } })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
-                // const userStore = useUserStore();
-                // userStore.setUser(response.data.user);
                 state.auth = response.data.user;
                 processing.value = false;
                 router.push("/");
@@ -64,10 +71,7 @@ export default function useAuth() {
             })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
-                // const userStore = useUserStore();
-                // userStore.setUser(response.data.user);
                 state.auth = response.data.user;
-
                 processing.value = false;
                 router.push("/hp");
             })
@@ -93,10 +97,7 @@ export default function useAuth() {
             .post("hp/login", data, { headers: { Accept: "application/json" } })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
-                // const userStore = useUserStore();
-                // userStore.setUser(response.data.user);
                 state.auth = response.data.user;
-
                 processing.value = false;
                 router.push("/");
             })
@@ -127,9 +128,8 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                // const userStore = useUserStore();
-                // userStore.removeUser();
-                state.auth = null;
+                state.auth = {};
+                console.log(state.auth);
                 processing.value = false;
                 router.push("/");
             })
@@ -150,9 +150,7 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                // const userStore = useUserStore();
-                // userStore.removeUser();
-                state.auth = null;
+                state.auth = {};
                 processing.value = false;
                 router.push("/");
             })
@@ -173,10 +171,7 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                // const userStore = useUserStore();
-                // userStore.removeUser();
-
-                state.auth = null;
+                state.auth = {};
                 processing.value = false;
                 router.push("/");
             })
