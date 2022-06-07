@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +27,10 @@ class RegisterRequest extends FormRequest
             'name' => 'required',
             'surname' => 'required',
             'birthdate' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'password_confirm' => 'required|same:password',
+            'email' => 'required|email',
         ];
     }
+
 
     public function messages()
     {
@@ -41,11 +40,6 @@ class RegisterRequest extends FormRequest
             'birthdate.required' => 'Por favor preencha a data de nascimento.',
             'email.required' => 'Por favor preencha o email.',
             'email.email' => 'Por favor preencha um email válido.',
-            'email.unique' => 'O email introduzido já tem conta.',
-            'password.required' => 'Por favor preencha a palavra passe.',
-            'password.min' => 'A palavra passe deve ter 6 caracteres no minimo.',
-            'password_confirm.required' => 'Por favor preencha a confirmação da palavra passe.',
-            'password_confirm.same' => 'Confirme a palavra passe.',
         ];
     }
 }

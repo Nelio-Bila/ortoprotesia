@@ -12,11 +12,11 @@
           </div>
         </div>
         <div class="col-md-7 mx-auto">
-          <form @submit.prevent="handleSubmit">
+          <form @submit.prevent="handleSubmit(auth.id)">
             <h3 class="text-center">Dados pessoais</h3>
-            <div v-if="errors_exist">
+            <div v-if="errors">
               <div
-                v-for="(field, k) in validationErrors"
+                v-for="(field, k) in errors"
                 :key="k"
                 class="
                   alert alert-danger
@@ -38,6 +38,36 @@
                   <use xlink:href="#exclamation-triangle-fill" />
                 </svg>
                 <div v-for="error in field" :key="error">{{ error }}</div>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
+            <div v-if="success">
+              <div
+                class="
+                  alert alert-success
+                  d-flex
+                  align-items-center
+                  alert-dismissible
+                  fade
+                  show
+                "
+                role="alert"
+              >
+                <svg
+                  class="bi flex-shrink-0 me-2"
+                  width="24"
+                  height="24"
+                  role="img"
+                  aria-label="Success:"
+                >
+                  <use xlink:href="#exclamation-triangle-fill" />
+                </svg>
+                <div>Dados salvos!</div>
                 <button
                   type="button"
                   class="btn-close"
@@ -199,10 +229,12 @@
             </div>
 
             <button class="btn btn-primary btn-block btn-lg">
-              <i
+              <span
                 v-if="processing"
-                class="fa-solid fa-spinner fa-spin-pulse mx-2"
-              ></i>
+                class="spinner-border spinner-border-sm mx-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
               <span v-if="processing">Processando...</span>
 
               <i v-if="!processing" class="fa-solid fa-user-plus mx-2"></i>
@@ -228,13 +260,11 @@ import AvatarInput from "../../components/AvatarInput.vue";
 import useAuth from "../../composables/auth";
 import useUsers from "../../composables/users";
 
-const { auth, getUser } = useAuth();
+const { auth, getUser, updateUser, processing, success, errors } = useAuth();
 
 onMounted(() => {
   getUser();
 });
-
-const { user, updateUser, setUSer, processing, errors } = useUsers();
 
 const editName = ref(false);
 const editSurname = ref(false);
@@ -276,13 +306,16 @@ const rules = computed(() => ({
   updated_at: {},
 }));
 
-const v$ = useVuelidate(rules, user);
+const v$ = useVuelidate(rules, auth);
 
-const handleSubmit = async () => {
+const handleSubmit = async (id) => {
   v$._value.$validate();
   if (!v$._value.$invalid) {
-    setUSer(auth);
-    await updateUser(auth.id);
+    await updateUser(id);
+    editName.value = false;
+    editSurname.value = false;
+    editBirthdate.value = false;
+    editEmail.value = false;
   } else {
     processing.value = false;
   }

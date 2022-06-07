@@ -9,6 +9,7 @@ export default function useAuth() {
     const router = useRouter();
     const errors = ref("");
     const processing = ref(false);
+    const success = ref(false);
     const validationErrors = ref([]);
     const errors_exist = ref(false);
     const invalid_credentials = ref([]);
@@ -35,6 +36,26 @@ export default function useAuth() {
             });
 
         return state.auth;
+    };
+
+    const updateUser = async (id) => {
+        processing.value = true;
+
+        errors.value = "";
+        try {
+            await axios
+                .put("/user/update/" + id, state.auth)
+                .then((response) => {
+                    state.auth = response.data;
+                    success.value = true;
+                    processing.value = false;
+                });
+        } catch (e) {
+            if (e.response.status === 422) {
+                errors.value = e.response.data.errors;
+            }
+            processing.value = false;
+        }
     };
 
     const login = async (data) => {
@@ -183,6 +204,7 @@ export default function useAuth() {
     return {
         ...toRefs(state),
         getUser,
+        updateUser,
         login,
         adminLogin,
         hpLogin,
@@ -190,6 +212,7 @@ export default function useAuth() {
         hplogout,
         errors,
         processing,
+        success,
         validationErrors,
         errors_exist,
         invalid_credentials,
