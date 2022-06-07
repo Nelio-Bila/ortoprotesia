@@ -101,7 +101,13 @@ export default function useAuth() {
 
     const logout = async () => {
         await axios
-            .post("logout")
+            .post(
+                "logout",
+                {},
+                {
+                    Authorization: "Bearer " + localStorage.getItem("op_token"),
+                }
+            )
             .then((response) => {
                 localStorage.removeItem("op_token");
                 const userStore = useUserStore();
@@ -117,7 +123,13 @@ export default function useAuth() {
     const adminLogout = async () => {
         processing.value = true;
         await axios
-            .post("admin/logout")
+            .post(
+                "admin/logout",
+                {},
+                {
+                    Authorization: "Bearer " + localStorage.getItem("op_token"),
+                }
+            )
             .then((response) => {
                 localStorage.removeItem("op_token");
                 const userStore = useUserStore();
@@ -133,7 +145,13 @@ export default function useAuth() {
     const hplogout = async () => {
         processing.value = true;
         await axios
-            .post("hp/logout")
+            .post(
+                "hp/logout",
+                {},
+                {
+                    Authorization: "Bearer " + localStorage.getItem("op_token"),
+                }
+            )
             .then((response) => {
                 localStorage.removeItem("op_token");
                 const userStore = useUserStore();

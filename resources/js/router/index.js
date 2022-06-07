@@ -35,6 +35,7 @@ import ConsultIndex from "../pages/Consult/ConsultIndex.vue";
 
 import ProcessCreate from "../pages/Process/ProcessCreate.vue";
 import ProcessDetails from "../pages/Process/ProcessDetails.vue";
+import ProcessInfo from "../pages/Process/ProcessInfo.vue";
 
 import ProcessIndex from "../pages/Admin/Processes/ProcessIndex.vue";
 import ProcessEdit from "../pages/Admin/Processes/ProcessEdit.vue";
@@ -240,6 +241,11 @@ const routes = [
         path: "/process",
         name: "process.show",
         component: ProcessDetails,
+    },
+    {
+        path: "/process/info",
+        name: "process.info",
+        component: ProcessInfo,
     },
     {
         path: "/processes",

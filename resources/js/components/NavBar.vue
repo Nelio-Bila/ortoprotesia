@@ -36,10 +36,10 @@
             >
           </li>
           <li class="nav-item hover:bg-primary">
-            <a class="nav-link" href="#news">Noticias</a>
+            <router-link class="nav-link" to="/#news">Noticias</router-link>
           </li>
           <li class="nav-item hover:bg-primary">
-            <a class="nav-link" href="#articles">Artigos</a>
+            <router-link class="nav-link" to="/#articles">Artigos</router-link>
           </li>
           <li class="nav-item hover:bg-primary hover:white">
             <a class="nav-link" href="/forum">Forum</a>
@@ -57,12 +57,14 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
+                <router-link class="dropdown-item" to="/process/info"
+                  >Informações</router-link
+                >
+              </li>
+              <li v-if="userStore.user">
                 <router-link to="/consult/create" class="dropdown-item"
                   >Marcar</router-link
                 >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Informações</a>
               </li>
               <li v-if="userStore.user"><hr class="dropdown-divider" /></li>
               <li v-if="userStore.user">
@@ -177,6 +179,8 @@ onMounted(async () => {
       userStore.setUser(response.data);
     })
     .catch((ex) => {});
+
+  //   userStore.setUser(userStore.user);
 });
 </script>
 
