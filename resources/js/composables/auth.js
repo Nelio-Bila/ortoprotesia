@@ -1,8 +1,11 @@
-import { ref } from "vue";
+import { reactive, ref, toRefs } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/UserStore";
 
+const state = reactive({
+    auth: null,
+});
 export default function useAuth() {
     const router = useRouter();
     const errors = ref("");
@@ -11,7 +14,19 @@ export default function useAuth() {
     const errors_exist = ref(false);
     const invalid_credentials = ref([]);
     const isLoginInvalid = ref(false);
-    // const userStore = useUserStore();
+
+    const getUser = async () => {
+        await axios
+            .get("user")
+            .then((response) => {
+                state.auth = response.data;
+            })
+            .catch((ex) => {
+                console.log("Sem autorização");
+            });
+
+        return state.auth;
+    };
 
     const login = async (data) => {
         processing.value = true;
@@ -19,9 +34,9 @@ export default function useAuth() {
             .post("login", data, { headers: { Accept: "application/json" } })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
-                const userStore = useUserStore();
-                userStore.setUser(response.data.user);
-
+                // const userStore = useUserStore();
+                // userStore.setUser(response.data.user);
+                state.auth = response.data.user;
                 processing.value = false;
                 router.push("/");
             })
@@ -49,8 +64,9 @@ export default function useAuth() {
             })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
-                const userStore = useUserStore();
-                userStore.setUser(response.data.user);
+                // const userStore = useUserStore();
+                // userStore.setUser(response.data.user);
+                state.auth = response.data.user;
 
                 processing.value = false;
                 router.push("/hp");
@@ -77,8 +93,9 @@ export default function useAuth() {
             .post("hp/login", data, { headers: { Accept: "application/json" } })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
-                const userStore = useUserStore();
-                userStore.setUser(response.data.user);
+                // const userStore = useUserStore();
+                // userStore.setUser(response.data.user);
+                state.auth = response.data.user;
 
                 processing.value = false;
                 router.push("/");
@@ -110,8 +127,9 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                const userStore = useUserStore();
-                userStore.removeUser();
+                // const userStore = useUserStore();
+                // userStore.removeUser();
+                state.auth = null;
                 processing.value = false;
                 router.push("/");
             })
@@ -132,8 +150,9 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                const userStore = useUserStore();
-                userStore.removeUser();
+                // const userStore = useUserStore();
+                // userStore.removeUser();
+                state.auth = null;
                 processing.value = false;
                 router.push("/");
             })
@@ -154,8 +173,10 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                const userStore = useUserStore();
-                userStore.removeUser();
+                // const userStore = useUserStore();
+                // userStore.removeUser();
+
+                state.auth = null;
                 processing.value = false;
                 router.push("/");
             })
@@ -165,6 +186,8 @@ export default function useAuth() {
     };
 
     return {
+        ...toRefs(state),
+        getUser,
         login,
         adminLogin,
         hpLogin,

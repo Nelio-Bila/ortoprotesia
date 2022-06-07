@@ -71,17 +71,19 @@ const routes = [
         name: "login",
         component: Login,
         async beforeEnter(to, from, next) {
-            let user = null;
-            await axios
-                .get("user")
-                .then((response) => {
-                    user = response.data;
-                    if (user) router.push("/");
-                })
-                .catch((ex) => {
-                    next();
-                });
-            next();
+            // let user = null;
+            // await axios
+            //     .get("user")
+            //     .then((response) => {
+            //         user = response.data;
+            //         if (user) router.push("/");
+            //     })
+            //     .catch((ex) => {
+            //         next();
+            //     });
+            const userStore = useUserStore();
+            if (userStore.user) router.push("/");
+            else next();
         },
     },
     {

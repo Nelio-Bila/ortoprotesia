@@ -1,97 +1,100 @@
 <template>
-  <div class="my-2" id="articles" v-if="!criteria">
-    <h1 class="text-center">Artigos</h1>
-    <div class="row mx-1">
-      <div class="row my-2">
-        <div class="col-md-6 text-sm-start text-center">
-          <h4><i class="fa-solid fa-filter mx-3 text-primary"></i>Filtros</h4>
+  <div>
+    <div class="my-2" id="articles" v-if="!criteria">
+      <h1 class="text-center">Artigos</h1>
+      <div class="row mx-1">
+        <div class="row my-2">
+          <div class="col-md-6 text-sm-start text-center">
+            <h4><i class="fa-solid fa-filter mx-3 text-primary"></i>Filtros</h4>
+          </div>
+          <div class="col-md-6 text-sm-end text-center">
+            <button
+              class="btn btn-outline-secondary btn-sm"
+              @click.prevent="resetFilters"
+            >
+              <i class="fa-solid fa-trash mx-3"></i>
+              Limpar todos filtros
+            </button>
+          </div>
         </div>
-        <div class="col-md-6 text-sm-end text-center">
-          <button
-            class="btn btn-outline-secondary btn-sm"
-            @click.prevent="resetFilters"
+        <div class="col-md-4">
+          <label for="categorySelect">Categorias</label>
+          <select
+            @change="filterCategory"
+            v-model="categoryFilter"
+            name="categorySelect"
+            id="categorySelect"
+            class="form-select"
+            aria-label="Filtrar artigos por categoria"
           >
-            <i class="fa-solid fa-trash mx-3"></i>
-            Limpar todos filtros
-          </button>
+            <option disabled>Selecione uma categoria</option>
+            <option
+              v-for="category in categories"
+              :key="category.id"
+              :value="category.id"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="categorySelect">Por data</label>
+          <select
+            @change="filterDate"
+            v-model="dateFilter"
+            name="dateSelect"
+            id="dateSelect"
+            aria-label="Filtrar artigos por data"
+            class="form-select"
+          >
+            <option disabled>Selecione um período</option>
+            <option value="week">Com menos de uma semana</option>
+            <option value="month">Com menos de um mês</option>
+            <option value="year">Com menos de um ano</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="categorySelect">Por popularidade</label>
+          <select
+            @change="filterPopularity"
+            v-model="popularityFilter"
+            name="popularitySelect"
+            id="popularitySelect"
+            aria-label="Filtrar artigos por vizualizações"
+            class="form-select"
+          >
+            <option disabled>Selecione uma opção</option>
+            <option value="most">Top 10 Mais lidos</option>
+            <option value="least">Top 10 Menos lidos</option>
+          </select>
         </div>
       </div>
-      <div class="col-md-4">
-        <label for="categorySelect">Categorias</label>
-        <select
-          @change="filterCategory"
-          v-model="categoryFilter"
-          name="categorySelect"
-          id="categorySelect"
-          class="form-select"
-          aria-label="Filtrar artigos por categoria"
-        >
-          <option disabled>Selecione uma categoria</option>
-          <option
-            v-for="category in categories"
-            :key="category.id"
-            :value="category.id"
-          >
-            {{ category.name }}
-          </option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <label for="categorySelect">Por data</label>
-        <select
-          @change="filterDate"
-          v-model="dateFilter"
-          name="dateSelect"
-          id="dateSelect"
-          aria-label="Filtrar artigos por data"
-          class="form-select"
-        >
-          <option disabled>Selecione um período</option>
-          <option value="week">Com menos de uma semana</option>
-          <option value="month">Com menos de um mês</option>
-          <option value="year">Com menos de um ano</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <label for="categorySelect">Por popularidade</label>
-        <select
-          @change="filterPopularity"
-          v-model="popularityFilter"
-          name="popularitySelect"
-          id="popularitySelect"
-          aria-label="Filtrar artigos por vizualizações"
-          class="form-select"
-        >
-          <option disabled>Selecione uma opção</option>
-          <option value="most">Top 10 Mais lidos</option>
-          <option value="least">Top 10 Menos lidos</option>
-        </select>
-      </div>
-    </div>
 
-    <div class="row my-5" v-if="processing">
-      <div class="col text-center">
-        <Spinner />
+      <div class="row my-5" v-if="processing">
+        <div class="col text-center">
+          <Spinner />
+        </div>
       </div>
-    </div>
-    <div v-else class="row">
-      <ArticleCard
-        v-for="article in articles"
-        :article="article"
-        :key="article.id"
-      />
-    </div>
-
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-6 d-flex justify-content-center">
-        <pagination-component
-          class="pagination-component"
-          v-model="currentPage"
-          :numberOfPages="numberOfPages"
+      <div v-else class="row">
+        <ArticleCard
+          v-for="article in articles"
+          :article="article"
+          :key="article.id"
         />
       </div>
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 d-flex justify-content-center">
+          <pagination-component
+            class="pagination-component"
+            v-model="currentPage"
+            :numberOfPages="numberOfPages"
+          />
+        </div>
+      </div>
     </div>
 
+    <!-- Search page -->
     <div class="my-2" id="articles" v-if="criteria">
       <router-link to="/" class="btn btn-outline-primary"
         ><i class="fa-solid fa-chevron-left"></i
@@ -100,7 +103,7 @@
       <h2 class="text-center" v-if="!searchedArticles.length">
         Infelimente não foi encontrado algo relacionado a pesquisa
       </h2>
-      <h2 class="text-center" v-if="searchedArticles.length">Artigos</h2>
+      <h2 class="text-center" v-else>Artigos</h2>
       <div class="row">
         <ArticleCard
           :article="article"
@@ -108,23 +111,16 @@
           :key="article.id"
         />
       </div>
-      <nav aria-label="Page navigation">
-        <ul class="pagination my-2 d-flex justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 d-flex justify-content-center">
+          <pagination-component
+            class="pagination-component"
+            v-model="currentPage"
+            :numberOfPages="numberOfPages"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
