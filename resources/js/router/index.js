@@ -72,7 +72,7 @@ const routes = [
         component: Login,
         async beforeEnter(to, from, next) {
             const { auth } = useAuth();
-            if (auth) router.push("/");
+            if (!Object.keys(auth).length === 0) router.push("/");
             else next();
         },
     },
@@ -84,17 +84,9 @@ const routes = [
             hideForAuth: true,
         },
         async beforeEnter(to, from, next) {
-            let user = null;
-            await axios
-                .get("user")
-                .then((response) => {
-                    user = response.data;
-                    if (user) router.push("/");
-                })
-                .catch((ex) => {
-                    next();
-                });
-            next();
+            const { auth } = useAuth();
+            if (!Object.keys(auth).length === 0) router.push("/");
+            else next();
         },
     },
     {
@@ -113,6 +105,7 @@ const routes = [
         component: HPHome,
         async beforeEnter(to, from, next) {
             const { auth } = useAuth();
+            console.log(auth.name);
             if (to.name !== "hplogin" && !auth.is_hp) next({ name: "hplogin" });
             // if the user is not authenticated, `next` is called twice
             next();
@@ -123,17 +116,9 @@ const routes = [
         name: "hplogin",
         component: HPLogin,
         async beforeEnter(to, from, next) {
-            let user = null;
-            await axios
-                .get("user")
-                .then((response) => {
-                    user = response.data;
-                    if (user.is_hp) router.push("/hp");
-                })
-                .catch((ex) => {
-                    next();
-                });
-            next();
+            const { auth } = useAuth();
+            if (auth.is_hp) router.push("/hp");
+            else next();
         },
     },
     {

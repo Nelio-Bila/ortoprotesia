@@ -3,7 +3,7 @@
     <NavBar />
     <div class="row my-2">
       <div class="col-md-5 mx-auto">
-        <form @submit.prevent="handleSubmit" class="mt-5">
+        <form @submit.prevent="handleLogin" class="mt-5">
           <h3 class="text-center">Inicio de sessão</h3>
           <p class="text-center">Como profissional de saúde</p>
           <div v-if="errors_exist">
@@ -79,7 +79,7 @@
                 'is-valid': !v$.email.$invalid,
               }"
               placeholder="Email"
-              v-model="v$.email.$model"
+              v-model="form.email"
             />
             <span class="invalid-feedback" v-if="v$.email.$error">
               {{ v$.email.$errors[0].$message }}
@@ -93,7 +93,7 @@
               class="form-control"
               :class="v$.password.$error ? 'is-invalid' : ''"
               placeholder="Palavra passe"
-              v-model="v$.password.$model"
+              v-model="form.password"
             />
             <span class="invalid-feedback" v-if="v$.password.$error">
               {{ v$.password.$errors[0].$message }}
@@ -103,7 +103,7 @@
             <input
               class="form-check-input"
               type="checkbox"
-              v-model="remember_me"
+              v-model="form.remember_me"
             />
             <label class="form-check-label" for="flexCheckDefault">
               Manter me logado
@@ -111,7 +111,7 @@
           </div>
 
           <button class="btn btn-primary btn-block mb-3" :disabled="processing">
-                       <span
+            <span
               v-if="processing"
               class="spinner-border spinner-border-sm mx-2"
               role="status"
@@ -138,96 +138,63 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-import useValidate from "@vuelidate/core";
-import { required, email, helpers } from "@vuelidate/validators";
 
-import useAuth from "../../composables/auth";
+<script setup>
+import { reactive, computed, onMounted, ref } from "vue";
+import useVuelidate from "@vuelidate/core";
+import { required, email, helpers } from "@vuelidate/validators";
+import { useRouter } from "vue-router";
+
+import Spinner from "../../components/Spinner.vue";
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
+import useAuth from "../../composables/auth";
 
-export default {
-  name: "HPLogin",
-  data() {
-    return {
-      v$: useValidate(),
-      email: "",
-      password: "",
-      processing: false,
-      remember_me: false,
-      errors_exist: false,
-      validationErrors: [],
-      isLoginInvalid: false,
-      invalid_credentials: "",
-    };
-  },
-  methods: {
-    async handleSubmit() {
-      this.processing = true;
-      this.v$.$validate();
+const router = useRouter();
 
-      if (!this.v$.$error) {
-        await axios
-          .post(
-            "hp/login",
+const loading = ref(true);
+onMounted(() => {
+  loading.value = false;
+});
 
-            {
-              email: this.email,
-              password: this.password,
-              remember_me: this.remember_me,
-            },
-            { headers: { Accept: "application/json" } }
-          )
-          .then((response) => {
-            localStorage.setItem("op_token", response.data.token);
-            const {auth} = useAuth();
-            auth.setUser(response.data.user);
-            this.processing = false;
-            this.$router.push("/hp");
-          })
-          .catch((ex) => {
-            this.processing = false;
-            localStorage.removeItem("op_token");
-            switch (ex.response.status) {
-              case 422:
-                this.validationErrors = ex.response.data.errors;
-                this.errors_exist = true;
-                break;
-              case 401:
-                this.invalid_credentials = ex.response.data.message;
-                this.isLoginInvalid = true;
-                break;
-            }
-          });
-      } else {
-        this.processing = false;
-      }
-    },
+const form = reactive({
+  email: "",
+  password: "",
+  remember_me: false,
+});
+
+const {
+  hpLogin,
+  errors_exist,
+  errors,
+  processing,
+  validationErrors,
+  invalid_credentials,
+  isLoginInvalid,
+} = useAuth();
+
+const rules = computed(() => ({
+  email: {
+    required: helpers.withMessage("Por favor preencha o email", required),
+    email: helpers.withMessage("Por favor preencha um email válido", email),
   },
-  validations() {
-    return {
-      email: {
-        required: helpers.withMessage("Por favor preencha o email", required),
-        email: helpers.withMessage("Por favor preencha um email válido", email),
-      },
-      password: {
-        required: helpers.withMessage(
-          "Por favor preencha a palavra passe",
-          required
-        ),
-      },
-      processing: {},
-      remember_me: {},
-      errors_exist: {},
-      validationErrors: {},
-      isLoginInvalid: {},
-      invalid_credentials: {},
-    };
+  password: {
+    required: helpers.withMessage(
+      "Por favor preencha a palavra passe",
+      required
+    ),
   },
-  components: {
-    NavBar,
-    Footer,
-  },
+  remember_me: {},
+}));
+
+const v$ = useVuelidate(rules, form);
+
+const handleLogin = async () => {
+  v$._value.$validate();
+  if (!v$._value.$invalid) {
+    await hpLogin({ ...form });
+  } else {
+    processing.value = false;
+  }
 };
 </script>

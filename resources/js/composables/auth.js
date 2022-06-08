@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 const state = reactive({
-    auth: {},
+    auth: null,
 });
 export default function useAuth() {
     const router = useRouter();
@@ -149,8 +149,7 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                state.auth = {};
-                console.log(state.auth);
+                state.auth = null;
                 processing.value = false;
                 router.push("/");
             })
@@ -171,7 +170,7 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                state.auth = {};
+                state.auth = null;
                 processing.value = false;
                 router.push("/");
             })
@@ -192,7 +191,7 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                state.auth = {};
+                state.auth = null;
                 processing.value = false;
                 router.push("/");
             })

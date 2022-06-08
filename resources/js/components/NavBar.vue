@@ -66,7 +66,9 @@
                   >Marcar</router-link
                 >
               </li>
-              <li v-if="auth"><hr class="dropdown-divider" /></li>
+              <li v-if="auth">
+                <hr class="dropdown-divider" />
+              </li>
               <li v-if="auth">
                 <a class="dropdown-item" href="#">Estado da minha consulta</a>
               </li>
@@ -170,8 +172,9 @@ const handleLogout = () => {
   logout();
 };
 
-onMounted(async () => {
+onMounted(() => {
   getUser();
+  console.log(auth);
 });
 </script>
 

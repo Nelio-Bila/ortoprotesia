@@ -27,7 +27,9 @@
             class="form-select"
             aria-label="Filtrar artigos por categoria"
           >
-            <option disabled>Selecione uma categoria</option>
+            <option value="selectCategory" disabled>
+              Selecione uma categoria
+            </option>
             <option
               v-for="category in categories"
               :key="category.id"
@@ -47,7 +49,7 @@
             aria-label="Filtrar artigos por data"
             class="form-select"
           >
-            <option disabled>Selecione um período</option>
+            <option value="selectPeriod" disabled>Selecione um período</option>
             <option value="week">Com menos de uma semana</option>
             <option value="month">Com menos de um mês</option>
             <option value="year">Com menos de um ano</option>
@@ -63,7 +65,7 @@
             aria-label="Filtrar artigos por vizualizações"
             class="form-select"
           >
-            <option disabled>Selecione uma opção</option>
+            <option value="selectPop" disabled>Selecione uma opção</option>
             <option value="most">Top 10 Mais lidos</option>
             <option value="least">Top 10 Menos lidos</option>
           </select>
@@ -137,9 +139,9 @@ import PaginationComponent from "../components/pagination/PaginationComponent.vu
 import useArticles from "../composables/articles";
 import useCategories from "../composables/categories";
 
-const categoryFilter = ref("");
-const dateFilter = ref("");
-const popularityFilter = ref("");
+const categoryFilter = ref("selectCategory");
+const dateFilter = ref("selectPeriod");
+const popularityFilter = ref("selectPop");
 
 const { route } = useRoute();
 
