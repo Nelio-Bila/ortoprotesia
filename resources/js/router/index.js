@@ -104,14 +104,14 @@ const routes = [
         path: "/hp/",
         name: "hp",
         component: HPHome,
-        async beforeEnter(to, from, next) {
-            const { getUser } = useAuth();
-            const auth = getUser();
+        // async beforeEnter(to, from, next) {
+        //     const { getUser } = useAuth();
+        //     const auth = getUser();
 
-            if (to.name !== "hplogin" && !auth.is_hp) next({ name: "hplogin" });
-            // if the user is not authenticated, `next` is called twice
-            next();
-        },
+        //     if (to.name !== "hplogin" && !auth.is_hp) next({ name: "hplogin" });
+        //     // if the user is not authenticated, `next` is called twice
+        //     next();
+        // },
     },
     {
         path: "/hp/login",
@@ -128,7 +128,12 @@ const routes = [
         path: "/hp/register",
         name: "hpregister",
         component: HPRegister,
-        async beforeEnter(to, from, next) {},
+        async beforeEnter(to, from, next) {
+            const useUser = useUserStore();
+            const auth = useUser.getUser;
+            if (auth.is_hp) router.push("/hp");
+            else next();
+        },
     },
     {
         path: "/hp/forgot",

@@ -31,7 +31,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item hover:bg-primary">
-            <router-link class="nav-link active" aria-current="page" to="/"
+            <router-link class="nav-link" aria-current="page" to="/"
               >Inicio</router-link
             >
           </li>
