@@ -5,43 +5,20 @@
       <div class="row mx-1">
         <div class="col-md-3">
           <div class="row">
-            <span class="text-center"
-              ><i class="fa-solid fa-filter mx-3 text-primary"></i>Filtros</span
-            >
-            <button
-              class="btn btn-outline-secondary btn-sm"
-              @click.prevent="resetFilters"
-            >
-              <i class="fa-solid fa-trash mx-3"></i>
-              Limpar todos filtros
-            </button>
+            <div class="col">
+              <i class="fa-solid fa-filter mx-1 text-primary"></i>Filtros
+              <span
+                class="mx-2 btn btn-outline-secondary btn-sm"
+                @click.prevent="resetFilters"
+              >
+                <i class="fa-solid fa-trash mx-1"></i>
+                Limpar todos
+              </span>
+            </div>
           </div>
-          <!-- <div class="col-md-3 text-sm-end text-center">
 
-          </div> -->
-          <!-- </div> -->
-          <!-- <div class="col-md-4"> -->
           <h5 class="my-2">Categorias</h5>
-          <!-- <label for="categorySelect">Categorias</label> -->
-          <!-- <select
-            @change="filterCategory"
-            v-model="categoryFilter"
-            name="categorySelect"
-            id="categorySelect"
-            class="form-select"
-            aria-label="Filtrar artigos por categoria"
-          >
-            <option value="selectCategory" disabled>
-              Selecione uma categoria
-            </option>
-            <option
-              v-for="category in categories"
-              :key="category.id"
-              :value="category.id"
-            >
-              {{ category.name }}
-            </option>
-          </select> -->
+
           <ul class="list-group">
             <li
               @click="filterCategory(category.id)"
