@@ -2,9 +2,8 @@ import { reactive, ref, toRefs } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-const state = reactive({
-    auth: null,
-});
+import { useUserStore } from "../stores/UserStore";
+
 export default function useAuth() {
     const router = useRouter();
     const errors = ref("");
@@ -17,7 +16,7 @@ export default function useAuth() {
 
     const getUser = async () => {
         processing.value = true;
-
+        const useUser = useUserStore();
         await axios
             .get(
                 "user",
@@ -27,29 +26,28 @@ export default function useAuth() {
                 }
             )
             .then((response) => {
-                state.auth = response.data;
+                useUser.setUser(response.data);
                 processing.value = false;
             })
             .catch((ex) => {
-                console.log("Sem autorização");
                 processing.value = false;
             });
 
-        return state.auth;
+        return useUser.getUser;
     };
 
     const updateUser = async (id) => {
         processing.value = true;
+        const useUser = useUserStore();
+        const auth = useUser.getUser;
 
         errors.value = "";
         try {
-            await axios
-                .put("/user/update/" + id, state.auth)
-                .then((response) => {
-                    state.auth = response.data;
-                    success.value = true;
-                    processing.value = false;
-                });
+            await axios.put("/user/update/" + id, auth).then((response) => {
+                useUser.setUser(response.data);
+                success.value = true;
+                processing.value = false;
+            });
         } catch (e) {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors;
@@ -64,7 +62,8 @@ export default function useAuth() {
             .post("login", data, { headers: { Accept: "application/json" } })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
-                state.auth = response.data.user;
+                const useUser = useUserStore();
+                useUser.setUser(response.data.user);
                 processing.value = false;
                 router.push("/");
             })
@@ -92,7 +91,8 @@ export default function useAuth() {
             })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
-                state.auth = response.data.user;
+                const useUser = useUserStore();
+                useUser.setUser(response.data.user);
                 processing.value = false;
                 router.push("/hp");
             })
@@ -118,7 +118,8 @@ export default function useAuth() {
             .post("hp/login", data, { headers: { Accept: "application/json" } })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
-                state.auth = response.data.user;
+                const useUser = useUserStore();
+                useUser.setUser(response.data.user);
                 processing.value = false;
                 router.push("/");
             })
@@ -149,7 +150,8 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                state.auth = null;
+                const useUser = useUserStore();
+                useUser.removeUser();
                 processing.value = false;
                 router.push("/");
             })
@@ -170,7 +172,8 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                state.auth = null;
+                const useUser = useUserStore();
+                useUser.removeUser();
                 processing.value = false;
                 router.push("/");
             })
@@ -191,7 +194,8 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
-                state.auth = null;
+                const useUser = useUserStore();
+                useUser.removeUser();
                 processing.value = false;
                 router.push("/");
             })
@@ -201,7 +205,6 @@ export default function useAuth() {
     };
 
     return {
-        ...toRefs(state),
         getUser,
         updateUser,
         login,

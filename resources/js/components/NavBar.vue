@@ -36,7 +36,7 @@
             >
           </li>
           <li class="nav-item hover:bg-primary">
-            <router-link class="nav-link" to="/#news">Noticias</router-link>
+            <router-link class="nav-link" to="/#news">Noticiasss</router-link>
           </li>
           <li class="nav-item hover:bg-primary">
             <router-link class="nav-link" to="/#articles">Artigos</router-link>
@@ -61,18 +61,18 @@
                   >Informações</router-link
                 >
               </li>
-              <li v-if="auth">
+              <li v-if="useUser.getUser">
                 <router-link to="/consult/create" class="dropdown-item"
                   >Marcar</router-link
                 >
               </li>
-              <li v-if="auth">
+              <li v-if="useUser.getUser">
                 <hr class="dropdown-divider" />
               </li>
-              <li v-if="auth">
+              <li v-if="useUser.getUser">
                 <a class="dropdown-item" href="#">Estado da minha consulta</a>
               </li>
-              <li v-if="auth">
+              <li v-if="useUser.getUser">
                 <router-link to="/process" class="dropdown-item"
                   >Processo clínico</router-link
                 >
@@ -96,13 +96,16 @@
             </button>
           </div>
         </form>
-        <form class="d-flex justify-content-center my-2" v-if="!auth">
+        <form
+          class="d-flex justify-content-center my-2"
+          v-if="!useUser.getUser"
+        >
           <router-link class="btn btn-outline-primary" to="/login">
             Entrar | Criar Conta
           </router-link>
         </form>
 
-        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="auth">
+        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="useUser.getUser">
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -113,11 +116,11 @@
               aria-expanded="false"
             >
               <span class="mx-2">
-                {{ auth.name }}
+                {{ useUser.getUser.name }}
               </span>
               <img
-                :src="`/images/profile_imgs/` + `${auth.avatar}`"
-                :alt="`${auth.name} ${auth.surname}`"
+                :src="`/images/profile_imgs/` + `${useUser.getUser.avatar}`"
+                :alt="`${useUser.getUser.name} ${useUser.getUser.surname}`"
                 class="rounded-circle mx-1"
                 style="width: 40px"
               />
@@ -125,7 +128,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
                 <router-link
-                  v-if="auth.is_hp"
+                  v-if="useUser.getUser.is_hp"
                   class="dropdown-item me-5"
                   to="/hp/"
                   >Painel</router-link
@@ -152,14 +155,20 @@
 
 
 <script setup>
+// 3rd party imports
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
+// my imports
+import { useUserStore } from "../stores/UserStore";
 import useAuth from "../composables/auth";
 
+// Composables
+const useUser = useUserStore();
 const router = useRouter();
 
-const { logout, getUser, auth } = useAuth();
+// variables and functions
+const { logout, getUser } = useAuth();
 
 const criteria = ref("");
 
@@ -172,9 +181,9 @@ const handleLogout = () => {
   logout();
 };
 
+// lifecycle hooks
 onMounted(() => {
   getUser();
-  console.log(auth);
 });
 </script>
 

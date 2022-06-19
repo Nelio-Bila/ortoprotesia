@@ -49,6 +49,7 @@ import AdminLogin from "../pages/Admin/AdminLogin.vue";
 import AdminCreate from "../pages/Admin/AdminCreate.vue";
 
 import useAuth from "../composables/auth";
+import { useUserStore } from "../stores/UserStore";
 
 const routes = [
     {
@@ -71,9 +72,9 @@ const routes = [
         name: "login",
         component: Login,
         async beforeEnter(to, from, next) {
-            const { auth } = useAuth();
-            if (!Object.keys(auth).length === 0) router.push("/");
-            else next();
+            if (localStorage.getItem("op_token")) {
+                next("/");
+            } else next();
         },
     },
     {
@@ -84,9 +85,9 @@ const routes = [
             hideForAuth: true,
         },
         async beforeEnter(to, from, next) {
-            const { auth } = useAuth();
-            if (!Object.keys(auth).length === 0) router.push("/");
-            else next();
+            if (localStorage.getItem("op_token")) {
+                next("/");
+            } else next();
         },
     },
     {
@@ -104,8 +105,9 @@ const routes = [
         name: "hp",
         component: HPHome,
         async beforeEnter(to, from, next) {
-            const { auth } = useAuth();
-            console.log(auth.name);
+            const { getUser } = useAuth();
+            const auth = getUser();
+
             if (to.name !== "hplogin" && !auth.is_hp) next({ name: "hplogin" });
             // if the user is not authenticated, `next` is called twice
             next();
@@ -116,7 +118,8 @@ const routes = [
         name: "hplogin",
         component: HPLogin,
         async beforeEnter(to, from, next) {
-            const { auth } = useAuth();
+            const useUser = useUserStore();
+            const auth = useUser.getUser;
             if (auth.is_hp) router.push("/hp");
             else next();
         },
@@ -125,19 +128,7 @@ const routes = [
         path: "/hp/register",
         name: "hpregister",
         component: HPRegister,
-        async beforeEnter(to, from, next) {
-            let user = null;
-            await axios
-                .get("user")
-                .then((response) => {
-                    user = response.data;
-                    if (user.is_hp) router.push("/hp");
-                })
-                .catch((ex) => {
-                    next();
-                });
-            next();
-        },
+        async beforeEnter(to, from, next) {},
     },
     {
         path: "/hp/forgot",

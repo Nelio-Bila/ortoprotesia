@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return response()->json(ArticleCategory::orderBy('id', 'desc')->get());
+        return response()->json(ArticleCategory::with(['articles'])->orderBy('id', 'desc')->get());
     }
     public function store(CategoryRegisterRequest $request)
     {

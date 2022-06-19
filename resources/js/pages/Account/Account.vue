@@ -260,7 +260,14 @@ import AvatarInput from "../../components/AvatarInput.vue";
 import useAuth from "../../composables/auth";
 import useUsers from "../../composables/users";
 
-const { auth, getUser, updateUser, processing, success, errors } = useAuth();
+import { useUserStore } from "../../stores/UserStore";
+
+const useUser = useUserStore();
+
+const auth = ref(null);
+auth.value = useUser.getUser;
+
+const { getUser, updateUser, processing, success, errors } = useAuth();
 
 onMounted(() => {
   getUser();

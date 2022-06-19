@@ -33,7 +33,6 @@ export default function useProcesses() {
                 processing.value = false;
             })
             .catch((ex) => {
-                console.log(ex.response.data.errors);
                 process.value = [];
                 processing.value = false;
             });

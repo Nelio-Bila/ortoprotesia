@@ -57,6 +57,5 @@ const { user, getUser } = useUsers();
 
 onMounted(() => {
   getUser(route.params.id);
-  console.log(user);
 });
 </script>

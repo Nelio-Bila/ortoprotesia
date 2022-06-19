@@ -3,11 +3,11 @@
     <div class="my-2" id="articles" v-if="!criteria">
       <h1 class="text-center">Artigos</h1>
       <div class="row mx-1">
-        <div class="row my-2">
-          <div class="col-md-6 text-sm-start text-center">
-            <h4><i class="fa-solid fa-filter mx-3 text-primary"></i>Filtros</h4>
-          </div>
-          <div class="col-md-6 text-sm-end text-center">
+        <div class="col-md-3">
+          <div class="row">
+            <span class="text-center"
+              ><i class="fa-solid fa-filter mx-3 text-primary"></i>Filtros</span
+            >
             <button
               class="btn btn-outline-secondary btn-sm"
               @click.prevent="resetFilters"
@@ -16,10 +16,14 @@
               Limpar todos filtros
             </button>
           </div>
-        </div>
-        <div class="col-md-4">
-          <label for="categorySelect">Categorias</label>
-          <select
+          <!-- <div class="col-md-3 text-sm-end text-center">
+
+          </div> -->
+          <!-- </div> -->
+          <!-- <div class="col-md-4"> -->
+          <h5 class="my-2">Categorias</h5>
+          <!-- <label for="categorySelect">Categorias</label> -->
+          <!-- <select
             @change="filterCategory"
             v-model="categoryFilter"
             name="categorySelect"
@@ -37,10 +41,31 @@
             >
               {{ category.name }}
             </option>
-          </select>
-        </div>
-        <div class="col-md-4">
-          <label for="categorySelect">Por data</label>
+          </select> -->
+          <ul class="list-group">
+            <li
+              @click="filterCategory(category.id)"
+              class="
+                list-group-item
+                d-flex
+                justify-content-between
+                align-items-center
+                cursor-pointer
+                hover:bg-medium
+              "
+              :class="currentCategory === category.id ? 'active' : ''"
+              v-for="category in categories"
+              :key="category.id"
+              :value="category.id"
+            >
+              {{ category.name }}
+              <span class="badge bg-primary rounded-pill">
+                {{ category.articles.length }}</span
+              >
+            </li>
+          </ul>
+
+          <h5 class="my-2">Por data</h5>
           <select
             @change="filterDate"
             v-model="dateFilter"
@@ -54,9 +79,8 @@
             <option value="month">Com menos de um mês</option>
             <option value="year">Com menos de um ano</option>
           </select>
-        </div>
-        <div class="col-md-4">
-          <label for="categorySelect">Por popularidade</label>
+
+          <h5 class="my-2">Por popularidade</h5>
           <select
             @change="filterPopularity"
             v-model="popularityFilter"
@@ -70,28 +94,30 @@
             <option value="least">Top 10 Menos lidos</option>
           </select>
         </div>
-      </div>
 
-      <div class="row my-5" v-if="processing">
-        <div class="col text-center">
-          <Spinner />
-        </div>
-      </div>
-      <div v-else class="row">
-        <ArticleCard
-          v-for="article in articles"
-          :article="article"
-          :key="article.id"
-        />
-      </div>
+        <div class="col-md-9">
+          <div class="row my-5" v-if="processing">
+            <div class="col text-center">
+              <Spinner />
+            </div>
+          </div>
+          <div v-else class="row">
+            <ArticleCard
+              v-for="article in articles"
+              :article="article"
+              :key="article.id"
+            />
+          </div>
 
-      <div class="row d-flex justify-content-center">
-        <div class="col-md-6 d-flex justify-content-center">
-          <pagination-component
-            class="pagination-component"
-            v-model="currentPage"
-            :numberOfPages="numberOfPages"
-          />
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-6 d-flex justify-content-center">
+              <pagination-component
+                class="pagination-component"
+                v-model="currentPage"
+                :numberOfPages="numberOfPages"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -145,6 +171,7 @@ const popularityFilter = ref("selectPop");
 
 const { route } = useRoute();
 
+const currentCategory = ref(0);
 const currentPage = ref(1);
 const rowsPerPage = ref(6);
 
@@ -178,8 +205,9 @@ onMounted(() => {
   searchArticles(props.criteria);
 });
 
-const filterCategory = async () => {
-  getArticlesByCategory(categoryFilter.value);
+const filterCategory = async (category_id) => {
+  currentCategory.value = category_id;
+  getArticlesByCategory(category_id);
 };
 
 const filterDate = async () => {
@@ -191,6 +219,7 @@ const filterPopularity = async () => {
 };
 
 const resetFilters = async () => {
+  currentCategory.value = 0;
   getArticles();
 };
 </script>

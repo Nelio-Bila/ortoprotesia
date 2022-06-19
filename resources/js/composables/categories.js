@@ -20,7 +20,6 @@ export default function useCategories() {
                 processing.value = false;
             })
             .catch((ex) => {
-                console.log(ex.response.data.errors);
                 categories.value = [];
                 processing.value = false;
             });
@@ -36,7 +35,6 @@ export default function useCategories() {
                 processing.value = false;
             })
             .catch((ex) => {
-                console.log(ex.response.data.errors);
                 category.value = [];
                 processing.value = false;
             });
@@ -62,7 +60,6 @@ export default function useCategories() {
 
     const updateCategory = async (id, data) => {
         processing.value = true;
-        console.log(data);
 
         errors.value = "";
         try {

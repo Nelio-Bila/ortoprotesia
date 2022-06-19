@@ -13,7 +13,7 @@
         Ortoprotesia em Moçambique e a Medicina Fisica e Reabilitação no geral.
       </p>
       <div
-        v-if="!auth"
+        v-if="!useUser.getUser"
         class="d-grid gap-2 d-sm-flex justify-content-sm-center"
       >
         <router-link to="/login" class="btn btn-primary btn-lg px-4 gap-3">
@@ -31,10 +31,7 @@
 </template>
 
 <script setup>
+import { useUserStore } from "../stores/UserStore";
 
-import useAuth from "../composables/auth";
-
-const { auth } = useAuth();
-
-
+const useUser = useUserStore();
 </script>

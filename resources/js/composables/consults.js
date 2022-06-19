@@ -18,7 +18,6 @@ export default function useConsults() {
                 processing.value = false;
             })
             .catch((ex) => {
-                console.log(ex.response.data.errors);
                 consults.value = [];
                 processing.value = false;
             });
@@ -34,7 +33,6 @@ export default function useConsults() {
                 processing.value = false;
             })
             .catch((ex) => {
-                console.log(ex.response.data.errors);
                 consult.value = [];
                 processing.value = false;
             });

@@ -18,7 +18,6 @@ export default function useUsers() {
                 processing.value = false;
             })
             .catch((ex) => {
-                console.log(ex.response.data.errors);
                 users.value = [];
                 processing.value = false;
             });

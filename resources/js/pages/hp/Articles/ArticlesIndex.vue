@@ -95,7 +95,6 @@ const { articles, getArticles, destroyArticle } = useArticles(
 );
 onMounted(() => {
   getArticles();
-  console.log(articles.value);
   setTimeout(() => {
     $("#articles_datatable").DataTable({
       lengthMenu: [
