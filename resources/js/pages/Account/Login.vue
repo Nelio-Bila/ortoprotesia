@@ -157,7 +157,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, onMounted, ref } from "vue";
+import { reactive, computed, onMounted, ref, watch } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
@@ -166,6 +166,8 @@ import Spinner from "../../components/Spinner.vue";
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 import useAuth from "../../composables/auth";
+import { useUserStore } from "../../stores/UserStore";
+import pinia from "../../stores/store";
 
 const router = useRouter();
 
@@ -189,6 +191,14 @@ const {
   invalid_credentials,
   isLoginInvalid,
 } = useAuth();
+
+const userStore = useUserStore();
+
+watch(userStore, async (newUserStore, oldUserStore) => {
+  if (newUserStore.user !== null) {
+    router.push("/");
+  }
+});
 
 const rules = computed(() => ({
   email: {

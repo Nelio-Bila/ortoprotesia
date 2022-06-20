@@ -49,6 +49,11 @@ class HealthProfessionalController extends Controller
         return HealthProfessional::find($id);
     }
 
+    public function hp()
+    {
+        return Auth::guard('hp-api')->user();
+    }
+
     public function login(Request $request)
     {
         try {

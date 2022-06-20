@@ -1,9 +1,10 @@
 require("./bootstrap");
+import store from "./stores/store";
 
 import { createApp } from "vue";
 import router from "./router";
 import { createMetaManager } from "vue-meta";
-import { createPinia } from "pinia";
+// import { createPinia } from "pinia";
 import "./config/axios";
 import CKEditor from "@ckeditor/ckeditor5-vue";
 import Toast from "vue-toastification";
@@ -27,7 +28,8 @@ const app = createApp(Home);
 app.config.warnHandler = function (msg, vm, trace) {
     return null;
 };
-app.use(createPinia()); // Create the root store
+// app.use(createPinia()); // Create the root store
+app.use(store);
 app.use(VueAnnouncer, { router });
 app.use(router);
 app.use(metaManager);
@@ -35,4 +37,8 @@ app.use(CKEditor);
 app.use(Toast, toastOptions);
 app.use(VueSocialSharing);
 app.use(VueApexCharts);
-app.mount("#app");
+
+router.isReady().then(() => {
+    app.mount("#app");
+});
+// app.mount("#app");

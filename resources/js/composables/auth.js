@@ -16,24 +16,61 @@ export default function useAuth() {
 
     const getUser = async () => {
         processing.value = true;
-        const useUser = useUserStore();
-        await axios
-            .get(
-                "user",
-                {},
-                {
-                    Authorization: "Bearer " + localStorage.getItem("op_token"),
-                }
-            )
-            .then((response) => {
-                useUser.setUser(response.data);
-                processing.value = false;
-            })
-            .catch((ex) => {
-                processing.value = false;
-            });
+        const user = null;
+        if (localStorage.getItem("op_token")) {
+            await axios
+                .get(
+                    "user",
+                    {},
+                    {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("op_token"),
+                    }
+                )
+                .then((response) => {
+                    user = response.data;
+                    processing.value = false;
+                })
+                .catch((ex) => {
+                    processing.value = false;
+                });
+        } else if (localStorage.getItem("op_hp_token")) {
+            await axios
+                .get(
+                    "user",
+                    {},
+                    {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("op_hp_token"),
+                    }
+                )
+                .then((response) => {
+                    user = response.data;
+                    processing.value = false;
+                })
+                .catch((ex) => {
+                    processing.value = false;
+                });
+        } else if (localStorage.getItem("op_admin_token")) {
+            await axios
+                .get(
+                    "user",
+                    {},
+                    {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("op_admin_token"),
+                    }
+                )
+                .then((response) => {
+                    user = response.data;
+                    processing.value = false;
+                })
+                .catch((ex) => {
+                    processing.value = false;
+                });
+        }
 
-        return useUser.getUser;
+        return user;
     };
 
     const updateUser = async (id) => {
@@ -62,6 +99,8 @@ export default function useAuth() {
             .post("login", data, { headers: { Accept: "application/json" } })
             .then((response) => {
                 localStorage.setItem("op_token", response.data.token);
+                localStorage.removeItem("op_hp_token");
+                localStorage.removeItem("op_admin_token");
                 const useUser = useUserStore();
                 useUser.setUser(response.data.user);
                 processing.value = false;
@@ -70,6 +109,8 @@ export default function useAuth() {
             .catch((ex) => {
                 processing.value = false;
                 localStorage.removeItem("op_token");
+                localStorage.removeItem("op_hp_token");
+                localStorage.removeItem("op_admin_token");
                 switch (ex.response.status) {
                     case 422:
                         errors.value = ex.response.data.errors;
@@ -90,7 +131,9 @@ export default function useAuth() {
                 headers: { Accept: "application/json" },
             })
             .then((response) => {
-                localStorage.setItem("op_token", response.data.token);
+                localStorage.setItem("op_admin_token", response.data.token);
+                localStorage.removeItem("op_token");
+                localStorage.removeItem("op_hp_token");
                 const useUser = useUserStore();
                 useUser.setUser(response.data.user);
                 processing.value = false;
@@ -98,7 +141,7 @@ export default function useAuth() {
             })
             .catch((ex) => {
                 processing.value = false;
-                localStorage.removeItem("op_token");
+                localStorage.removeItem("op_admin_token");
                 switch (ex.response.status) {
                     case 422:
                         errors.value = ex.response.data.errors;
@@ -117,7 +160,9 @@ export default function useAuth() {
         await axios
             .post("hp/login", data, { headers: { Accept: "application/json" } })
             .then((response) => {
-                localStorage.setItem("op_token", response.data.token);
+                localStorage.setItem("op_hp_token", response.data.token);
+                localStorage.removeItem("op_token");
+                localStorage.removeItem("op_admin_token");
                 const useUser = useUserStore();
                 useUser.setUser(response.data.user);
                 processing.value = false;
@@ -125,7 +170,9 @@ export default function useAuth() {
             })
             .catch((ex) => {
                 processing.value = false;
+                localStorage.removeItem("op_hp_token");
                 localStorage.removeItem("op_token");
+                localStorage.removeItem("op_admin_token");
                 switch (ex.response.status) {
                     case 422:
                         errors.value = ex.response.data.errors;
@@ -140,6 +187,8 @@ export default function useAuth() {
     };
 
     const logout = async () => {
+        // if (localStorage.getItem("op_token")) {
+        processing.value = true;
         await axios
             .post(
                 "logout",
@@ -150,6 +199,8 @@ export default function useAuth() {
             )
             .then((response) => {
                 localStorage.removeItem("op_token");
+                localStorage.removeItem("op_hp_token");
+                localStorage.removeItem("op_admin_token");
                 const useUser = useUserStore();
                 useUser.removeUser();
                 processing.value = false;
@@ -158,51 +209,96 @@ export default function useAuth() {
             .catch((ex) => {
                 processing.value = false;
             });
+        // } else if (localStorage.getItem("op_hp_token")) {
+        //     processing.value = true;
+        //     await axios
+        //         .post(
+        //             "hp/logout",
+        //             {},
+        //             {
+        //                 Authorization:
+        //                     "Bearer " + localStorage.getItem("op_hp_token"),
+        //             }
+        //         )
+        //         .then((response) => {
+        //             localStorage.removeItem("op_hp_token");
+        //             const useUser = useUserStore();
+        //             useUser.removeUser();
+        //             processing.value = false;
+        //             router.push("/");
+        //         })
+        //         .catch((ex) => {
+        //             processing.value = false;
+        //         });
+        // } else if (localStorage.getItem("op_admin_token")) {
+        //     processing.value = true;
+        //     await axios
+        //         .post(
+        //             "admin/logout",
+        //             {},
+        //             {
+        //                 Authorization:
+        //                     "Bearer " + localStorage.getItem("op_admin_token"),
+        //             }
+        //         )
+        //         .then((response) => {
+        //             localStorage.removeItem("op_admin_token");
+        //             const useUser = useUserStore();
+        //             useUser.removeUser();
+        //             processing.value = false;
+        //             router.push("/");
+        //         })
+        //         .catch((ex) => {
+        //             processing.value = false;
+        //         });
+        // }
     };
 
-    const adminLogout = async () => {
-        processing.value = true;
-        await axios
-            .post(
-                "admin/logout",
-                {},
-                {
-                    Authorization: "Bearer " + localStorage.getItem("op_token"),
-                }
-            )
-            .then((response) => {
-                localStorage.removeItem("op_token");
-                const useUser = useUserStore();
-                useUser.removeUser();
-                processing.value = false;
-                router.push("/");
-            })
-            .catch((ex) => {
-                processing.value = false;
-            });
-    };
+    // const adminLogout = async () => {
+    //     processing.value = true;
+    //     await axios
+    //         .post(
+    //             "admin/logout",
+    //             {},
+    //             {
+    //                 Authorization:
+    //                     "Bearer " + localStorage.getItem("op_admin_token"),
+    //             }
+    //         )
+    //         .then((response) => {
+    //             localStorage.removeItem("op_admin_token");
+    //             const useUser = useUserStore();
+    //             useUser.removeUser();
+    //             processing.value = false;
+    //             router.push("/");
+    //         })
+    //         .catch((ex) => {
+    //             processing.value = false;
+    //         });
+    // };
 
-    const hplogout = async () => {
-        processing.value = true;
-        await axios
-            .post(
-                "hp/logout",
-                {},
-                {
-                    Authorization: "Bearer " + localStorage.getItem("op_token"),
-                }
-            )
-            .then((response) => {
-                localStorage.removeItem("op_token");
-                const useUser = useUserStore();
-                useUser.removeUser();
-                processing.value = false;
-                router.push("/");
-            })
-            .catch((ex) => {
-                processing.value = false;
-            });
-    };
+    // const hplogout = async () => {
+    //     processing.value = true;
+    //     await axios
+    //         .post(
+    //             "hp/logout",
+    //             {},
+    //             {
+    //                 Authorization:
+    //                     "Bearer " + localStorage.getItem("op_hp_token"),
+    //             }
+    //         )
+    //         .then((response) => {
+    //             localStorage.removeItem("op_hp_token");
+    //             const useUser = useUserStore();
+    //             useUser.removeUser();
+    //             processing.value = false;
+    //             router.push("/");
+    //         })
+    //         .catch((ex) => {
+    //             processing.value = false;
+    //         });
+    // };
 
     return {
         getUser,
@@ -211,7 +307,6 @@ export default function useAuth() {
         adminLogin,
         hpLogin,
         logout,
-        hplogout,
         errors,
         processing,
         success,

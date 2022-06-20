@@ -50,7 +50,9 @@ Route::post('hp/logout', [HealthProfessionalController::class, 'logout'])->middl
 Route::post('hp/register', [HealthProfessionalController::class, 'store']);
 Route::post('hp/forgot', [HealthProfessionalController::class, 'forgot']);
 Route::post('hp/reset', [HealthProfessionalController::class, 'reset']);
-Route::get('hp', [HealthProfessionalController::class, 'store'])->middleware('auth:hp-api');
+Route::get('hp', [HealthProfessionalController::class, 'hp'])->middleware('auth:hp-api');
+
+
 // dashboard
 Route::get('hpros', [HealthProfessionalController::class, 'index']);
 Route::get('hpro/{id}', [HealthProfessionalController::class, 'show']);

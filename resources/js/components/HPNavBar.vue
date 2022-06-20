@@ -59,9 +59,7 @@ import useAuth from "../composables/auth";
 
 const router = useRouter();
 
-
-
-const { hplogout, auth, getUser } = useAuth();
+const { logout, auth, getUser } = useAuth();
 
 const criteria = ref("");
 
@@ -70,7 +68,7 @@ const search = () => {
 };
 
 const handleLogout = () => {
-  hplogout();
+  logout();
 };
 
 onMounted(async () => {
