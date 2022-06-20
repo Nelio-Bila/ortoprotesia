@@ -12,16 +12,23 @@
 </template>
 
 <script setup>
-import { watch } from "vue";
+import { watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useOnline } from "@vueuse/core";
 import { useToast } from "vue-toastification";
+import useAuth from "../composables/auth";
 
 const online = useOnline();
 
 const route = useRoute();
 
 const toast = useToast();
+
+const { getUser } = useAuth();
+
+onMounted(() => {
+  getUser();
+});
 
 watch(online, async (on, off) => {
   if (!on) {

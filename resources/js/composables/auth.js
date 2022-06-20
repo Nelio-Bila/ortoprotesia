@@ -16,7 +16,7 @@ export default function useAuth() {
 
     const getUser = async () => {
         processing.value = true;
-        const user = null;
+        const useUser = useUserStore();
         if (localStorage.getItem("op_token")) {
             await axios
                 .get(
@@ -28,10 +28,11 @@ export default function useAuth() {
                     }
                 )
                 .then((response) => {
-                    user = response.data;
+                    useUser.setUser(response.data);
                     processing.value = false;
                 })
                 .catch((ex) => {
+                    useUser.removeUser();
                     processing.value = false;
                 });
         } else if (localStorage.getItem("op_hp_token")) {
@@ -45,10 +46,12 @@ export default function useAuth() {
                     }
                 )
                 .then((response) => {
-                    user = response.data;
+                    useUser.setUser(response.data);
+                    useUser.setIsHP(true);
                     processing.value = false;
                 })
                 .catch((ex) => {
+                    useUser.removeUser();
                     processing.value = false;
                 });
         } else if (localStorage.getItem("op_admin_token")) {
@@ -62,21 +65,21 @@ export default function useAuth() {
                     }
                 )
                 .then((response) => {
-                    user = response.data;
+                    useUser.setUser(response.data);
+                    useUser.setIsAdmin(true);
                     processing.value = false;
                 })
                 .catch((ex) => {
+                    useUser.removeUser();
                     processing.value = false;
                 });
         }
-
-        return user;
     };
 
     const updateUser = async (id) => {
         processing.value = true;
         const useUser = useUserStore();
-        const auth = useUser.getUser;
+        const auth = useUser.get;
 
         errors.value = "";
         try {

@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="col-md-7 mx-auto">
-          <form @submit.prevent="handleSubmit(auth.id)">
+          <form @submit.prevent="handleSubmit(useUser.user.id)">
             <h3 class="text-center">Dados pessoais</h3>
             <div v-if="errors">
               <div
@@ -79,7 +79,7 @@
 
             <div class="row mb-3 text-center">
               <avatar-input
-                v-model="auth.avatar"
+                v-model="useUser.user.avatar"
                 default-src="/images/profile_imgs/avatar.png"
               ></avatar-input>
             </div>
@@ -93,7 +93,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Nome"
-                    v-model="auth.name"
+                    v-model="useUser.user.name"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
                     :class="{
@@ -141,7 +141,7 @@
                       'is-valid': !v$.surname.$invalid,
                     }"
                     placeholder="Apelido"
-                    v-model="auth.surname"
+                    v-model="useUser.user.surname"
                   />
                   <button
                     @click="editSurname = !editSurname"
@@ -182,7 +182,7 @@
                       'is-valid': !v$.birthdate.$invalid,
                     }"
                     placeholder="Data de nascimento"
-                    v-model="auth.birthdate"
+                    v-model="useUser.user.birthdate"
                   />
                   <button
                     @click="editBirthdate = !editBirthdate"
@@ -220,7 +220,7 @@
                     'is-valid': !v$.email.$invalid,
                   }"
                   placeholder="Email"
-                  v-model="auth.email"
+                  v-model="useUser.user.email"
                 />
                 <span class="invalid-feedback" v-if="v$.email.$error">
                   {{ v$.email.$errors[0].$message }}
@@ -264,14 +264,14 @@ import { useUserStore } from "../../stores/UserStore";
 
 const useUser = useUserStore();
 
-const auth = ref(null);
-auth.value = useUser.getUser;
+// const useUser.user = ref(null);
+// useUser.user.value = useUser.get;
 
-const { getUser, updateUser, processing, success, errors } = useAuth();
+const { updateUser, processing, success, errors } = useAuth();
 
-onMounted(() => {
-  getUser();
-});
+// onMounted(() => {
+//   getUser();
+// });
 
 const editName = ref(false);
 const editSurname = ref(false);
@@ -313,7 +313,7 @@ const rules = computed(() => ({
   updated_at: {},
 }));
 
-const v$ = useVuelidate(rules, auth);
+const v$ = useVuelidate(rules, useUser.user);
 
 const handleSubmit = async (id) => {
   v$._value.$validate();

@@ -6,7 +6,7 @@ const { getUser } = useAuth();
 
 export const useUserStore = defineStore("user", {
     state: () => {
-        return { user: getUser(), isHP: false, isAdmin: false };
+        return { user: null, isHP: false, isAdmin: false };
     },
     getters: {
         get: (state) => state.user,
