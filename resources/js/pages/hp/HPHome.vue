@@ -40,12 +40,13 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { watch, reactive, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 import HPSideBar from "../../components/HPSideBar.vue";
 import HPNavBar from "../../components/HPNavBar.vue";
 
+import { useUserStore } from "../../stores/UserStore";
 
 const router = useRouter();
 
@@ -138,4 +139,22 @@ const topicsOptions = reactive({
 });
 
 const topics = ref([30, 40, 45, 50]);
+
+const userStore = useUserStore();
+
+onMounted(() => {
+  if (!userStore.user?.is_hp) {
+    router.push("/hp/login");
+  }
+});
+
+// watch(userStore, async (newUserStore, oldUserStore) => {
+//   if (
+//     newUserStore.user === null ||
+//     !newUserStore.user?.is_hp ||
+//     oldUserStore.user === null
+//   ) {
+//     router.push("/hp/login");
+//   }
+// });
 </script>

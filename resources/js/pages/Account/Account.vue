@@ -264,14 +264,7 @@ import { useUserStore } from "../../stores/UserStore";
 
 const useUser = useUserStore();
 
-// const useUser.user = ref(null);
-// useUser.user.value = useUser.get;
-
 const { updateUser, processing, success, errors } = useAuth();
-
-// onMounted(() => {
-//   getUser();
-// });
 
 const editName = ref(false);
 const editSurname = ref(false);

@@ -139,6 +139,7 @@ export default function useAuth() {
                 localStorage.removeItem("op_hp_token");
                 const useUser = useUserStore();
                 useUser.setUser(response.data.user);
+                useUser.setIsAdmin(true);
                 processing.value = false;
                 router.push("/hp");
             })
@@ -168,6 +169,7 @@ export default function useAuth() {
                 localStorage.removeItem("op_admin_token");
                 const useUser = useUserStore();
                 useUser.setUser(response.data.user);
+                useUser.setIsHP(true);
                 processing.value = false;
                 router.push("/");
             })
@@ -206,6 +208,8 @@ export default function useAuth() {
                 localStorage.removeItem("op_admin_token");
                 const useUser = useUserStore();
                 useUser.removeUser();
+                useUser.setIsAdmin(false);
+                useUser.setIsHP(false);
                 processing.value = false;
                 router.push("/");
             })

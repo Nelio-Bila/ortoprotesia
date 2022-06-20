@@ -153,7 +153,7 @@
 
 <script setup>
 // 3rd party imports
-import { onMounted, ref, computed } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 // my imports

@@ -8,7 +8,7 @@
     ></i>
 
     <div class="me-auto"></div>
-    <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="auth">
+    <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="useUser.user">
       <li class="nav-item dropdown">
         <a
           class="nav-link dropdown-toggle"
@@ -19,18 +19,18 @@
           aria-expanded="false"
         >
           <span class="mx-2">
-            {{ auth.name }}
+            {{ useUser.user.name }}
           </span>
           <img
-            :src="`/images/profile_imgs/` + `${auth.avatar}`"
-            :alt="`${auth.name} ${auth.surname}`"
+            :src="`/images/profile_imgs/` + `${useUser.user.avatar}`"
+            :alt="`${useUser.user.name} ${useUser.user.surname}`"
             class="rounded-circle mx-1"
             style="width: 40px"
           />
         </a>
         <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown">
           <li>
-            <a v-if="auth.carrier" class="dropdown-item me-5" to="/hp/"
+            <a v-if="useUser.user.is_hp" class="dropdown-item me-5" to="/hp/"
               >Painel</a
             >
           </li>
@@ -55,11 +55,17 @@
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
+// my imports
+
+// Composables
+import { useUserStore } from "../stores/UserStore";
 import useAuth from "../composables/auth";
+
+const useUser = useUserStore();
 
 const router = useRouter();
 
-const { logout, auth, getUser } = useAuth();
+const { logout } = useAuth();
 
 const criteria = ref("");
 
@@ -70,10 +76,6 @@ const search = () => {
 const handleLogout = () => {
   logout();
 };
-
-onMounted(async () => {
-  getUser();
-});
 
 const toggleMenu = () => {
   document.getElementById("wrapper").classList.toggle("toggled");
