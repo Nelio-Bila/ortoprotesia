@@ -19,14 +19,7 @@ export default function useAuth() {
         const useUser = useUserStore();
         if (localStorage.getItem("op_token")) {
             await axios
-                .get(
-                    "user",
-                    {},
-                    {
-                        Authorization:
-                            "Bearer " + localStorage.getItem("op_token"),
-                    }
-                )
+                .get("user")
                 .then((response) => {
                     useUser.setUser(response.data);
                     processing.value = false;
@@ -37,14 +30,7 @@ export default function useAuth() {
                 });
         } else if (localStorage.getItem("op_hp_token")) {
             await axios
-                .get(
-                    "user",
-                    {},
-                    {
-                        Authorization:
-                            "Bearer " + localStorage.getItem("op_hp_token"),
-                    }
-                )
+                .get("hp")
                 .then((response) => {
                     useUser.setUser(response.data);
                     useUser.setIsHP(true);
@@ -56,14 +42,7 @@ export default function useAuth() {
                 });
         } else if (localStorage.getItem("op_admin_token")) {
             await axios
-                .get(
-                    "user",
-                    {},
-                    {
-                        Authorization:
-                            "Bearer " + localStorage.getItem("op_admin_token"),
-                    }
-                )
+                .get("admin")
                 .then((response) => {
                     useUser.setUser(response.data);
                     useUser.setIsAdmin(true);
@@ -141,7 +120,7 @@ export default function useAuth() {
                 useUser.setUser(response.data.user);
                 useUser.setIsAdmin(true);
                 processing.value = false;
-                router.push("/hp");
+                router.push("/admin/home");
             })
             .catch((ex) => {
                 processing.value = false;

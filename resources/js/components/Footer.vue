@@ -87,7 +87,7 @@
               >
             </p>
             <p>
-              <router-link to="/admin/login" class="text-reset"
+              <router-link to="/admin/home" class="text-reset"
                 >Administração</router-link
               >
             </p>

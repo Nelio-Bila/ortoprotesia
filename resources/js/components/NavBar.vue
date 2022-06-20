@@ -125,9 +125,17 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
                 <router-link
-                  v-if="useUser.get.is_hp"
+                  v-if="useUser.user.is_hp"
                   class="dropdown-item me-5"
                   to="/hp/"
+                  >Painel</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  v-if="useUser.user.is_admin"
+                  class="dropdown-item me-5"
+                  to="/admin/home"
                   >Painel</router-link
                 >
               </li>

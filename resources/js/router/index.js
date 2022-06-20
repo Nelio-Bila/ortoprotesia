@@ -46,6 +46,7 @@ import ProcessEdit from "../pages/Admin/Processes/ProcessEdit.vue";
 import HProsIndex from "../pages/Admin/Health_pros/HProsIndex.vue";
 import HProDetails from "../pages/Admin/Health_pros/HProDetails.vue";
 
+import AdminHome from "../pages/Admin/AdminHome.vue";
 import AdminsIndex from "../pages/Admin/AdminsIndex.vue";
 import AdminDetails from "../pages/Admin/AdminDetails.vue";
 import AdminLogin from "../pages/Admin/AdminLogin.vue";
@@ -249,6 +250,11 @@ const routes = [
         path: "/admins",
         name: "admins.index",
         component: AdminsIndex,
+    },
+    {
+        path: "/admin/home",
+        name: "admin.home",
+        component: AdminHome,
     },
     {
         path: "/admin/login",

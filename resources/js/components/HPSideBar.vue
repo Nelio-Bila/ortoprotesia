@@ -14,6 +14,16 @@
         :class="currentLink === 'home' ? 'active-link' : ''"
         aria-current="page"
         to="/hp"
+        v-if="useUser.user.is_hp"
+      >
+        <h5><i class="fa-solid fa-house me-2"></i> Inicio</h5>
+      </router-link>
+      <router-link
+        class="nav-link text-white"
+        :class="currentLink === 'home' ? 'active-link' : ''"
+        aria-current="page"
+        to="/admin/home"
+        v-if="useUser.user.is_admin"
       >
         <h5><i class="fa-solid fa-house me-2"></i> Inicio</h5>
       </router-link>
@@ -74,12 +84,27 @@
   <!-- /#sidebar-wrapper -->
 </template>
 
-<script>
-export default {
-  name: "HPSideBar",
-  props: ["currentLink"],
-};
+<script setup>
+import { useUserStore } from "../stores/UserStore";
+const props = defineProps({
+  currentLink: String,
+});
+
+const useUser = useUserStore();
 </script>
+
+<!-- <script>
+import { useUserStore } from "../stores/UserStore";
+export default {
+  setup() {
+    const useUser = useUserStore();
+
+    return {
+      useUser,
+    };
+  },
+};
+</script> -->
 
 <style scoped>
 li:hover {

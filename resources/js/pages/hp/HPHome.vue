@@ -140,21 +140,25 @@ const topicsOptions = reactive({
 
 const topics = ref([30, 40, 45, 50]);
 
-const userStore = useUserStore();
+// const userStore = useUserStore();
 
-onMounted(() => {
-  if (!userStore.user?.is_hp) {
-    router.push("/hp/login");
-  }
-});
-
-// watch(userStore, async (newUserStore, oldUserStore) => {
-//   if (
-//     newUserStore.user === null ||
-//     !newUserStore.user?.is_hp ||
-//     oldUserStore.user === null
-//   ) {
+// onMounted(() => {
+//   if (!userStore.user?.is_hp) {
 //     router.push("/hp/login");
 //   }
 // });
+</script>
+
+
+<script>
+import { useUserStore } from "../../stores/UserStore";
+
+export default {
+  beforeRouteEnter: function (to, from, next) {
+    const userStore = useUserStore();
+    if (to.name !== "hplogin" && !userStore.user?.is_hp)
+      next({ name: "hplogin" });
+    else next();
+  },
+};
 </script>

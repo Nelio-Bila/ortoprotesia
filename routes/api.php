@@ -64,7 +64,7 @@ Route::post('admin/register', [AdminController::class, 'store']);
 Route::post('admin/update/{id}', [AdminController::class, 'update'])->middleware('auth::admin-api');
 Route::post('admin/forgot', [AdminController::class, 'forgot']);
 Route::post('admin/reset', [AdminController::class, 'reset']);
-Route::get('admin', [AdminController::class, 'show']);
+Route::get('admin', [AdminController::class, 'admin']);
 Route::get('admin/{id}', [AdminController::class, 'getAdmin']);
 Route::delete('admin/{category}', [AdminController::class, 'destroy'])->middleware('auth::admin-api');
 Route::get('admins', [AdminController::class, 'index']);

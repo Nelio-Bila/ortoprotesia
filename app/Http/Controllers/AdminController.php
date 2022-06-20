@@ -37,6 +37,11 @@ class AdminController extends Controller
             ], 400);
         }
     }
+
+    public function admin()
+    {
+        return Auth::guard('admin-api')->user();
+    }
     public function update(AdminRegisterRequest $request, $id)
     {
         try {
@@ -79,8 +84,9 @@ class AdminController extends Controller
             if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
 
                 /** @var User $user */
-                $user = Auth::user();
-                $token = $user->createToken('app')->accessToken;
+                // $user = Auth::user();
+                $user = Auth::guard('admin')->user();
+                $token = $user->createToken('admin-token')->accessToken;
 
                 return response([
                     'message' => 'sucess',

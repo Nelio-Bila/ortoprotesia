@@ -30,7 +30,10 @@
         </a>
         <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown">
           <li>
-            <a v-if="useUser.user.is_hp" class="dropdown-item me-5" to="/hp/"
+            <a
+              v-if="useUser.user.is_hp || useUser.user.is_admin"
+              class="dropdown-item me-5"
+              to="/hp/"
               >Painel</a
             >
           </li>
