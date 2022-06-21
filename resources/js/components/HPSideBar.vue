@@ -93,19 +93,6 @@ const props = defineProps({
 const useUser = useUserStore();
 </script>
 
-<!-- <script>
-import { useUserStore } from "../stores/UserStore";
-export default {
-  setup() {
-    const useUser = useUserStore();
-
-    return {
-      useUser,
-    };
-  },
-};
-</script> -->
-
 <style scoped>
 li:hover {
   background-color: #92400e;
