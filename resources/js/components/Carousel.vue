@@ -28,7 +28,7 @@
           aria-label="Slide 3"
         ></button>
       </div>
-      <div class="carousel-inner">
+      <div class="carousel-inner cursor-pointer">
         <div class="carousel-item active">
           <img
             :src="'/images/various/hcm.jpg'"
