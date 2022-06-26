@@ -29,7 +29,7 @@
         ></button>
       </div>
       <div class="carousel-inner cursor-pointer">
-        <div class="carousel-item active">
+        <router-link to="/news" class="carousel-item active">
           <img
             :src="'/images/various/hcm.jpg'"
             class="d-block w-100 img"
@@ -42,7 +42,7 @@
               Maputo.
             </p>
           </div>
-        </div>
+        </router-link>
         <div class="carousel-item">
           <img
             :src="'/images/various/hcm.jpg'"

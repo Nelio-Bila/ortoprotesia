@@ -66,8 +66,9 @@ class CategoryController extends Controller
         return ArticleCategory::where('id', $id)->get();
     }
 
-    public function destroy(ArticleCategory $category)
+    public function destroy($id)
     {
+        $category = ArticleCategory::find($id);
         $category->delete();
 
         return response()->noContent();

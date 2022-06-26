@@ -52,7 +52,7 @@ import AdminDetails from "../pages/Admin/AdminDetails.vue";
 import AdminLogin from "../pages/Admin/AdminLogin.vue";
 import AdminCreate from "../pages/Admin/AdminCreate.vue";
 
-import useAuth from "../composables/auth";
+import NewsIndex from "../pages/News/NewsIndex.vue";
 
 const routes = [
     {
@@ -74,19 +74,6 @@ const routes = [
         path: "/login",
         name: "login",
         component: Login,
-        // async beforeEnter(to, from, next) {
-        //     if (localStorage.getItem("op_token")) {
-        //         next("/");
-        //     } else next();
-        // },
-        // beforeEnter: (to, from, next) => {
-        //     const userStore = useUserStore(pinia); // <-- passing Pinia instance directly
-
-        //     const auth = userStore.getUser;
-        //     console.log(userStore.getUser);
-        //     if (auth) router.push("/");
-        //     else next();
-        // },
     },
     {
         path: "/register",
@@ -95,11 +82,6 @@ const routes = [
         meta: {
             hideForAuth: true,
         },
-        // async beforeEnter(to, from, next) {
-        //     if (localStorage.getItem("op_token")) {
-        //         next("/");
-        //     } else next();
-        // },
     },
     {
         path: "/forgot",
@@ -118,36 +100,16 @@ const routes = [
         meta: {
             requiresAuth: true,
         },
-        // async beforeEnter(to, from, next) {
-        //     const { getUser } = useAuth();
-        //     const auth = getUser();
-
-        //     if (to.name !== "hplogin" && !auth.is_hp) next({ name: "hplogin" });
-        //     // if the user is not authenticated, `next` is called twice
-        //     next();
-        // },
     },
     {
         path: "/hp/login",
         name: "hplogin",
         component: HPLogin,
-        // async beforeEnter(to, from, next) {
-        //     const useUser = useUserStore();
-        //     const auth = useUser.getUser;
-        //     if (auth.is_hp) router.push("/hp");
-        //     else next();
-        // },
     },
     {
         path: "/hp/register",
         name: "hpregister",
         component: HPRegister,
-        // async beforeEnter(to, from, next) {
-        //     const useUser = useUserStore();
-        //     const auth = useUser.getUser;
-        //     if (auth.is_hp) router.push("/hp");
-        //     else next();
-        // },
     },
     {
         path: "/hp/forgot",
@@ -282,6 +244,11 @@ const routes = [
         name: "hpro.details",
         component: HProDetails,
         props: true,
+    },
+    {
+        path: "/news",
+        name: "news.index",
+        component: NewsIndex,
     },
 ];
 

@@ -78,7 +78,7 @@ export default function useCategories() {
     const destroyCategory = async (id) => {
         processing.value = true;
 
-        await axios.delete("/category/" + id);
+        await axios.delete("/category/destroy/" + id);
         processing.value = false;
     };
 
