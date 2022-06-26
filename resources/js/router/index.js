@@ -53,6 +53,8 @@ import AdminLogin from "../pages/Admin/AdminLogin.vue";
 import AdminCreate from "../pages/Admin/AdminCreate.vue";
 
 import NewsIndex from "../pages/News/NewsIndex.vue";
+import Orto from "../pages/News/Orto.vue";
+import Guide from "../pages/News/Guide.vue";
 
 const routes = [
     {
@@ -249,6 +251,16 @@ const routes = [
         path: "/news",
         name: "news.index",
         component: NewsIndex,
+    },
+    {
+        path: "/ortoprotesia",
+        name: "orto",
+        component: Orto,
+    },
+    {
+        path: "/guide",
+        name: "guide",
+        component: Guide,
     },
 ];
 

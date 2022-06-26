@@ -43,7 +43,7 @@
             </p>
           </div>
         </router-link>
-        <div class="carousel-item">
+        <router-link to="/ortoprotesia" class="carousel-item">
           <img
             :src="'/images/various/hcm.jpg'"
             class="d-block w-100 img"
@@ -53,8 +53,8 @@
             <h5>O que é Ortoprotesia</h5>
             <p>Saiba o que é e o que trata esta area da Saúde.</p>
           </div>
-        </div>
-        <div class="carousel-item">
+        </router-link>
+        <router-link to="/guide" class="carousel-item">
           <img
             :src="'/images/various/hcm.jpg'"
             class="d-block w-100 img"
@@ -67,7 +67,7 @@
               utente, acompanhante, profissinal ou entusiasta.
             </p>
           </div>
-        </div>
+        </router-link>
       </div>
       <button
         class="carousel-control-prev"
