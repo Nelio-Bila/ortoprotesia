@@ -14,8 +14,18 @@
         canadianas axilares, bengalas e mais.
       </p>
 
-      <h2 class="text-center">Fluxo de atendimento</h2>
-      <img src="./images/various/fluxo.png" alt="fluxo de atendimento" />
+      <h2 class="text-center">Organograma</h2>
+      <img
+        class="rounded mx-auto d-block my-5"
+        src="/images/various/org.png"
+        alt="fluxo de atendimento"
+      />
+      <h2 class="text-center mb-5">Fluxo de atendimento</h2>
+      <img
+        class="rounded mx-auto d-block"
+        src="/images/various/fluxo.png"
+        alt="fluxo de atendimento"
+      />
     </div>
     <Footer />
   </div>
