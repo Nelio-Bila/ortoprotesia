@@ -231,136 +231,7 @@ const form = reactive({
   category_id: null,
 });
 
-const crop = reactive({
-  closeOnSave: true,
-  cropArea: "box",
-  croppedHeight: 400,
-  croppedWidth: 800,
-  dropareaMessage: "Arraste e solte uma imagem aqui ou use o botão abaixo.",
-  frameLineDash: [5, 3],
-  frameStrokeColor: "#273a7e",
-  handleFillColor: "rgba(255, 255, 255, 0.2)",
-  handleHoverFillColor: "rgba(255, 255, 255, 0.4)",
-  handleHoverStrokeColor: "rgba(255, 255, 255, 1)",
-  handleSize: 10,
-  handleStrokeColor: "rgba(255, 255, 255, 0.8)",
-  layoutBreakpoint: 850,
-  maxCropperHeight: 768,
-  maxFileSize: 4000000, // 8MB
-  overlayFill: "rgba(0, 0, 0, 0.5)",
-  previewOnDrag: true,
-  previewQuality: 0.65,
-  resultQuality: 0.8,
-  resultMimeType: "image/jpeg",
-  selectButtonLabel: "Seleciona uma imagem",
-  showPreview: true,
-  skin: "light",
-  uploadData: {},
-  uploadTo: false,
-  // demo, internal
-  cropperH: 500,
-  useCropperH: false,
-  dash: "",
-  upl: "/api/uploadarticleheaderimage",
-  useAr: true,
-  ar: 1,
-  events: [],
-});
-
-const options = computed(() => {
-  return {
-    aspectRatio: crop.aspectRatio,
-    closeOnSave: crop.closeOnSave,
-    cropArea: crop.cropArea,
-    croppedHeight: crop.croppedHeight,
-    croppedWidth: crop.croppedWidth,
-    cropperHeight: crop.cropperHeight,
-    dropareaMessage: crop.dropareaMessage,
-    frameLineDash: crop.frameLineDash,
-    frameStrokeColor: crop.frameStrokeColor,
-    handleFillColor: crop.handleFillColor,
-    handleHoverFillColor: crop.handleHoverFillColor,
-    handleHoverStrokeColor: crop.handleHoverStrokeColor,
-    handleSize: crop.handleSize,
-    handleStrokeColor: crop.handleStrokeColor,
-    layoutBreakpoint: crop.layoutBreakpoint,
-    maxCropperHeight: crop.maxCropperHeight,
-    maxFileSize: crop.maxFileSize,
-    overlayFill: crop.overlayFill,
-    previewOnDrag: crop.previewOnDrag,
-    previewQuality: crop.previewQuality,
-    resultQuality: crop.resultQuality,
-    resultMimeType: crop.resultMimeType,
-    selectButtonLabel: crop.selectButtonLabel,
-    showPreview: crop.showPreview,
-    skin: crop.skin,
-    uploadData: crop.uploadData,
-    uploadTo: crop.uploadTo,
-  };
-});
-const cropperHeight = computed(() => {
-  return crop.useCropperH ? crop.cropperH : false;
-});
-
-const aspectRatio = computed(() => {
-  return crop.useAr ? crop.ar : false;
-});
-
-const debug = (ev, name) => {
-  crop.events.unshift({ name: name, payload: ev });
-  if (crop.events.lenght > 10) {
-    crop.events.pop();
-  }
-};
-const printEv = (e) => {
-  if (e.payload === undefined) return "No payload";
-  if (e.name === "cropper-preview") {
-    return (
-      'Image data URI<br/><img src="' +
-      e.payload +
-      '" alt="" style="max-width: 100px;"/>'
-    );
-  }
-  if (e.name === "cropper-error") {
-    return e.payload;
-  }
-  if (e.name === "cropper-file-selected") {
-    return "Payload: selected file";
-  }
-  if (e.name === "cropper-saved") {
-    let d = e.payload;
-    let output = "<div><strong>cropCoords</strong><br/>";
-    for (let p in d.cropCoords) {
-      output += p + ": " + d.cropCoords[p] + "<br/>";
-    }
-    output += "</div>";
-    output += "<div><strong>croppedFile</strong><br/>Blob</div>";
-    output +=
-      '<div><strong>croppedImageURI</strong><br/><img src="' +
-      d.croppedImageURI +
-      '" alt="" style="max-width: 100px;"/></div>';
-    output += "<div><strong>filename</strong><br/>" + d.filename + "</div>";
-    output += "<div><strong>flippedH</strong><br/>" + d.flippedH + "</div>";
-    output += "<div><strong>flippedV</strong><br/>" + d.flippedV + "</div>";
-    output += "<div><strong>originalFile</strong><br/>File</div>";
-    output += "<div><strong>rotation</strong><br/>" + d.rotation + "</div>";
-    return output;
-  }
-};
-const addDash = (ev) => {
-  let num = parseInt(ev.target.value.trim());
-  if (!isNaN(num)) {
-    crop.frameLineDash.push(num);
-  }
-  crop.dash = "";
-};
-const removeDash = (i) => {
-  crop.frameLineDash.splice(i, 1);
-};
-
-const cropperSaved = (ev) => {
-  console.log(ev);
-};
+const creating = ref(true);
 
 const { categories, getCategories } = useCategories();
 
@@ -581,41 +452,32 @@ const v$ = useVuelidate(rules, form);
 const saveArticle = async () => {
   v$._value.$validate();
 
-  if (!v$._value.$invalid) {
-    let data = new FormData();
-    data.append("title", form.title);
-    data.append("body", form.body);
-    data.append("postExcerpt", form.postExcerpt);
-    data.append("featuredImage", form.featuredImage);
-    data.append("category_id", form.category_id);
-    data.append("metaDescription", "metaDescription");
-    data.append("health_professional_id", 1);
-    data.append("slug", form.title.replace(/\s/g, ""));
-    await storeArticle(data);
-  } else {
-    processing.value = false;
-  }
+  //   if (!v$._value.$invalid) {
+  let data = new FormData();
+  data.append("title", form.title);
+  data.append("body", form.body);
+  data.append("postExcerpt", form.postExcerpt);
+  data.append("featuredImage", form.featuredImage);
+  data.append("category_id", form.category_id);
+  data.append("metaDescription", "metaDescription");
+  data.append("health_professional_id", 1);
+  data.append("slug", form.title.replace(/\s/g, ""));
+  creating.value = false;
+  await storeArticle(data);
+  //   } else {
+  //     processing.value = false;
+  //   }
 };
 
-onBeforeRouteLeave((to, from) => {
-  const answer = window.confirm("Tens certeza que desejas sair desta pagina?");
-  // cancel the navigation and stay on the same page
-  if (!answer) return false;
-
-  //   new Swal({
-  //     title: "Sair da criação de Artigo?",
-  //     text: "Tens certeza? Não poderás recuperar suas edições!",
-  //     type: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#902f37",
-  //     confirmButtonText: "Sim, sair!",
-  //     cancelButtonText: "Cancelar",
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       return false;
-  //     }
-  //   });
-});
+// onBeforeRouteLeave((to, from) => {
+//   if (creating.value) {
+//     const answer = window.confirm(
+//       "Tens certeza que desejas sair desta pagina?"
+//     );
+//     // cancel the navigation and stay on the same page
+//     if (!answer) return false;
+//   }
+// });
 </script>
 
 <style lang="scss" scoped>
