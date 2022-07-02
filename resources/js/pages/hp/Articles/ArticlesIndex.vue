@@ -20,6 +20,7 @@
           <thead class="table-light">
             <tr>
               <th>Titulo</th>
+              <th>Imagem</th>
               <th>Categoria</th>
               <th>Visualizações</th>
               <th>Autor</th>
@@ -31,6 +32,13 @@
             <template v-for="article in articles" :key="article.id">
               <tr>
                 <td>{{ article.title }}</td>
+                <td>
+                  <img
+                    :src="article.featuredImage"
+                    :alt="article.title"
+                    class="img-thumbnail"
+                  />
+                </td>
                 <td>{{ article.category.name }}</td>
                 <td>{{ article.views }}</td>
                 <td>

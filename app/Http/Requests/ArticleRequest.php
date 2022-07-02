@@ -24,7 +24,7 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'featuredImage' => 'mimes:jpg,jpeg,png|max:20048',
+            'featuredImage' => 'image|mimes:jpg,jpeg,png|max:20048',
             'title' => 'required',
             'body' => 'required',
             'postExcerpt' => 'required',

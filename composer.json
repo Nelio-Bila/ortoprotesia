@@ -2,18 +2,23 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
+        "jrm2k6/cloudder": "^0.6.0",
         "laravel/framework": "^9.2",
         "laravel/passport": "^10.4",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
-        "riari/laravel-forum": "~5.0"
+        "riari/laravel-forum": "~5.0",
+        "cloudinary/cloudinary_php": "1.20"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

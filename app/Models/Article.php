@@ -12,7 +12,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['category_id', 'title', 'body', 'jsonData', 'postExcerpt', 'slug', 'featuredImage', 'metaDescription', 'health_professional_id', 'views'];
+    protected $fillable = ['category_id', 'title', 'body', 'jsonData', 'postExcerpt', 'slug', 'featuredImage', 'metaDescription', 'health_professional_id', 'views', 'header_image_public_id'];
 
     public function category()
     {

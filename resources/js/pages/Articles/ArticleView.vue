@@ -34,8 +34,8 @@
       </div>
       <div v-else class="col text-center my-3">
         <img
-          :src="`/storage/articles/headers/${article.featuredImage}`"
-          :alt="article.featuredImage"
+          :src="article.featuredImage"
+          :alt="article.title"
           class="img"
           width="600"
           height="500"
@@ -68,8 +68,8 @@
             <div class="row">
               <div class="col vertical-center">
                 <img
-                  :src="`/storage/articles/headers/${article.featuredImage}`"
-                  alt=""
+                  :src="article.featuredImage"
+                  :alt="article.title"
                   class="img img-thumbnail"
                 />
               </div>
@@ -119,8 +119,8 @@
             <div class="row">
               <div class="col vertical-center">
                 <img
-                  :src="`/storage/articles/headers/${article.featuredImage}`"
-                  alt=""
+                  :src="article.featuredImage"
+                  :alt="article.title"
                   class="img img-thumbnail"
                 />
               </div>

@@ -5,7 +5,7 @@
         <div class="row g-0">
           <div class="col-md-4 vertical-center">
             <img
-              :src="`/storage/articles/headers/${article.featuredImage}`"
+              :src="article.featuredImage"
               class="img-thumbnail rounded mt-3 mt-md-0"
               :alt="article.title"
             />

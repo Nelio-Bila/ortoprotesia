@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ArticleRequest;
 use Carbon\Carbon;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use JD\Cloudder\Facades\Cloudder;
+use App\Http\Requests\ArticleRequest;
 
 class ArticleController extends Controller
 {
@@ -73,18 +74,46 @@ class ArticleController extends Controller
         $article = new Article();
 
         if ($request->file()) {
-            $image_name = time() . '_' . $request->featuredImage->getClientOriginalName();
-            // $image_path = $request->file('featuredImage')->storeAs('articles/headers', $image_name, 'public');
-            // $image_path = $request->file('featuredImage')->storeAs('images/articles/headers', $image_name, 'public_uploads');
 
-            $request->featuredImage->move(public_path('/images/articles/headers'), $image_name);
+
+
+            $image_name = $request->file('featuredImage')->getRealPath();
+            //the upload method handles the uploading of the file and can accept attributes to define what should happen to the image
+
+            //Also note you could set a default height for all the images and Cloudinary does a good job of handling and rendering the image.
+            Cloudder::upload($image_name, null, array(
+                "folder" => "ortoprotesia/articles/headers",  "overwrite" => FALSE,
+                "resource_type" => "image", "responsive" => TRUE, "transformation" => array("quality" => "70", "width" => "250", "height" => "250", "crop" => "scale")
+            ));
+
+            //Cloudinary returns the publicId of the media uploaded which we'll store in our database for ease of access when displaying it.
+
+            $public_id = Cloudder::getPublicId();
+
+            $width = 250;
+            $height = 250;
+
+            //The show method returns the URL of the media file on Cloudinary
+            $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height, "crop" => "scale", "quality" => 70, "secure" => "true"]);
+
+            //In a situation where the user has already uploaded a file we could use the delete method to remove the media and upload a new one.
+            // if ($public_id != null) {
+            //     $image_public_id_exist = Article::select('header_image_public_id')->where('id', Article::id)->get();
+            //     Cloudder::delete($image_public_id_exist);
+            // }
+            // $image_name = time() . '_' . $request->featuredImage->getClientOriginalName();
+
+
+            // $request->featuredImage->move(public_path('/images/articles/headers'), $image_name);
 
             $article->title = $request->title;
             $article->body = $request->body;
             $article->jsonData = $request->jsonData;
             $article->postExcerpt = $request->postExcerpt;
             $article->slug = $request->slug;
-            $article->featuredImage = time() . '_' . $request->featuredImage->getClientOriginalName();
+            // $article->featuredImage = time() . '_' . $request->featuredImage->getClientOriginalName();
+            $article->featuredImage = $image_url;
+            $article->header_image_public_id = $public_id;
             $article->metaDescription = $request->metaDescription;
             $article->health_professional_id = 1;
             $article->category_id = $request->category_id;
@@ -94,6 +123,17 @@ class ArticleController extends Controller
 
             return response()->json(['success' => 'Article posted successfully.']);
         }
+
+
+
+
+        // $user = User::find(Auth::user()->id);
+        // $user->public_id = $public_id;
+        // $user->avatar_url = $image_url;
+        // $user->update();
+        // return back()->with('success_msg', 'Media successfully updated!');
+
+
     }
     public function update(ArticleRequest $request, $id)
     {
