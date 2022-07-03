@@ -71,7 +71,7 @@
           <div class="form-group mb-3 text-center">
             <label for="title">Foto do cabecalho</label>
             <img
-              :src="article.featuredImage"
+              :src="src"
               :alt="article.title"
               class="h-52 w-52 my-3 d-block mx-auto"
             />
@@ -198,15 +198,17 @@
             </span>
           </div>
 
-          <button class="btn btn-primary btn-block btn-lg">
-            <i
+          <button class="btn btn-primary btn-block mb-3" :disabled="processing">
+            <span
               v-if="processing"
-              class="fa-solid fa-spinner fa-spin-pulse mx-2"
-            ></i>
+              class="spinner-border spinner-border-sm mx-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
             <span v-if="processing">Processando...</span>
 
             <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
-            <span v-if="!processing">Publicar</span>
+            <span v-if="!processing">Salvar</span>
           </button>
         </form>
       </div>
@@ -215,7 +217,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, ref, onMounted, nextTick } from "vue";
+import { reactive, computed, ref, onMounted, watch } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, helpers, minValue } from "@vuelidate/validators";
 import "@ckeditor/ckeditor5-build-classic/build/translations/pt";
@@ -397,22 +399,29 @@ const { processing, errors, article, getArticle, updateArticle } =
 
 onMounted(() => {
   getArticle(props.id);
-  src.value = article.featuredImage;
+  console.log(article.featuredImage);
+  // src.value = article.featuredImage;
 });
 
 const changeFeaturedImage = (event) => {
   article.featuredImage = event.target.files[0];
+  console.log(article.featuredImage);
   let reader = new FileReader();
   reader.readAsDataURL(event.target.files[0]);
   reader.onload = (e) => {
     src.value = e.target.result;
-    article.featuredImage = e.target.result;
   };
 };
 
 const defaultSrc = ref("/images/logo.png");
 const src = ref(defaultSrc.value);
 const fileInput = ref(null);
+const creating = ref(true);
+
+watch(article.featuredImage, async (featuredImage, oldfeaturedImage) => {
+  console.log("featuredImage", featuredImage);
+  src.value = featuredImage;
+});
 
 const removeImage = () => {
   article.featuredImage = null;
@@ -469,11 +478,16 @@ const v$ = useVuelidate(rules, article);
 const saveArticle = async () => {
   v$._value.$validate();
 
-  if (!v$._value.$invalid) {
-    await updateArticle(props.id);
-  } else {
-    processing.value = false;
-  }
+  let data = new FormData();
+  data.append("title", article.title);
+  data.append("body", article.body);
+  data.append("postExcerpt", article.postExcerpt);
+  data.append("featuredImage", article.featuredImage);
+  data.append("category_id", article.category_id);
+  data.append("metaDescription", article.title);
+  data.append("slug", article.title.replace(/\s/g, ""));
+  creating.value = false;
+  await updateArticle(props.id, data);
 };
 </script>
 

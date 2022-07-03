@@ -63,7 +63,11 @@
         <form @submit.prevent="saveArticle" enctype="multipart/form-data">
           <div class="form-group mb-3 text-center">
             <label for="title">Foto do cabecalho</label>
-            <img :src="src" alt="" class="h-52 w-52 my-3 d-block mx-auto" />
+            <img
+              :src="src"
+              :alt="form.title"
+              class="h-52 w-52 my-3 d-block mx-auto"
+            />
             <i
               v-if="form.featuredImage"
               @click.prevent="removeImage()"
@@ -195,7 +199,7 @@
               role="status"
               aria-hidden="true"
             ></span>
-            <span v-if="processing">Salvando...</span>
+            <span v-if="processing">Processando...</span>
 
             <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
             <span v-if="!processing">Publicar</span>

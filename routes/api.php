@@ -89,6 +89,7 @@ Route::get('/articles/popularity/{popularity}', [ArticleController::class, 'byVi
 Route::post('/articles/register', [ArticleController::class, 'store']);
 Route::put('/articles/increment/{id}', [ArticleController::class, 'incrementViews']);
 Route::put('/articles/update/{id}', [ArticleController::class, 'update']);
+Route::delete('/articles/delete/{id}', [ArticleController::class, 'destroy']);
 
 // Process
 Route::post('process/register', [ProcessController::class, 'store']);

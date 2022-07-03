@@ -137,12 +137,12 @@ export default function useArticles(currentPage, rowsPerPage = 2) {
         }
     };
 
-    const updateArticle = async (id) => {
+    const updateArticle = async (id, data) => {
         processing.value = true;
 
         errors.value = "";
         try {
-            await axios.put("/articles/update/" + id, article.value);
+            await axios.put("/articles/update/" + id, data);
             await router.push("/articles");
             processing.value = false;
         } catch (e) {
@@ -156,7 +156,7 @@ export default function useArticles(currentPage, rowsPerPage = 2) {
     const destroyArticle = async (id) => {
         processing.value = true;
 
-        await axios.delete("/articles/" + id);
+        await axios.delete("/articles/delete/" + id);
         processing.value = false;
     };
 
