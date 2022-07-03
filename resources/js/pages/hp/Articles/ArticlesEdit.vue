@@ -21,7 +21,7 @@
             border-bottom
           "
         >
-          <h1 class="h2">Novo artigo</h1>
+          <h1 class="h2">Editar artigo</h1>
         </div>
 
         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
@@ -70,6 +70,16 @@
         <form @submit.prevent="saveArticle" enctype="multipart/form-data">
           <div class="form-group mb-3 text-center">
             <label for="title">Foto do cabecalho</label>
+            <img
+              :src="article.featuredImage"
+              :alt="article.title"
+              class="h-52 w-52 my-3 d-block mx-auto"
+            />
+            <i
+              v-if="article.featuredImage"
+              @click.prevent="removeImage()"
+              class="fa-solid fa-xmark fa-2xl cursor-pointer hover:primary mb-5"
+            ></i>
             <input
               @blur="v$.featuredImage.$touch"
               type="file"
@@ -80,6 +90,7 @@
               }"
               placeholder="Foto de cabeçalho do artigo"
               v-on:change="changeFeaturedImage"
+              ref="fileInput"
             />
 
             <span
@@ -384,7 +395,30 @@ const editorConfig = reactive({
 const { processing, errors, article, getArticle, updateArticle } =
   useArticles();
 
-onMounted(getArticle(props.id));
+onMounted(() => {
+  getArticle(props.id);
+  src.value = article.featuredImage;
+});
+
+const changeFeaturedImage = (event) => {
+  article.featuredImage = event.target.files[0];
+  let reader = new FileReader();
+  reader.readAsDataURL(event.target.files[0]);
+  reader.onload = (e) => {
+    src.value = e.target.result;
+    article.featuredImage = e.target.result;
+  };
+};
+
+const defaultSrc = ref("/images/logo.png");
+const src = ref(defaultSrc.value);
+const fileInput = ref(null);
+
+const removeImage = () => {
+  article.featuredImage = null;
+  fileInput.value.value = "";
+  src.value = defaultSrc.value;
+};
 
 const rules = computed(() => ({
   title: {
@@ -429,10 +463,6 @@ const rules = computed(() => ({
   },
   featuredImage: {},
 }));
-
-const changeFeaturedImage = (event) => {
-  article.featuredImage = event.target.files[0];
-};
 
 const v$ = useVuelidate(rules, article);
 

@@ -28,7 +28,6 @@ class ArticleRequest extends FormRequest
             'title' => 'required',
             'body' => 'required',
             'postExcerpt' => 'required',
-            'slug' => 'required',
             'category_id' => 'required',
         ];
     }
@@ -38,10 +37,10 @@ class ArticleRequest extends FormRequest
     {
         return [
             'featuredImage.mimes' => 'Por favor carrega uma imagem válida.',
+            'featuredImage.image' => 'Por favor carrega uma imagem.',
             'title.required' => 'Por favor preencha o titulo.',
             'body.required' => 'Por favor preencha o conteúdo.',
             'postExcerpt.required' => 'Por favor preencha um trecho introdutório.',
-            'slug.required' => 'Indica o slug.',
             'category_id.required' => 'Por favor preencha a categoria.',
         ];
     }

@@ -11470,6 +11470,10 @@ body {
   color: #fff;
 }
 
+.hover\:primary:hover {
+  color: #273a7e;
+}
+
 .hover\:bg-primary:hover {
   background-color: #6982aa;
   border-radius: 12px;

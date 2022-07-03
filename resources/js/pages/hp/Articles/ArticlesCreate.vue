@@ -63,6 +63,13 @@
         <form @submit.prevent="saveArticle" enctype="multipart/form-data">
           <div class="form-group mb-3 text-center">
             <label for="title">Foto do cabecalho</label>
+            <img :src="src" alt="" class="h-52 w-52 my-3 d-block mx-auto" />
+            <i
+              v-if="form.featuredImage"
+              @click.prevent="removeImage()"
+              class="fa-solid fa-xmark fa-2xl cursor-pointer hover:primary mb-5"
+            ></i>
+
             <input
               @blur="v$.featuredImage.$touch"
               type="file"
@@ -73,19 +80,8 @@
               }"
               placeholder="Foto de cabeçalho do artigo"
               v-on:change="changeFeaturedImage"
+              ref="fileInput"
             />
-
-            <!-- <vue-anka-cropper
-              :options="options"
-              @cropper-mounted="debug($event, 'cropper-mounted')"
-              @cropper-error="debug($event, 'cropper-error')"
-              @cropper-file-selected="debug($event, 'cropper-file-selected')"
-              @cropper-preview="debug($event, 'cropper-preview')"
-              @cropper-saved="debug($event, 'cropperSaved')"
-              @cropper-cancelled="debug($event, 'cropper-cancelled')"
-              @cropper-uploaded="debug($event, 'cropper-uploaded')"
-              @cropper-before-destroy="debug($event, 'cropper-before-destroy')"
-            ></vue-anka-cropper> -->
 
             <span
               class="invalid-feedback"
@@ -192,12 +188,14 @@
             </span>
           </div>
 
-          <button class="btn btn-primary btn-block btn-lg">
-            <i
+          <button class="btn btn-primary btn-block mb-3" :disabled="processing">
+            <span
               v-if="processing"
-              class="fa-solid fa-spinner fa-spin-pulse mx-2"
-            ></i>
-            <span v-if="processing">Processando...</span>
+              class="spinner-border spinner-border-sm mx-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span v-if="processing">Salvando...</span>
 
             <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
             <span v-if="!processing">Publicar</span>
@@ -220,6 +218,7 @@ import Swal from "sweetalert2";
 
 import useArticles from "../../../composables/articles";
 import useCategories from "../../../composables/categories";
+import { useUserStore } from "../../../stores/UserStore";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
@@ -231,7 +230,11 @@ const form = reactive({
   category_id: null,
 });
 
+const defaultSrc = ref("/images/logo.png");
+const src = ref(defaultSrc.value);
+
 const creating = ref(true);
+const useUser = useUserStore();
 
 const { categories, getCategories } = useCategories();
 
@@ -445,6 +448,18 @@ const rules = computed(() => ({
 
 const changeFeaturedImage = (event) => {
   form.featuredImage = event.target.files[0];
+  let reader = new FileReader();
+  reader.readAsDataURL(event.target.files[0]);
+  reader.onload = (e) => {
+    src.value = e.target.result;
+  };
+};
+
+const fileInput = ref(null);
+const removeImage = () => {
+  form.featuredImage = null;
+  fileInput.value.value = "";
+  src.value = defaultSrc.value;
 };
 
 const v$ = useVuelidate(rules, form);
@@ -459,10 +474,11 @@ const saveArticle = async () => {
   data.append("postExcerpt", form.postExcerpt);
   data.append("featuredImage", form.featuredImage);
   data.append("category_id", form.category_id);
-  data.append("metaDescription", "metaDescription");
-  data.append("health_professional_id", 1);
+  data.append("metaDescription", form.title);
+  data.append("health_professional_id", useUser.user.id);
   data.append("slug", form.title.replace(/\s/g, ""));
   creating.value = false;
+
   await storeArticle(data);
   //   } else {
   //     processing.value = false;

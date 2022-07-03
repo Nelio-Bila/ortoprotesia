@@ -170,8 +170,11 @@ body {
 
 
   .hover\:white:hover {
-    // background-color: #fff;
     color: #fff;
+  }
+
+  .hover\:primary:hover {
+    color: $primary;
   }
 
   .hover\:bg-primary:hover {

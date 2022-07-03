@@ -75,8 +75,6 @@ class ArticleController extends Controller
 
         if ($request->file()) {
 
-
-
             $image_name = $request->file('featuredImage')->getRealPath();
             //the upload method handles the uploading of the file and can accept attributes to define what should happen to the image
 
@@ -101,17 +99,12 @@ class ArticleController extends Controller
             //     $image_public_id_exist = Article::select('header_image_public_id')->where('id', Article::id)->get();
             //     Cloudder::delete($image_public_id_exist);
             // }
-            // $image_name = time() . '_' . $request->featuredImage->getClientOriginalName();
-
-
-            // $request->featuredImage->move(public_path('/images/articles/headers'), $image_name);
 
             $article->title = $request->title;
             $article->body = $request->body;
             $article->jsonData = $request->jsonData;
             $article->postExcerpt = $request->postExcerpt;
             $article->slug = $request->slug;
-            // $article->featuredImage = time() . '_' . $request->featuredImage->getClientOriginalName();
             $article->featuredImage = $image_url;
             $article->header_image_public_id = $public_id;
             $article->metaDescription = $request->metaDescription;

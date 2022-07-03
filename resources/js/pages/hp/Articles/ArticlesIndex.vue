@@ -49,29 +49,31 @@
                   {{ new Date(article.created_at).toLocaleDateString() }}
                 </td>
                 <td>
-                  <router-link
-                    class="btn btn-sm btn-success mx-2"
-                    :to="{
-                      name: 'articles.view',
-                      params: { id: article.id },
-                    }"
-                    >Visualizar</router-link
-                  >
-                  <router-link
-                    class="btn btn-sm btn-warning mx-2"
-                    :to="{
-                      name: 'articles.edit',
-                      params: { id: article.id },
-                    }"
-                    >Editar</router-link
-                  >
+                  <div class="d-flex flex-column align-items-center">
+                    <router-link
+                      class="btn btn-sm btn-success mx-2"
+                      :to="{
+                        name: 'articles.view',
+                        params: { id: article.id },
+                      }"
+                      >Visualizar</router-link
+                    >
+                    <router-link
+                      class="btn btn-sm btn-warning mx-2"
+                      :to="{
+                        name: 'articles.edit',
+                        params: { id: article.id },
+                      }"
+                      >Editar</router-link
+                    >
 
-                  <button
-                    class="btn btn-sm btn-danger"
-                    @click="deleteArticle(article.id)"
-                  >
-                    Eliminar
-                  </button>
+                    <button
+                      class="btn btn-sm btn-danger"
+                      @click="deleteArticle(article.id)"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
                 </td>
               </tr></template
             >
@@ -134,3 +136,9 @@ const deleteArticle = async (id) => {
   });
 };
 </script>
+
+<style scoped>
+td {
+  text-align: center;
+}
+</style>
