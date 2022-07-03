@@ -7,7 +7,7 @@ export default function useArticles(currentPage, rowsPerPage = 2) {
     const articles = ref([]);
     const latestArticles = ref([]);
     const searchedArticles = ref([]);
-    const article = ref([]);
+    const article = ref({});
     const router = useRouter();
     const errors = ref("");
     const processing = ref(false);
@@ -110,7 +110,6 @@ export default function useArticles(currentPage, rowsPerPage = 2) {
                 processing.value = false;
             })
             .catch((ex) => {
-                article.value = [];
                 processing.value = false;
             });
     };
