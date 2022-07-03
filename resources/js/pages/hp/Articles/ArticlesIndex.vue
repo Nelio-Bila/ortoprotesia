@@ -31,7 +31,9 @@
           <tbody>
             <template v-for="article in articles" :key="article.id">
               <tr>
-                <td>{{ article.title }}</td>
+                <td>
+                  <strong>{{ article.title }}</strong>
+                </td>
                 <td>
                   <img
                     :src="article.featuredImage"
@@ -49,9 +51,9 @@
                   {{ new Date(article.created_at).toLocaleDateString() }}
                 </td>
                 <td>
-                  <div class="d-flex flex-column align-items-center">
+                  <div class="d-flex flex-column">
                     <router-link
-                      class="btn btn-sm btn-success mx-2"
+                      class="btn btn-sm btn-success m-2"
                       :to="{
                         name: 'articles.view',
                         params: { id: article.id },
@@ -59,7 +61,7 @@
                       >Visualizar</router-link
                     >
                     <router-link
-                      class="btn btn-sm btn-warning mx-2"
+                      class="btn btn-sm btn-warning m-2"
                       :to="{
                         name: 'articles.edit',
                         params: { id: article.id },
@@ -68,7 +70,7 @@
                     >
 
                     <button
-                      class="btn btn-sm btn-danger"
+                      class="btn btn-sm btn-danger m-2"
                       @click="deleteArticle(article.id)"
                     >
                       Eliminar
@@ -140,5 +142,6 @@ const deleteArticle = async (id) => {
 <style scoped>
 td {
   text-align: center;
+  vertical-align: middle;
 }
 </style>
