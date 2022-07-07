@@ -40,7 +40,7 @@
           width="600"
           height="500"
         />
-        <div v-html="article.body"></div>
+        <article v-html="article.body"></article>
       </div>
 
       <div class="col-md-3">
