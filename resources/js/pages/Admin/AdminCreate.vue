@@ -242,7 +242,6 @@ import {
   required,
   minLength,
   helpers,
-  minLengthValue,
   email,
   sameAs,
 } from "@vuelidate/validators";
@@ -269,19 +268,11 @@ const rules = computed(() => ({
       "Por favor preencha um nome válido",
       minLength(2)
     ),
-    minLengthValue: helpers.withMessage(
-      "O nome deve ter dois caracteres no minímo",
-      minLength(2)
-    ),
   },
   surname: {
     required: helpers.withMessage("Por favor preencha o apelido", required),
     minLength: helpers.withMessage(
       "Por favor preencha um apelido válido",
-      minLength(2)
-    ),
-    minLengthValue: helpers.withMessage(
-      "O apelido deve ter dois caracteres no minímo",
       minLength(2)
     ),
   },
@@ -304,7 +295,6 @@ const rules = computed(() => ({
       "A palavra passe deve ter 6 caracteres no minímo",
       minLength(6)
     ),
-    minLengthValue: minLength(6),
   },
   password_confirm: {
     required: helpers.withMessage(

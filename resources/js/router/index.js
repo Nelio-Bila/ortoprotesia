@@ -13,6 +13,9 @@ import Register from "../pages/Account/Register.vue";
 import Login from "../pages/Account/Login.vue";
 import Forgot from "../pages/Account/Forgot.vue";
 import Account from "../pages/Account/Account.vue";
+import AccountSecurity from "../pages/Account/AccountSecurity.vue";
+import AccountPrivacy from "../pages/Account/AccountPrivacy.vue";
+import AccountSettings from "../pages/Account/AccountSettings.vue";
 
 import HPHome from "../pages/hp/HPHome.vue";
 import HPLogin from "../pages/hp/HPLogin.vue";
@@ -94,6 +97,21 @@ const routes = [
         path: "/account",
         name: "account",
         component: Account,
+    },
+    {
+        path: "/account/security",
+        name: "account.security",
+        component: AccountSecurity,
+    },
+    {
+        path: "/account/settings",
+        name: "account.settings",
+        component: AccountSettings,
+    },
+    {
+        path: "/account/privacy",
+        name: "account.privacy",
+        component: AccountPrivacy,
     },
     {
         path: "/hp/",

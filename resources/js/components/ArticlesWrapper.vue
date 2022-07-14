@@ -117,7 +117,10 @@
         />
       </div>
 
-      <div class="row d-flex justify-content-center">
+      <div
+        class="row d-flex justify-content-center"
+        v-if="searchedArticles.length"
+      >
         <div class="col-md-6 d-flex justify-content-center">
           <pagination-component
             class="pagination-component"

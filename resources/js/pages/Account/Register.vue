@@ -283,7 +283,6 @@ export default {
           "Por favor preencha um nome válido",
           minLength(2)
         ),
-        minLengthValue: minLength(2),
       },
       surname: {
         required: helpers.withMessage("Por favor preencha o apelido", required),
@@ -291,7 +290,6 @@ export default {
           "Por favor preencha um apelido válido",
           minLength(2)
         ),
-        minLengthValue: minLength(2),
       },
       birthdate: {
         required: helpers.withMessage(
@@ -312,7 +310,6 @@ export default {
           "A palavra passe deve ter 6 caracteres no minímo",
           minLength(6)
         ),
-        minLengthValue: minLength(6),
       },
       password_confirm: {
         required: helpers.withMessage(

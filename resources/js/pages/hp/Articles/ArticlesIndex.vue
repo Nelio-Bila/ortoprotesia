@@ -95,18 +95,20 @@ import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
 
 import useArticles from "../../../composables/articles";
+import { useUserStore } from "../../../stores/UserStore";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
 const currentPage = ref(1);
 const rowsPerPage = ref(20);
 
-const { articles, getArticles, destroyArticle } = useArticles(
+const { articles, getMyArticles, destroyArticle } = useArticles(
   currentPage,
   rowsPerPage
 );
 onMounted(() => {
-  getArticles();
+  const useUser = useUserStore();
+  getMyArticles(useUser?.user?.id);
   setTimeout(() => {
     $("#articles_datatable").DataTable({
       lengthMenu: [
@@ -133,7 +135,7 @@ const deleteArticle = async (id) => {
   }).then((result) => {
     if (result.value) {
       destroyArticle(id);
-      getArticles();
+      getMyArticles();
     }
   });
 };

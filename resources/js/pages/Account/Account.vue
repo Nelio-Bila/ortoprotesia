@@ -5,10 +5,24 @@
       <div class="row my-2">
         <div class="col-md-3 vertical-center">
           <div class="btn-group-vertical w-100 my-2">
-            <button class="btn btn-primary block">Dados pessoais</button>
-            <button class="btn btn-outline-secondary block">Segurança</button>
-            <button class="btn btn-outline-secondary block">Privacidade</button>
-            <button class="btn btn-outline-secondary block">Conta</button>
+            <router-link to="/account" class="btn btn-primary block">
+              Dados pessoais
+            </router-link>
+            <router-link
+              to="/account/security"
+              class="btn btn-outline-secondary block"
+              >Segurança</router-link
+            >
+            <router-link
+              to="/account/privacy"
+              class="btn btn-outline-secondary block"
+              >Privacidade</router-link
+            >
+            <router-link
+              to="/account/settings"
+              class="btn btn-outline-secondary block"
+              >Conta</router-link
+            >
           </div>
         </div>
         <div class="col-md-7 mx-auto">
@@ -293,7 +307,6 @@ const rules = computed(() => ({
       "Por favor preencha um nome válido",
       minLength(2)
     ),
-    minLengthValue: minLength(2),
   },
   surname: {
     required: helpers.withMessage("Por favor preencha o apelido", required),
@@ -301,7 +314,6 @@ const rules = computed(() => ({
       "Por favor preencha um apelido válido",
       minLength(2)
     ),
-    minLengthValue: minLength(2),
   },
   updated_at: {},
 }));

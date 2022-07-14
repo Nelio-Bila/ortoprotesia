@@ -161,7 +161,6 @@ import {
   required,
   minLength,
   helpers,
-  minLengthValue,
 } from "@vuelidate/validators";
 
 import useCategories from "../../../composables/categories";
@@ -205,10 +204,6 @@ export default {
         required: helpers.withMessage("Por favor preencha o nome", required),
         minLength: helpers.withMessage(
           "Por favor preencha um nome válido",
-          minLength(2)
-        ),
-        minLengthValue: helpers.withMessage(
-          "O nome deve ter dois caracteres no minímo",
           minLength(2)
         ),
       },

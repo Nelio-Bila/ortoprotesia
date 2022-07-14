@@ -32,6 +32,20 @@ export default function useArticles(currentPage, rowsPerPage = 2) {
             });
     };
 
+    const getMyArticles = async (id) => {
+        processing.value = true;
+        await axios
+            .get("/articles/me/" + id)
+            .then((response) => {
+                articles.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                articles.value = [];
+                processing.value = false;
+            });
+    };
+
     const getArticlesByCategory = async (category_id) => {
         processing.value = true;
         await axios
@@ -204,5 +218,6 @@ export default function useArticles(currentPage, rowsPerPage = 2) {
         getArticlesByCategory,
         getArticlesByDate,
         getArticlesByPopularity,
+        getMyArticles,
     };
 }

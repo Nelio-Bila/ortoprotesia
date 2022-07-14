@@ -425,12 +425,7 @@
 <script setup>
 import { reactive, computed, onMounted } from "vue";
 import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  helpers,
-  minLength,
-  minLengthValue,
-} from "@vuelidate/validators";
+import { required, helpers, minLength } from "@vuelidate/validators";
 
 import useProcesses from "../../composables/processes";
 import useAuth from "../../composables/auth";
