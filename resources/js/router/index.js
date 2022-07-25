@@ -59,6 +59,9 @@ import NewsIndex from "../pages/News/NewsIndex.vue";
 import Orto from "../pages/News/Orto.vue";
 import Guide from "../pages/News/Guide.vue";
 
+import TermsConditions from "../pages/legal/TermsConditions.vue";
+import PrivacyPolicy from "../pages/legal/PrivacyPolicy.vue";
+
 const routes = [
     {
         path: "/",
@@ -279,6 +282,16 @@ const routes = [
         path: "/guide",
         name: "guide",
         component: Guide,
+    },
+    {
+        path: "/terms-and-conditions",
+        name: "termsAndConditions",
+        component: TermsConditions,
+    },
+    {
+        path: "/privacy-policy",
+        name: "privacyPolicy",
+        component: PrivacyPolicy,
     },
 ];
 

@@ -31,10 +31,14 @@
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="/css/animate.css" type="text/css">
+    <link rel="stylesheet" href="/css/nprogress.css">
 
-    <link href="https://unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" />
-    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js" defer></script>
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" /> --}}
+
+    {{-- <link href="https://unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" /> --}}
+    {{-- <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js" defer></script> --}}
+    <script src="js/nprogress.js" defer></script>
 
 
 

@@ -30,23 +30,30 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item hover:bg-primary">
-            <router-link class="nav-link" aria-current="page" to="/"
+          <li class="nav-item">
+            <router-link
+              class="nav-link hover:primary"
+              aria-current="page"
+              to="/"
               >Inicio</router-link
             >
           </li>
-          <li class="nav-item hover:bg-primary">
-            <router-link class="nav-link" to="/#news">Noticias</router-link>
+          <li class="nav-item">
+            <router-link class="nav-link hover:primary" to="/#news"
+              >Noticias</router-link
+            >
           </li>
-          <li class="nav-item hover:bg-primary">
-            <router-link class="nav-link" to="/#articles">Artigos</router-link>
+          <li class="nav-item">
+            <router-link class="nav-link hover:primary" to="/#articles"
+              >Artigos</router-link
+            >
           </li>
-          <li class="nav-item hover:bg-primary hover:white">
-            <a class="nav-link" href="/forum">Forum</a>
+          <li class="nav-item hover:white">
+            <a class="nav-link hover:primary" href="/forum">Forum</a>
           </li>
-          <li class="nav-item dropdown hover:bg-primary">
+          <li class="nav-item dropdown">
             <a
-              class="nav-link dropdown-toggle"
+              class="nav-link dropdown-toggle hover:primary"
               href="#"
               id="navbarDropdown"
               role="button"
@@ -57,12 +64,16 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <router-link class="dropdown-item" to="/process/info"
+                <router-link
+                  class="dropdown-item hover:primary"
+                  to="/process/info"
                   >Informações</router-link
                 >
               </li>
               <li v-if="useUser.get">
-                <router-link to="/consult/create" class="dropdown-item"
+                <router-link
+                  to="/consult/create"
+                  class="dropdown-item hover:primary"
                   >Marcar</router-link
                 >
               </li>
@@ -70,10 +81,12 @@
                 <hr class="dropdown-divider" />
               </li>
               <li v-if="useUser.get">
-                <a class="dropdown-item" href="#">Estado da minha consulta</a>
+                <a class="dropdown-item hover:primary" href="#"
+                  >Estado da minha consulta</a
+                >
               </li>
               <li v-if="useUser.get">
-                <router-link to="/process" class="dropdown-item"
+                <router-link to="/process" class="dropdown-item hover:primary"
                   >Processo clínico</router-link
                 >
               </li>

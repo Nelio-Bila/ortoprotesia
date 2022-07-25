@@ -59,7 +59,7 @@ export default function useAuth() {
         processing.value = true;
         const useUser = useUserStore();
         const auth = useUser.get;
-
+        console.log(auth);
         errors.value = "";
         try {
             await axios.put("/user/update/" + id, auth).then((response) => {

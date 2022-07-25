@@ -3,8 +3,9 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { usePagination } from "../components/pagination/useClientSidePagination";
 
-export default function useArticles(currentPage, rowsPerPage = 2) {
+export default function useArticles(currentPage, rowsPerPage = 200) {
     const articles = ref([]);
+    const viewsCount = ref(0);
     const latestArticles = ref([]);
     const searchedArticles = ref([]);
     const article = ref({});
@@ -42,6 +43,20 @@ export default function useArticles(currentPage, rowsPerPage = 2) {
             })
             .catch((ex) => {
                 articles.value = [];
+                processing.value = false;
+            });
+    };
+
+    const getMyViewsCount = async (id) => {
+        processing.value = true;
+        await axios
+            .get("/articles/views/" + id)
+            .then((response) => {
+                viewsCount.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                viewsCount.value = [];
                 processing.value = false;
             });
     };
@@ -219,5 +234,7 @@ export default function useArticles(currentPage, rowsPerPage = 2) {
         getArticlesByDate,
         getArticlesByPopularity,
         getMyArticles,
+        getMyViewsCount,
+        viewsCount,
     };
 }

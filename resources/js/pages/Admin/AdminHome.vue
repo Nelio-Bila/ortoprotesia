@@ -9,10 +9,65 @@
       <!-- Navbar End  -->
 
       <div class="container-fluid">
-        <h1 class="mt-4">Bem vindo(a) Admin</h1>
+        <h1 class="mt-4">Bem vindo de volta</h1>
         <p>
           Nesta area podes gerir publicações, categorias, etiquetas e muito mais
         </p>
+        <div class="row mb-2">
+          <div class="col ">
+            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
+              <div class="card-body">
+                <h6 class="card-title">Publicações</h6>
+                <p class="card-text">
+                 <h1 class="text-bold"> {{ articles.length }}</h1>
+                </p>
+                <router-link to="/hp/articles" class="btn btn-primary btn-sm"
+                  >Detalhes</router-link
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
+              <div class="card-body">
+                <h6 class="card-title">Utentes registrados</h6>
+                <p class="card-text">
+                 <h1 class="text-bold"> {{ users.length }}</h1>
+                </p>
+                <router-link to="/users" class="btn btn-primary btn-sm"
+                  >Detalhes</router-link
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
+              <div class="card-body">
+                <h6 class="card-title">Prof. de Saúde</h6>
+                <p class="card-text">
+                 <h1 class="text-bold"> {{ hpros.length }}</h1>
+                </p>
+                <router-link to="/admin/hpros" class="btn btn-primary btn-sm"
+                  >Detalhes</router-link
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
+              <div class="card-body">
+                <h6 class="card-title">Processos</h6>
+                <p class="card-text">
+                 <h1 class="text-bold"> {{ processes.length }}</h1>
+                </p>
+                <router-link to="/processes" class="btn btn-primary btn-sm"
+                  >Detalhes</router-link
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col">
             <apexchart
@@ -42,6 +97,10 @@
 <script setup>
 import { watch, reactive, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import useUsers from "../../composables/users";
+import useArticles from "../../composables/articles";
+import useHPros from "../../composables/hpros";
+import useProcesses from "../../composables/processes";
 
 import HPSideBar from "../../components/HPSideBar.vue";
 import HPNavBar from "../../components/HPNavBar.vue";
@@ -140,6 +199,20 @@ const topicsOptions = reactive({
 });
 
 const topics = ref([30, 40, 45, 50]);
+
+const currentPage = ref(1);
+const rowsPerPage = ref(20);
+const { getUsers, users } = useUsers();
+const { getArticles, articles } = useArticles(currentPage, rowsPerPage);
+const { hpros, getHPros } = useHPros();
+const { processes, getProcesses } = useProcesses();
+
+onMounted(() => {
+  getUsers();
+  getArticles(currentPage);
+  getHPros();
+  getProcesses();
+});
 
 // const userStore = useUserStore();
 

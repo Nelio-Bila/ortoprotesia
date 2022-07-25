@@ -17,7 +17,11 @@ class ArticleController extends Controller
 
     public function myArticles($id)
     {
-        return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", "!=", $id)->get();
+        return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->get();
+    }
+    public function myViewsCount($id)
+    {
+        return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->sum('views');
     }
 
     public function related($id, $article)

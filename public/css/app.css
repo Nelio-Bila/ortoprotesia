@@ -11471,7 +11471,7 @@ body {
 }
 
 .hover\:primary:hover {
-  color: #273a7e;
+  color: #273a7e !important;
 }
 
 .hover\:bg-primary:hover {

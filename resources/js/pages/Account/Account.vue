@@ -95,6 +95,7 @@
               <avatar-input
                 v-model="useUser.user.avatar"
                 default-src="/images/profile_imgs/avatar.png"
+                :input="useUser.user.avatar"
               ></avatar-input>
             </div>
             <div class="row mb-3">
@@ -321,6 +322,8 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, useUser.user);
 
 const handleSubmit = async (id) => {
+  console.log(useUser?.user.avatar);
+
   v$._value.$validate();
   if (!v$._value.$invalid) {
     await updateUser(id);

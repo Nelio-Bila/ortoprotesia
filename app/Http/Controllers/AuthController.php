@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\UpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\UpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterRequest;
 
 class AuthController extends Controller
 {
@@ -104,5 +105,25 @@ class AuthController extends Controller
     public function index()
     {
         return User::all();
+    }
+
+    public function userByDate()
+    {
+        //          MYSQL
+        $users = User::select("id", DB::raw("(count(id)) as count"), DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as users_to_month"))
+            ->orderBy('created_at', 'desc')
+            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%m-%Y')"))
+            ->get();
+
+
+        foreach ($users as $user) {
+            $usersPerMonth[] = $user["count"];
+            $months[] = $user["users_to_month"];
+        }
+
+
+        return response()->json([
+            'usersPerMonth' => array_reverse($usersPerMonth), 'months' => array_reverse($months)
+        ]);
     }
 }

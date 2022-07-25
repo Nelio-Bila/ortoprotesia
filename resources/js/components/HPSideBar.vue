@@ -47,7 +47,7 @@
         to="/users"
         v-if="useUser.user.is_admin"
       >
-        <h5><i class="fa-solid fa-users me-2"></i> Usuários</h5>
+        <h5><i class="fa-solid fa-users me-2"></i> Utentes</h5>
       </router-link>
       <router-link
         class="nav-link text-white"

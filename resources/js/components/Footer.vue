@@ -64,12 +64,12 @@
             <!-- Links -->
             <h6 class="text-uppercase fw-bold mb-4">Informações legais</h6>
             <p>
-              <router-link to="/" class="text-reset"
+              <router-link to="/privacy-policy" class="text-reset"
                 >Política de privacidade</router-link
               >
             </p>
             <p>
-              <router-link to="/" class="text-reset"
+              <router-link to="/terms-and-conditions" class="text-reset"
                 >Termos e condições de uso</router-link
               >
             </p>
