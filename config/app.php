@@ -185,7 +185,6 @@ return [
          * Package Service Providers...
          */
         Laravel\Passport\PassportServiceProvider::class,
-        TeamTeaTime\Forum\ForumServiceProvider::class,
 
         /*
          * Application Service Providers...

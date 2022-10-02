@@ -27,7 +27,17 @@
           <div class="col ">
             <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
               <router-link to="/hp/articles" class="card-body">
-                <h6 class="card-title">Visualizações</h6>
+                <h6 class="card-title">Visualizações de hoje</h6>
+                <p class="card-text">
+                 <h1 class="text-bold"> {{ viewsTodayCount }}</h1>
+                </p>
+              </router-link>
+            </div>
+          </div>
+          <div class="col ">
+            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
+              <router-link to="/hp/articles" class="card-body">
+                <h6 class="card-title">Total Visualizações das minhas Publicações</h6>
                 <p class="card-text">
                  <h1 class="text-bold"> {{ viewsCount }}</h1>
                 </p>
@@ -167,15 +177,20 @@ const topics = ref([30, 40, 45, 50]);
 const currentPage = ref(1);
 const rowsPerPage = ref(20);
 
-const { articles, getMyArticles, getMyViewsCount, viewsCount } = useArticles(
-  currentPage,
-  rowsPerPage
-);
+const {
+  articles,
+  getMyArticles,
+  getMyViewsCount,
+  viewsCount,
+  getMyTodayViewsCount,
+  viewsTodayCount,
+} = useArticles(currentPage, rowsPerPage);
 
 onMounted(() => {
   const useUser = useUserStore();
   getMyArticles(useUser?.user?.id);
   getMyViewsCount(useUser?.user?.id);
+  getMyTodayViewsCount(useUser?.user?.id);
 });
 
 // const userStore = useUserStore();

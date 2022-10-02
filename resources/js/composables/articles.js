@@ -6,6 +6,7 @@ import { usePagination } from "../components/pagination/useClientSidePagination"
 export default function useArticles(currentPage, rowsPerPage = 200) {
     const articles = ref([]);
     const viewsCount = ref(0);
+    const viewsTodayCount = ref(0);
     const latestArticles = ref([]);
     const searchedArticles = ref([]);
     const article = ref({});
@@ -56,7 +57,20 @@ export default function useArticles(currentPage, rowsPerPage = 200) {
                 processing.value = false;
             })
             .catch((ex) => {
-                viewsCount.value = [];
+                viewsCount.value = 0;
+                processing.value = false;
+            });
+    };
+    const getMyTodayViewsCount = async (id) => {
+        processing.value = true;
+        await axios
+            .get("/articles/views/today/" + id)
+            .then((response) => {
+                viewsTodayCount.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                viewsTodayCount.value = 0;
                 processing.value = false;
             });
     };
@@ -235,6 +249,8 @@ export default function useArticles(currentPage, rowsPerPage = 200) {
         getArticlesByPopularity,
         getMyArticles,
         getMyViewsCount,
+        getMyTodayViewsCount,
         viewsCount,
+        viewsTodayCount,
     };
 }

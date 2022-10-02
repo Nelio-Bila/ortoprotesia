@@ -24,6 +24,13 @@ class ArticleController extends Controller
         return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->sum('views');
     }
 
+
+    // TODO
+    public function myTodayViewsCount($id)
+    {
+        return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->whereDate('updated_at', Carbon::today())->sum('views');
+    }
+
     public function related($id, $article)
     {
         return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $id)->where('id', '!=', $article)->limit(5)->get());

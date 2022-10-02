@@ -3,9 +3,16 @@
   <div>
     <NavBar />
     <div class="container">
-      <Hero />
-      <Carousel />
+      <div class="row">
+        <div class="col-md-4">
+          <VerticalCarousel />
+        </div>
+        <div class="col-md-8">
+          <Carousel />
+        </div>
+      </div>
       <ArticlesWrapper />
+      <Hero />
     </div>
     <Footer />
   </div>
@@ -15,6 +22,7 @@
 import NavBar from "../components/NavBar.vue";
 import Hero from "../components/Hero.vue";
 import Carousel from "../components/Carousel.vue";
+import VerticalCarousel from "../components/VerticalCarousel.vue";
 import ArticlesWrapper from "../components/ArticlesWrapper.vue";
 import Footer from "../components/Footer.vue";
 import { useAnnouncer } from "@vue-a11y/announcer";

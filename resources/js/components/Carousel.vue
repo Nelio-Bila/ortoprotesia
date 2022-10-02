@@ -1,6 +1,7 @@
 <template>
-  <div class="my-2" id="news">
-    <h1 class="text-center my-2">Noticias</h1>
+  <div class="my-2">
+    <!-- <h1 class="text-center my-2">Noticias</h1> -->
+
     <div
       id="carouselExampleCaptions"
       class="carousel slide"
@@ -103,5 +104,6 @@ export default {
   object-fit: cover;
   width: 100%;
   height: 250px;
+  min-height: 250px;
 }
 </style>

@@ -16,6 +16,8 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="http://fonts.cdnfonts.com/css/hanken-grotesk" rel="stylesheet">
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,6 +76,8 @@
 <body class="antialiased">
     <div id="app">
     </div>
+
+
 </body>
 
 </html>

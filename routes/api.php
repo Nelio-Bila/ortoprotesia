@@ -81,6 +81,7 @@ Route::delete('category/destroy/{id}', [CategoryController::class, 'destroy']);
 Route::get('articles', [ArticleController::class, 'index']);
 Route::get('articles/me/{id}', [ArticleController::class, 'myArticles']);
 Route::get('/articles/views/{id}', [ArticleController::class, 'myViewsCount']);
+Route::get('/articles/views/today/{id}', [ArticleController::class, 'myTodayViewsCount']);
 Route::get('article/{id}', [ArticleController::class, 'show']);
 Route::get('articles/related/{id}/{article}', [ArticleController::class, 'related']);
 Route::get('/articles/search/{criteria}', [ArticleController::class, 'search']);
