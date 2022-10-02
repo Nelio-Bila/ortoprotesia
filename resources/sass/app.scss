@@ -189,6 +189,10 @@ body {
     // border-radius: 12px;
   }
 
+  .hover\:transparent:hover {
+    opacity: 0.9;
+  }
+
 
   .h-52	{height: 13rem; /* 208px */}
   .w-52	{width: 13rem; /* 208px */}

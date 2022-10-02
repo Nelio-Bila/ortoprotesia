@@ -17,16 +17,8 @@ class CategoryController extends Controller
     {
 
         try {
-            $imageName = "category_default.png";
-            if ($request->hasFile("image")) {
-                $imageName = time() . '.' . $request->image->getClientOriginalName();
-
-                $request->file('image')->storeAs('images/categories', $imageName);
-                // $request->image->move(public_path('images/categories'), $imageName);
-            }
             $category = ArticleCategory::create([
                 'name' => $request->name,
-                'image' => $imageName,
             ]);
 
             return $category;
@@ -35,42 +27,45 @@ class CategoryController extends Controller
                 'message' => $exception->getMessage()
             ], 400);
         }
-
-        // STart
-        // foreach ($request->media as $image) {
-        //     $from = public_path('tmp/uploads/' . $image);
-        //     $to = public_path('images/categories/' . $image);
-
-        //     File::move($from, $to);
-        //     $category = Category::create([
-        //         'name' => $request->name,
-        //         'image' => $image,
-        //     ]);
-
-        //     return $category;
-        // }
     }
 
-    // CategoryRegisterRequest $request
-    public function update(Request $request, $id)
+    public function update(CategoryRegisterRequest $request, $id)
     {
-        return $request;
+        try {
+            $category = ArticleCategory::find($id);
+            $category->name = $request->name;
 
-        // $category->update($request->validated());
-
-        // return $category;
+            return response()->json($category);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], 400);
+        }
     }
 
     public function show($id)
     {
-        return ArticleCategory::where('id', $id)->get();
+        try {
+            $category = ArticleCategory::find($id);
+            return response()->json($category);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], 400);
+        }
     }
 
     public function destroy($id)
     {
-        $category = ArticleCategory::find($id);
-        $category->delete();
+        try {
+            $category = ArticleCategory::find($id);
+            $category->delete();
 
-        return response()->noContent();
+            return response()->noContent();
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], 400);
+        }
     }
 }

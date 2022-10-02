@@ -10,6 +10,7 @@ export default function useArticles(currentPage, rowsPerPage = 200) {
     const latestArticles = ref([]);
     const searchedArticles = ref([]);
     const article = ref({});
+    const articlesViewsPerDay = ref({});
     const router = useRouter();
     const errors = ref("");
     const processing = ref(false);
@@ -71,6 +72,20 @@ export default function useArticles(currentPage, rowsPerPage = 200) {
             })
             .catch((ex) => {
                 viewsTodayCount.value = 0;
+                processing.value = false;
+            });
+    };
+
+    const getArticlesViewsPerDay = async (id) => {
+        processing.value = true;
+        await axios
+            .get("/articles/views/day/" + id)
+            .then((response) => {
+                articlesViewsPerDay.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                articlesViewsPerDay.value = {};
                 processing.value = false;
             });
     };
@@ -252,5 +267,7 @@ export default function useArticles(currentPage, rowsPerPage = 200) {
         getMyTodayViewsCount,
         viewsCount,
         viewsTodayCount,
+        articlesViewsPerDay,
+        getArticlesViewsPerDay,
     };
 }

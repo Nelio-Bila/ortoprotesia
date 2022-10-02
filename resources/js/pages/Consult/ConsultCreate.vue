@@ -125,6 +125,21 @@
                   </span>
                 </div>
               </div>
+
+              <button
+                class="btn btn-primary btn-block mb-3"
+                :disabled="processing"
+              >
+                <span
+                  v-if="processing"
+                  class="spinner-border spinner-border-sm mx-2"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span v-if="processing">Processando...</span>
+
+                <span v-if="!processing">Submeter</span>
+              </button>
             </form>
           </div>
         </div>

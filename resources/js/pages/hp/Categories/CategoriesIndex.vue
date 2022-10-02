@@ -20,7 +20,7 @@
           <thead class="table-light">
             <tr>
               <th>Nome</th>
-              <th>Imagem</th>
+              <th>Activa</th>
               <th>Criada aos</th>
               <th>Acções</th>
             </tr>
@@ -30,11 +30,11 @@
               <tr>
                 <td>{{ category.name }}</td>
                 <td class="text-center">
-                  <img
-                    :src="'images/icons/' + category.image"
-                    alt="categoria"
-                    style="height: 30px; width: 30px"
-                  />
+                  <i
+                    class="fa-sharp fa-solid fa-check"
+                    v-if="category.deleted_at"
+                  ></i>
+                  <i class="fa-sharp fa-solid fa-xmark" v-else></i>
                 </td>
                 <td>
                   {{ new Date(category.created_at).toLocaleDateString() }}

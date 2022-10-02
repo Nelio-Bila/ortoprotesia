@@ -44,7 +44,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $guard = 'api';
+    protected $guard = 'user';
 
     public function process()
     {

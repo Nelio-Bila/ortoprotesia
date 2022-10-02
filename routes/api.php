@@ -79,6 +79,7 @@ Route::delete('category/destroy/{id}', [CategoryController::class, 'destroy']);
 
 // Articles
 Route::get('articles', [ArticleController::class, 'index']);
+Route::get('articles/views/day/{hp}', [ArticleController::class, 'articlesViewsPerDay']);
 Route::get('articles/me/{id}', [ArticleController::class, 'myArticles']);
 Route::get('/articles/views/{id}', [ArticleController::class, 'myViewsCount']);
 Route::get('/articles/views/today/{id}', [ArticleController::class, 'myTodayViewsCount']);

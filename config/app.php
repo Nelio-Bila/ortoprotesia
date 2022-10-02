@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'locale' => 'pt_BR',
+    'locale' => 'pt-BR',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'pt',
+    'fallback_locale' => 'pt-BR',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +108,7 @@ return [
     |
     */
 
-    'faker_locale' => 'pt_BR',
+    'faker_locale' => 'pt-BR',
 
     /*
     |--------------------------------------------------------------------------
@@ -185,7 +185,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Passport\PassportServiceProvider::class,
-
+        TeamTeaTime\Forum\ForumServiceProvider::class,
         /*
          * Application Service Providers...
          */

@@ -14,14 +14,7 @@
 
     <title>Ortoprotesia</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="http://fonts.cdnfonts.com/css/hanken-grotesk" rel="stylesheet">
 
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     @if (config('app.env') === 'local')
@@ -29,9 +22,13 @@
     @else
         <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
     @endif
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
 
     <link rel="stylesheet" href="/css/animate.css" type="text/css">
     <link rel="stylesheet" href="/css/nprogress.css">
@@ -70,7 +67,14 @@
     <!-- Custom styles for this template -->
     <link href="/css/dashboard.css" rel="stylesheet">
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="http://fonts.cdnfonts.com/css/hanken-grotesk" rel="stylesheet">
 
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body class="antialiased">

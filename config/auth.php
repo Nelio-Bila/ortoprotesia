@@ -16,7 +16,7 @@ return [
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
-        'guard' => 'api',
+        'guard' => 'user',
         'passwords' => 'users',
         'guard' => 'hp',
         'passwords' => 'health_professionals',

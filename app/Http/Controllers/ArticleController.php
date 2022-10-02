@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArticleRequest;
 
 class ArticleController extends Controller
@@ -186,5 +187,24 @@ class ArticleController extends Controller
         $article->delete();
 
         return response()->noContent();
+    }
+
+
+    public function articlesViewsPerDay($hp)
+    {
+        $articles = Article::where('health_professional_id', $hp)->select("id", DB::raw("(sum(views)) as sum"), DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as days"))
+            ->orderBy('created_at', 'desc')
+            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y')"))
+            ->get();
+
+        $ArticlesViewsPerDay = [];
+        $days = [];
+
+        foreach ($articles as $article) {
+            $ArticlesViewsPerDay[] = $article->sum;
+            $days[] = $article->days;
+        }
+
+        return response()->json(['ArticlesViewsPerDay' => $ArticlesViewsPerDay, 'days' => $days]);
     }
 }

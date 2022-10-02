@@ -8,44 +8,68 @@
       <HPNavBar />
       <!-- Navbar End  -->
 
-      <div class="container-fluid">
-        <h1 class="mt-4">Painel do Profissional de Saúde</h1>
+      <div class="container mt-4">
+        <h1>Painel do Profissional de Saúde</h1>
         <p>
           Nesta area podes gerir publicações, categorias, etiquetas e muito mais
         </p>
-        <div class="row mb-2">
-          <div class="col ">
-            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
-              <router-link to="/hp/articles" class="card-body">
-                <h6 class="card-title">Publicações</h6>
-                <p class="card-text">
-                 <h1 class="text-bold"> {{ articles.length }}</h1>
-                </p>
-              </router-link>
+        <div class="row">
+          <router-link
+            to="/hp/articles"
+            class="col-md-4 col-xl-4 text-decoration-none"
+          >
+            <div class="card bg-c-blue order-card hover:transparent">
+              <div class="card-block">
+                <h6 class="m-b-20 text-white">Publicações</h6>
+                <h2 class="text-right">
+                  <i
+                    class="text-white fa-sharp fa-solid fa-newspaper mr-5"
+                    style="margin-right: 15px"
+                  ></i
+                  ><span class="text-white">{{ articles.length }}</span>
+                </h2>
+              </div>
             </div>
-          </div>
-          <div class="col ">
-            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
-              <router-link to="/hp/articles" class="card-body">
-                <h6 class="card-title">Visualizações de hoje</h6>
-                <p class="card-text">
-                 <h1 class="text-bold"> {{ viewsTodayCount }}</h1>
-                </p>
-              </router-link>
-            </div>
-          </div>
-          <div class="col ">
-            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
-              <router-link to="/hp/articles" class="card-body">
-                <h6 class="card-title">Total Visualizações das minhas Publicações</h6>
-                <p class="card-text">
-                 <h1 class="text-bold"> {{ viewsCount }}</h1>
-                </p>
-              </router-link>
-            </div>
-          </div>
+          </router-link>
 
+          <router-link
+            to="/hp/articles"
+            class="col-md-4 col-xl-4 text-decoration-none"
+          >
+            <div class="card bg-c-green order-card hover:transparent">
+              <div class="card-block">
+                <h6 class="m-b-20 text-white">Visualizações de hoje</h6>
+                <h2 class="text-right">
+                  <i
+                    class="fa fa-eye f-left text-white"
+                    style="margin-right: 15px"
+                  ></i
+                  ><span class="text-white">{{ viewsTodayCount }}</span>
+                </h2>
+              </div>
+            </div>
+          </router-link>
+
+          <router-link
+            to="/hp/articles"
+            class="col-md-4 col-xl-4 text-decoration-none"
+          >
+            <div class="card bg-c-yellow order-card hover:transparent">
+              <div class="card-block">
+                <h6 class="m-b-20 text-white">Total Visualizações</h6>
+                <h2 class="text-right">
+                  <i
+                    class="fa fa-eye f-left text-white"
+                    style="margin-right: 15px"
+                  ></i
+                  ><span class="text-white">{{ viewsCount }}</span>
+                </h2>
+                <!-- <p class="m-b-0">Completed Orders<span class="f-right">351</span></p> -->
+              </div>
+            </div>
+          </router-link>
         </div>
+
         <div class="row">
           <div class="col">
             <apexchart
@@ -73,8 +97,9 @@
 </template>
 
 <script setup>
-import { watch, reactive, ref, onMounted } from "vue";
+import { watch, reactive, ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
+import axios from "axios";
 
 import HPSideBar from "../../components/HPSideBar.vue";
 import HPNavBar from "../../components/HPNavBar.vue";
@@ -84,7 +109,7 @@ import useArticles from "../../composables/articles";
 
 const router = useRouter();
 
-const traficOptions = reactive({
+const traficOptions = computed(() => ({
   chart: {
     id: "app-traffic",
     fontFamily: "Raleway,Nunito, sans-serif",
@@ -104,11 +129,11 @@ const traficOptions = reactive({
     },
   },
   xaxis: {
-    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+    categories: days.value,
   },
   colors: ["#273a7e", "#5072A7", "#902f37"],
   title: {
-    text: "Trafego",
+    text: "Leituras por dia",
     align: "left",
     margin: 10,
     offsetX: 0,
@@ -121,18 +146,7 @@ const traficOptions = reactive({
       color: "#902f37",
     },
   },
-});
-
-const userTypes = ref([
-  {
-    name: "Utentes",
-    data: [30, 40, 45, 50, 49, 60, 70, 91],
-  },
-  {
-    name: "Profissionais de Saúde",
-    data: [20, 90, 25, 50, 19, 30, 40, 81],
-  },
-]);
+}));
 
 const topicsOptions = reactive({
   chart: {
@@ -184,6 +198,8 @@ const {
   viewsCount,
   getMyTodayViewsCount,
   viewsTodayCount,
+  //   articlesViewsPerDay,
+  //   getArticlesViewsPerDay,
 } = useArticles(currentPage, rowsPerPage);
 
 onMounted(() => {
@@ -191,15 +207,41 @@ onMounted(() => {
   getMyArticles(useUser?.user?.id);
   getMyViewsCount(useUser?.user?.id);
   getMyTodayViewsCount(useUser?.user?.id);
+  getArticlesViewsPerDay(useUser?.user?.id);
 });
 
-// const userStore = useUserStore();
+let userTypes = ref([
+  {
+    name: "Utentes",
+    data: [],
+  },
+]);
 
-// onMounted(() => {
-//   if (!userStore.user?.is_hp) {
-//     router.push("/hp/login");
-//   }
-// });
+const days = ref();
+const articlesViewsPerDay = ref({});
+const getArticlesViewsPerDay = async (id) => {
+  //   processing.value = true;
+  await axios
+    .get("/articles/views/day/" + id)
+    .then((response) => {
+      userTypes.value = {
+        name: "Utentes",
+        data: response.data.ArticlesViewsPerDay,
+      };
+      //   userTypes.data = response.data.ArticlesViewsPerDay;
+      //   traficOptions.xaxis.categories = response.data.days;
+      days.value = response.data.days;
+
+      //   console.log({ ...userTypes.data });
+      //   console.log({ ...traficOptions.xaxis.categories });
+
+      //   processing.value = false;
+    })
+    .catch((ex) => {
+      console.log(ex);
+      //   processing.value = false;
+    });
+};
 </script>
 
 
@@ -215,3 +257,51 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+order-card {
+  color: #fff;
+}
+
+.bg-c-blue {
+  background: #f9cf00;
+}
+
+.bg-c-green {
+  background: #902f37;
+}
+
+.bg-c-yellow {
+  background: #273a7e;
+}
+
+.bg-c-pink {
+  background: #4caf50;
+}
+
+.card {
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  border: none;
+  margin-bottom: 30px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.card .card-block {
+  padding: 25px;
+}
+
+.order-card i {
+  font-size: 26px;
+}
+
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+</style>

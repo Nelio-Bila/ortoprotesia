@@ -23,10 +23,6 @@
         >
           <h1 class="h2">Editar Categoria</h1>
         </div>
-
-        <!-- <router-link to="/categories" class="btn btn-primary mb-4"
-          >Lista de categorias</router-link
-        > -->
         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -46,60 +42,6 @@
         </div>
 
         <form @submit.prevent="saveCategory" enctype="multipart/form-data">
-          <div class="form-group mb-3 text-center">
-            <label for="name">Icone da categoria</label>
-            <div>
-              <input
-                type="file"
-                accept="image/*"
-                class="hidden"
-                ref="input"
-                @change="change"
-              />
-              <div class="relative inline-block rounded-3">
-                <img
-                  :src="src"
-                  alt=""
-                  class="h-52 w-52 object-cover rounded-3"
-                />
-                <div
-                  class="
-                    absolute
-                    top-0
-                    h-full
-                    w-full
-                    bg-black bg-opacity-25
-                    flex
-                    items-center
-                    justify-center
-                    rounded-3
-                  "
-                >
-                  <i
-                    @click.prevent="browse()"
-                    class="
-                      fa-solid fa-camera fa-2xl
-                      primary-color
-                      cursor-pointer
-                      hover:white
-                      mx-2
-                    "
-                  ></i>
-                  <i
-                    v-if="category.image"
-                    @click.prevent="remove()"
-                    class="
-                      fa-solid fa-xmark fa-2xl
-                      primary-color
-                      cursor-pointer
-                      hover:white
-                      mx-2
-                    "
-                  ></i>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="form-group mb-3">
             <label for="name">Nome da categoria</label>
             <input
@@ -123,10 +65,12 @@
           </div>
 
           <button class="btn btn-primary btn-block btn-lg">
-            <i
+            <span
               v-if="processing"
-              class="fa-solid fa-spinner fa-spin-pulse mx-2"
-            ></i>
+              class="spinner-border spinner-border-sm mx-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
             <span v-if="processing">Processando...</span>
 
             <i v-if="!processing" class="fa-solid fa-user-plus mx-2"></i>
@@ -156,37 +100,7 @@ onMounted(() => {
   getCategory(route.params.id);
 });
 
-const src = ref("/images/icons/category_default.png");
-const input = ref(null);
-
-const form = reactive({
-  file: null,
-});
-
-function browse() {
-  input.value.click();
-}
-
-function remove() {
-  form.file = null;
-  src.value = "/images/icons/category_default.png";
-}
-function change(e) {
-  form.file = e.target.files[0];
-  category.value.image = e.target.files[0];
-
-  let reader = new FileReader();
-  reader.readAsDataURL(e.target.files[0]);
-  reader.onload = (e) => {
-    src.value = e.target.result;
-  };
-  nextTick();
-}
-
 const saveCategory = async () => {
-  //   let data = new FormData();
-  //   data.append("name", "ghoust");
-  //   data.append("image", form.file);
   await updateCategory(route.params.id, { ...category });
 };
 
@@ -199,7 +113,7 @@ const rules = computed(() => ({
     ),
     minValue: minLength(2),
   },
-  image: {},
+  deleted_at: {},
   created_at: {},
   updated_at: {},
 }));
