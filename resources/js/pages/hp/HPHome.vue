@@ -73,10 +73,13 @@
         <div class="row">
           <div class="col">
             <apexchart
+              id="trafficChart"
+              ref="trafficChart"
               width="400"
               type="area"
               :options="traficOptions"
               :series="userTypes"
+              @mounted="trafficMounted"
             ></apexchart>
           </div>
 
@@ -148,6 +151,13 @@ const traficOptions = computed(() => ({
   },
 }));
 
+let userTypes = computed(() => [
+  {
+    name: "Utentes",
+    data: series.value,
+  },
+]);
+
 const topicsOptions = reactive({
   chart: {
     id: "traffic-by-topic",
@@ -210,36 +220,17 @@ onMounted(() => {
   getArticlesViewsPerDay(useUser?.user?.id);
 });
 
-let userTypes = ref([
-  {
-    name: "Utentes",
-    data: [],
-  },
-]);
-
 const days = ref();
-const articlesViewsPerDay = ref({});
+const series = ref();
 const getArticlesViewsPerDay = async (id) => {
-  //   processing.value = true;
   await axios
     .get("/articles/views/day/" + id)
     .then((response) => {
-      userTypes.value = {
-        name: "Utentes",
-        data: response.data.ArticlesViewsPerDay,
-      };
-      //   userTypes.data = response.data.ArticlesViewsPerDay;
-      //   traficOptions.xaxis.categories = response.data.days;
+      series.value = response.data.ArticlesViewsPerDay;
       days.value = response.data.days;
-
-      //   console.log({ ...userTypes.data });
-      //   console.log({ ...traficOptions.xaxis.categories });
-
-      //   processing.value = false;
     })
     .catch((ex) => {
       console.log(ex);
-      //   processing.value = false;
     });
 };
 </script>
