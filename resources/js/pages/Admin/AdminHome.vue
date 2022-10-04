@@ -99,7 +99,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col d-flex justify-content-center">
+          <div class="col d-flex justify-content-center aligns-items-center">
             <apexchart
               width="500"
               type="pie"

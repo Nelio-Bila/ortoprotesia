@@ -1,5 +1,5 @@
 <template>
-  <div class="my-2">
+  <div class="my-2 col">
     <!-- <h1 class="text-center my-2">Noticias</h1> -->
 
     <div
@@ -103,7 +103,7 @@ export default {
   /* height: 15em; */
   object-fit: cover;
   width: 100%;
-  height: 250px;
-  min-height: 250px;
+  height: 350px;
+  min-height: 350px;
 }
 </style>

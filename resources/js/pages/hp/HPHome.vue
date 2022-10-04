@@ -71,11 +71,11 @@
         </div>
 
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-6">
             <apexchart
               id="trafficChart"
               ref="trafficChart"
-              width="700"
+              width="500"
               type="area"
               :options="traficOptions"
               :series="userTypes"
@@ -83,12 +83,14 @@
             ></apexchart>
           </div>
 
-          <div class="col-md-4">
+          <div
+            class="col-md-6 d-flex justify-content-center aligns-items-center"
+          >
             <apexchart
-              width="300"
+              width="500"
               type="pie"
               :options="topicsOptions"
-              :series="topics"
+              :series="topicsOptions.chart.series"
             ></apexchart>
           </div>
         </div>
@@ -167,7 +169,7 @@ let userTypes = computed(() => [
   },
 ]);
 
-const topicsOptions = reactive({
+const topicsOptions = computed(() => ({
   chart: {
     id: "traffic-by-topic",
     fontFamily: "Raleway,Nunito, sans-serif",
@@ -185,12 +187,12 @@ const topicsOptions = reactive({
         speed: 350,
       },
     },
-    labels: ["Proteses", "Ortoteses", "Auxiliares de Marcha", "Outros"],
-    series: [30, 40, 45, 50],
+    labels: catnames.value,
+    series: articlesViewsPerCategory.value,
   },
   colors: ["#273a7e", "#5072A7", "#902f37", "#f9cf00"],
   title: {
-    text: "Trafego por categoria",
+    text: "Visualizações por categoria",
     align: "left",
     margin: 10,
     offsetX: 0,
@@ -203,9 +205,8 @@ const topicsOptions = reactive({
       color: "#902f37",
     },
   },
-});
-
-const topics = ref([30, 40, 45, 50]);
+  labels: catnames.value,
+}));
 
 const currentPage = ref(1);
 const rowsPerPage = ref(20);
@@ -219,12 +220,27 @@ const {
   viewsTodayCount,
 } = useArticles(currentPage, rowsPerPage);
 
+const catnames = ref();
+const articlesViewsPerCategory = ref();
+const getReadersPerCategory = async () => {
+  await axios
+    .get("/readersPerCategory")
+    .then((response) => {
+      catnames.value = response.data.catnames;
+      articlesViewsPerCategory.value = response.data.articlesViewsPerCategory;
+    })
+    .catch((ex) => {
+      console.log(ex);
+    });
+};
+
 onMounted(() => {
   const useUser = useUserStore();
   getMyArticles(useUser?.user?.id);
   getMyViewsCount(useUser?.user?.id);
   getMyTodayViewsCount(useUser?.user?.id);
   getArticlesViewsPerDay(useUser?.user?.id);
+  getReadersPerCategory();
 });
 
 const days = ref();

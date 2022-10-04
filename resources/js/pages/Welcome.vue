@@ -4,12 +4,12 @@
     <NavBar />
     <div class="container">
       <div class="row">
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
           <VerticalCarousel />
         </div>
         <div class="col-md-8">
-          <Carousel />
-        </div>
+        </div> -->
+        <Carousel />
       </div>
       <ArticlesWrapper />
       <!-- <Hero /> -->
