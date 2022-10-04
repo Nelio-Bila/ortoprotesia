@@ -40,9 +40,9 @@
           </div>
 
           <div class="col-md-4">
-            <label for="">Possui Processo</label>
-            <h3>Sim</h3>
-            <h3>Não</h3>
+            <label for="">Possui Processo?</label>
+            <h3 v-if="user.process">Sim <a href="">ver</a></h3>
+            <h3 v-else>Não</h3>
           </div>
         </div>
       </div>
@@ -63,7 +63,6 @@ const route = useRoute();
 const { user, getUser } = useUsers();
 
 onMounted(() => {
-  getUser(route.params.id);
   console.log(user);
 });
 </script>

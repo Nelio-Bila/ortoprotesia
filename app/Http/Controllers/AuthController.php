@@ -66,7 +66,7 @@ class AuthController extends Controller
 
     public function details($id)
     {
-        return User::find($id);
+        return User::with('process')->find($id);
     }
 
     public function register(RegisterRequest $request)

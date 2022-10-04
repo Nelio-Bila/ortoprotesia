@@ -82,6 +82,12 @@ class AdminController extends Controller
 
         return response()->noContent();
     }
+    public function destroyUser(User $user)
+    {
+        $user->delete();
+
+        return response()->noContent();
+    }
 
     public function login(Request $request)
     {
