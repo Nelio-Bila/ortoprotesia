@@ -52,6 +52,10 @@ class AuthController extends Controller
             Auth::guard('user')->user()->token()->revoke();
         }
 
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->user()->token()->revoke();
+        }
+
         return "Logged out sucessfully";
     }
 

@@ -12,7 +12,7 @@
         </div>
       </div>
       <ArticlesWrapper />
-      <Hero />
+      <!-- <Hero /> -->
     </div>
     <Footer />
   </div>

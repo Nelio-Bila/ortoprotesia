@@ -23,12 +23,22 @@ class ArticleController extends Controller
     }
     public function myViewsCount($id)
     {
-        return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->sum('views');
+        $myViewsCount = Article::join('article_views', 'articles.id', '=', 'article_views.article_id')
+            ->where("articles.health_professional_id", $id)
+            ->get();
+        return $myViewsCount->count();
     }
 
     public function myTodayViewsCount($id)
     {
-        return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->whereDate('updated_at', Carbon::today())->sum('views');
+        $myTodayViewsCount = Article::with(['category', 'hpro'])
+            ->join('article_views', 'articles.id', '=', 'article_views.article_id')
+            ->where("articles.health_professional_id", $id)
+            ->whereDate('article_views.created_at', Carbon::today())
+            ->get();
+        return $myTodayViewsCount->count();
+
+        // return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->whereDate('updated_at', Carbon::today())->sum('views');
     }
 
     public function related($id, $article)
@@ -51,11 +61,20 @@ class ArticleController extends Controller
         return Article::with(['category', 'hpro', 'views'])->find($id);
     }
 
-    public function incrementViews($id)
+    public function incrementViews($article_id, $user_id, $who)
     {
-        $articleViews = ArticleView::where('article_id', $id);
-        $articleViews->count++;
-        $articleViews->save();
+
+        try {
+            ArticleView::create([
+                'article_id' => $article_id,
+                'who->id' => $user_id,
+                'who->type' => $who
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], 400);
+        }
     }
 
     public function byCategory($category_id)
@@ -194,7 +213,10 @@ class ArticleController extends Controller
         //     ->get();
 
 
-        $articles = Article::where('health_professional_id', $hp)->join('article_views', 'articles.id', '=', 'article_views.article_id')->select(DB::raw("(sum(article_views.count)) as sum"), DB::raw("(DATE_FORMAT(article_views.created_at, '%d-%m-%Y')) as days"))
+        $articles = Article::where('health_professional_id', $hp)
+            ->whereBetween('articles.created_at', [now()->subDays(15), now()])
+            ->join('article_views', 'articles.id', '=', 'article_views.article_id')
+            ->select(DB::raw("(count(article_views.id)) as count"), DB::raw("(DATE_FORMAT(article_views.created_at, '%d-%m-%Y')) as days"))
             ->orderBy('article_views.created_at', 'desc')
             ->groupBy(DB::raw("DATE_FORMAT(article_views.created_at, '%d-%m-%Y')"))
             ->get();
@@ -203,10 +225,10 @@ class ArticleController extends Controller
         $days = [];
 
         foreach ($articles as $article) {
-            $ArticlesViewsPerDay[] = $article->sum;
+            $ArticlesViewsPerDay[] = $article->count;
             $days[] = $article->days;
         }
 
-        return response()->json(['ArticlesViewsPerDay' => $ArticlesViewsPerDay, 'days' => $days]);
+        return response()->json(['ArticlesViewsPerDay' => array_reverse($ArticlesViewsPerDay), 'days' => array_reverse($days)]);
     }
 }

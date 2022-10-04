@@ -79,6 +79,9 @@
             </div>
           </div>
           <div v-else class="row">
+            <p v-if="articles.length < 1" class="text-center">
+              Sem artigos do momento
+            </p>
             <ArticleCard
               v-for="article in articles"
               :article="article"

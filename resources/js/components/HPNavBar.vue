@@ -8,7 +8,7 @@
     ></i>
 
     <div class="me-auto"></div>
-    <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="useUser.user">
+    <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="useUser?.user">
       <li class="nav-item dropdown">
         <a
           class="nav-link dropdown-toggle"
@@ -19,11 +19,11 @@
           aria-expanded="false"
         >
           <span class="mx-2">
-            {{ useUser.user.name }}
+            {{ useUser?.user?.name }}
           </span>
           <img
-            :src="`/images/profile_imgs/` + `${useUser.user.avatar}`"
-            :alt="`${useUser.user.name} ${useUser.user.surname}`"
+            :src="`/images/profile_imgs/` + `${useUser?.user?.avatar}`"
+            :alt="`${useUser?.user?.name} ${useUser?.user?.surname}`"
             class="rounded-circle mx-1"
             style="width: 40px"
           />
@@ -31,7 +31,7 @@
         <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown">
           <li>
             <a
-              v-if="useUser.user.is_hp || useUser.user.is_admin"
+              v-if="useUser?.user?.is_hp || useUser?.user?.is_admin"
               class="dropdown-item me-5"
               to="/hp/"
               >Painel</a

@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="col-md-7 mx-auto">
-          <form @submit.prevent="handleSubmit(useUser.user.id)">
+          <form @submit.prevent="handleSubmit(useUser?.user?.id)">
             <h3 class="text-center">Dados pessoais</h3>
             <div v-if="errors">
               <div
@@ -322,8 +322,6 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, useUser.user);
 
 const handleSubmit = async (id) => {
-  console.log(useUser?.user.avatar);
-
   v$._value.$validate();
   if (!v$._value.$invalid) {
     await updateUser(id);

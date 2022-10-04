@@ -70,22 +70,22 @@
                   >Informações</router-link
                 >
               </li>
-              <li v-if="useUser.get">
+              <li v-if="useUser?.get">
                 <router-link
                   to="/consult/create"
                   class="dropdown-item hover:primary"
                   >Marcar</router-link
                 >
               </li>
-              <li v-if="useUser.get">
+              <li v-if="useUser?.get">
                 <hr class="dropdown-divider" />
               </li>
-              <li v-if="useUser.get">
+              <li v-if="useUser?.get">
                 <a class="dropdown-item hover:primary" href="#"
                   >Estado da minha consulta</a
                 >
               </li>
-              <li v-if="useUser.get">
+              <li v-if="useUser?.get">
                 <router-link to="/process" class="dropdown-item hover:primary"
                   >Processo clínico</router-link
                 >
@@ -109,13 +109,13 @@
             </button>
           </div>
         </form>
-        <form class="d-flex justify-content-center my-2" v-if="!useUser.get">
+        <form class="d-flex justify-content-center my-2" v-if="!useUser?.get">
           <router-link class="btn btn-outline-primary" to="/login">
             Entrar | Criar Conta
           </router-link>
         </form>
 
-        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="useUser.get">
+        <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="useUser?.get">
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -126,11 +126,11 @@
               aria-expanded="false"
             >
               <span class="mx-2">
-                {{ useUser.get.name }}
+                {{ useUser?.get?.name }}
               </span>
               <img
-                :src="`/images/profile_imgs/` + `${useUser.get.avatar}`"
-                :alt="`${useUser.get.name} ${useUser.get.surname}`"
+                :src="`/images/profile_imgs/` + `${useUser?.get?.avatar}`"
+                :alt="`${useUser?.get?.name} ${useUser?.get?.surname}`"
                 class="rounded-circle mx-1"
                 style="width: 40px"
               />
@@ -138,7 +138,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
                 <router-link
-                  v-if="useUser.user.is_hp"
+                  v-if="useUser?.user?.is_hp"
                   class="dropdown-item me-5"
                   to="/hp/"
                   >Painel</router-link
@@ -146,7 +146,7 @@
               </li>
               <li>
                 <router-link
-                  v-if="useUser.user.is_admin"
+                  v-if="useUser?.user?.is_admin"
                   class="dropdown-item me-5"
                   to="/admin/home"
                   >Painel</router-link

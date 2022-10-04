@@ -14,7 +14,7 @@
         :class="currentLink === 'home' ? 'active-link' : ''"
         aria-current="page"
         to="/hp"
-        v-if="useUser.user.is_hp"
+        v-if="useUser?.user?.is_hp"
       >
         <h5><i class="fa-solid fa-house me-2"></i> Inicio</h5>
       </router-link>
@@ -23,7 +23,7 @@
         :class="currentLink === 'home' ? 'active-link' : ''"
         aria-current="page"
         to="/admin/home"
-        v-if="useUser.user.is_admin"
+        v-if="useUser?.user?.is_admin"
       >
         <h5><i class="fa-solid fa-house me-2"></i> Inicio</h5>
       </router-link>
@@ -45,7 +45,7 @@
         class="nav-link text-white"
         :class="currentLink === 'users' ? 'active-link' : 'text-white'"
         to="/users"
-        v-if="useUser.user.is_admin"
+        v-if="useUser?.user?.is_admin"
       >
         <h5><i class="fa-solid fa-users me-2"></i> Utentes</h5>
       </router-link>
@@ -53,7 +53,7 @@
         class="nav-link text-white"
         :class="currentLink === 'health_pros' ? 'active-link' : 'text-white'"
         to="/admin/hpros"
-        v-if="useUser.user.is_admin"
+        v-if="useUser?.user?.is_admin"
       >
         <h5><i class="fa-solid fa-users me-2"></i> Prof. de Saúde</h5>
       </router-link>
@@ -61,7 +61,7 @@
         class="nav-link text-white"
         :class="currentLink === 'processes' ? 'active-link' : 'text-white'"
         to="/processes"
-        v-if="useUser.user.is_admin"
+        v-if="useUser?.user?.is_admin"
       >
         <h5><i class="fa-solid fa-box-archive me-2"></i> Processos Clinícos</h5>
       </router-link>
@@ -69,7 +69,7 @@
         class="nav-link text-white"
         :class="currentLink === 'consults' ? 'active-link' : 'text-white'"
         to="/hp"
-        v-if="useUser.user.is_admin"
+        v-if="useUser?.user?.is_admin"
       >
         <h5><i class="fa-solid fa-calendar-check me-2"></i> Consultas</h5>
       </router-link>
@@ -77,14 +77,14 @@
         class="nav-link text-white"
         :class="currentLink === 'admins' ? 'active-link' : 'text-white'"
         to="/admins"
-        v-if="useUser.user.is_admin"
+        v-if="useUser?.user?.is_admin"
       >
         <h5><i class="fa-solid fa-shield me-2"></i> Admins</h5>
       </router-link>
       <router-link
         class="nav-link text-white"
         to="/hp"
-        v-if="useUser.user.is_admin"
+        v-if="useUser?.user?.is_admin"
       >
         <h5><i class="fa-solid fa-chart-column me-2"></i> Estatisticas</h5>
       </router-link>

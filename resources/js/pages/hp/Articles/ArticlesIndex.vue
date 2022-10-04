@@ -42,7 +42,7 @@
                   />
                 </td>
                 <td>{{ article.category.name }}</td>
-                <td>{{ article.views.count }}</td>
+                <td>{{ article.views.length }}</td>
                 <td>
                   {{ article.hpro.name }}
                   {{ article.hpro.surname }}
@@ -56,7 +56,7 @@
                       class="btn btn-sm btn-success m-2"
                       :to="{
                         name: 'articles.view',
-                        params: { id: article.id },
+                        params: { article_id: article.id },
                       }"
                       >Visualizar</router-link
                     >

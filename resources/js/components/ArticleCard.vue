@@ -27,7 +27,7 @@
                 >
               </p>
               <p class="mt-0">
-                <i class="fa-solid fa-eye"></i> {{ article.views }}
+                <i class="fa-solid fa-eye"></i> {{ article.views.length }}
               </p>
               <div class="d-flex justify-content-between align-items-center">
                 <router-link

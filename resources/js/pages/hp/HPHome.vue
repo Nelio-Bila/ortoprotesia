@@ -71,11 +71,11 @@
         </div>
 
         <div class="row">
-          <div class="col">
+          <div class="col-md-8">
             <apexchart
               id="trafficChart"
               ref="trafficChart"
-              width="400"
+              width="700"
               type="area"
               :options="traficOptions"
               :series="userTypes"
@@ -83,9 +83,9 @@
             ></apexchart>
           </div>
 
-          <div class="col">
+          <div class="col-md-4">
             <apexchart
-              width="400"
+              width="300"
               type="pie"
               :options="topicsOptions"
               :series="topics"
@@ -136,7 +136,7 @@ const traficOptions = computed(() => ({
   },
   colors: ["#273a7e", "#5072A7", "#902f37"],
   title: {
-    text: "Leituras por dia",
+    text: "Leituras por dia (últimos 15 dias)",
     align: "left",
     margin: 10,
     offsetX: 0,
@@ -181,7 +181,7 @@ const topicsOptions = reactive({
   },
   colors: ["#273a7e", "#5072A7", "#902f37", "#f9cf00"],
   title: {
-    text: "Trafego por tópico",
+    text: "Trafego por categoria",
     align: "left",
     margin: 10,
     offsetX: 0,
@@ -208,8 +208,6 @@ const {
   viewsCount,
   getMyTodayViewsCount,
   viewsTodayCount,
-  //   articlesViewsPerDay,
-  //   getArticlesViewsPerDay,
 } = useArticles(currentPage, rowsPerPage);
 
 onMounted(() => {

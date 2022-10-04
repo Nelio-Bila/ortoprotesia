@@ -40,7 +40,7 @@ Route::get('user', [AuthController::class, 'user'])->middleware('auth:user');
 Route::get('user/{id}', [AuthController::class, 'details'])->middleware('auth:user');
 Route::put('user/update/{id}', [AuthController::class, 'update'])->middleware('auth:user');
 Route::get('users', [AuthController::class, 'index']);
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:user');;
+Route::post('logout', [AuthController::class, 'logout']);
 
 //
 
@@ -91,7 +91,7 @@ Route::get('/articles/category/{category_id}', [ArticleController::class, 'byCat
 Route::get('/articles/period/{period}', [ArticleController::class, 'byPeriod']);
 Route::get('/articles/popularity/{popularity}', [ArticleController::class, 'byViews']);
 Route::post('/articles/register', [ArticleController::class, 'store']);
-Route::put('/articles/increment/{id}', [ArticleController::class, 'incrementViews']);
+Route::post('/articles/increment/{article_id}/{user_id}/{who}', [ArticleController::class, 'incrementViews']);
 Route::put('/articles/update/{id}', [ArticleController::class, 'update']);
 Route::delete('/articles/delete/{id}', [ArticleController::class, 'destroy']);
 

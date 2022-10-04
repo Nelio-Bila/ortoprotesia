@@ -161,7 +161,7 @@ const routes = [
         props: true,
     },
     {
-        path: "/articles/:id",
+        path: "/articles/:article_id",
         name: "articles.view",
         component: ArticleView,
         props: true,

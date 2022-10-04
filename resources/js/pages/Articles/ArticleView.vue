@@ -22,8 +22,8 @@
         {{ article.category.name }}
       </div>
       <div class="col text-primary">
-        <i class="fa-solid fa-eye fa-xl mx-3"></i> {{ article.views }}
-        <span v-if="article.views === 1">Visualização</span>
+        <i class="fa-solid fa-eye fa-xl mx-3"></i> {{ article?.views?.length }}
+        <span v-if="article?.views?.length === 1">Visualização</span>
         <span v-else>Visualizações</span>
       </div>
     </div>
@@ -89,7 +89,7 @@
                 </p>
                 <p class="text-small m-0">
                   <i class="fa-solid fa-eye mx-2"></i>
-                  {{ article.views }}
+                  {{ article.views.length }}
                 </p>
               </div>
             </div>
@@ -140,7 +140,7 @@
                 </p>
                 <p class="text-small m-0">
                   <i class="fa-solid fa-eye mx-2"></i>
-                  {{ article.views }}
+                  {{ article.views.length }}
                 </p>
               </div>
             </div>
@@ -202,6 +202,7 @@ import { useRoute } from "vue-router";
 import useArticles from "../../composables/articles";
 
 import { useRouter } from "vue-router";
+import { useUserStore } from "../../stores/UserStore";
 
 const currentPage = ref(1);
 const rowsPerPage = ref(2);
@@ -222,9 +223,16 @@ const {
 const route = useRoute();
 
 onMounted(() => {
-  getArticle(route.params.id);
+  getArticle(route.params.article_id);
   getLatestArticles();
-  incrementArticleViews(route.params.id);
+  const useUser = useUserStore();
+  let who = "user";
+  if (useUser?.getIsAdmin) {
+    who = "admin";
+  } else if (useUser?.getIsHP) {
+    who = "hp";
+  }
+  incrementArticleViews(route.params.article_id, useUser?.user?.id, who);
 });
 
 watch(article, async (newArticle, oldArticle) => {

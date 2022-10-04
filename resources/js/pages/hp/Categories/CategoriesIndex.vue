@@ -32,7 +32,7 @@
                 <td class="text-center">
                   <i
                     class="fa-sharp fa-solid fa-check"
-                    v-if="category.deleted_at"
+                    v-if="!category.deleted_at"
                   ></i>
                   <i class="fa-sharp fa-solid fa-xmark" v-else></i>
                 </td>

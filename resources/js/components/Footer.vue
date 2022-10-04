@@ -52,9 +52,9 @@
             <!-- Content -->
             <h6 class="text-uppercase fw-bold mb-4">Ortoprotesia</h6>
             <p>
-              Corrigir, estabilizar ou modificar uma função muscular,
-              esquelética ou neurológica através da construção, adaptação ou
-              aplicação de próteses e ortóteses. "ortoprotesia"
+              Nesta plataforma podes obter várias informações relacionadas com a
+              Ortoprotesia em Moçambique e a Medicina Fisica e Reabilitação no
+              geral.
             </p>
           </div>
           <!-- Grid column -->
