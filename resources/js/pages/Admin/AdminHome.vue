@@ -13,71 +13,93 @@
         <p>
           Nesta area podes gerir publicações, categorias, etiquetas e muito mais
         </p>
-        <div class="row mb-2">
-          <div class="col ">
-            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
-              <div class="card-body">
-                <h6 class="card-title">Publicações</h6>
-                <p class="card-text">
-                 <h1 class="text-bold"> {{ articles.length }}</h1>
-                </p>
-                <router-link to="/hp/articles" class="btn btn-primary btn-sm"
-                  >Detalhes</router-link
-                >
+        <div class="row">
+          <router-link
+            to="/hp/articles"
+            class="col-md-3 col-xl-3 text-decoration-none"
+          >
+            <div class="card bg-c-blue order-card hover:transparent">
+              <div class="card-block">
+                <h6 class="m-b-20 text-white">Publicações</h6>
+                <h2 class="text-right">
+                  <i
+                    class="text-white fa-sharp fa-solid fa-newspaper mr-5"
+                    style="margin-right: 15px"
+                  ></i
+                  ><span class="text-white">{{ articles.length }}</span>
+                </h2>
               </div>
             </div>
-          </div>
-          <div class="col">
-            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
-              <div class="card-body">
-                <h6 class="card-title">Utentes registrados</h6>
-                <p class="card-text">
-                 <h1 class="text-bold"> {{ users.length }}</h1>
-                </p>
-                <router-link to="/users" class="btn btn-primary btn-sm"
-                  >Detalhes</router-link
-                >
+          </router-link>
+
+          <router-link
+            to="/admin/hpros"
+            class="col-md-3 col-xl-3 text-decoration-none"
+          >
+            <div class="card bg-c-green order-card hover:transparent">
+              <div class="card-block">
+                <h6 class="m-b-20 text-white">Prof. de Saúde</h6>
+                <h2 class="text-right">
+                  <i
+                    class="fa-solid fa-user-nurse f-left text-white"
+                    style="margin-right: 15px"
+                  ></i
+                  ><span class="text-white">{{ hpros.length }}</span>
+                </h2>
               </div>
             </div>
-          </div>
-          <div class="col">
-            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
-              <div class="card-body">
-                <h6 class="card-title">Prof. de Saúde</h6>
-                <p class="card-text">
-                 <h1 class="text-bold"> {{ hpros.length }}</h1>
-                </p>
-                <router-link to="/admin/hpros" class="btn btn-primary btn-sm"
-                  >Detalhes</router-link
-                >
+          </router-link>
+
+          <router-link
+            to="/users"
+            class="col-md-3 col-xl-3 text-decoration-none"
+          >
+            <div class="card bg-c-yellow order-card hover:transparent">
+              <div class="card-block">
+                <h6 class="m-b-20 text-white">Utentes registrados</h6>
+                <h2 class="text-right">
+                  <i
+                    class="fa fa-user f-left text-white"
+                    style="margin-right: 15px"
+                  ></i
+                  ><span class="text-white">{{ users.length }}</span>
+                </h2>
+                <!-- <p class="m-b-0">Completed Orders<span class="f-right">351</span></p> -->
               </div>
             </div>
-          </div>
-          <div class="col">
-            <div class="m-2 card text-center border border-primary rounded-3 hover:bg-primary hover:white" style="width: 12rem">
-              <div class="card-body">
-                <h6 class="card-title">Processos</h6>
-                <p class="card-text">
-                 <h1 class="text-bold"> {{ processes.length }}</h1>
-                </p>
-                <router-link to="/processes" class="btn btn-primary btn-sm"
-                  >Detalhes</router-link
-                >
+          </router-link>
+
+          <router-link
+            to="/processes"
+            class="col-md-3 col-xl-3 text-decoration-none"
+          >
+            <div class="card bg-c-yellow order-card hover:transparent">
+              <div class="card-block">
+                <h6 class="m-b-20 text-white">Processos</h6>
+                <h2 class="text-right">
+                  <i
+                    class="fa fa-archive f-left text-white"
+                    style="margin-right: 15px"
+                  ></i
+                  ><span class="text-white">{{ processes.length }}</span>
+                </h2>
+                <!-- <p class="m-b-0">Completed Orders<span class="f-right">351</span></p> -->
               </div>
             </div>
-          </div>
+          </router-link>
         </div>
 
         <div class="row">
-          <div class="col">
+          <div class="col d-flex justify-content-center">
             <apexchart
-              width="400"
+              width="900"
               type="area"
               :options="traficOptions"
               :series="userTypes"
             ></apexchart>
           </div>
-
+        </div>
+        <div class="row">
           <div class="col">
             <apexchart
               width="400"
@@ -95,7 +117,7 @@
 </template>
 
 <script setup>
-import { watch, reactive, ref, onMounted } from "vue";
+import { watch, reactive, ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import useUsers from "../../composables/users";
 import useArticles from "../../composables/articles";
@@ -109,6 +131,10 @@ import { useUserStore } from "../../stores/UserStore";
 import pinia from "../../stores/store";
 
 const router = useRouter();
+
+const days = ref();
+const usersSeries = ref();
+const hpSeries = ref();
 
 const traficOptions = reactive({
   chart: {
@@ -130,11 +156,11 @@ const traficOptions = reactive({
     },
   },
   xaxis: {
-    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+    categories: days.value,
   },
-  colors: ["#273a7e", "#5072A7", "#902f37"],
+  colors: ["#273a7e", "#902f37", "#f9cf00", "#5072A7"],
   title: {
-    text: "Trafego",
+    text: "Registo de Usuários",
     align: "left",
     margin: 10,
     offsetX: 0,
@@ -149,18 +175,18 @@ const traficOptions = reactive({
   },
 });
 
-const userTypes = ref([
+const userTypes = computed(() => [
   {
     name: "Utentes",
-    data: [30, 40, 45, 50, 49, 60, 70, 91],
+    data: usersSeries.value,
   },
   {
     name: "Profissionais de Saúde",
-    data: [20, 90, 25, 50, 19, 30, 40, 81],
+    data: hpSeries.value,
   },
 ]);
 
-const topicsOptions = reactive({
+const topicsOptions = computed(() => ({
   chart: {
     id: "traffic-by-topic",
     fontFamily: "Raleway,Nunito, sans-serif",
@@ -196,7 +222,7 @@ const topicsOptions = reactive({
       color: "#902f37",
     },
   },
-});
+}));
 
 const topics = ref([30, 40, 45, 50]);
 
@@ -207,11 +233,25 @@ const { getArticles, articles } = useArticles(currentPage, rowsPerPage);
 const { hpros, getHPros } = useHPros();
 const { processes, getProcesses } = useProcesses();
 
+const getRegistersPerDay = async () => {
+  await axios
+    .get("/registersPerDay")
+    .then((response) => {
+      days.value = response.data.days;
+      usersSeries.value = response.data.newUsersPerDay;
+      hpSeries.value = response.data.newHPsPerDay;
+    })
+    .catch((ex) => {
+      console.log(ex);
+    });
+};
+
 onMounted(() => {
   getUsers();
   getArticles(currentPage);
   getHPros();
   getProcesses();
+  getRegistersPerDay();
 });
 
 // const userStore = useUserStore();
@@ -236,13 +276,63 @@ onMounted(() => {
 
 <script>
 import { useUserStore } from "../../stores/UserStore";
+import useAdmins from "../../composables/admins";
 
 export default {
   beforeRouteEnter: function (to, from, next) {
     const userStore = useUserStore();
-    if (to.name !== "admin.login" && !userStore.user?.is_admin)
+    if (to.name !== "admin.login" && !userStore?.user?.is_admin)
       next({ name: "admin.login" });
     else next();
   },
 };
 </script>
+
+
+<style scoped>
+order-card {
+  color: #fff;
+}
+
+.bg-c-blue {
+  background: #f9cf00;
+}
+
+.bg-c-green {
+  background: #902f37;
+}
+
+.bg-c-yellow {
+  background: #273a7e;
+}
+
+.bg-c-pink {
+  background: #4caf50;
+}
+
+.card {
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  border: none;
+  margin-bottom: 30px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.card .card-block {
+  padding: 25px;
+}
+
+.order-card i {
+  font-size: 26px;
+}
+
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+</style>

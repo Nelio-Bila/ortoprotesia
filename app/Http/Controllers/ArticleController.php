@@ -207,12 +207,6 @@ class ArticleController extends Controller
 
     public function articlesViewsPerDay($hp)
     {
-        // $articles = Article::where('health_professional_id', $hp)->select("id", DB::raw("(sum(views)) as sum"), DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as days"))
-        //     ->orderBy('created_at', 'desc')
-        //     ->groupBy(DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y')"))
-        //     ->get();
-
-
         $articles = Article::where('health_professional_id', $hp)
             ->whereBetween('articles.created_at', [now()->subDays(15), now()])
             ->join('article_views', 'articles.id', '=', 'article_views.article_id')

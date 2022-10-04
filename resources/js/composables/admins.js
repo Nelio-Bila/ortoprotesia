@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 
 export default function useAdmins() {
     const admins = ref([]);
+    const registersPerDay = ref([]);
     const admin = ref([]);
     const router = useRouter();
     const errors = ref("");
@@ -19,6 +20,20 @@ export default function useAdmins() {
             })
             .catch((ex) => {
                 admins.value = [];
+                processing.value = false;
+            });
+    };
+
+    const getRegistersPerDay = async () => {
+        processing.value = true;
+        await axios
+            .get("/registersPerDay")
+            .then((response) => {
+                registersPerDay.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                registersPerDay.value = [];
                 processing.value = false;
             });
     };
@@ -90,5 +105,7 @@ export default function useAdmins() {
         storeAdmin,
         updateAdmin,
         destroyAdmin,
+        registersPerDay,
+        getRegistersPerDay,
     };
 }

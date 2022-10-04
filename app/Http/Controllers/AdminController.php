@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AdminResetRequest;
 use App\Http\Requests\AdminForgotRequest;
 use App\Http\Requests\AdminRegisterRequest;
+use App\Models\HealthProfessional;
 
 class AdminController extends Controller
 {
@@ -173,5 +175,44 @@ class AdminController extends Controller
         }
 
         return "Admin Logged out sucessfully";
+    }
+
+    public function registersPerDay()
+    {
+
+        $left = User::whereBetween('users.created_at', [now()->subDays(15), now()])
+            ->leftJoin('health_professionals', DB::raw("DATE_FORMAT(health_professionals.created_at, '%d-%m-%Y')"), '=', DB::raw("DATE_FORMAT(users.created_at, '%d-%m-%Y')"))
+            ->select(DB::raw("(count(health_professionals.id)) as hp_count"), DB::raw("(count(users.id)) as users_count"), DB::raw("(DATE_FORMAT(users.created_at, '%d-%m-%Y')) as days"))
+            ->orderBy('users.created_at', 'desc')
+            ->groupBy('days');
+
+
+
+
+        $newRegisters = User::whereBetween('users.created_at', [now()->subDays(15), now()])
+            ->rightJoin('health_professionals', DB::raw("DATE_FORMAT(health_professionals.created_at, '%d-%m-%Y')"), '=', DB::raw("DATE_FORMAT(users.created_at, '%d-%m-%Y')"))
+            ->select(DB::raw("(count(health_professionals.id)) as hp_count"), DB::raw("(count(users.id)) as users_count"), DB::raw("(DATE_FORMAT(users.created_at, '%d-%m-%Y')) as days"))
+            ->orderBy('users.created_at', 'desc')
+            ->groupBy('days')
+            ->union($left)
+            ->get();
+
+        $newUsersPerDay = [];
+        $newHPsPerDay = [];
+        $days = [];
+
+        foreach ($newRegisters as $register) {
+            $newUsersPerDay[] = $register->users_count;
+            $newHPsPerDay[] = $register->hp_count;
+            $days[] = $register->days;
+        }
+
+
+
+        return response()->json([
+            'newUsersPerDay' => array_reverse($newUsersPerDay),
+            'newHPsPerDay' => array_reverse($newHPsPerDay),
+            'days' => array_reverse($days)
+        ]);
     }
 }
