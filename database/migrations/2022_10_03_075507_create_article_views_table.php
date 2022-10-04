@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('article_views', function (Blueprint $table) {
             $table->id();
-            $table->integer('count')->default(0);
             $table->unsignedBigInteger('article_id');
             $table->foreign('article_id')->references('id')->on('articles');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes();
             $table->timestamps();
         });

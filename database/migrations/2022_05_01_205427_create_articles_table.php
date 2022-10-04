@@ -17,16 +17,17 @@ return new class extends Migration
             $table->id();
             $table->string('title', 80);
             $table->text('body');
-            $table->text('jsonData')->nullable();
             $table->string('postExcerpt');
             $table->string('slug')->unique()->default('');
             $table->string('featuredImage')->nullable();
+            $table->text('header_image_public_id')->nullable();
             $table->string('metaDescription', 300);
             $table->unsignedBigInteger('health_professional_id');
             $table->foreign('health_professional_id')->references('id')->on('health_professionals');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->unsignedInteger('views')->default(0);
+            $table->timestamp('published_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -201,9 +201,24 @@
             ></span>
             <span v-if="processing">Processando...</span>
 
-            <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
-            <span v-if="!processing">Publicar</span>
+            <i v-if="!processing" class="fa-solid fa-floppy-disk mx-2"></i>
+            <span v-if="!processing">Salvar</span>
           </button>
+          <!-- <button
+            class="btn btn-primary btn-block mb-3 mx-10"
+            :disabled="processing"
+          >
+            <span
+              v-if="processing"
+              class="spinner-border spinner-border-sm mx-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span v-if="processing">Processando...</span>
+
+            <i v-if="!processing" class="fa-solid fa-newspaper mx-2"></i>
+            <span v-if="!processing">Publicar</span>
+          </button> -->
         </form>
       </div>
     </main>

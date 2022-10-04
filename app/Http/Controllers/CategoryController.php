@@ -35,6 +35,8 @@ class CategoryController extends Controller
             $category = ArticleCategory::find($id);
             $category->name = $request->name;
 
+            $category->save();
+
             return response()->json($category);
         } catch (\Exception $exception) {
             return response()->json([

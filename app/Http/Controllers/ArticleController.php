@@ -8,25 +8,24 @@ use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArticleRequest;
+use App\Models\ArticleView;
 
 class ArticleController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->get();
+        return Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->get();
     }
 
     public function myArticles($id)
     {
-        return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->get();
+        return Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where("health_professional_id", $id)->get();
     }
     public function myViewsCount($id)
     {
         return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->sum('views');
     }
 
-
-    // TODO
     public function myTodayViewsCount($id)
     {
         return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->whereDate('updated_at', Carbon::today())->sum('views');
@@ -34,56 +33,55 @@ class ArticleController extends Controller
 
     public function related($id, $article)
     {
-        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $id)->where('id', '!=', $article)->limit(5)->get());
+        return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where('category_id', $id)->where('id', '!=', $article)->limit(5)->get());
     }
 
     public function search($criteria)
     {
-        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('title', 'like', '%' . $criteria . '%')->get());
+        return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where('title', 'like', '%' . $criteria . '%')->get());
     }
 
     public function latest()
     {
-        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->limit(5)->get());
+        return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->limit(5)->get());
     }
 
     public function show($id)
     {
-        return Article::with(['category', 'hpro'])->find($id);
+        return Article::with(['category', 'hpro', 'views'])->find($id);
     }
 
     public function incrementViews($id)
     {
-        $article =  Article::find($id);
-        $article->views++;
-
-        $article->save();
+        $articleViews = ArticleView::where('article_id', $id);
+        $articleViews->count++;
+        $articleViews->save();
     }
 
     public function byCategory($category_id)
     {
-        return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('category_id', $category_id)->get());
+        return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where('category_id', $category_id)->get());
     }
     public function byPeriod($period)
     {
         if (strcmp($period, "week") === 0) {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereBetween(
+            return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->whereBetween(
                 'created_at',
                 [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
             )->get());
         } elseif (strcmp($period, "month") === 0) {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where('created_at', '>=', Carbon::now()->subdays(30))->get());
+            return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where('created_at', '>=', Carbon::now()->subdays(30))->get());
         } elseif (strcmp($period, "year") === 0) {
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('id', 'desc')->whereYear('created_at', date('Y'))->get());
+            return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->whereYear('created_at', date('Y'))->get());
         } else {
         }
     }
     public function byViews($popularity)
     {
         if (strcmp($popularity, "most") === 0)
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('views', 'desc')->get());
+            return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('views', 'desc')->get());
         elseif (strcmp($popularity, "least") === 0)
-            return response()->json(Article::with(['category', 'hpro'])->orderBy('views', 'asc')->get());
+            return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('views', 'asc')->get());
     }
 
     public function store(ArticleRequest $request)
@@ -119,7 +117,6 @@ class ArticleController extends Controller
 
             $article->title = $request->title;
             $article->body = $request->body;
-            $article->jsonData = $request->jsonData;
             $article->postExcerpt = $request->postExcerpt;
             $article->slug = $request->slug;
             $article->featuredImage = $image_url;
@@ -128,7 +125,6 @@ class ArticleController extends Controller
             $article->health_professional_id = $request->health_professional_id;
             $article->category_id = $request->category_id;
 
-            // $article->path = '/storage/' . $image_path;
             $article->save();
 
             return response()->json(['success' => 'Article posted successfully.']);
@@ -192,9 +188,15 @@ class ArticleController extends Controller
 
     public function articlesViewsPerDay($hp)
     {
-        $articles = Article::where('health_professional_id', $hp)->select("id", DB::raw("(sum(views)) as sum"), DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as days"))
-            ->orderBy('created_at', 'desc')
-            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y')"))
+        // $articles = Article::where('health_professional_id', $hp)->select("id", DB::raw("(sum(views)) as sum"), DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as days"))
+        //     ->orderBy('created_at', 'desc')
+        //     ->groupBy(DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y')"))
+        //     ->get();
+
+
+        $articles = Article::where('health_professional_id', $hp)->join('article_views', 'articles.id', '=', 'article_views.article_id')->select(DB::raw("(sum(article_views.count)) as sum"), DB::raw("(DATE_FORMAT(article_views.created_at, '%d-%m-%Y')) as days"))
+            ->orderBy('article_views.created_at', 'desc')
+            ->groupBy(DB::raw("DATE_FORMAT(article_views.created_at, '%d-%m-%Y')"))
             ->get();
 
         $ArticlesViewsPerDay = [];

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("number");
             $table->string("archive");
             $table->date("issueDate");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

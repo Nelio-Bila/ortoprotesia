@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Process::class);
     }
+
+    public function views()
+    {
+        return $this->hasMany(ArticleView::class);
+    }
 }

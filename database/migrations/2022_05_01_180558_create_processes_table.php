@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string("phoneNumber");
             $table->string("fatherName");
             $table->string("motherName");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

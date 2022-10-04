@@ -33,11 +33,37 @@
             </li>
           </ol>
         </nav>
+
         <div v-if="errors">
-          <div v-for="(v, k) in errors" :key="k">
-            <p v-for="error in v" :key="error">
-              {{ error }}
-            </p>
+          <div
+            v-for="(field, k) in errors"
+            :key="k"
+            class="
+              alert alert-danger
+              d-flex
+              align-items-center
+              alert-dismissible
+              fade
+              show
+            "
+            role="alert"
+          >
+            <svg
+              class="bi flex-shrink-0 me-2"
+              width="24"
+              height="24"
+              role="img"
+              aria-label="Danger:"
+            >
+              <use xlink:href="#exclamation-triangle-fill" />
+            </svg>
+            <div v-for="error in field" :key="error">{{ error }}</div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
           </div>
         </div>
 
@@ -73,8 +99,8 @@
             ></span>
             <span v-if="processing">Processando...</span>
 
-            <i v-if="!processing" class="fa-solid fa-user-plus mx-2"></i>
-            Salvar
+            <i v-if="!processing" class="fa-solid fa-floppy-disk mx-2"></i>
+            Actualizar
           </button>
         </form>
       </div>
@@ -101,7 +127,12 @@ onMounted(() => {
 });
 
 const saveCategory = async () => {
-  await updateCategory(route.params.id, { ...category });
+  v$._value.$validate();
+  if (!v$._value.$invalid) {
+    await updateCategory(route.params.id, { ...category.value });
+  } else {
+    processing.value = false;
+  }
 };
 
 const rules = computed(() => ({

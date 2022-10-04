@@ -16,12 +16,13 @@ return new class extends Migration
         Schema::create('consults', function (Blueprint $table) {
             $table->id();
             $table->string("type");
-            $table->date("date");
             $table->boolean("accomplished")->default(false);
             $table->unsignedBigInteger('process_id');
             $table->foreign('process_id')->references('id')->on('processes');
-            $table->timestamps();
+            $table->unsignedBigInteger('consult_date_id');
+            $table->foreign('consult_date_id')->references('id')->on('consult_dates');
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

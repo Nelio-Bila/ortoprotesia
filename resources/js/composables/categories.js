@@ -29,7 +29,7 @@ export default function useCategories() {
         await axios
             .get("/category/" + id)
             .then((response) => {
-                category.value = response.data[0];
+                category.value = response.data;
                 processing.value = false;
             })
             .catch((ex) => {

@@ -42,7 +42,7 @@
                   />
                 </td>
                 <td>{{ article.category.name }}</td>
-                <td>{{ article.views }}</td>
+                <td>{{ article.views.count }}</td>
                 <td>
                   {{ article.hpro.name }}
                   {{ article.hpro.surname }}

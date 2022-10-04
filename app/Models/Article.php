@@ -33,4 +33,9 @@ class Article extends Model
     {
         return $this->hasMany(Video::class);
     }
+
+    public function views()
+    {
+        return $this->hasMany(ArticleView::class);
+    }
 }
