@@ -134,6 +134,15 @@ const traficOptions = computed(() => ({
   xaxis: {
     categories: days.value,
   },
+  yaxis: [
+    {
+      labels: {
+        formatter: function (val) {
+          return val.toFixed(0);
+        },
+      },
+    },
+  ],
   colors: ["#273a7e", "#5072A7", "#902f37"],
   title: {
     text: "Leituras por dia (últimos 15 dias)",

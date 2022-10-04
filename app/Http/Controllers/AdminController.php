@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AdminResetRequest;
 use App\Http\Requests\AdminForgotRequest;
 use App\Http\Requests\AdminRegisterRequest;
+use App\Models\Article;
+use App\Models\ArticleView;
+use App\Models\Category;
 use App\Models\HealthProfessional;
 
 class AdminController extends Controller
@@ -213,6 +216,31 @@ class AdminController extends Controller
             'newUsersPerDay' => array_reverse($newUsersPerDay),
             'newHPsPerDay' => array_reverse($newHPsPerDay),
             'days' => array_reverse($days)
+        ]);
+    }
+
+    public function readersPerCategory()
+    {
+
+        $categories = Category::with(['articles.views'])->get();
+
+        $articlesViewsPerCategory = [];
+        $catnames = [];
+        $articleviews = 0;
+
+        foreach ($categories as $cat) {
+            $catnames[] = $cat->name;
+            foreach ($cat->articles as $article) {
+
+                $articleviews += count($article->views);
+            }
+            $articlesViewsPerCategory[] = $articleviews;
+            $articleviews = 0;
+        }
+
+        return response()->json([
+            'catnames' => $catnames,
+            'articlesViewsPerCategory' => $articlesViewsPerCategory,
         ]);
     }
 }

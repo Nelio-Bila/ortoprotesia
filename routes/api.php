@@ -69,6 +69,7 @@ Route::get('admin/{id}', [AdminController::class, 'getAdmin']);
 Route::delete('admin/{category}', [AdminController::class, 'destroy'])->middleware('auth::admin-api');
 Route::get('admins', [AdminController::class, 'index']);
 Route::get('registersPerDay', [AdminController::class, 'registersPerDay']);
+Route::get('readersPerCategory', [AdminController::class, 'readersPerCategory']);
 
 // Category
 Route::get('categories', [CategoryController::class, 'index']);

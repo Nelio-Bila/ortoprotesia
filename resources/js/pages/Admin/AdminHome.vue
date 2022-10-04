@@ -64,7 +64,6 @@
                   ></i
                   ><span class="text-white">{{ users.length }}</span>
                 </h2>
-                <!-- <p class="m-b-0">Completed Orders<span class="f-right">351</span></p> -->
               </div>
             </div>
           </router-link>
@@ -100,12 +99,12 @@
           </div>
         </div>
         <div class="row">
-          <div class="col">
+          <div class="col d-flex justify-content-center">
             <apexchart
-              width="400"
+              width="500"
               type="pie"
               :options="topicsOptions"
-              :series="topics"
+              :series="topicsOptions.chart.series"
             ></apexchart>
           </div>
         </div>
@@ -132,11 +131,7 @@ import pinia from "../../stores/store";
 
 const router = useRouter();
 
-const days = ref();
-const usersSeries = ref();
-const hpSeries = ref();
-
-const traficOptions = reactive({
+const traficOptions = computed(() => ({
   chart: {
     id: "app-traffic",
     fontFamily: "Raleway,Nunito, sans-serif",
@@ -158,6 +153,15 @@ const traficOptions = reactive({
   xaxis: {
     categories: days.value,
   },
+  yaxis: [
+    {
+      labels: {
+        formatter: function (val) {
+          return val.toFixed(0);
+        },
+      },
+    },
+  ],
   colors: ["#273a7e", "#902f37", "#f9cf00", "#5072A7"],
   title: {
     text: "Registo de Usuários",
@@ -173,7 +177,11 @@ const traficOptions = reactive({
       color: "#902f37",
     },
   },
-});
+  dataLabels: {
+    enabled: true,
+    enabledOnSeries: [1],
+  },
+}));
 
 const userTypes = computed(() => [
   {
@@ -204,12 +212,12 @@ const topicsOptions = computed(() => ({
         speed: 350,
       },
     },
-    labels: ["Proteses", "Ortoteses", "Auxiliares de Marcha", "Outros"],
-    series: [30, 40, 45, 50],
+    labels: catnames.value,
+    series: articlesViewsPerCategory.value,
   },
   colors: ["#273a7e", "#5072A7", "#902f37", "#f9cf00"],
   title: {
-    text: "Trafego por tópico",
+    text: "Visualizações por categoria",
     align: "left",
     margin: 10,
     offsetX: 0,
@@ -222,9 +230,8 @@ const topicsOptions = computed(() => ({
       color: "#902f37",
     },
   },
+  labels: catnames.value,
 }));
-
-const topics = ref([30, 40, 45, 50]);
 
 const currentPage = ref(1);
 const rowsPerPage = ref(20);
@@ -233,6 +240,9 @@ const { getArticles, articles } = useArticles(currentPage, rowsPerPage);
 const { hpros, getHPros } = useHPros();
 const { processes, getProcesses } = useProcesses();
 
+const days = ref();
+const usersSeries = ref();
+const hpSeries = ref();
 const getRegistersPerDay = async () => {
   await axios
     .get("/registersPerDay")
@@ -246,12 +256,27 @@ const getRegistersPerDay = async () => {
     });
 };
 
+const catnames = ref();
+const articlesViewsPerCategory = ref();
+const getReadersPerCategory = async () => {
+  await axios
+    .get("/readersPerCategory")
+    .then((response) => {
+      catnames.value = response.data.catnames;
+      articlesViewsPerCategory.value = response.data.articlesViewsPerCategory;
+    })
+    .catch((ex) => {
+      console.log(ex);
+    });
+};
+
 onMounted(() => {
   getUsers();
   getArticles(currentPage);
   getHPros();
   getProcesses();
   getRegistersPerDay();
+  getReadersPerCategory();
 });
 
 // const userStore = useUserStore();

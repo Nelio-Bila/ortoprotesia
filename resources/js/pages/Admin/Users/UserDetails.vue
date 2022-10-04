@@ -7,7 +7,7 @@
       <!-- Navbar -->
       <HPNavBar />
       <!-- Navbar End  -->
-      <div class="container-fluid my-3">
+      <div class="container mx-10 my-3">
         <span class="fs-2"> Detalhes do usuário {{ user.name }} </span>
         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
           <ol class="breadcrumb">
@@ -35,7 +35,14 @@
               {{ user.email }}
             </h5>
             <label class="text-muted" for="status">Status:</label>
-            <h5 id="status" class="fw-bold"></h5>
+            <h5 v-if="!user.deleted_at" id="status" class="fw-bold">Activo</h5>
+            <h5 v-else id="status" class="fw-bold">Inactivo</h5>
+          </div>
+
+          <div class="col-md-4">
+            <label for="">Possui Processo</label>
+            <h3>Sim</h3>
+            <h3>Não</h3>
           </div>
         </div>
       </div>
@@ -57,5 +64,6 @@ const { user, getUser } = useUsers();
 
 onMounted(() => {
   getUser(route.params.id);
+  console.log(user);
 });
 </script>
