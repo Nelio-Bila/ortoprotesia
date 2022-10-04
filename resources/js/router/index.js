@@ -183,13 +183,13 @@ const routes = [
         component: NewsCreate,
     },
     {
-        path: "/admin/news/:news_id/edit",
+        path: "/admin/news/:notice_id/edit",
         name: "news.edit",
         component: NewsEdit,
         props: true,
     },
     {
-        path: "/news/:news_id",
+        path: "/news/:notice_id",
         name: "news.view",
         component: NewsView,
         props: true,

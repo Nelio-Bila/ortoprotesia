@@ -1,16 +1,17 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Models\HealthProfessional;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ForgotController;
+use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HealthProfessionalController;
-use App\Models\HealthProfessional;
 
 /*
 |--------------------------------------------------------------------------

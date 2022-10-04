@@ -24,21 +24,21 @@
             </tr>
           </thead>
           <tbody>
-            <template v-for="advert in news" :key="advert.id">
+            <template v-for="notice in news" :key="notice.id">
               <tr>
                 <td>
-                  <strong>{{ advert.title }}</strong>
+                  <strong>{{ notice.title }}</strong>
                 </td>
                 <td>
                   <img
-                    :src="advert.image"
-                    :alt="advert.title"
+                    :src="notice.featuredImage"
+                    :alt="notice.title"
                     class="img-thumbnail"
                   />
                 </td>
-                <td>{{ advert.category.name }}</td>
+                <td>{{ notice.category.name }}</td>
                 <td>
-                  {{ new Date(advert.created_at).toLocaleDateString() }}
+                  {{ new Date(notice.created_at).toLocaleDateString() }}
                 </td>
                 <td>
                   <div class="d-flex flex-column">
@@ -46,7 +46,7 @@
                       class="btn btn-sm btn-success m-2"
                       :to="{
                         name: 'news.view',
-                        params: { advert_id: advert.id },
+                        params: { notice_id: notice.id },
                       }"
                       >Visualizar</router-link
                     >
@@ -54,14 +54,14 @@
                       class="btn btn-sm btn-warning m-2"
                       :to="{
                         name: 'news.edit',
-                        params: { advert_id: advert.id },
+                        params: { notice_id: notice.id },
                       }"
                       >Editar</router-link
                     >
 
                     <button
                       class="btn btn-sm btn-danger m-2"
-                      @click="deleteNews(advert.id)"
+                      @click="deleteNews(notice.id)"
                     >
                       Eliminar
                     </button>

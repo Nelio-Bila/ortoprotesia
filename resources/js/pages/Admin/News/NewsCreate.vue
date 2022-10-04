@@ -82,7 +82,7 @@
                 'is-invalid': v$.featuredImage.$error,
                 'is-valid': !v$.featuredImage.$invalid,
               }"
-              placeholder="Foto de cabeçalho do artigo"
+              placeholder="Foto de cabeçalho da noticia"
               v-on:change="changeFeaturedImage"
               ref="fileInput"
             />
@@ -120,7 +120,7 @@
           </div>
 
           <div class="form-group mb-3">
-            <label for="title">Corpo do artigo</label>
+            <label for="title">Corpo da noticia</label>
             <ckeditor
               :editor="editor"
               v-model="form.body"

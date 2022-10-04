@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex" id="wrapper">
-    <HPSideBar currentLink="articles" />
+    <HPSideBar currentLink="news" />
 
     <!-- Page Content -->
     <main id="page-content-wrapper">
@@ -27,7 +27,7 @@
         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <router-link to="/hp/articles">Noticias</router-link>
+              <router-link to="/admin/news">Noticias</router-link>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
               Editar noticia
@@ -67,16 +67,16 @@
           </div>
         </div>
 
-        <form @submit.prevent="saveArticle" enctype="multipart/form-data">
+        <form @submit.prevent="saveNews" enctype="multipart/form-data">
           <div class="form-group mb-3 text-center">
             <label for="title">Foto do cabecalho</label>
             <img
               :src="src"
-              :alt="article.title"
+              :alt="advert.title"
               class="h-52 w-52 my-3 d-block mx-auto"
             />
             <i
-              v-if="article.featuredImage"
+              v-if="advert.featuredImage"
               @click.prevent="removeImage()"
               class="fa-solid fa-xmark fa-2xl cursor-pointer hover:primary mb-5"
             ></i>
@@ -88,7 +88,7 @@
                 'is-invalid': v$.featuredImage.$error,
                 'is-valid': !v$.featuredImage.$invalid,
               }"
-              placeholder="Foto de cabeçalho do artigo"
+              placeholder="Foto de cabeçalho da noticia"
               v-on:change="changeFeaturedImage"
               ref="fileInput"
             />
@@ -103,7 +103,7 @@
           </div>
 
           <div class="form-group mb-3">
-            <label for="title">Titulo do artigo</label>
+            <label for="title">Titulo da noticia</label>
             <input
               @blur="v$.title.$touch"
               type="text"
@@ -113,7 +113,7 @@
                 'is-valid': !v$.title.$invalid,
               }"
               placeholder="Titulo"
-              v-model="article.title"
+              v-model="advert.title"
             />
 
             <span
@@ -126,33 +126,10 @@
           </div>
 
           <div class="form-group mb-3">
-            <label for="title">Trecho introdutório do artigo</label>
-            <input
-              @blur="v$.postExcerpt.$touch"
-              type="text"
-              class="form-control"
-              :class="{
-                'is-invalid': v$.postExcerpt.$error,
-                'is-valid': !v$.postExcerpt.$invalid,
-              }"
-              placeholder="Titulo"
-              v-model="article.postExcerpt"
-            />
-
-            <span
-              class="invalid-feedback"
-              v-for="error of v$.postExcerpt.$errors"
-              :key="error.$uid"
-            >
-              {{ error.$message }}
-            </span>
-          </div>
-
-          <div class="form-group mb-3">
-            <label for="title">Corpo do artigo</label>
+            <label for="title">Corpo da noticia</label>
             <ckeditor
               :editor="editor"
-              v-model="article.body"
+              v-model="advert.body"
               :config="editorConfig"
               class="form-control"
             ></ckeditor>
@@ -167,7 +144,7 @@
           </div>
 
           <div class="form-group mb-3">
-            <label for="category_id">Categoria do artigo</label>
+            <label for="category_id">Categoria da notícia</label>
             <select
               id="category_id"
               @blur="v$.category_id.$touch"
@@ -179,7 +156,9 @@
               aria-label="Selecção de categoria"
               v-model="v$.category_id.$model"
             >
-              <option selected disabled>Selecione a categoria do artigo</option>
+              <option selected disabled>
+                Selecione a categoria da notícia
+              </option>
               <option
                 v-for="category in categories"
                 :key="category.id"
@@ -222,13 +201,15 @@ import useVuelidate from "@vuelidate/core";
 import { required, minLength, helpers, minValue } from "@vuelidate/validators";
 import "@ckeditor/ckeditor5-build-classic/build/translations/pt";
 import "../../../components/editor/ckeditor";
+import { useRoute } from "vue-router";
 
-import useArticles from "../../../composables/articles";
+import useNews from "../../../composables/news";
 import useCategories from "../../../composables/categories";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
-const props = defineProps(["id"]);
+const route = useRoute();
+const props = defineProps(["notice_id"]);
 
 const { categories, getCategories } = useCategories();
 
@@ -394,18 +375,15 @@ const editorConfig = reactive({
 });
 // The configuration of the editor.
 
-const { processing, errors, article, getArticle, updateArticle } =
-  useArticles();
+const { processing, errors, advert, getAdvert, updateNews } = useNews();
 
 onMounted(() => {
-  getArticle(props.id);
-  console.log(article.value);
-  // src.value = article.featuredImage;
+  getAdvert(route.params.notice_id);
 });
 
 const changeFeaturedImage = (event) => {
-  article.featuredImage = event.target.files[0];
-  console.log(article.featuredImage);
+  advert.featuredImage = event.target.files[0];
+  console.log(advert.featuredImage);
   let reader = new FileReader();
   reader.readAsDataURL(event.target.files[0]);
   reader.onload = (e) => {
@@ -418,13 +396,13 @@ const src = ref(defaultSrc.value);
 const fileInput = ref(null);
 const creating = ref(true);
 
-watch(article.featuredImage, async (featuredImage, oldfeaturedImage) => {
+watch(advert.featuredImage, async (featuredImage, oldfeaturedImage) => {
   console.log("featuredImage", featuredImage);
   src.value = featuredImage;
 });
 
 const removeImage = () => {
-  article.featuredImage = null;
+  advert.featuredImage = null;
   fileInput.value.value = "";
   src.value = defaultSrc.value;
 };
@@ -432,7 +410,7 @@ const removeImage = () => {
 const rules = computed(() => ({
   title: {
     required: helpers.withMessage(
-      "Por favor preencha o titulo do artigo",
+      "Por favor preencha o titulo da noticia",
       required
     ),
     minLength: helpers.withMessage(
@@ -446,7 +424,7 @@ const rules = computed(() => ({
   },
   body: {
     required: helpers.withMessage(
-      "Por favor preencha o conteúdo do artigo",
+      "Por favor preencha o conteúdo da noticia",
       required
     ),
     minLength: helpers.withMessage(
@@ -460,34 +438,26 @@ const rules = computed(() => ({
   },
   category_id: {
     required: helpers.withMessage(
-      "Por favor selecione a categoria do artigo",
-      required
-    ),
-  },
-  postExcerpt: {
-    required: helpers.withMessage(
-      "Por favor preencha o trecho introdutório do artigo",
+      "Por favor selecione a categoria da noticia",
       required
     ),
   },
   featuredImage: {},
 }));
 
-const v$ = useVuelidate(rules, article);
+const v$ = useVuelidate(rules, advert);
 
-const saveArticle = async () => {
+const saveAdvert = async () => {
   v$._value.$validate();
 
   let data = new FormData();
-  data.append("title", article.title);
-  data.append("body", article.body);
-  data.append("postExcerpt", article.postExcerpt);
-  data.append("featuredImage", article.featuredImage);
-  data.append("category_id", article.category_id);
-  data.append("metaDescription", article.title);
-  data.append("slug", article.title.replace(/\s/g, ""));
+  data.append("title", advert.title);
+  data.append("body", advert.body);
+  data.append("featuredImage", advert.featuredImage);
+  data.append("category_id", advert.category_id);
+  data.append("slug", advert.title.replace(/\s/g, ""));
   creating.value = false;
-  await updateArticle(props.id, data);
+  await updateAdvert(props.id, data);
 };
 </script>
 

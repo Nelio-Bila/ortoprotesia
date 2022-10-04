@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar />
-    <div class="container">
+    <!-- <div class="container">
       <h1 class="text-center">
         Centro Ortopédico do Hospital Central de Maputo
       </h1>
@@ -26,7 +26,38 @@
         src="/images/various/fluxo.png"
         alt="fluxo de atendimento"
       />
+    </div> -->
+
+    <!-- <div class="container"> -->
+    <div class="card">
+      <div class="row g-0">
+        <div class="col-sm-4 position-relative">
+          <img
+            src="https://via.placeholder.com/600"
+            class="card-img fit-cover w-100 h-100"
+            alt="..."
+          />
+        </div>
+
+        <div class="col-sm-8">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a class="link-dark text-decoration-none" href="#" target="_blank"
+                >Card Title</a
+              >
+            </h5>
+
+            <p class="card-text">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+            <span class="badge rounded-pill bg-dark">Tag1</span>
+          </div>
+
+          <div class="card-footer text-end text-muted">Last updated today.</div>
+        </div>
+      </div>
     </div>
+    <!-- </div> -->
     <Footer />
   </div>
 </template>

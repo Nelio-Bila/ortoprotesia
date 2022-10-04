@@ -399,7 +399,7 @@ const { processing, errors, article, getArticle, updateArticle } =
 
 onMounted(() => {
   getArticle(props.id);
-  console.log(article.value);
+  //   console.log(article.value);
   // src.value = article.featuredImage;
 });
 
