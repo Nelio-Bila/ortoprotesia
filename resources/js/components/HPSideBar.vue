@@ -27,6 +27,16 @@
       >
         <h5><i class="fa-solid fa-house me-2"></i> Inicio</h5>
       </router-link>
+
+      <router-link
+        class="nav-link text-white"
+        :class="currentLink === 'news' ? 'active-link' : 'text-white'"
+        to="/admin/news"
+        v-if="useUser?.user?.is_admin"
+      >
+        <h5><i class="fa-solid fa-newspaper me-2"></i> Noticias</h5>
+      </router-link>
+
       <router-link
         class="nav-link text-white"
         :class="currentLink === 'articles' ? 'active-link' : 'text-white'"

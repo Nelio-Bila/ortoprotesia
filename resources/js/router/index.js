@@ -32,6 +32,11 @@ import ArticleView from "../pages/Articles/ArticleView.vue";
 import UsersIndex from "../pages/Admin/Users/UsersIndex.vue";
 import UserDetails from "../pages/Admin/Users/UserDetails.vue";
 
+import NewsIndex from "../pages/Admin/News/NewsIndex.vue";
+import NewsCreate from "../pages/Admin/News/NewsCreate.vue";
+import NewsView from "../pages/News/NewsView.vue";
+import NewsEdit from "../pages/Admin/News/NewsEdit.vue";
+
 import CategoriesIndex from "../pages/hp/Categories/CategoriesIndex.vue";
 import CategoriesEdit from "../pages/hp/Categories/CategoriesEdit.vue";
 import CategoriesCreate from "../pages/hp/Categories/CategoriesCreate.vue";
@@ -55,7 +60,7 @@ import AdminDetails from "../pages/Admin/AdminDetails.vue";
 import AdminLogin from "../pages/Admin/AdminLogin.vue";
 import AdminCreate from "../pages/Admin/AdminCreate.vue";
 
-import NewsIndex from "../pages/News/NewsIndex.vue";
+import News from "../pages/News/Index.vue";
 import Orto from "../pages/News/Orto.vue";
 import Guide from "../pages/News/Guide.vue";
 
@@ -166,6 +171,30 @@ const routes = [
         component: ArticleView,
         props: true,
     },
+
+    {
+        path: "/admin/news",
+        name: "news",
+        component: NewsIndex,
+    },
+    {
+        path: "/admin/news/create",
+        name: "news.create",
+        component: NewsCreate,
+    },
+    {
+        path: "/admin/news/:news_id/edit",
+        name: "news.edit",
+        component: NewsEdit,
+        props: true,
+    },
+    {
+        path: "/news/:news_id",
+        name: "news.view",
+        component: NewsView,
+        props: true,
+    },
+
     {
         path: "/categories",
         name: "categories.index",
@@ -271,7 +300,7 @@ const routes = [
     {
         path: "/news",
         name: "news.index",
-        component: NewsIndex,
+        component: News,
     },
     {
         path: "/ortoprotesia",

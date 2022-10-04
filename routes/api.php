@@ -98,6 +98,19 @@ Route::post('/articles/increment/{article_id}/{user_id}/{who}', [ArticleControll
 Route::put('/articles/update/{id}', [ArticleController::class, 'update']);
 Route::delete('/articles/delete/{id}', [ArticleController::class, 'destroy']);
 
+
+// Notices
+Route::get('news', [NoticeController::class, 'index']);
+Route::get('news/{id}', [NoticeController::class, 'show']);
+Route::get('news/related/{id}/{article}', [NoticeController::class, 'related']);
+Route::get('/news/search/{criteria}', [NoticeController::class, 'search']);
+Route::get('/news/latest', [NoticeController::class, 'latest']);
+Route::get('/news/category/{category_id}', [NoticeController::class, 'byCategory']);
+Route::get('/news/period/{period}', [NoticeController::class, 'byPeriod']);
+Route::post('/news/register', [NoticeController::class, 'store']);
+Route::put('/news/update/{id}', [NoticeController::class, 'update']);
+Route::delete('/news/delete/{id}', [NoticeController::class, 'destroy']);
+
 // Process
 Route::post('process/register', [ProcessController::class, 'store']);
 Route::get('processes', [ProcessController::class, 'index']);
