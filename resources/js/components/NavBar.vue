@@ -39,7 +39,7 @@
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link hover:primary" to="/#news"
+            <router-link class="nav-link hover:primary" to="/news"
               >Noticias</router-link
             >
           </li>

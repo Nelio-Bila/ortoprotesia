@@ -102,7 +102,7 @@ Route::delete('/articles/delete/{id}', [ArticleController::class, 'destroy']);
 
 // Notices
 Route::get('news', [NoticeController::class, 'index']);
-Route::get('news/{id}', [NoticeController::class, 'show']);
+Route::get('/news/{id}', [NoticeController::class, 'show']);
 Route::get('news/related/{id}/{article}', [NoticeController::class, 'related']);
 Route::get('/news/search/{criteria}', [NoticeController::class, 'search']);
 Route::get('/news/latest', [NoticeController::class, 'latest']);

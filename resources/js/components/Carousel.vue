@@ -69,6 +69,26 @@
             </p>
           </div>
         </router-link>
+
+        <router-link
+          :to="{
+            name: 'news.view',
+            params: { notice_id: notice.id },
+          }"
+          class="carousel-item"
+          v-for="notice in news"
+          :key="notice.id"
+        >
+          <img
+            :src="notice.featuredImage"
+            class="d-block w-100 img"
+            alt="Primeira foto"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{ notice.title }}</h5>
+            <p v-html="notice.body"></p>
+          </div>
+        </router-link>
       </div>
       <button
         class="carousel-control-prev"
@@ -92,10 +112,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Carousel",
-};
+<script setup>
+import { onMounted, ref } from "vue";
+import useNews from "../composables/news";
+
+const currentPage = ref(1);
+const rowsPerPage = ref(5);
+
+const { news, getNews } = useNews(currentPage, rowsPerPage);
+
+onMounted(() => {
+  getNews();
+});
 </script>
 
 <style scoped>

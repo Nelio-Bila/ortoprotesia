@@ -85,7 +85,6 @@ import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
 
 import useNews from "../../../composables/news";
-import { useUserStore } from "../../../stores/UserStore";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
 
@@ -94,7 +93,6 @@ const rowsPerPage = ref(20);
 
 const { news, getNews, destroyNews } = useNews(currentPage, rowsPerPage);
 onMounted(() => {
-  const useUser = useUserStore();
   getNews();
   setTimeout(() => {
     $("#news_datatable").DataTable({

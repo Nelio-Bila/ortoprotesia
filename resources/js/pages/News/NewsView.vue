@@ -1,6 +1,24 @@
 <template>
   <NavBar />
-  <div class="container my-3"></div>
+  <div class="container my-3">
+    <h1 class="text-center mb-5">{{ advert.title }}</h1>
+  </div>
+
+  <div class="row">
+    <div class="col text-center my-3" v-if="processing">
+      <Spinner />
+    </div>
+    <div v-else class="col text-center my-3">
+      <img
+        :src="advert.featuredImage"
+        :alt="advert.title"
+        class="img"
+        width="600"
+        height="500"
+      />
+      <article v-html="advert.body"></article>
+    </div>
+  </div>
 
   <Footer />
 </template>
@@ -36,7 +54,7 @@ const {
 const route = useRoute();
 
 onMounted(() => {
-  getNews(route.params.news_id);
+  getAdvert(route.params.notice_id);
   getLatestNews();
 });
 

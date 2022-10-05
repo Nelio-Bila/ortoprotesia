@@ -32,6 +32,20 @@ export default function useNews(currentPage, rowsPerPage = 200) {
             });
     };
 
+    const getNewsByCategory = async (category_id) => {
+        processing.value = true;
+        await axios
+            .get("/news/category/" + category_id)
+            .then((response) => {
+                news.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                news.value = [];
+                processing.value = false;
+            });
+    };
+
     const getLatestNews = async () => {
         processing.value = true;
         await axios
@@ -50,7 +64,7 @@ export default function useNews(currentPage, rowsPerPage = 200) {
         processing.value = true;
 
         await axios
-            .get("/new/" + id)
+            .get("/news/" + id)
             .then((response) => {
                 advert.value = response.data;
                 processing.value = false;
@@ -121,18 +135,20 @@ export default function useNews(currentPage, rowsPerPage = 200) {
 
     return {
         getNews,
+        getNewsByCategory,
         getLatestNews,
         getAdvert,
         storeNews,
         updateNews,
         destroyNews,
         searchNews,
-        news,
+        news: paginatedArray,
         latestNews,
         searchedNews,
         advert,
         router,
         errors,
         processing,
+        numberOfPages,
     };
 }
