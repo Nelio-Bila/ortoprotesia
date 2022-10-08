@@ -95,7 +95,7 @@
               <avatar-input
                 v-model="useUser.user.avatar"
                 default-src="/images/profile_imgs/avatar.png"
-                :input="useUser.user.avatar"
+                :input="useUser?.user?.avatar"
               ></avatar-input>
             </div>
             <div class="row mb-3">

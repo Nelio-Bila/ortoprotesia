@@ -67,7 +67,7 @@
           </div>
         </div>
 
-        <form @submit.prevent="saveNews" enctype="multipart/form-data">
+        <form @submit.prevent="saveAdvert" enctype="multipart/form-data">
           <div class="form-group mb-3 text-center">
             <label for="title">Foto do cabecalho</label>
             <img
@@ -186,7 +186,7 @@
             ></span>
             <span v-if="processing">Processando...</span>
 
-            <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
+            <i v-if="!processing" class="fa-solid fa-floppy-disk mx-2"></i>
             <span v-if="!processing">Salvar</span>
           </button>
         </form>
@@ -383,7 +383,6 @@ onMounted(() => {
 
 const changeFeaturedImage = (event) => {
   advert.featuredImage = event.target.files[0];
-  console.log(advert.featuredImage);
   let reader = new FileReader();
   reader.readAsDataURL(event.target.files[0]);
   reader.onload = (e) => {
@@ -397,7 +396,6 @@ const fileInput = ref(null);
 const creating = ref(true);
 
 watch(advert.featuredImage, async (featuredImage, oldfeaturedImage) => {
-  console.log("featuredImage", featuredImage);
   src.value = featuredImage;
 });
 
@@ -450,14 +448,20 @@ const v$ = useVuelidate(rules, advert);
 const saveAdvert = async () => {
   v$._value.$validate();
 
+  console.log(advert.title);
+
   let data = new FormData();
-  data.append("title", advert.title);
-  data.append("body", advert.body);
-  data.append("featuredImage", advert.featuredImage);
-  data.append("category_id", advert.category_id);
-  data.append("slug", advert.title.replace(/\s/g, ""));
+  data.append("title", advert?.title);
+  data.append("body", advert?.body);
+  data.append("featuredImage", advert?.featuredImage);
+  data.append("category_id", advert?.category_id);
+  data.append("slug", advert?.title?.replace(/\s/g, ""));
   creating.value = false;
-  await updateAdvert(props.id, data);
+
+  //   console.log(data);
+  //   await updateNews(route.params.notice_id, data);
+
+  //   await updateNews(route.params.notice_id, { ...advert.value });
 };
 </script>
 

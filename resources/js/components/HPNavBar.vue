@@ -89,4 +89,9 @@ const toggleMenu = () => {
 .h-72 {
   min-height: 76px;
 }
+
+.nav-link {
+  font-size: larger;
+}
 </style>
+

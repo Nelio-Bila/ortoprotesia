@@ -384,4 +384,16 @@ router.afterEach((to, from) => {
     NProgress.done();
 });
 
+// router.beforeEach(async (to) => {
+//     // redirect to login page if not logged in and trying to access a restricted page
+//     const publicPages = ["/login"];
+//     const authRequired = !publicPages.includes(to.path);
+//     const userStore = useUserStore();
+
+//     if (authRequired && !userStore?.user) {
+//         userStore.returnUrl = to.fullPath;
+//         return "/login";
+//     }
+// });
+
 export default router;

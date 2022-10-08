@@ -1,12 +1,8 @@
 import { defineStore } from "pinia";
 
-import useAuth from "../composables/auth";
-
-const { getUser } = useAuth();
-
 export const useUserStore = defineStore("user", {
     state: () => {
-        return { user: null, isHP: false, isAdmin: false };
+        return { user: null, isHP: false, isAdmin: false, returnUrl: null };
     },
     getters: {
         get: (state) => state.user,
@@ -21,7 +17,7 @@ export const useUserStore = defineStore("user", {
             this.isHP = isHP;
         },
         setIsAdmin(isAdmin) {
-            this.isAdmin = this.isAdmin;
+            this.isAdmin = isAdmin;
         },
         removeUser() {
             this.user = null;

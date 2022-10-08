@@ -32,28 +32,28 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <router-link
-              class="nav-link hover:primary"
+              class="nav-link hover:primary fw-bold"
               aria-current="page"
               to="/"
               >Inicio</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link hover:primary" to="/news"
+            <router-link class="nav-link hover:primary fw-bold" to="/news"
               >Noticias</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link hover:primary" to="/#articles"
+            <router-link class="nav-link hover:primary fw-bold" to="/#articles"
               >Artigos</router-link
             >
           </li>
           <li class="nav-item hover:white">
-            <a class="nav-link hover:primary" href="/forum">Forum</a>
+            <a class="nav-link hover:primary fw-bold" href="/forum">Forum</a>
           </li>
           <li class="nav-item dropdown">
             <a
-              class="nav-link dropdown-toggle hover:primary"
+              class="nav-link dropdown-toggle hover:primary fw-bold"
               href="#"
               id="navbarDropdown"
               role="button"
@@ -65,7 +65,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
                 <router-link
-                  class="dropdown-item hover:primary"
+                  class="dropdown-item hover:primary fw-bold"
                   to="/process/info"
                   >Informações</router-link
                 >
@@ -73,7 +73,7 @@
               <li v-if="useUser?.get">
                 <router-link
                   to="/consult/create"
-                  class="dropdown-item hover:primary"
+                  class="dropdown-item hover:primary fw-bold"
                   >Marcar</router-link
                 >
               </li>
@@ -81,12 +81,14 @@
                 <hr class="dropdown-divider" />
               </li>
               <li v-if="useUser?.get">
-                <a class="dropdown-item hover:primary" href="#"
+                <a class="dropdown-item hover:primary fw-bold" href="#"
                   >Estado da minha consulta</a
                 >
               </li>
               <li v-if="useUser?.get">
-                <router-link to="/process" class="dropdown-item hover:primary"
+                <router-link
+                  to="/process"
+                  class="dropdown-item hover:primary fw-bold"
                   >Processo clínico</router-link
                 >
               </li>
@@ -125,7 +127,7 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <span class="mx-2">
+              <span class="mx-2 fw-bold">
                 {{ useUser?.get?.name }}
               </span>
               <img
@@ -139,7 +141,7 @@
               <li>
                 <router-link
                   v-if="useUser?.user?.is_hp"
-                  class="dropdown-item me-5"
+                  class="dropdown-item me-5 fw-bold"
                   to="/hp/"
                   >Painel</router-link
                 >
@@ -147,18 +149,18 @@
               <li>
                 <router-link
                   v-if="useUser?.user?.is_admin"
-                  class="dropdown-item me-5"
+                  class="dropdown-item me-5 fw-bold"
                   to="/admin/home"
                   >Painel</router-link
                 >
               </li>
               <li>
-                <router-link to="/account" class="dropdown-item me-5"
+                <router-link to="/account" class="dropdown-item me-5 fw-bold"
                   >Definições da conta</router-link
                 >
               </li>
               <li
-                class="dropdown-item me-5 cursor-pointer"
+                class="dropdown-item me-5 cursor-pointer fw-bold"
                 @click.prevent="handleLogout"
               >
                 Terminar sessão
@@ -201,3 +203,8 @@ const handleLogout = () => {
 </script>
 
 
+<style scoped>
+.nav-link {
+  font-size: larger;
+}
+</style>

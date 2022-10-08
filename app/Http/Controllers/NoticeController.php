@@ -7,6 +7,7 @@ use App\Models\Notice;
 use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
 use App\Http\Requests\NoticeRequest;
+use App\Http\Requests\NoticeUpdateRequest;
 
 class NoticeController extends Controller
 {
@@ -93,7 +94,7 @@ class NoticeController extends Controller
             return response()->json(['success' => 'Notice posted successfully.']);
         }
     }
-    public function update(NoticeRequest $request, $id)
+    public function update(NoticeUpdateRequest $request, $id)
     {
 
 
@@ -130,6 +131,14 @@ class NoticeController extends Controller
             $notice->body = $request->body;
             $notice->featuredImage = $image_url;
             $notice->header_image_public_id = $public_id;
+            $notice->category_id = $request->category_id;
+
+            $notice->save();
+
+            return response()->json(['success' => 'Notice updated successfully.']);
+        } else {
+            $notice->title = $request->title;
+            $notice->body = $request->body;
             $notice->category_id = $request->category_id;
 
             $notice->save();
