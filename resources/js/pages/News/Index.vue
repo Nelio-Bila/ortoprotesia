@@ -18,7 +18,7 @@
           <button
             @click="filterCategory(category.id)"
             to="/news"
-            class="btn btn-sm"
+            class="btn btn-sm text-wrap"
             :class="
               currentCategory === category.id
                 ? 'btn-primary'
