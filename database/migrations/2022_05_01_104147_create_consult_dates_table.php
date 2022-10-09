@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('consult_dates', function (Blueprint $table) {
             $table->id();
+            $table->enum('type', ['Próteses', 'Órteses']);
             $table->timestamp('date');
+            $table->timestamp('accomplished_at');
             $table->softDeletes();
             $table->timestamps();
         });

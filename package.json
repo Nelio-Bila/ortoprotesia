@@ -38,6 +38,7 @@
         "@vueuse/core": "^8.5.0",
         "animate.css": "^4.1.1",
         "apexcharts": "^3.35.3",
+        "dark-mode-switch": "^1.0.0",
         "datatables.net-dt": "^1.12.0",
         "dropzone-vue": "^0.1.11",
         "jquery": "^3.6.1",

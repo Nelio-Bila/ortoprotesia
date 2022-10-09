@@ -81,6 +81,7 @@
     <div id="app">
     </div>
 
+    {{-- <script src="/js/dark-mode-switch.min.js"></script> --}}
 
 </body>
 

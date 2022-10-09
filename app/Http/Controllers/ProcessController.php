@@ -7,6 +7,7 @@ use App\Models\Process;
 use Illuminate\Http\Request;
 use App\Models\Identification;
 use App\Http\Requests\ProcessRequest;
+use App\Models\Province;
 
 class ProcessController extends Controller
 {
@@ -30,9 +31,9 @@ class ProcessController extends Controller
     {
         try {
             $address = Adress::create([
-                "province" => $request->province,
-                "district" => $request->district,
-                "neighbourhood" => $request->neighbourhood,
+                "province_id" => $request->province_id,
+                "district_id" => $request->district_id,
+                "neighbourhood_id" => $request->neighbourhood_id,
             ]);
 
             $identification = Identification::create([

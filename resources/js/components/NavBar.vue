@@ -60,30 +60,25 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              Consultas
+              Centro Ortopédico
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
                 <router-link
                   class="dropdown-item hover:primary fw-bold"
                   to="/process/info"
-                  >Informações</router-link
+                  >Guias</router-link
                 >
               </li>
               <li v-if="useUser?.get">
                 <router-link
                   to="/consult/create"
                   class="dropdown-item hover:primary fw-bold"
-                  >Marcar</router-link
+                  >Marcar consulta</router-link
                 >
               </li>
               <li v-if="useUser?.get">
                 <hr class="dropdown-divider" />
-              </li>
-              <li v-if="useUser?.get">
-                <a class="dropdown-item hover:primary fw-bold" href="#"
-                  >Estado da minha consulta</a
-                >
               </li>
               <li v-if="useUser?.get">
                 <router-link
@@ -117,6 +112,32 @@
           </router-link>
         </form>
 
+        <i
+          v-if="useUser?.get"
+          class="
+            fa-solid fa-bell fa-2x
+            text-muted
+            position-relative
+            hover:primary
+            cursor-pointer
+          "
+        >
+          <span
+            class="
+              position-absolute
+              top-0
+              start-100
+              translate-middle
+              badge
+              rounded-pill
+              bg-primary
+            "
+          >
+            9
+            <span class="visually-hidden">Notificações não lidas</span>
+          </span>
+        </i>
+
         <ul class="navbar-nav me-5 mb-2 mb-lg-0" v-if="useUser?.get">
           <li class="nav-item dropdown">
             <a
@@ -127,7 +148,7 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <span class="mx-2 fw-bold">
+              <span class="mx-2 fw-bold hover:primary">
                 {{ useUser?.get?.name }}
               </span>
               <img
@@ -172,7 +193,6 @@
     </div>
   </nav>
 </template>
-
 
 <script setup>
 // 3rd party imports

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ConsultDate extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['type', 'date', 'accomplished_at'];
 }

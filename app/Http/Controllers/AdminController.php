@@ -219,9 +219,9 @@ class AdminController extends Controller
 
 
         return response()->json([
-            'newUsersPerDay' => array_reverse($newUsersPerDay),
-            'newHPsPerDay' => array_reverse($newHPsPerDay),
-            'days' => array_reverse($days)
+            'newUsersPerDay' => $newUsersPerDay,
+            'newHPsPerDay' => $newHPsPerDay,
+            'days' => $days
         ]);
     }
 
