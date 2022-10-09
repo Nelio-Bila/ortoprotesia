@@ -86,18 +86,29 @@
                 <label class="my-2">Endereço</label>
                 <div class="col">
                   <label for="province">Provincia</label>
-                  <input
+                  <select
+                    name="province"
+                    v-model="form.address.province"
+                    @change="getDistricts(form.address.province.id)"
                     id="province"
                     @blur="v$.address.province.$touch"
-                    type="text"
-                    class="form-control"
+                    class="form-select"
                     :class="{
                       'is-invalid': v$.address.province.$error,
                       'is-valid': !v$.address.province.$invalid,
                     }"
-                    placeholder="Provincia"
-                    v-model="form.address.province"
-                  />
+                  >
+                    <option selected disabled>
+                      -- Selecione a provincia --
+                    </option>
+                    <option
+                      v-for="province in provinces"
+                      :value="province"
+                      v-bind:key="province.id"
+                    >
+                      {{ province.name }}
+                    </option>
+                  </select>
                   <span
                     class="invalid-feedback"
                     v-if="v$.address.province.$error"
@@ -107,18 +118,28 @@
                 </div>
                 <div class="col">
                   <label for="district">Distrito</label>
-                  <input
+                  <select
+                    name="district"
+                    v-model="form.address.district"
                     id="district"
                     @blur="v$.address.district.$touch"
-                    type="text"
-                    class="form-control"
+                    class="form-select"
                     :class="{
                       'is-invalid': v$.address.district.$error,
                       'is-valid': !v$.address.district.$invalid,
                     }"
-                    placeholder="Distrito"
-                    v-model="form.address.district"
-                  />
+                  >
+                    <option selected disabled>
+                      -- Selecione o distrito --
+                    </option>
+                    <option
+                      v-for="district in districts"
+                      :value="district"
+                      v-bind:key="district.id"
+                    >
+                      {{ district.name }}
+                    </option>
+                  </select>
                   <span
                     class="invalid-feedback"
                     v-if="v$.address.district.$error"
@@ -456,13 +477,23 @@ const form = reactive({
   },
 });
 
-onMounted(() => {});
+onMounted(() => {
+  getProvinces();
+});
 
 const toggleSideMenu = () => {
   document.getElementById("sidebar").classList.toggle("active");
 };
 
-const { processing, errors, storeProcess } = useProcesses();
+const {
+  processing,
+  errors,
+  storeProcess,
+  getProvinces,
+  provinces,
+  getDistricts,
+  districts,
+} = useProcesses();
 
 const rules = computed(() => ({
   user_id: { required },

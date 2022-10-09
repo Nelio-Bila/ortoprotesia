@@ -11,7 +11,9 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HealthProfessionalController;
+use App\Http\Controllers\ProvinceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,3 +122,10 @@ Route::get('processes', [ProcessController::class, 'index']);
 // Files
 Route::post('/upload', [ImageController::class, 'store'])->name('upload');
 Route::get('/media/{post}', [ImageController::class, 'getImages'])->name('post.images');
+
+
+// Provinces
+Route::get('provinces', [ProvinceController::class, 'index']);
+
+// Districts
+Route::get('districts/{province_id}', [DistrictController::class, 'index']);

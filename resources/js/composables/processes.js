@@ -4,6 +4,8 @@ import { useRouter } from "vue-router";
 
 export default function useProcesses() {
     const processes = ref([]);
+    const provinces = ref([]);
+    const districts = ref([]);
     const process = ref([]);
     const router = useRouter();
     const errors = ref("");
@@ -23,6 +25,35 @@ export default function useProcesses() {
             });
     };
 
+    const getProvinces = async () => {
+        processing.value = true;
+        await axios
+            .get("/provinces")
+            .then((response) => {
+                provinces.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                provinces.value = [];
+                processing.value = false;
+            });
+    };
+
+    const getDistricts = async (province_id) => {
+        console.log(province_id);
+        processing.value = true;
+
+        await axios
+            .get("/districts/" + province_id)
+            .then((response) => {
+                districts.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                districts.value = [];
+                processing.value = false;
+            });
+    };
     const getProcess = async (id) => {
         processing.value = true;
 
@@ -82,7 +113,11 @@ export default function useProcesses() {
         process,
         errors,
         processing,
+        provinces,
+        districts,
+        getDistricts,
         getProcesses,
+        getProvinces,
         getProcess,
         storeProcess,
         updateProcess,
