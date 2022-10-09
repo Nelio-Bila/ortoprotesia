@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Notice extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
 
-    protected $fillable = ['category_id', 'title', 'body', 'slug', 'featuredImage', 'header_image_public_id'];
+    protected $fillable = ['id', 'category_id', 'title', 'body', 'slug', 'featuredImage', 'header_image_public_id'];
 
     public function category()
     {

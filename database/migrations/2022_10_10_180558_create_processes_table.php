@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('processes', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('id')->primary();
+            $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('address_id');
+            $table->uuid('address_id');
             $table->foreign('address_id')->references('id')->on('adresses');
-            $table->unsignedBigInteger('identification_id');
+            $table->uuid('identification_id');
             $table->foreign('identification_id')->references('id')->on('identifications');
             $table->string("maritalState")->nullable();
             $table->string("genre");

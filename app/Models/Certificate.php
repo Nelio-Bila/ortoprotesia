@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Certificate extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
 
-    protected $fillable = ['name', 'health_professional_id'];
+    protected $fillable = ['id', 'name', 'health_professional_id'];
 
     public function health_professional()
     {

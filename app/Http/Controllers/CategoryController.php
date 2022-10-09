@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category as ArticleCategory;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Models\Category as ArticleCategory;
 use App\Http\Requests\CategoryRegisterRequest;
 
 class CategoryController extends Controller
@@ -18,6 +19,7 @@ class CategoryController extends Controller
 
         try {
             $category = ArticleCategory::create([
+                'id' => Str::uuid()->toString(),
                 'name' => $request->name,
             ]);
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Notice;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
 use App\Http\Requests\NoticeRequest;
@@ -82,6 +83,7 @@ class NoticeController extends Controller
             $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height, "crop" => "scale", "quality" => 70, "secure" => "true"]);
 
 
+            $notice->id = Str::uuid()->toString();
             $notice->title = $request->title;
             $notice->body = $request->body;
             $notice->slug = $request->slug;

@@ -5,14 +5,15 @@ namespace App\Models;
 use App\Models\Image;
 use App\Models\Category;
 use App\Models\HealthProfessional;
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Article extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
 
-    protected $fillable = ['category_id', 'title', 'body', 'jsonData', 'postExcerpt', 'slug', 'featuredImage', 'metaDescription', 'health_professional_id', 'views', 'header_image_public_id'];
+    protected $fillable = ['id', 'category_id', 'title', 'body', 'jsonData', 'postExcerpt', 'slug', 'featuredImage', 'metaDescription', 'health_professional_id', 'views', 'header_image_public_id'];
 
     public function category()
     {

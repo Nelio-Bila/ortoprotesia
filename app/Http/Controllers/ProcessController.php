@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Adress;
 use App\Models\Process;
+use App\Models\Province;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Identification;
 use App\Http\Requests\ProcessRequest;
-use App\Models\Province;
 
 class ProcessController extends Controller
 {
@@ -31,18 +32,21 @@ class ProcessController extends Controller
     {
         try {
             $address = Adress::create([
+                "id" => Str::uuid()->toString(),
                 "province_id" => $request->province_id,
                 "district_id" => $request->district_id,
                 "neighbourhood_id" => $request->neighbourhood_id,
             ]);
 
             $identification = Identification::create([
+                "id" => Str::uuid()->toString(),
                 "number" => $request->number,
                 "archive" => $request->archive,
                 "issueDate" => $request->issueDate,
             ]);
 
             $process = Process::create([
+                "id" => Str::uuid()->toString(),
                 "address_id" => $address->id,
                 "identification_id" => $identification->id,
                 "user_id" => $request->user_id,

@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Article;
+use App\Models\ArticleView;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArticleRequest;
-use App\Models\ArticleView;
 
 class ArticleController extends Controller
 {
@@ -134,6 +135,7 @@ class ArticleController extends Controller
             //     Cloudder::delete($image_public_id_exist);
             // }
 
+            $article->id = Str::uuid()->toString();
             $article->title = $request->title;
             $article->body = $request->body;
             $article->postExcerpt = $request->postExcerpt;

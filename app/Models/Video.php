@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
 
-    protected $fillable = ['name', 'article_id'];
+    protected $fillable = ['id', 'name', 'article_id'];
 
     public function article()
     {

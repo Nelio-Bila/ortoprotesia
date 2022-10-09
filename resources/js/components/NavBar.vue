@@ -132,6 +132,7 @@
               rounded-pill
               bg-primary
             "
+            style="font-size: 0.35em"
           >
             9
             <span class="visually-hidden">Notificações não lidas</span>

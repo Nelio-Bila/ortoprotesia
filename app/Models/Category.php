@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use App\Models\Article;
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
 
     protected $table = "categories";
 
-    protected $fillable = ['name'];
+    protected $fillable = ['id', 'name'];
 
     public function articles()
     {

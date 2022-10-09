@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Neighbourhood extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
 
-    protected $fillable = ["name", "cod", "district_id"];
+    protected $fillable = ['id', "name", "cod", "district_id"];
 
     public function district()
     {

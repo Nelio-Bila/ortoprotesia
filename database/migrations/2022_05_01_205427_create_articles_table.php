@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title', 80);
             $table->text('body');
             $table->string('postExcerpt');
@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('featuredImage')->nullable();
             $table->text('header_image_public_id')->nullable();
             $table->string('metaDescription', 300);
-            $table->unsignedBigInteger('health_professional_id');
+            $table->uuid('health_professional_id');
             $table->foreign('health_professional_id')->references('id')->on('health_professionals');
-            $table->unsignedBigInteger('category_id');
+            $table->uuid('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamp('published_at')->nullable();
             $table->softDeletes();

@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('adresses', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('province_id');
+            $table->uuid('id')->primary();
+            $table->uuid('province_id');
             $table->foreign('province_id')->references('id')->on('provinces');
-            $table->unsignedBigInteger('district_id');
+            $table->uuid('district_id');
             $table->foreign('district_id')->references('id')->on('districts');
-            $table->unsignedBigInteger('neighbourhood_id');
+            $table->uuid('neighbourhood_id');
             $table->foreign('neighbourhood_id')->references('id')->on('neighbourhoods');
             $table->softDeletes();
             $table->timestamps();

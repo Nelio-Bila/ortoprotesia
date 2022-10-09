@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('consult_dates', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->enum('type', ['Próteses', 'Órteses']);
             $table->timestamp('date');
             $table->timestamp('accomplished_at');

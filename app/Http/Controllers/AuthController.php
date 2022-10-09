@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UpdateRequest;
@@ -73,6 +74,7 @@ class AuthController extends Controller
     {
         try {
             $user = User::create([
+                'id' => Str::uuid()->toString(),
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'birthdate' => $request->birthdate,

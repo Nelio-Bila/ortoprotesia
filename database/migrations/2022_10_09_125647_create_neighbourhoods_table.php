@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('neighbourhoods', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('cod')->unique();
-            $table->unsignedBigInteger('district_id');
+            $table->uuid('district_id');
             $table->foreign('district_id')->references('id')->on('districts');
             $table->timestamps();
         });

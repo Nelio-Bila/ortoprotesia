@@ -28,6 +28,7 @@ class AdminController extends Controller
     {
         try {
             $admin = Admin::create([
+                'id' => Str::uuid()->toString(),
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'birthdate' => $request->birthdate,

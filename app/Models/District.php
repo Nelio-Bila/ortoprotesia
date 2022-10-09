@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class District extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
 
-    protected $fillable = ["name", "cod", "province_id"];
+    protected $fillable = ["id", "name", "cod", "province_id"];
 
     public function province()
     {

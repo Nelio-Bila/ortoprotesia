@@ -23,6 +23,7 @@ class HealthProfessionalController extends Controller
     {
         try {
             $hp = HealthProfessional::create([
+                'id' => Str::uuid()->toString(),
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'birthdate' => $request->birthdate,
