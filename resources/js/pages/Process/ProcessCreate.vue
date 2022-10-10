@@ -123,6 +123,7 @@
                     v-model="form.address.district"
                     id="district"
                     @blur="v$.address.district.$touch"
+                    @change="getNeighbourhoods(form.address.district.id)"
                     class="form-select"
                     :class="{
                       'is-invalid': v$.address.district.$error,
@@ -153,14 +154,25 @@
                     id="neighbourhood"
                     @blur="v$.address.neighbourhood.$touch"
                     type="text"
-                    class="form-control"
+                    class="form-select"
                     :class="{
                       'is-invalid': v$.address.neighbourhood.$error,
                       'is-valid': !v$.address.neighbourhood.$invalid,
                     }"
-                    placeholder="Bairro"
                     v-model="form.address.neighbourhood"
+                    list="neighbourhoods"
+                    placeholder="Digite ou selecione o bairro"
                   />
+
+                  <datalist id="neighbourhoods">
+                    <option
+                      v-for="neighbourhood in neighbourhoods"
+                      :value="neighbourhood.id"
+                      v-bind:key="neighbourhood.id"
+                    >
+                      {{ neighbourhood.name }}
+                    </option>
+                  </datalist>
                   <span
                     class="invalid-feedback"
                     v-if="v$.address.neighbourhood.$error"
@@ -493,6 +505,8 @@ const {
   provinces,
   getDistricts,
   districts,
+  neighbourhoods,
+  getNeighbourhoods,
 } = useProcesses();
 
 const rules = computed(() => ({

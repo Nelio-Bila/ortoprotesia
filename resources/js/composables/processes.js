@@ -6,6 +6,7 @@ export default function useProcesses() {
     const processes = ref([]);
     const provinces = ref([]);
     const districts = ref([]);
+    const neighbourhoods = ref([]);
     const process = ref([]);
     const router = useRouter();
     const errors = ref("");
@@ -40,7 +41,6 @@ export default function useProcesses() {
     };
 
     const getDistricts = async (province_id) => {
-        console.log(province_id);
         processing.value = true;
 
         await axios
@@ -54,6 +54,22 @@ export default function useProcesses() {
                 processing.value = false;
             });
     };
+
+    const getNeighbourhoods = async (district_id) => {
+        processing.value = true;
+
+        await axios
+            .get("/neighbourhoods/" + district_id)
+            .then((response) => {
+                neighbourhoods.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                neighbourhoods.value = [];
+                processing.value = false;
+            });
+    };
+
     const getProcess = async (id) => {
         processing.value = true;
 
@@ -115,6 +131,8 @@ export default function useProcesses() {
         processing,
         provinces,
         districts,
+        neighbourhoods,
+        getNeighbourhoods,
         getDistricts,
         getProcesses,
         getProvinces,

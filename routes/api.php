@@ -129,3 +129,6 @@ Route::get('provinces', [ProvinceController::class, 'index']);
 
 // Districts
 Route::get('districts/{province_id}', [DistrictController::class, 'index']);
+
+// Neighbouhoods
+Route::get('neighbourhoods/{district_id}', [DistrictController::class, 'index']);
