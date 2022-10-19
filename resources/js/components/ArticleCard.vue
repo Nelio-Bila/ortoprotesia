@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-6">
+  <!-- <div class="col-lg-6">
     <div class="row justify-content-center mt-2 mx-1">
       <div class="card mb-3" style="max-width: 540px">
         <div class="row g-0">
@@ -41,6 +41,60 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+        <div class="card">
+          <img
+            :src="article.featuredImage"
+            class="card-img"
+            :alt="article.title"
+          />
+          <div class="card-img-overlay">
+            <a href="#" class="btn btn-light btn-sm">{{
+              article.category.name
+            }}</a>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ article.title }}</h4>
+            <small class="text-muted cat">
+              <i class="far fa-clock text-primary mr-2"></i>
+              {{ article.createdDateHumanReadable }}
+              <i class="fas fa-user text-primary"></i> {{ article.hpro.name }}
+              {{ article.hpro.surname }}
+            </small>
+            <p class="card-text">
+              {{ article.postExcerpt }}
+            </p>
+            <router-link
+              :to="`/articles/${article.id}`"
+              class="btn btn-primary cursor-pointer"
+              >Ler mais...</router-link
+            >
+          </div>
+          <div
+            class="
+              card-footer
+              text-muted
+              d-flex
+              justify-content-between
+              bg-transparent
+              border-top-0
+            "
+          >
+            <div class="views">
+              {{ new Date(article.created_at).toLocaleDateString() }}
+            </div>
+            <div class="stats">
+              <i class="far fa-eye"></i> {{ article.views.length }}
+              <!-- <i class="far fa-comment"></i> 12 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -52,3 +106,31 @@ const props = defineProps({
   },
 });
 </script>
+
+<style scoped>
+body {
+  padding: 2rem 0rem;
+}
+
+.card-img {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.card-title {
+  margin-bottom: 0.3rem;
+}
+
+.cat {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.fa-users {
+  margin-left: 1rem;
+}
+
+.card-footer {
+  font-size: 0.8rem;
+}
+</style>

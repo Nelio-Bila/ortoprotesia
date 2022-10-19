@@ -39,4 +39,14 @@ class Article extends Model
     {
         return $this->hasMany(ArticleView::class);
     }
+
+
+    protected $dates = ['created_at', 'updated_at'];
+
+    protected $appends = ['createdDateHumanReadable'];
+
+    public function getCreatedDateHumanReadableAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
 }
