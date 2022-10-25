@@ -43,7 +43,7 @@
     </div>
   </div> -->
   <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-    <div class="card">
+    <router-link :to="`/articles/${article.id}`" class="card">
       <img :src="article.featuredImage" class="card-img" :alt="article.title" />
       <div class="card-img-overlay">
         <span class="btn btn-light btn-sm" style="cursor: default">{{
@@ -58,14 +58,9 @@
           <i class="fas fa-user text-primary"></i> {{ article.hpro.name }}
           {{ article.hpro.surname }}
         </small>
-        <p class="card-text">
-          <!-- {{ article.postExcerpt }} -->
-        </p>
-        <router-link
-          style="cursor: pointer"
-          :to="`/articles/${article.id}`"
-          class="btn btn-primary cursor-pointer"
-          disabled="false"
+        <p class="card-text"></p>
+
+        <router-link :to="`/articles/${article.id}`" class="btn btn-primary"
           >Ler mais...</router-link
         >
       </div>
@@ -84,10 +79,10 @@
         </div>
         <div class="stats">
           <i class="far fa-eye"></i> {{ article.views.length }}
-          <!-- <i class="far fa-comment"></i> 12 -->
+          <i class="far fa-comment"></i> 12
         </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
