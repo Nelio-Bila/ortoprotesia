@@ -42,56 +42,49 @@
       </div>
     </div>
   </div> -->
-
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-        <div class="card">
-          <img
-            :src="article.featuredImage"
-            class="card-img"
-            :alt="article.title"
-          />
-          <div class="card-img-overlay">
-            <a href="#" class="btn btn-light btn-sm">{{
-              article.category.name
-            }}</a>
-          </div>
-          <div class="card-body">
-            <h4 class="card-title">{{ article.title }}</h4>
-            <small class="text-muted cat">
-              <i class="far fa-clock text-primary mr-2"></i>
-              {{ article.createdDateHumanReadable }}
-              <i class="fas fa-user text-primary"></i> {{ article.hpro.name }}
-              {{ article.hpro.surname }}
-            </small>
-            <p class="card-text">
-              {{ article.postExcerpt }}
-            </p>
-            <router-link
-              :to="`/articles/${article.id}`"
-              class="btn btn-primary cursor-pointer"
-              >Ler mais...</router-link
-            >
-          </div>
-          <div
-            class="
-              card-footer
-              text-muted
-              d-flex
-              justify-content-between
-              bg-transparent
-              border-top-0
-            "
-          >
-            <div class="views">
-              {{ new Date(article.created_at).toLocaleDateString() }}
-            </div>
-            <div class="stats">
-              <i class="far fa-eye"></i> {{ article.views.length }}
-              <!-- <i class="far fa-comment"></i> 12 -->
-            </div>
-          </div>
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+    <div class="card">
+      <img :src="article.featuredImage" class="card-img" :alt="article.title" />
+      <div class="card-img-overlay">
+        <span class="btn btn-light btn-sm" style="cursor: default">{{
+          article.category.name
+        }}</span>
+      </div>
+      <div class="card-body">
+        <h4 class="card-title">{{ article.title }}</h4>
+        <small class="text-muted cat">
+          <i class="far fa-clock text-primary mr-2"></i>
+          {{ article.createdDateHumanReadable }}
+          <i class="fas fa-user text-primary"></i> {{ article.hpro.name }}
+          {{ article.hpro.surname }}
+        </small>
+        <p class="card-text">
+          <!-- {{ article.postExcerpt }} -->
+        </p>
+        <router-link
+          style="cursor: pointer"
+          :to="`/articles/${article.id}`"
+          class="btn btn-primary cursor-pointer"
+          disabled="false"
+          >Ler mais...</router-link
+        >
+      </div>
+      <div
+        class="
+          card-footer
+          text-muted
+          d-flex
+          justify-content-between
+          bg-transparent
+          border-top-0
+        "
+      >
+        <div class="views">
+          {{ new Date(article.created_at).toLocaleDateString() }}
+        </div>
+        <div class="stats">
+          <i class="far fa-eye"></i> {{ article.views.length }}
+          <!-- <i class="far fa-comment"></i> 12 -->
         </div>
       </div>
     </div>
