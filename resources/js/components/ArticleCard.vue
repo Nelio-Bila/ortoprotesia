@@ -43,7 +43,15 @@
     </div>
   </div> -->
   <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-    <router-link :to="`/articles/${article.id}`" class="card">
+    <router-link
+      :to="`/articles/${article.id}`"
+      class="card"
+      style="
+        :hover {
+          opacity: 0.5;
+        }
+      "
+    >
       <img :src="article.featuredImage" class="card-img" :alt="article.title" />
       <div class="card-img-overlay">
         <span class="btn btn-light btn-sm" style="cursor: default">{{
@@ -60,9 +68,9 @@
         </small>
         <p class="card-text"></p>
 
-        <router-link :to="`/articles/${article.id}`" class="btn btn-primary"
+        <!-- <router-link :to="`/articles/${article.id}`" class="btn btn-primary"
           >Ler mais...</router-link
-        >
+        > -->
       </div>
       <div
         class="

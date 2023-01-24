@@ -433,7 +433,7 @@
                 </div>
               </div>
 
-              <button class="btn btn-primary btn-block btn-lg">
+              <button class="btn btn-primary btn-block btn-lg" type="submit">
                 <span
                   v-if="processing"
                   class="spinner-border spinner-border-sm mx-2"
@@ -461,7 +461,7 @@ import useVuelidate from "@vuelidate/core";
 import { required, helpers, minLength } from "@vuelidate/validators";
 
 import useProcesses from "../../composables/processes";
-import useAuth from "../../composables/auth";
+import { useUserStore } from "../../stores/UserStore";
 
 import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
@@ -571,9 +571,10 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, form);
 
 const saveProcess = async () => {
-  const { auth } = useAuth();
+  console.log({ ...form });
+  const userStore = useUserStore();
 
-  form.user_id = auth.id;
+  form.user_id = userStore.user.id;
   v$._value.$validate();
 
   if (!v$._value.$invalid) {

@@ -105,21 +105,25 @@ const routes = [
         path: "/account",
         name: "account",
         component: Account,
+        meta: { requiresAuth: true },
     },
     {
         path: "/account/security",
         name: "account.security",
         component: AccountSecurity,
+        meta: { requiresAuth: true },
     },
     {
         path: "/account/settings",
         name: "account.settings",
         component: AccountSettings,
+        meta: { requiresAuth: true },
     },
     {
         path: "/account/privacy",
         name: "account.privacy",
         component: AccountPrivacy,
+        meta: { requiresAuth: true },
     },
     {
         path: "/hp/",
@@ -153,17 +157,20 @@ const routes = [
         path: "/hp/articles",
         name: "articles",
         component: ArticlesIndex,
+        meta: { requiresHPAuth: true },
     },
     {
         path: "/hp/articles/create",
         name: "articles.create",
         component: ArticlesCreate,
+        meta: { requiresHPAuth: true },
     },
     {
         path: "/hp/articles/:id/edit",
         name: "articles.edit",
         component: ArticlesEdit,
         props: true,
+        meta: { requiresHPAuth: true },
     },
     {
         path: "/articles/:article_id",
@@ -171,22 +178,24 @@ const routes = [
         component: ArticleView,
         props: true,
     },
-
     {
         path: "/admin/news",
         name: "news",
         component: NewsIndex,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/admin/news/create",
         name: "news.create",
         component: NewsCreate,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/admin/news/:notice_id/edit",
         name: "news.edit",
         component: NewsEdit,
         props: true,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/news/:notice_id",
@@ -194,64 +203,73 @@ const routes = [
         component: NewsView,
         props: true,
     },
-
     {
         path: "/categories",
         name: "categories.index",
         component: CategoriesIndex,
+        meta: { requiresAdminAuth: true, requiresHPAuth: true },
     },
     {
         path: "/categories/create",
         name: "categories.create",
         component: CategoriesCreate,
+        meta: { requiresAdminAuth: true, requiresHPAuth: true },
     },
     {
         path: "/categories/:id/edit",
         name: "categories.edit",
         component: CategoriesEdit,
         props: true,
+        meta: { requiresAdminAuth: true, requiresHPAuth: true },
     },
     {
         path: "/consult/create",
         name: "consult.create",
         component: ConsultCreate,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/consults",
         name: "consult.index",
         component: ConsultIndex,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/process/create",
         name: "process.create",
         component: ProcessCreate,
+        meta: { requiresAuth: true },
     },
     {
         path: "/process",
         name: "process.show",
         component: ProcessDetails,
+        meta: { requiresAuth: true },
     },
     {
         path: "/process/info",
         name: "process.info",
         component: ProcessInfo,
+        meta: { requiresAuth: true },
     },
     {
         path: "/processes",
         name: "processes.index",
         component: ProcessIndex,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/process/edit",
         name: "process.edit",
         component: ProcessEdit,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/users",
         name: "users.index",
         component: UsersIndex,
         meta: {
-            requireAdminAuth: true,
+            requiresAdminAuth: true,
         },
     },
     {
@@ -264,11 +282,13 @@ const routes = [
         path: "/admins",
         name: "admins.index",
         component: AdminsIndex,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/admin/home",
         name: "admin.home",
         component: AdminHome,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/admin/login",
@@ -285,11 +305,13 @@ const routes = [
         name: "admin.details",
         component: AdminDetails,
         props: true,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/admin/hpros",
         name: "hpros.index",
         component: HProsIndex,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/admin/hpro/:id/details",
@@ -335,7 +357,7 @@ const router = createRouter({
 //         .get("user")
 //         .then((response) => {
 //             user = response.data;
-//             if (to.meta.requireHPAuth) {
+//             if (to.meta.requiresHPAuth) {
 //                 if (user === null) {
 //                     if (
 //                         // make sure the user is authenticated

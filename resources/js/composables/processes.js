@@ -91,7 +91,7 @@ export default function useProcesses() {
         errors.value = "";
         try {
             await axios.post("/process/register", data);
-            await router.push("/processes");
+            // await router.push("/processes");
             processing.value = false;
         } catch (e) {
             if (e.response.status === 422) {
