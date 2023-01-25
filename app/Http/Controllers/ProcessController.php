@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Identification;
 use App\Http\Requests\ProcessRequest;
+use App\Models\Neighbourhood;
 
 class ProcessController extends Controller
 {
@@ -30,19 +31,32 @@ class ProcessController extends Controller
      */
     public function store(ProcessRequest $request)
     {
+        // return $request;
         try {
+
+            $neighbourhood = Neighbourhood::where('name', $request->address['neighbourhood'])->first();
+
+            if (!$neighbourhood) {
+                $neighbourhood = Neighbourhood::create([
+                    "id" => Str::uuid()->toString(),
+                    'name' => $request->address['neighbourhood'],
+                    'cod' => $request->address['neighbourhood'],
+                    'district_id' => $request->address['district']['id'],
+
+                ]);
+            }
             $address = Adress::create([
                 "id" => Str::uuid()->toString(),
-                "province_id" => $request->province_id,
-                "district_id" => $request->district_id,
-                "neighbourhood_id" => $request->neighbourhood_id,
+                "province_id" => $request->address['province']['id'],
+                "district_id" => $request->address['district']['id'],
+                "neighbourhood_id" => $neighbourhood->id,
             ]);
 
             $identification = Identification::create([
                 "id" => Str::uuid()->toString(),
-                "number" => $request->number,
-                "archive" => $request->archive,
-                "issueDate" => $request->issueDate,
+                "number" => $request->identification['number'],
+                "archive" => $request->identification['archive'],
+                "issueDate" => $request->identification['issueDate'],
             ]);
 
             $process = Process::create([

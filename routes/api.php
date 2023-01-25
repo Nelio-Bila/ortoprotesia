@@ -40,7 +40,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('forgot', [ForgotController::class, 'forgot']);
 Route::post('reset', [ForgotController::class, 'reset']);
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:user');
-Route::get('user/{id}', [AuthController::class, 'details'])->middleware('auth:user');
+Route::get('user/{id}', [AuthController::class, 'details']);
 Route::delete('user/{id}', [AdminController::class, 'destroyUser'])->middleware('auth:admin');
 Route::put('user/update/{id}', [AuthController::class, 'update'])->middleware('auth:user');
 Route::get('users', [AuthController::class, 'index']);

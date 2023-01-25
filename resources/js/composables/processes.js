@@ -86,6 +86,7 @@ export default function useProcesses() {
     };
 
     const storeProcess = async (data) => {
+        console.log(data);
         processing.value = true;
 
         errors.value = "";

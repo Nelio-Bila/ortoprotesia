@@ -467,7 +467,7 @@ import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 
 const form = reactive({
-  user_id: "",
+  //   user_id: "",
   maritalState: "",
   genre: "",
   race: "",
@@ -510,7 +510,7 @@ const {
 } = useProcesses();
 
 const rules = computed(() => ({
-  user_id: { required },
+  //   user_id: { required },
   maritalState: {},
   genre: {
     required: helpers.withMessage("Por favor preencha o seu genero", required),
@@ -522,7 +522,7 @@ const rules = computed(() => ({
   workPlace: {},
   naturality: {
     required: helpers.withMessage(
-      "Por favor preencha a sua nacionalidade",
+      "Por favor preencha a sua naturalidade",
       required
     ),
   },
@@ -544,7 +544,7 @@ const rules = computed(() => ({
     neighbourhood: {
       required: helpers.withMessage("Por favor preencha o bairro", required),
     },
-    process_id: { required },
+    // process_id: { required },
   },
   identification: {
     number: {
@@ -573,11 +573,14 @@ const v$ = useVuelidate(rules, form);
 const saveProcess = async () => {
   const userStore = useUserStore();
 
-  form.user_id = userStore.user.id;
+  //   form.user_id = userStore.user.id;
+
   v$._value.$validate();
 
+  console.log(v$._value.$invalid);
+
   if (!v$._value.$invalid) {
-    await storeProcess({ ...form });
+    await storeProcess({ user_id: userStore.user.id, ...form });
   } else {
     processing.value = false;
   }

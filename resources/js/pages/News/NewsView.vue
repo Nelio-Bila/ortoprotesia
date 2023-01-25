@@ -60,7 +60,7 @@ onMounted(() => {
 
 watch(advert, async (newAdvert, oldAdvert) => {
   if (newAdvert) {
-    getRelatedArticles(advert.value.category_id, advert.value.id);
+    getRelatedNews(advert.value.category_id, advert.value.id);
   }
 });
 

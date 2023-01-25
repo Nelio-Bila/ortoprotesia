@@ -25,13 +25,12 @@ class ProcessRequest extends FormRequest
     {
         return [
 
-            "province" => "required",
-            "district" => "required",
-            "neighbourhood" => "required",
-            "process_id" => "required",
-            "number" => "required",
-            "archive" => "required",
-            "issueDate" => "required",
+            // "province_id" => "required",
+            // "district_id" => "required",
+            // "neighbourhood_id" => "required",
+            // "number" => "required",
+            // "archive" => "required",
+            // "issueDate" => "required",
             "user_id" => "required",
             "maritalState" => "required",
             "genre" => "required",
@@ -44,5 +43,10 @@ class ProcessRequest extends FormRequest
             "motherName" => "required"
 
         ];
+    }
+
+    public function messages()
+    {
+        return [];
     }
 }
