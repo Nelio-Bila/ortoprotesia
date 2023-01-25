@@ -97,7 +97,6 @@ export default function useNews(currentPage, rowsPerPage = 200) {
     };
 
     const updateNews = async (id, data) => {
-        console.log(data);
         processing.value = true;
 
         errors.value = "";

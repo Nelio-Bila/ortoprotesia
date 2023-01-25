@@ -62,7 +62,5 @@ const route = useRoute();
 
 const { user, getUser } = useUsers();
 
-onMounted(() => {
-  console.log(user);
-});
+onMounted(() => {});
 </script>

@@ -399,7 +399,6 @@ const { processing, errors, article, getArticle, updateArticle } =
 
 onMounted(() => {
   getArticle(props.id);
-  //   console.log(article.value);
   // src.value = article.featuredImage;
 });
 
@@ -419,7 +418,7 @@ const fileInput = ref(null);
 const creating = ref(true);
 
 watch(article.featuredImage, async (featuredImage, oldfeaturedImage) => {
-  console.log("featuredImage", featuredImage);
+
   src.value = featuredImage;
 });
 

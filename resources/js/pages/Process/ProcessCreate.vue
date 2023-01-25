@@ -571,7 +571,6 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, form);
 
 const saveProcess = async () => {
-  console.log({ ...form });
   const userStore = useUserStore();
 
   form.user_id = userStore.user.id;

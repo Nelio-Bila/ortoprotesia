@@ -458,7 +458,6 @@ const saveAdvert = async () => {
   data.append("slug", advert?.title?.replace(/\s/g, ""));
   creating.value = false;
 
-  //   console.log(data);
   //   await updateNews(route.params.notice_id, data);
 
   //   await updateNews(route.params.notice_id, { ...advert.value });
