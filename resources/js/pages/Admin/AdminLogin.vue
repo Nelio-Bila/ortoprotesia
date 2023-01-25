@@ -216,7 +216,7 @@ import { useUserStore } from "../../stores/UserStore";
 export default {
   beforeRouteEnter: function (to, from, next) {
     const userStore = useUserStore();
-    console.log(userStore.user);
+
     // if (userStore.user?.is_admin) next();
   },
 };
