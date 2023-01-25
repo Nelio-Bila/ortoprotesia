@@ -459,6 +459,7 @@
 import { reactive, computed, onMounted } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, helpers, minLength } from "@vuelidate/validators";
+import { useRouter } from "vue-router";
 
 import useProcesses from "../../composables/processes";
 import { useUserStore } from "../../stores/UserStore";
@@ -467,7 +468,6 @@ import NavBar from "../../components/NavBar.vue";
 import Footer from "../../components/Footer.vue";
 
 const form = reactive({
-  //   user_id: "",
   maritalState: "",
   genre: "",
   race: "",
@@ -497,6 +497,8 @@ const toggleSideMenu = () => {
   document.getElementById("sidebar").classList.toggle("active");
 };
 
+const router = useRouter();
+
 const {
   processing,
   errors,
@@ -510,7 +512,6 @@ const {
 } = useProcesses();
 
 const rules = computed(() => ({
-  //   user_id: { required },
   maritalState: {},
   genre: {
     required: helpers.withMessage("Por favor preencha o seu genero", required),
@@ -544,7 +545,6 @@ const rules = computed(() => ({
     neighbourhood: {
       required: helpers.withMessage("Por favor preencha o bairro", required),
     },
-    // process_id: { required },
   },
   identification: {
     number: {
@@ -573,193 +573,13 @@ const v$ = useVuelidate(rules, form);
 const saveProcess = async () => {
   const userStore = useUserStore();
 
-  //   form.user_id = userStore.user.id;
-
   v$._value.$validate();
-
-  console.log(v$._value.$invalid);
 
   if (!v$._value.$invalid) {
     await storeProcess({ user_id: userStore.user.id, ...form });
+    await router.push("/process");
   } else {
     processing.value = false;
   }
 };
 </script>
-<!-- <script>
-import axios from "axios";
-import useValidate from "@vuelidate/core";
-import {
-  required,
-  email,
-  sameAs,
-  helpers,
-  minLength,
-} from "@vuelidate/validators";
-
-import NavBar from "../../components/NavBar.vue";
-import Footer from "../../components/Footer.vue";
-
-export default {
-  name: "ProcesseCreate",
-  data() {
-    return {
-      v$: useValidate(),
-      address: {
-        province: "",
-        district: "",
-        neighbourhood: "",
-      },
-      identification: {
-        number: "",
-        archive: "",
-        issueDate: "",
-      },
-      process: {
-        user_id: "",
-        maritalState: "",
-        genre: "",
-        race: "",
-        profession: "",
-        workPlace: "",
-        naturality: "",
-        phoneNumber: "",
-        fatherName: "",
-        motherName: "",
-      },
-      processing: false,
-      errors_exist: false,
-      validationErrors: null,
-    };
-  },
-  methods: {
-    toggleSideMenu() {
-      document.getElementById("sidebar").classList.toggle("active");
-    },
-    async handleSubmit() {
-      this.processing = true;
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        await axios
-          .post("process/register", {
-            province: this.address.province,
-            district: this.address.district,
-            neighbourhood: this.address.neighbourhood,
-
-            number: this.identification.number,
-            archive: this.identification.archive,
-            issueDate: this.identification.issueDate,
-
-            user_id: this.process.user_id,
-            maritalState: this.process.maritalState,
-            genre: this.process.maritalState,
-            race: this.process.race,
-            profession: this.process.profession,
-            workPlace: this.process.workPlace,
-            naturality: this.process.naturality,
-            phoneNumber: this.process.phoneNumber,
-            fatherName: this.process.fatherName,
-            motherName: this.process.motherName,
-            identification_id: this.process.identification_id,
-          })
-          .then((response) => {
-            this.processing = false;
-            this.$router.push("/login");
-          })
-          .catch((ex) => {
-            this.processing = false;
-            switch (ex.response.status) {
-              case 422:
-                this.validationErrors = ex.response.data.errors;
-                this.errors_exist = true;
-                break;
-            }
-          });
-      } else {
-        this.processing = false;
-      }
-    },
-  },
-  validations() {
-    return {
-      address: {
-        province: {
-          required: helpers.withMessage(
-            "Por favor preencha a provincia",
-            required
-          ),
-        },
-        district: {
-          required: helpers.withMessage(
-            "Por favor preencha o distrito",
-            required
-          ),
-        },
-        neighbourhood: {
-          required: helpers.withMessage(
-            "Por favor preencha o bairro",
-            required
-          ),
-        },
-        process_id: { required },
-      },
-      identification: {
-        number: {
-          required: helpers.withMessage(
-            "Por favor preencha o numero do BI",
-            required
-          ),
-        },
-        archive: {
-          required: helpers.withMessage(
-            "Por favor preencha o arquivo de identificação",
-            required
-          ),
-        },
-        issueDate: {
-          required: helpers.withMessage(
-            "Por favor preencha a data de registo do BI",
-            required
-          ),
-        },
-      },
-      process: {
-        user_id: { required },
-        maritalState: {},
-        genre: {
-          required: helpers.withMessage(
-            "Por favor preencha o seu genero",
-            required
-          ),
-        },
-        race: {
-          required: helpers.withMessage(
-            "Por favor preencha a sua raça",
-            required
-          ),
-        },
-        profession: {},
-        workPlace: {},
-        naturality: {
-          required: helpers.withMessage(
-            "Por favor preencha a sua nacionalidade",
-            required
-          ),
-        },
-        phoneNumber: {
-          required: helpers.withMessage(
-            "Por favor preencha o seu numero de telefone",
-            required
-          ),
-        },
-        fatherName: {},
-        motherName: {},
-      },
-      processing: {},
-      errors_exist: {},
-      validationErrors: {},
-    };
-  },
-  components: { NavBar, Footer },
-};
-</script> -->

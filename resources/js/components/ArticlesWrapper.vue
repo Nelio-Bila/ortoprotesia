@@ -139,7 +139,6 @@
 <script setup>
 import { onMounted, watch, ref, computed } from "vue";
 import { useOnline } from "@vueuse/core";
-import { useRoute } from "vue-router";
 
 import Spinner from "./Spinner.vue";
 import ArticleCard from "./ArticleCard.vue";
@@ -151,8 +150,6 @@ import useCategories from "../composables/categories";
 const categoryFilter = ref("selectCategory");
 const dateFilter = ref("selectPeriod");
 const popularityFilter = ref("selectPop");
-
-const { route } = useRoute();
 
 const currentCategory = ref(0);
 const currentPage = ref(1);

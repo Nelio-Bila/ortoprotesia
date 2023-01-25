@@ -86,13 +86,11 @@ export default function useProcesses() {
     };
 
     const storeProcess = async (data) => {
-        console.log(data);
         processing.value = true;
 
         errors.value = "";
         try {
             await axios.post("/process/register", data);
-            // await router.push("/processes");
             processing.value = false;
         } catch (e) {
             if (e.response.status === 422) {
