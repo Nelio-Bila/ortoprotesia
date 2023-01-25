@@ -47,6 +47,7 @@
       :to="`/articles/${article.id}`"
       class="card"
       style="
+        text-decoration: none;
         :hover {
           opacity: 0.5;
         }

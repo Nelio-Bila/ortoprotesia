@@ -22,7 +22,7 @@
               <th>Nome</th>
               <th>Activa</th>
               <th>Criada aos</th>
-              <th>Acções</th>
+              <th v-if="useUser?.user?.is_admin">Acções</th>
             </tr>
           </thead>
           <tbody>
@@ -39,7 +39,7 @@
                 <td>
                   {{ new Date(category.created_at).toLocaleDateString() }}
                 </td>
-                <td>
+                <td v-if="useUser?.user?.is_admin">
                   <router-link
                     class="btn btn-sm btn-warning mx-2"
                     :to="{
@@ -73,6 +73,7 @@ import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
 
+import { useUserStore } from "../../../stores/UserStore";
 import useCategories from "../../../composables/categories";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
@@ -84,7 +85,10 @@ export default {
   },
   setup() {
     const { categories, getCategories, destroyCategory } = useCategories();
+    const useUser = useUserStore();
+    console.log(useUser?.user);
     onMounted(() => {
+      //   getMyArticles(useUser?.user?.id);
       getCategories();
       setTimeout(() => {
         $("#categories_datatable").DataTable({
