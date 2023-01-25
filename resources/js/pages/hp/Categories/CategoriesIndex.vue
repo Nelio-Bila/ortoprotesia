@@ -86,7 +86,7 @@ export default {
   setup() {
     const { categories, getCategories, destroyCategory } = useCategories();
     const useUser = useUserStore();
-    console.log(useUser?.user);
+
     onMounted(() => {
       //   getMyArticles(useUser?.user?.id);
       getCategories();
@@ -123,6 +123,7 @@ export default {
     return {
       categories,
       deleteCategory,
+      useUser,
     };
   },
 };
