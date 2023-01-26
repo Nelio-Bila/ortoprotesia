@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="col-md-7 mx-auto">
-          <form @submit.prevent="handleSubmit(useUser?.user?.id)">
+          <form @submit.prevent="handleSubmit(user?.id)">
             <h3 class="text-center">Dados pessoais</h3>
             <div v-if="errors">
               <div
@@ -93,9 +93,9 @@
 
             <div class="row mb-3 text-center">
               <avatar-input
-                v-model="useUser.user.avatar"
+                v-model="user.avatar"
                 default-src="/images/profile_imgs/avatar.png"
-                :input="useUser?.user?.avatar"
+                :input="user?.avatar"
               ></avatar-input>
             </div>
             <div class="row mb-3">
@@ -108,7 +108,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Nome"
-                    v-model="useUser.user.name"
+                    v-model="user.name"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
                     :class="{
@@ -156,7 +156,7 @@
                       'is-valid': !v$.surname.$invalid,
                     }"
                     placeholder="Apelido"
-                    v-model="useUser.user.surname"
+                    v-model="user.surname"
                   />
                   <button
                     @click="editSurname = !editSurname"
@@ -197,7 +197,7 @@
                       'is-valid': !v$.birthdate.$invalid,
                     }"
                     placeholder="Data de nascimento"
-                    v-model="useUser.user.birthdate"
+                    v-model="user.birthdate"
                   />
                   <button
                     @click="editBirthdate = !editBirthdate"
@@ -235,7 +235,7 @@
                     'is-valid': !v$.email.$invalid,
                   }"
                   placeholder="Email"
-                  v-model="useUser.user.email"
+                  v-model="user.email"
                 />
                 <span class="invalid-feedback" v-if="v$.email.$error">
                   {{ v$.email.$errors[0].$message }}
@@ -277,7 +277,8 @@ import useUsers from "../../composables/users";
 
 import { useUserStore } from "../../stores/UserStore";
 
-const useUser = useUserStore();
+// const useUser = useUserStore();
+const { user } = useUserStore();
 
 const { updateUser, processing, success, errors } = useAuth();
 
@@ -319,7 +320,7 @@ const rules = computed(() => ({
   updated_at: {},
 }));
 
-const v$ = useVuelidate(rules, useUser.user);
+const v$ = useVuelidate(rules, user);
 
 const handleSubmit = async (id) => {
   v$._value.$validate();

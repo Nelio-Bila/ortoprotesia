@@ -45,11 +45,11 @@ import ConsultCreate from "../pages/Consult/ConsultCreate.vue";
 import ConsultIndex from "../pages/Consult/ConsultIndex.vue";
 
 import ProcessCreate from "../pages/Process/ProcessCreate.vue";
+import ProcessEdit from "../pages/Process/ProcessEdit.vue";
 import ProcessDetails from "../pages/Process/ProcessDetails.vue";
 import ProcessInfo from "../pages/Process/ProcessInfo.vue";
 
 import ProcessIndex from "../pages/Admin/Processes/ProcessIndex.vue";
-import ProcessEdit from "../pages/Admin/Processes/ProcessEdit.vue";
 
 import HProsIndex from "../pages/Admin/Health_pros/HProsIndex.vue";
 import HProDetails from "../pages/Admin/Health_pros/HProDetails.vue";
@@ -241,6 +241,12 @@ const routes = [
         meta: { requiresAuth: true },
     },
     {
+        path: "/process/edit",
+        name: "process.edit",
+        component: ProcessEdit,
+        meta: { requiresAuth: true },
+    },
+    {
         path: "/process",
         name: "process.show",
         component: ProcessDetails,
@@ -256,12 +262,6 @@ const routes = [
         path: "/processes",
         name: "processes.index",
         component: ProcessIndex,
-        meta: { requiresAdminAuth: true },
-    },
-    {
-        path: "/process/edit",
-        name: "process.edit",
-        component: ProcessEdit,
         meta: { requiresAdminAuth: true },
     },
     {

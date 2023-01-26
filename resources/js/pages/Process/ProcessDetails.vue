@@ -51,6 +51,15 @@
             <h3 class="text-center">Dados do processo</h3>
 
             <div class="row mb-3 border py-2">
+              <router-link
+                :to="{
+                  name: 'process.edit',
+                }"
+                class="btn btn-primary"
+                >Editar</router-link
+              >
+            </div>
+            <div class="row mb-3 border py-2">
               <label class="my-2">Endereço</label>
               <div class="col">
                 <label for="province">Provincia</label>
@@ -245,9 +254,9 @@ const route = useRoute();
 
 const { getProcess, process } = useProcesses();
 
-const { user } = useUserStore();
+const userStore = useUserStore();
 
 onMounted(() => {
-  getProcess(user.id);
+  getProcess(userStore?.user?.id);
 });
 </script>
