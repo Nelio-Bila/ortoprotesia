@@ -55,7 +55,7 @@
                 :to="{
                   name: 'process.edit',
                 }"
-                class="btn btn-primary"
+                class="btn btn-primary mx-3"
                 >Editar</router-link
               >
             </div>
