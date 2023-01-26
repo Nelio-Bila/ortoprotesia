@@ -15,7 +15,7 @@ class Adress extends Model
 
     public function process()
     {
-        return $this->belongsTo(Process::class, 'process_id', 'id');
+        return $this->hasMany(Process::class);
     }
 
     public function province()

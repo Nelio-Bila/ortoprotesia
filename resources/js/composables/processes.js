@@ -70,17 +70,17 @@ export default function useProcesses() {
             });
     };
 
-    const getProcess = async (id) => {
+    const getProcess = async (user_id) => {
         processing.value = true;
 
         await axios
-            .get("/process/" + id)
+            .get("/process/" + user_id)
             .then((response) => {
-                process.value = response.data[0];
+                process.value = response.data;
                 processing.value = false;
             })
             .catch((ex) => {
-                process.value = [];
+                process.value = {};
                 processing.value = false;
             });
     };

@@ -14,11 +14,11 @@
               >Abertura de processo</router-link
             >
           </li>
-          <li class="active">
+          <!-- <li class="active">
             <router-link to="/process" class="nav-link text-white"
               >Dados do processo</router-link
             >
-          </li>
+          </li> -->
           <li>
             <router-link to="/consults" class="nav-link text-white"
               >Consultas</router-link

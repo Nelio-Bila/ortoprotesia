@@ -117,6 +117,7 @@ Route::delete('/news/delete/{id}', [NoticeController::class, 'destroy']);
 // Process
 Route::post('process/register', [ProcessController::class, 'store']);
 Route::get('processes', [ProcessController::class, 'index']);
+Route::get('process/{user_id}', [ProcessController::class, 'show']);
 
 
 // Files

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Identification;
 use App\Http\Requests\ProcessRequest;
 use App\Models\Neighbourhood;
+use Illuminate\Support\Facades\Auth;
 
 class ProcessController extends Controller
 {
@@ -91,9 +92,9 @@ class ProcessController extends Controller
      * @param  \App\Models\Process  $process
      * @return \Illuminate\Http\Response
      */
-    public function show(Process $process)
+    public function show($user_id)
     {
-        return Process::find($process);
+        return Process::with(['address.province', 'address.district', 'address.neighbourhood', 'identification', 'consults'])->where('user_id', $user_id)->first();
     }
 
     /**

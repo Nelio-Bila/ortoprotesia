@@ -16,12 +16,12 @@ class Process extends Model
 
     public function identification()
     {
-        return $this->hasOne(Identification::class);
+        return $this->belongsTo(Identification::class);
     }
 
     public function address()
     {
-        return $this->hasOne(Adress::class);
+        return $this->belongsTo(Adress::class);
     }
     public function user()
     {
