@@ -50,12 +50,12 @@
           <div class="col mx-auto">
             <h3 class="text-center">Dados do processo</h3>
 
-            <div class="row mb-3 border py-2">
+            <div class="row mb-3 border p-2">
               <router-link
                 :to="{
                   name: 'process.edit',
                 }"
-                class="btn btn-primary mx-3"
+                class="btn btn-primary"
                 >Editar</router-link
               >
             </div>
