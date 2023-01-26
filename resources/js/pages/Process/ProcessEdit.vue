@@ -506,7 +506,7 @@ const form = reactive({
 
 onMounted(() => {
   getProcess(userStore?.user?.id);
-
+  console.log(process);
   form.maritalState = process?.maritalState;
   form.genre = process?.genre;
   form.race = process?.race;
