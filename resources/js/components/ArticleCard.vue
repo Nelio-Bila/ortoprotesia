@@ -42,7 +42,7 @@
       </div>
     </div>
   </div> -->
-  <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4 mb-3">
     <router-link
       :to="`/articles/${article.id}`"
       class="card"

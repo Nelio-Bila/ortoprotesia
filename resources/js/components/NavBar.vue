@@ -31,21 +31,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link
-              class="nav-link hover:primary fw-bold"
-              aria-current="page"
-              to="/"
-              >Inicio</router-link
+            <router-link class="nav-link hover:primary fw-bold" to="/#articles"
+              >Artigos</router-link
             >
           </li>
           <li class="nav-item">
             <router-link class="nav-link hover:primary fw-bold" to="/news"
               >Noticias</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link hover:primary fw-bold" to="/#articles"
-              >Artigos</router-link
             >
           </li>
           <li class="nav-item hover:white">
