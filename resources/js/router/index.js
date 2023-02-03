@@ -37,6 +37,8 @@ import NewsCreate from "../pages/Admin/News/NewsCreate.vue";
 import NewsView from "../pages/News/NewsView.vue";
 import NewsEdit from "../pages/Admin/News/NewsEdit.vue";
 
+import ForumIndex from "../pages/Forum/ForumIndex.vue";
+
 import CategoriesIndex from "../pages/hp/Categories/CategoriesIndex.vue";
 import CategoriesEdit from "../pages/hp/Categories/CategoriesEdit.vue";
 import CategoriesCreate from "../pages/hp/Categories/CategoriesCreate.vue";
@@ -328,6 +330,11 @@ const routes = [
         path: "/ortoprotesia",
         name: "orto",
         component: Orto,
+    },
+    {
+        path: "/forum",
+        name: "forum.index",
+        component: ForumIndex,
     },
     {
         path: "/guide",
