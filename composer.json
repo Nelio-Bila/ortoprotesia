@@ -3,8 +3,9 @@
     "type": "project",
     "description": "Portal de Ortoprotesia - HCM.",
     "keywords": [
-        "plataforma de diseminacao de informacao em torno da Ortoprotesia no HCM",
-        "laravel"
+        "plataforma de diseminação de informação em torno da Ortoprotesia no HCM",
+        "laravel",
+        "Vuejs"
     ],
     "license": "MIT",
     "require": {
