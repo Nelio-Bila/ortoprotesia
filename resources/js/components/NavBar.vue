@@ -126,7 +126,7 @@
             "
             style="font-size: 0.35em"
           >
-            9
+            2
             <span class="visually-hidden">Notificações não lidas</span>
           </span>
         </i>
