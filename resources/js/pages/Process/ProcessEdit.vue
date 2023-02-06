@@ -10,15 +10,10 @@
 
         <ul class="list-unstyled components">
           <li class="active">
-            <router-link to="/process/create" class="nav-link text-white"
+            <router-link to="/process" class="nav-link text-white"
               >Dados do processo</router-link
             >
           </li>
-          <!-- <li class="active">
-              <router-link to="/process" class="nav-link text-white"
-                >Dados do processo</router-link
-              >
-            </li> -->
           <li>
             <router-link to="/consults" class="nav-link text-white"
               >Consultas</router-link
@@ -38,12 +33,17 @@
         class="container-fluid align-items-center justify-content-center"
       >
         <!-- We'll fill this with dummy content -->
-        <div
-          @click="toggleSideMenu"
-          id="sidebarCollapse"
-          class="my-2 text-primary cursor-pointer"
-        >
-          <i class="fas fa-align-left fa-2xl"></i>
+        <div class="row">
+          <div
+            @click="toggleSideMenu"
+            id="sidebarCollapse"
+            class="my-2 text-primary cursor-pointer col-1 mr-2"
+          >
+            <i class="fas fa-align-left fa-2xl"></i>
+          </div>
+          <button @click.prevent="goBack" class="btn btn-outline-primary col-1">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
         </div>
         <!-- <div class="container align-items-center justify-content-center"> -->
         <div class="row m-2">
@@ -456,7 +456,7 @@
 </template>
 
   <script setup>
-import { reactive, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, helpers, minLength } from "@vuelidate/validators";
 import { useRouter, useRoute } from "vue-router";
@@ -482,7 +482,7 @@ const {
   process,
 } = useProcesses();
 
-const form = reactive({
+const form = ref({
   maritalState: "",
   genre: "",
   race: "",
@@ -504,26 +504,33 @@ const form = reactive({
   },
 });
 
+watch(
+  userStore,
+  async () => {
+    getProcess(userStore?.get?.id);
+    form.value.maritalState = process.value.maritalState;
+    form.value.genre = process.value.genre;
+    form.value.race = process.value.race;
+    form.value.profession = process.value.profession;
+    form.value.workPlace = process.value.workPlace;
+    form.value.naturality = process.value.naturality;
+    form.value.phoneNumber = process.value.phoneNumber;
+    form.value.fatherName = process.value.fatherName;
+    form.value.motherName = process.value.motherName;
+    form.value.address.province = process.value.address?.province.name;
+    form.value.address.district = process.value.address?.district.name;
+    form.value.address.neighbourhood =
+      process.value.address?.neighbourhood.name;
+
+    form.value.identification.number = process.value.identification?.number;
+    form.value.identification.archive = process.value.identification?.archive;
+    form.value.identification.issueDate =
+      process.value.identification?.issueDate;
+  },
+  { immediate: true }
+);
+
 onMounted(() => {
-  getProcess(userStore?.user?.id);
-  console.log(process);
-  form.maritalState = process?.maritalState;
-  form.genre = process?.genre;
-  form.race = process?.race;
-  form.profession = process?.profession;
-  form.workPlace = process?.workPlace;
-  form.naturality = process?.naturality;
-  form.phoneNumber = process?.phoneNumber;
-  form.fatherName = process?.fatherName;
-  form.motherName = process?.motherName;
-  form.address.province = process?.address?.province.name;
-  form.address.district = process?.address?.district.name;
-  form.address.neighbourhood = process?.address?.neighbourhood.name;
-
-  form.identification.number = process?.identification?.number;
-  form.identification.archive = process?.identification?.archive;
-  form.identification.issueDate = process?.identification?.issueDate;
-
   getProvinces();
 });
 
@@ -603,5 +610,9 @@ const saveProcess = async () => {
   } else {
     processing.value = false;
   }
+};
+
+const goBack = () => {
+  router.go(-1);
 };
 </script>
