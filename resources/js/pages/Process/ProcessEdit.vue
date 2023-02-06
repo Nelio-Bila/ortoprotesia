@@ -101,6 +101,9 @@
                     <option selected disabled>
                       -- Selecione a provincia --
                     </option>
+                    <option selected :value="form.address.province">
+                      {{ form.address.province }}
+                    </option>
                     <option
                       v-for="province in provinces"
                       :value="province"
@@ -132,6 +135,9 @@
                   >
                     <option selected disabled>
                       -- Selecione o distrito --
+                    </option>
+                    <option selected :value="form.address.district">
+                      {{ form.address.district }}
                     </option>
                     <option
                       v-for="district in districts"
