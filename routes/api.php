@@ -97,7 +97,7 @@ Route::get('/articles/category/{category_id}', [ArticleController::class, 'byCat
 Route::get('/articles/period/{period}', [ArticleController::class, 'byPeriod']);
 Route::get('/articles/popularity/{popularity}', [ArticleController::class, 'byViews']);
 Route::post('/articles/register', [ArticleController::class, 'store']);
-Route::post('/articles/increment/{article_id}/{user_id}/{who}', [ArticleController::class, 'incrementViews']);
+Route::post('/articles/increment/{slug}/{user_id}/{who}', [ArticleController::class, 'incrementViews']);
 Route::put('/articles/update/{id}', [ArticleController::class, 'update']);
 Route::delete('/articles/delete/{id}', [ArticleController::class, 'destroy']);
 

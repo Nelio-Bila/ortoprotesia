@@ -62,12 +62,13 @@ class ArticleController extends Controller
         return Article::with(['category', 'hpro', 'views'])->where('slug', $slug)->first();
     }
 
-    public function incrementViews($article_id, $user_id, $who)
+    public function incrementViews($slug, $user_id, $who)
     {
+        $article = Article::where('slug', $slug)->first();
 
         try {
             ArticleView::create([
-                'article_id' => $article_id,
+                'article_id' => $article->id,
                 'who->id' => $user_id,
                 'who->type' => $who
             ]);

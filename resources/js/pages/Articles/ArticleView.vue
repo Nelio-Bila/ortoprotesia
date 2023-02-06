@@ -232,7 +232,7 @@ onMounted(() => {
   } else if (useUser?.getIsHP) {
     who = "hp";
   }
-  incrementArticleViews(route.params.article_id, useUser?.user?.id, who);
+  incrementArticleViews(route.params.slug, useUser?.user?.id, who);
 });
 
 watch(article, async (newArticle, oldArticle) => {

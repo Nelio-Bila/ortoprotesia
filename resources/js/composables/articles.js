@@ -231,11 +231,11 @@ export default function useArticles(currentPage, rowsPerPage = 200) {
             });
     };
 
-    const incrementArticleViews = async (article_id, user_id, who) => {
+    const incrementArticleViews = async (slug, user_id, who) => {
         errors.value = "";
         try {
             await axios.post(
-                "/articles/increment/" + article_id + "/" + user_id + "/" + who
+                "/articles/increment/" + slug + "/" + user_id + "/" + who
             );
         } catch (e) {
             if (e.response.status === 422) {
