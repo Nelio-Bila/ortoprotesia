@@ -175,7 +175,7 @@ const routes = [
         meta: { requiresHPAuth: true },
     },
     {
-        path: "/articles/:article_id",
+        path: "/articles/:slug",
         name: "articles.view",
         component: ArticleView,
         props: true,

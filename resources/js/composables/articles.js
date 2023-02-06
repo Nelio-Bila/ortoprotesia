@@ -158,11 +158,11 @@ export default function useArticles(currentPage, rowsPerPage = 200) {
             });
     };
 
-    const getArticle = async (id) => {
+    const getArticle = async (slug) => {
         processing.value = true;
 
         await axios
-            .get("/article/" + id)
+            .get("/article/" + slug)
             .then((response) => {
                 article.value = response.data;
                 processing.value = false;

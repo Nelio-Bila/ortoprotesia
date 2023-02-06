@@ -62,7 +62,7 @@
             v-else
             v-for="article in articles"
             :key="article.id"
-            :to="`/articles/${article.id}`"
+            :to="`/articles/${article.slug}`"
             class="btn btn-outline-secondary p-1 mb-0 w-100"
           >
             <div class="row">
@@ -113,7 +113,7 @@
             v-else
             v-for="article in latestArticles"
             :key="article.id"
-            :to="`/articles/${article.id}`"
+            :to="`/articles/${article.slug}`"
             class="btn btn-outline-secondary p-1 mb-0 w-100"
           >
             <div class="row">
@@ -223,7 +223,7 @@ const {
 const route = useRoute();
 
 onMounted(() => {
-  getArticle(route.params.article_id);
+  getArticle(route.params.slug);
   getLatestArticles();
   const useUser = useUserStore();
   let who = "user";

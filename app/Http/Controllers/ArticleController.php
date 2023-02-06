@@ -57,9 +57,9 @@ class ArticleController extends Controller
         return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->limit(5)->get());
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        return Article::with(['category', 'hpro', 'views'])->find($id);
+        return Article::with(['category', 'hpro', 'views'])->where('slug', $slug)->first();
     }
 
     public function incrementViews($article_id, $user_id, $who)
@@ -139,7 +139,7 @@ class ArticleController extends Controller
             $article->title = $request->title;
             $article->body = $request->body;
             $article->postExcerpt = $request->postExcerpt;
-            $article->slug = $request->slug;
+            $article->slug = str_replace(' ', '_', $request->title);
             $article->featuredImage = $image_url;
             $article->header_image_public_id = $public_id;
             $article->metaDescription = $request->metaDescription;

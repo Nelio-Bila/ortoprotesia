@@ -23,11 +23,11 @@ export default function useUsers() {
             });
     };
 
-    const getUser = async (id) => {
+    const getUser = async () => {
         processing.value = true;
 
         await axios
-            .get("/user/" + id)
+            .get("/user/details")
             .then((response) => {
                 user.value = response.data;
                 processing.value = false;

@@ -189,16 +189,22 @@
 
 <script setup>
 // 3rd party imports
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 // my imports
 import { useUserStore } from "../stores/UserStore";
 import useAuth from "../composables/auth";
+import useUsers from "../composables/users";
 
 // Composables
 const useUser = useUserStore();
 const router = useRouter();
+const { user, getUser } = useUsers;
+
+// onMounted(() => {
+//   getUser();
+// });
 
 // variables and functions
 const { logout } = useAuth();

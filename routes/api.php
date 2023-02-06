@@ -40,7 +40,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('forgot', [ForgotController::class, 'forgot']);
 Route::post('reset', [ForgotController::class, 'reset']);
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:user');
-Route::get('user/{id}', [AuthController::class, 'details']);
+Route::get('user/details', [AuthController::class, 'details']);
 Route::delete('user/{id}', [AdminController::class, 'destroyUser'])->middleware('auth:admin');
 Route::put('user/update/{id}', [AuthController::class, 'update'])->middleware('auth:user');
 Route::get('users', [AuthController::class, 'index']);
@@ -89,7 +89,7 @@ Route::get('articles/views/day/{hp}', [ArticleController::class, 'articlesViewsP
 Route::get('articles/me/{id}', [ArticleController::class, 'myArticles']);
 Route::get('/articles/views/{id}', [ArticleController::class, 'myViewsCount']);
 Route::get('/articles/views/today/{id}', [ArticleController::class, 'myTodayViewsCount']);
-Route::get('article/{id}', [ArticleController::class, 'show']);
+Route::get('article/{slug}', [ArticleController::class, 'show']);
 Route::get('articles/related/{id}/{article}', [ArticleController::class, 'related']);
 Route::get('/articles/search/{criteria}', [ArticleController::class, 'search']);
 Route::get('/articles/latest', [ArticleController::class, 'latest']);

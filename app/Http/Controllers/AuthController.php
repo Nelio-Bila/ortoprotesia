@@ -65,9 +65,9 @@ class AuthController extends Controller
         return Auth::guard('user')->user();
     }
 
-    public function details($id)
+    public function details()
     {
-        return User::with('process')->find($id);
+        return User::with('process')->find(Auth::guard('user')->user()->id);
     }
 
     public function register(RegisterRequest $request)
