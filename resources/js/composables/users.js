@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 export default function useUsers() {
     const users = ref([]);
     const user = ref([]);
+    const userProcess = ref([]);
     const router = useRouter();
     const errors = ref("");
     const processing = ref(false);
@@ -34,6 +35,21 @@ export default function useUsers() {
             })
             .catch((ex) => {
                 user.value = [];
+                processing.value = false;
+            });
+    };
+
+    const getUserProcess = async (user_id) => {
+        processing.value = true;
+
+        await axios
+            .get("/user/process/" + user_id)
+            .then((response) => {
+                userProcess.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                userProcess.value = [];
                 processing.value = false;
             });
     };
@@ -95,5 +111,7 @@ export default function useUsers() {
         updateUser,
         destroyUser,
         setUSer,
+        getUserProcess,
+        userProcess,
     };
 }

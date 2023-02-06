@@ -62,7 +62,7 @@
                   >Guias</router-link
                 >
               </li>
-              <li v-if="useUser?.get">
+              <li v-if="userProcess?.process">
                 <router-link
                   to="/consult/create"
                   class="dropdown-item hover:primary fw-bold"
@@ -72,11 +72,18 @@
               <li v-if="useUser?.get">
                 <hr class="dropdown-divider" />
               </li>
-              <li v-if="useUser?.get">
+              <li v-if="userProcess?.process">
                 <router-link
                   to="/process"
                   class="dropdown-item hover:primary fw-bold"
                   >Processo clínico</router-link
+                >
+              </li>
+              <li v-if="!userProcess?.process">
+                <router-link
+                  to="/process/create"
+                  class="dropdown-item hover:primary fw-bold"
+                  >Abrir Processo clínico</router-link
                 >
               </li>
             </ul>
@@ -189,7 +196,7 @@
 
 <script setup>
 // 3rd party imports
-import { ref, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 // my imports
@@ -200,11 +207,19 @@ import useUsers from "../composables/users";
 // Composables
 const useUser = useUserStore();
 const router = useRouter();
-const { user, getUser } = useUsers;
 
-// onMounted(() => {
-//   getUser();
-// });
+const { userProcess, getUserProcess } = useUsers();
+
+const todoId = ref(1);
+const data = ref(null);
+
+watch(
+  useUser,
+  async () => {
+    getUserProcess(useUser?.get?.id);
+  },
+  { immediate: true }
+);
 
 // variables and functions
 const { logout } = useAuth();

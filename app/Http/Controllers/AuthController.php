@@ -69,6 +69,15 @@ class AuthController extends Controller
     {
         return User::with('process')->find(Auth::guard('user')->user()->id);
     }
+    public function process($user_id)
+    {
+        $user = User::with('process')->find($user_id);
+        if ($user) {
+            return $user;
+        } else {
+            return null;
+        }
+    }
 
     public function register(RegisterRequest $request)
     {

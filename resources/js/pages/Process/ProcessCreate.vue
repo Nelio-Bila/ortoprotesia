@@ -3,7 +3,7 @@
     <NavBar />
     <div class="wrapper">
       <!-- Sidebar -->
-      <nav id="sidebar" class="bg-primary">
+      <!-- <nav id="sidebar" class="bg-primary">
         <div class="sidebar-header">
           <h3>Processo</h3>
         </div>
@@ -14,11 +14,6 @@
               >Abertura de processo</router-link
             >
           </li>
-          <!-- <li class="active">
-            <router-link to="/process" class="nav-link text-white"
-              >Dados do processo</router-link
-            >
-          </li> -->
           <li>
             <router-link to="/consults" class="nav-link text-white"
               >Consultas</router-link
@@ -30,7 +25,7 @@
             >
           </li>
         </ul>
-      </nav>
+      </nav> -->
 
       <!-- Page Content -->
       <div
@@ -38,13 +33,13 @@
         class="container-fluid align-items-center justify-content-center"
       >
         <!-- We'll fill this with dummy content -->
-        <div
+        <!-- <div
           @click="toggleSideMenu"
           id="sidebarCollapse"
           class="my-2 text-primary cursor-pointer"
         >
           <i class="fas fa-align-left fa-2xl"></i>
-        </div>
+        </div> -->
         <!-- <div class="container align-items-center justify-content-center"> -->
         <div class="row m-2">
           <div class="col mx-auto">
