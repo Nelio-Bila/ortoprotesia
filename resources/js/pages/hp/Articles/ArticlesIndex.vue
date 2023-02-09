@@ -56,7 +56,7 @@
                       class="btn btn-sm btn-success m-2"
                       :to="{
                         name: 'articles.view',
-                        params: { article_id: article.id },
+                        params: { slug: article.slug },
                       }"
                       >Visualizar</router-link
                     >
@@ -109,6 +109,7 @@ const { articles, getMyArticles, destroyArticle } = useArticles(
 onMounted(() => {
   const useUser = useUserStore();
   getMyArticles(useUser?.user?.id);
+
   setTimeout(() => {
     $("#articles_datatable").DataTable({
       lengthMenu: [

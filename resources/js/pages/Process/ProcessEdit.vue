@@ -527,7 +527,6 @@ watch(
     form.value.address.district = process.value.address?.district.name;
     form.value.address.neighbourhood =
       process.value.address?.neighbourhood.name;
-
     form.value.identification.number = process.value.identification?.number;
     form.value.identification.archive = process.value.identification?.archive;
     form.value.identification.issueDate =
