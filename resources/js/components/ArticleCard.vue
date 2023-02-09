@@ -88,7 +88,7 @@
         </div>
         <div class="stats">
           <i class="far fa-eye"></i> {{ article.views.length }}
-          <i class="far fa-comment"></i> 12
+          <!-- <i class="far fa-comment"></i> 12 -->
         </div>
       </div>
     </router-link>

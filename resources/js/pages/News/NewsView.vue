@@ -47,7 +47,7 @@ const {
   latestNews,
   getLatestNews,
   news,
-  getRelatedNews,
+
   processing,
 } = useNews(currentPage, rowsPerPage);
 
@@ -56,12 +56,6 @@ const route = useRoute();
 onMounted(() => {
   getAdvert(route.params.notice_id);
   getLatestNews();
-});
-
-watch(advert, async (newAdvert, oldAdvert) => {
-  if (newAdvert) {
-    getRelatedNews(advert.value.category_id, advert.value.id);
-  }
 });
 
 const router = useRouter();
