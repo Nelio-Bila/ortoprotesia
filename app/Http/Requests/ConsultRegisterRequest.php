@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ConsultSessionRegisterRequest extends FormRequest
+class ConsultRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,14 @@ class ConsultSessionRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => ['required'],
-            'date' => ['required'],
+            'consult_session_id' => ['required'],
         ];
     }
 
     public function messages()
     {
         return [
-            'type.required' => "Por favor indique o tipo de consulta",
-            'date.required' => "Por favor indique a data",
+            'consult_session_id.required' => 'Por favor, preencha a data',
         ];
     }
 }
