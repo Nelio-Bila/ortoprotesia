@@ -137,3 +137,11 @@ Route::post('consultsession/register', [ConsultSessionController::class, 'store'
 Route::get('consultsession/{id}', [ConsultSessionController::class, 'show']);
 Route::put('consultsession/{id}', [ConsultSessionController::class, 'update']);
 Route::delete('consultsession/destroy/{id}', [ConsultSessionController::class, 'destroy']);
+
+
+// Consults
+Route::get('consults', [ConsultController::class, 'index']);
+Route::post('consult/register', [ConsultController::class, 'store']);
+Route::get('consult/{id}', [ConsultController::class, 'show']);
+Route::put('consult/{id}', [ConsultController::class, 'update']);
+Route::delete('consult/destroy/{id}', [ConsultController::class, 'destroy']);
