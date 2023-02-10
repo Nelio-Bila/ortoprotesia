@@ -11,7 +11,11 @@ class ConsultSession extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'id',
-        'type', 'date', 'accomplished', 'admin_id', 'admin_id',
+        'id', 'type', 'date', 'accomplished', 'admin_id', 'admin_id',
     ];
+
+    public function consults()
+    {
+        return $this->hasMany(Consult::class);
+    }
 }

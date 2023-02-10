@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConsultSessionController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\ForgotController;
 use App\Http\Controllers\HealthProfessionalController;
@@ -128,3 +129,11 @@ Route::get('districts/{province_id}', [DistrictController::class, 'index']);
 
 // Neighbouhoods
 Route::get('neighbourhoods/{district_id}', [DistrictController::class, 'index']);
+
+
+// Consult Sessions
+Route::get('consultsessions', [ConsultSessionController::class, 'index']);
+Route::post('consultsession/register', [ConsultSessionController::class, 'store']);
+Route::get('consultsession/{id}', [ConsultSessionController::class, 'show']);
+Route::put('consultsession/{id}', [ConsultSessionController::class, 'update']);
+Route::delete('consultsession/destroy/{id}', [ConsultSessionController::class, 'destroy']);
