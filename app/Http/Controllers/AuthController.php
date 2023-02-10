@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\UpdateRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -18,7 +18,6 @@ class AuthController extends Controller
     {
         try {
             if (Auth::guard('web')->attempt($request->only('email', 'password'))) {
-
                 /** @var User $user */
                 $user = Auth::guard('web')->user();
                 $token = $user->createToken('user-token')->accessToken;
@@ -26,14 +25,14 @@ class AuthController extends Controller
                 return response([
                     'message' => 'sucess',
                     'token' => $token,
-                    'user' => $user
+                    'user' => $user,
                 ]);
 
                 return $user;
             }
 
             return response()->json([
-                'message' => 'As credenciais introduzidas não são válidas'
+                'message' => 'As credenciais introduzidas não são válidas',
             ], 401);
         } catch (\Exception $exception) {
             return response()->json([
@@ -57,7 +56,7 @@ class AuthController extends Controller
             Auth::guard('admin')->user()->token()->revoke();
         }
 
-        return "Logged out sucessfully";
+        return 'Logged out sucessfully';
     }
 
     public function user()
@@ -69,6 +68,7 @@ class AuthController extends Controller
     {
         return User::with('process')->find(Auth::guard('user')->user()->id);
     }
+
     public function process($user_id)
     {
         $user = User::with('process')->find($user_id);
@@ -94,15 +94,13 @@ class AuthController extends Controller
             return $user;
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
 
-
     public function update(UpdateRequest $request, $id)
     {
-
         $user = User::find($id);
 
         try {
@@ -113,11 +111,10 @@ class AuthController extends Controller
 
             $user->save();
 
-
             return $user;
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -130,20 +127,18 @@ class AuthController extends Controller
     public function userByDate()
     {
         //          MYSQL
-        $users = User::select("id", DB::raw("(count(id)) as count"), DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as users_to_month"))
+        $users = User::select('id', DB::raw('(count(id)) as count'), DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as users_to_month"))
             ->orderBy('created_at', 'desc')
             ->groupBy(DB::raw("DATE_FORMAT(created_at, '%m-%Y')"))
             ->get();
 
-
         foreach ($users as $user) {
-            $usersPerMonth[] = $user["count"];
-            $months[] = $user["users_to_month"];
+            $usersPerMonth[] = $user['count'];
+            $months[] = $user['users_to_month'];
         }
 
-
         return response()->json([
-            'usersPerMonth' => array_reverse($usersPerMonth), 'months' => array_reverse($months)
+            'usersPerMonth' => array_reverse($usersPerMonth), 'months' => array_reverse($months),
         ]);
     }
 }

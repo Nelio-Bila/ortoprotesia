@@ -18,7 +18,7 @@ class ArticleView extends Model
     }
 
     protected $casts = [
-        'who' => 'array'
+        'who' => 'array',
     ];
 
     public function setWhosAttribute($value)
@@ -26,7 +26,7 @@ class ArticleView extends Model
         $who = [];
 
         foreach ($value as $array_item) {
-            if (!is_null($array_item['key'])) {
+            if (! is_null($array_item['key'])) {
                 $who[] = $array_item;
             }
         }

@@ -1,19 +1,18 @@
 <?php
 
-use Illuminate\Http\Request;
-use App\Models\HealthProfessional;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ImageController;
-use App\Http\Controllers\ForgotController;
-use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\ProcessController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\ForgotController;
 use App\Http\Controllers\HealthProfessionalController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\ProvinceController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +56,6 @@ Route::post('hp/forgot', [HealthProfessionalController::class, 'forgot']);
 Route::post('hp/reset', [HealthProfessionalController::class, 'reset']);
 Route::get('hp', [HealthProfessionalController::class, 'hp'])->middleware('auth:hp-api');
 
-
 // dashboard
 Route::get('hpros', [HealthProfessionalController::class, 'index']);
 Route::get('hpro/{id}', [HealthProfessionalController::class, 'show']);
@@ -83,7 +81,6 @@ Route::get('category/{id}', [CategoryController::class, 'show']);
 Route::put('category/{id}', [CategoryController::class, 'update']);
 Route::delete('category/destroy/{id}', [CategoryController::class, 'destroy']);
 
-
 // Articles
 Route::get('articles', [ArticleController::class, 'index']);
 Route::get('articles/views/day/{hp}', [ArticleController::class, 'articlesViewsPerDay']);
@@ -102,7 +99,6 @@ Route::post('/articles/increment/{slug}/{user_id}/{who}', [ArticleController::cl
 Route::put('/articles/update/{id}', [ArticleController::class, 'update']);
 Route::delete('/articles/delete/{id}', [ArticleController::class, 'destroy']);
 
-
 // Notices
 Route::get('news', [NoticeController::class, 'index']);
 Route::get('/news/{id}', [NoticeController::class, 'show']);
@@ -120,11 +116,9 @@ Route::post('process/register', [ProcessController::class, 'store']);
 Route::get('processes', [ProcessController::class, 'index']);
 Route::get('process/{user_id}', [ProcessController::class, 'show']);
 
-
 // Files
 Route::post('/upload', [ImageController::class, 'store'])->name('upload');
 Route::get('/media/{post}', [ImageController::class, 'getImages'])->name('post.images');
-
 
 // Provinces
 Route::get('provinces', [ProvinceController::class, 'index']);

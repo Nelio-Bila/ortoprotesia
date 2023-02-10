@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('consults', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string("type");
-            $table->boolean("accomplished")->default(false);
+            $table->string('type');
+            $table->boolean('accomplished')->default(false);
             $table->uuid('process_id');
             $table->foreign('process_id')->references('id')->on('processes');
-            $table->uuid('consult_date_id');
-            $table->foreign('consult_date_id')->references('id')->on('consult_dates');
+            $table->uuid('consult_session_id');
+            $table->foreign('consult_session_id')->references('id')->on('consult_sessions');
             $table->softDeletes();
             $table->timestamps();
         });

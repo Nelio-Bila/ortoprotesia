@@ -11,13 +11,13 @@ class ImageController extends Controller
     {
         $path = public_path('tmp/uploads');
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             mkdir($path, 0777, true);
         }
 
         $file = $request->file('image');
 
-        $name = uniqid() . '_' . trim($file->getClientOriginalName());
+        $name = uniqid().'_'.trim($file->getClientOriginalName());
 
         $file->move($path, $name);
 
@@ -27,6 +27,7 @@ class ImageController extends Controller
     public function getImages(Category $category)
     {
         $image = $category->image;
+
         return ['media' => $image];
     }
 }

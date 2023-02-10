@@ -578,3 +578,16 @@ const saveProcess = async () => {
   }
 };
 </script>
+
+
+<script>
+import { useUserStore } from "../../stores/UserStore";
+
+export default {
+  beforeRouteEnter: function (to, from, next) {
+    const userStore = useUserStore();
+    if (to.name !== "login" && !userStore.user) next({ name: "login" });
+    else next();
+  },
+};
+</script>

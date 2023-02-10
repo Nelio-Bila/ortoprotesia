@@ -10,7 +10,7 @@ class Neighbourhood extends Model
 {
     use HasFactory, Uuids;
 
-    protected $fillable = ['id', "name", "cod", "district_id"];
+    protected $fillable = ['id', 'name', 'cod', 'district_id'];
 
     public function district()
     {

@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        JD\Cloudder\CloudderServiceProvider::class
+        JD\Cloudder\CloudderServiceProvider::class,
 
     ],
 

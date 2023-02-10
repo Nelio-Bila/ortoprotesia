@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ForgotRequest;
 use App\Http\Requests\ResetRequest;
+use App\Models\User;
 use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class ForgotController extends Controller
 {
@@ -21,7 +20,7 @@ class ForgotController extends Controller
 
         if (User::where('email', $email)->doesntExist()) {
             return response([
-                'message' => "Usuário inexistente"
+                'message' => 'Usuário inexistente',
             ], 404);
         }
 
@@ -30,7 +29,7 @@ class ForgotController extends Controller
         try {
             DB::table('password_resets')->insert([
                 'email' => $email,
-                'token' => $token
+                'token' => $token,
             ]);
 
             // Send email
@@ -40,11 +39,11 @@ class ForgotController extends Controller
             // });
 
             return response([
-                'message' => 'Verifica sua caixa de email'
+                'message' => 'Verifica sua caixa de email',
             ]);
         } catch (\Exception $exception) {
             return response([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -53,16 +52,16 @@ class ForgotController extends Controller
     {
         $token = $request->input('token');
 
-        if (!$passwordResets = DB::table('password_resets')->where('token', $token)->first()) {
+        if (! $passwordResets = DB::table('password_resets')->where('token', $token)->first()) {
             return response([
-                'message' => 'Token invalido!'
+                'message' => 'Token invalido!',
             ], 400);
         }
 
-        /**@var User $user */
-        if (!$user = User::where('email', $passwordResets->email)->first()) {
+        /** @var User $user */
+        if (! $user = User::where('email', $passwordResets->email)->first()) {
             return response([
-                'message' => 'Usuario inexistente'
+                'message' => 'Usuario inexistente',
             ], 404);
         }
 
@@ -70,7 +69,7 @@ class ForgotController extends Controller
         $user->save();
 
         return response([
-            'message' => 'sucesso'
+            'message' => 'sucesso',
         ]);
     }
 }

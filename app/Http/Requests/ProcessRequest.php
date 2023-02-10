@@ -31,16 +31,16 @@ class ProcessRequest extends FormRequest
             // "number" => "required",
             // "archive" => "required",
             // "issueDate" => "required",
-            "user_id" => "required",
-            "maritalState" => "required",
-            "genre" => "required",
-            "race" => "required",
+            'user_id' => 'required',
+            'maritalState' => 'required',
+            'genre' => 'required',
+            'race' => 'required',
             // "profession" => "required",
             // "workPlace" => "required",
-            "naturality" => "required",
-            "phoneNumber" => "required",
-            "fatherName" => "required",
-            "motherName" => "required"
+            'naturality' => 'required',
+            'phoneNumber' => 'required',
+            'fatherName' => 'required',
+            'motherName' => 'required',
 
         ];
     }

@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Admin;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\AdminResetRequest;
 use App\Http\Requests\AdminForgotRequest;
 use App\Http\Requests\AdminRegisterRequest;
-use App\Models\Article;
-use App\Models\ArticleView;
+use App\Http\Requests\AdminResetRequest;
+use App\Models\Admin;
 use App\Models\Category;
-use App\Models\HealthProfessional;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -39,7 +36,7 @@ class AdminController extends Controller
             return $admin;
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -48,6 +45,7 @@ class AdminController extends Controller
     {
         return Auth::guard('admin-api')->user();
     }
+
     public function update(AdminRegisterRequest $request, $id)
     {
         try {
@@ -58,11 +56,10 @@ class AdminController extends Controller
 
             $admin->save();
 
-
             return $admin;
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -83,6 +80,7 @@ class AdminController extends Controller
 
         return response()->noContent();
     }
+
     public function destroyUser(User $user)
     {
         $user->delete();
@@ -94,7 +92,6 @@ class AdminController extends Controller
     {
         try {
             if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
-
                 /** @var User $user */
                 // $user = Auth::user();
                 $user = Auth::guard('admin')->user();
@@ -103,18 +100,18 @@ class AdminController extends Controller
                 return response([
                     'message' => 'sucess',
                     'token' => $token,
-                    'user' => $user
+                    'user' => $user,
                 ]);
 
                 return $user;
             }
 
             return response()->json([
-                'message' => 'Introduziste credenciais inválidas'
+                'message' => 'Introduziste credenciais inválidas',
             ], 401);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => "Houve um erro desconhecido, por favor aguarde um pouco e tente de novo"
+                'message' => 'Houve um erro desconhecido, por favor aguarde um pouco e tente de novo',
             ]);
         }
     }
@@ -125,7 +122,7 @@ class AdminController extends Controller
 
         if (Admin::where('email', $email)->doesntExist()) {
             return response([
-                'message' => "Usuário inexistente"
+                'message' => 'Usuário inexistente',
             ], 404);
         }
 
@@ -134,7 +131,7 @@ class AdminController extends Controller
         try {
             DB::table('password_resets')->insert([
                 'email' => $email,
-                'token' => $token
+                'token' => $token,
             ]);
 
             // Send email
@@ -144,11 +141,11 @@ class AdminController extends Controller
             // });
 
             return response([
-                'message' => 'Verifica sua caixa de email'
+                'message' => 'Verifica sua caixa de email',
             ]);
         } catch (\Exception $exception) {
             return response([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -157,16 +154,16 @@ class AdminController extends Controller
     {
         $token = $request->input('token');
 
-        if (!$passwordResets = DB::table('password_resets')->where('token', $token)->first()) {
+        if (! $passwordResets = DB::table('password_resets')->where('token', $token)->first()) {
             return response([
-                'message' => 'Token invalido!'
+                'message' => 'Token invalido!',
             ], 400);
         }
 
-        /**@var User $user */
-        if (!$user = Admin::where('email', $passwordResets->email)->first()) {
+        /** @var User $user */
+        if (! $user = Admin::where('email', $passwordResets->email)->first()) {
             return response([
-                'message' => 'Usuario inexistente'
+                'message' => 'Usuario inexistente',
             ], 404);
         }
 
@@ -174,7 +171,7 @@ class AdminController extends Controller
         $user->save();
 
         return response([
-            'message' => 'sucesso'
+            'message' => 'sucesso',
         ]);
     }
 
@@ -184,24 +181,20 @@ class AdminController extends Controller
             Auth::guard('admin-api')->user()->AauthAcessToken()->delete();
         }
 
-        return "Admin Logged out sucessfully";
+        return 'Admin Logged out sucessfully';
     }
 
     public function registersPerDay()
     {
-
         $left = User::whereBetween('users.created_at', [now()->subDays(15), now()])
             ->leftJoin('health_professionals', DB::raw("DATE_FORMAT(health_professionals.created_at, '%d-%m-%Y')"), '=', DB::raw("DATE_FORMAT(users.created_at, '%d-%m-%Y')"))
-            ->select(DB::raw("(count(health_professionals.id)) as hp_count"), DB::raw("(count(users.id)) as users_count"), DB::raw("(DATE_FORMAT(users.created_at, '%d-%m-%Y')) as days"))
+            ->select(DB::raw('(count(health_professionals.id)) as hp_count'), DB::raw('(count(users.id)) as users_count'), DB::raw("(DATE_FORMAT(users.created_at, '%d-%m-%Y')) as days"))
             ->orderBy('users.created_at', 'desc')
             ->groupBy('days');
 
-
-
-
         $newRegisters = User::whereBetween('users.created_at', [now()->subDays(15), now()])
             ->rightJoin('health_professionals', DB::raw("DATE_FORMAT(health_professionals.created_at, '%d-%m-%Y')"), '=', DB::raw("DATE_FORMAT(users.created_at, '%d-%m-%Y')"))
-            ->select(DB::raw("(count(health_professionals.id)) as hp_count"), DB::raw("(count(users.id)) as users_count"), DB::raw("(DATE_FORMAT(users.created_at, '%d-%m-%Y')) as days"))
+            ->select(DB::raw('(count(health_professionals.id)) as hp_count'), DB::raw('(count(users.id)) as users_count'), DB::raw("(DATE_FORMAT(users.created_at, '%d-%m-%Y')) as days"))
             ->orderBy('users.created_at', 'desc')
             ->groupBy('days')
             ->union($left)
@@ -217,18 +210,15 @@ class AdminController extends Controller
             $days[] = $register->days;
         }
 
-
-
         return response()->json([
             'newUsersPerDay' => $newUsersPerDay,
             'newHPsPerDay' => $newHPsPerDay,
-            'days' => $days
+            'days' => $days,
         ]);
     }
 
     public function readersPerCategory()
     {
-
         $categories = Category::with(['articles.views'])->get();
 
         $articlesViewsPerCategory = [];
@@ -238,7 +228,6 @@ class AdminController extends Controller
         foreach ($categories as $cat) {
             $catnames[] = $cat->name;
             foreach ($cat->articles as $article) {
-
                 $articleviews += count($article->views);
             }
             $articlesViewsPerCategory[] = $articleviews;

@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('identifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string("number");
-            $table->string("archive");
-            $table->date("issueDate");
+            $table->string('number');
+            $table->string('archive');
+            $table->date('issueDate');
             $table->softDeletes();
             $table->timestamps();
         });

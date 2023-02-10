@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class IdentificationController extends Controller
+class ConsultSessionController extends Controller
 {
     //
 }

@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('consult_sessions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('path');
+            $table->string('type');
+            $table->date('date');
+            $table->boolean('accomplished')->default(false);
+            $table->uuid('admin_id');
+            $table->foreign('admin_id')->references('id')->on('admins');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('consult_sessions');
     }
 };

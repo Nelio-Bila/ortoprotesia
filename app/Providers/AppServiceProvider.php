@@ -2,11 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Routing\UrlGenerator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,7 +29,6 @@ class AppServiceProvider extends ServiceProvider
 
         if ($this->app->isLocal()) {
             //if local register your services you require for development
-
         } else {
             //else register your services you require for production
             $url->forceScheme('https');

@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Adress;
-use App\Models\Process;
-use App\Models\Province;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\Identification;
 use App\Http\Requests\ProcessRequest;
+use App\Models\Adress;
+use App\Models\Identification;
 use App\Models\Neighbourhood;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Process;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProcessController extends Controller
 {
@@ -34,12 +32,11 @@ class ProcessController extends Controller
     {
         // return $request;
         try {
-
             $neighbourhood = Neighbourhood::where('name', $request->address['neighbourhood'])->first();
 
-            if (!$neighbourhood) {
+            if (! $neighbourhood) {
                 $neighbourhood = Neighbourhood::create([
-                    "id" => Str::uuid()->toString(),
+                    'id' => Str::uuid()->toString(),
                     'name' => $request->address['neighbourhood'],
                     'cod' => $request->address['neighbourhood'],
                     'district_id' => $request->address['district']['id'],
@@ -47,41 +44,39 @@ class ProcessController extends Controller
                 ]);
             }
             $address = Adress::create([
-                "id" => Str::uuid()->toString(),
-                "province_id" => $request->address['province']['id'],
-                "district_id" => $request->address['district']['id'],
-                "neighbourhood_id" => $neighbourhood->id,
+                'id' => Str::uuid()->toString(),
+                'province_id' => $request->address['province']['id'],
+                'district_id' => $request->address['district']['id'],
+                'neighbourhood_id' => $neighbourhood->id,
             ]);
 
             $identification = Identification::create([
-                "id" => Str::uuid()->toString(),
-                "number" => $request->identification['number'],
-                "archive" => $request->identification['archive'],
-                "issueDate" => $request->identification['issueDate'],
+                'id' => Str::uuid()->toString(),
+                'number' => $request->identification['number'],
+                'archive' => $request->identification['archive'],
+                'issueDate' => $request->identification['issueDate'],
             ]);
 
             $process = Process::create([
-                "id" => Str::uuid()->toString(),
-                "address_id" => $address->id,
-                "identification_id" => $identification->id,
-                "user_id" => $request->user_id,
-                "maritalState" => $request->maritalState,
-                "genre" => $request->genre,
-                "race" => $request->race,
-                "profession" => $request->profession,
-                "workPlace" => $request->workPlace,
-                "naturality" => $request->naturality,
-                "phoneNumber" => $request->phoneNumber,
-                "fatherName" => $request->fatherName,
-                "motherName" => $request->motherName,
+                'id' => Str::uuid()->toString(),
+                'address_id' => $address->id,
+                'identification_id' => $identification->id,
+                'user_id' => $request->user_id,
+                'maritalState' => $request->maritalState,
+                'genre' => $request->genre,
+                'race' => $request->race,
+                'profession' => $request->profession,
+                'workPlace' => $request->workPlace,
+                'naturality' => $request->naturality,
+                'phoneNumber' => $request->phoneNumber,
+                'fatherName' => $request->fatherName,
+                'motherName' => $request->motherName,
             ]);
-
-
 
             return $process;
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }

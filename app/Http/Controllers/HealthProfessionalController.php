@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\HealthProfessional;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\HPResetRequest;
 use App\Http\Requests\HPForgotRequest;
 use App\Http\Requests\HPRegisterRequest;
+use App\Http\Requests\HPResetRequest;
+use App\Models\HealthProfessional;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class HealthProfessionalController extends Controller
 {
@@ -40,7 +40,7 @@ class HealthProfessionalController extends Controller
             return $hp;
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -59,7 +59,6 @@ class HealthProfessionalController extends Controller
     {
         try {
             if (Auth::guard('hp')->attempt($request->only('email', 'password'))) {
-
                 /** @var User $user */
                 $user = Auth::guard('hp')->user();
                 $token = $user->createToken('hp-token')->accessToken;
@@ -67,18 +66,18 @@ class HealthProfessionalController extends Controller
                 return response([
                     'message' => 'sucess',
                     'token' => $token,
-                    'user' => $user
+                    'user' => $user,
                 ]);
 
                 return $user;
             }
 
             return response()->json([
-                'message' => 'As credenciais introduzidas não são válidas'
+                'message' => 'As credenciais introduzidas não são válidas',
             ], 401);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ]);
         }
     }
@@ -89,7 +88,7 @@ class HealthProfessionalController extends Controller
 
         if (HealthProfessional::where('email', $email)->doesntExist()) {
             return response([
-                'message' => "Usuário inexistente"
+                'message' => 'Usuário inexistente',
             ], 404);
         }
 
@@ -98,7 +97,7 @@ class HealthProfessionalController extends Controller
         try {
             DB::table('password_resets')->insert([
                 'email' => $email,
-                'token' => $token
+                'token' => $token,
             ]);
 
             // Send email
@@ -108,11 +107,11 @@ class HealthProfessionalController extends Controller
             // });
 
             return response([
-                'message' => 'Verifica sua caixa de email'
+                'message' => 'Verifica sua caixa de email',
             ]);
         } catch (\Exception $exception) {
             return response([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -121,16 +120,16 @@ class HealthProfessionalController extends Controller
     {
         $token = $request->input('token');
 
-        if (!$passwordResets = DB::table('password_resets')->where('token', $token)->first()) {
+        if (! $passwordResets = DB::table('password_resets')->where('token', $token)->first()) {
             return response([
-                'message' => 'Token invalido!'
+                'message' => 'Token invalido!',
             ], 400);
         }
 
-        /**@var User $user */
-        if (!$user = HealthProfessional::where('email', $passwordResets->email)->first()) {
+        /** @var User $user */
+        if (! $user = HealthProfessional::where('email', $passwordResets->email)->first()) {
             return response([
-                'message' => 'Usuario inexistente'
+                'message' => 'Usuario inexistente',
             ], 404);
         }
 
@@ -138,10 +137,9 @@ class HealthProfessionalController extends Controller
         $user->save();
 
         return response([
-            'message' => 'sucesso'
+            'message' => 'sucesso',
         ]);
     }
-
 
     public function logout()
     {
@@ -149,6 +147,6 @@ class HealthProfessionalController extends Controller
             Auth::guard('hp')->user()->AauthAcessToken()->delete();
         }
 
-        return "Health Professional Logged out sucessfully";
+        return 'Health Professional Logged out sucessfully';
     }
 }

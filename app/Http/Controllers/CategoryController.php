@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use App\Models\Category as ArticleCategory;
 use App\Http\Requests\CategoryRegisterRequest;
+use App\Models\Category as ArticleCategory;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -14,9 +12,9 @@ class CategoryController extends Controller
     {
         return response()->json(ArticleCategory::with(['articles'])->orderBy('id', 'desc')->get());
     }
+
     public function store(CategoryRegisterRequest $request)
     {
-
         try {
             $category = ArticleCategory::create([
                 'id' => Str::uuid()->toString(),
@@ -26,7 +24,7 @@ class CategoryController extends Controller
             return $category;
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -42,7 +40,7 @@ class CategoryController extends Controller
             return response()->json($category);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -51,10 +49,11 @@ class CategoryController extends Controller
     {
         try {
             $category = ArticleCategory::find($id);
+
             return response()->json($category);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -68,7 +67,7 @@ class CategoryController extends Controller
             return response()->noContent();
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }

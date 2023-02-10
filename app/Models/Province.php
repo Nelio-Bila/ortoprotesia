@@ -10,7 +10,7 @@ class Province extends Model
 {
     use HasFactory, Uuids;
 
-    protected $fillable = ["id", "name", "cod"];
+    protected $fillable = ['id', 'name', 'cod'];
 
     public function districts()
     {

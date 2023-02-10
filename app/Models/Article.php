@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Image;
-use App\Models\Category;
-use App\Models\HealthProfessional;
 use App\Traits\Uuids;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
@@ -17,7 +14,7 @@ class Article extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, "category_id", "id");
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     public function hpro()
@@ -39,7 +36,6 @@ class Article extends Model
     {
         return $this->hasMany(ArticleView::class);
     }
-
 
     protected $dates = ['created_at', 'updated_at'];
 

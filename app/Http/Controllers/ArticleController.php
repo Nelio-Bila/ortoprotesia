@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
 use App\Models\ArticleView;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use JD\Cloudder\Facades\Cloudder;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\ArticleRequest;
+use Illuminate\Support\Str;
+use JD\Cloudder\Facades\Cloudder;
 
 class ArticleController extends Controller
 {
@@ -20,13 +19,15 @@ class ArticleController extends Controller
 
     public function myArticles($id)
     {
-        return Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where("health_professional_id", $id)->get();
+        return Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where('health_professional_id', $id)->get();
     }
+
     public function myViewsCount($id)
     {
         $myViewsCount = Article::join('article_views', 'articles.id', '=', 'article_views.article_id')
-            ->where("articles.health_professional_id", $id)
+            ->where('articles.health_professional_id', $id)
             ->get();
+
         return $myViewsCount->count();
     }
 
@@ -34,9 +35,10 @@ class ArticleController extends Controller
     {
         $myTodayViewsCount = Article::with(['category', 'hpro'])
             ->join('article_views', 'articles.id', '=', 'article_views.article_id')
-            ->where("articles.health_professional_id", $id)
+            ->where('articles.health_professional_id', $id)
             ->whereDate('article_views.created_at', Carbon::today())
             ->get();
+
         return $myTodayViewsCount->count();
 
         // return Article::with(['category', 'hpro'])->orderBy('id', 'desc')->where("health_professional_id", $id)->whereDate('updated_at', Carbon::today())->sum('views');
@@ -49,7 +51,7 @@ class ArticleController extends Controller
 
     public function search($criteria)
     {
-        return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where('title', 'like', '%' . $criteria . '%')->get());
+        return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where('title', 'like', '%'.$criteria.'%')->get());
     }
 
     public function latest()
@@ -70,11 +72,11 @@ class ArticleController extends Controller
             ArticleView::create([
                 'article_id' => $article->id,
                 'who->id' => $user_id,
-                'who->type' => $who
+                'who->type' => $who,
             ]);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400);
         }
     }
@@ -83,26 +85,29 @@ class ArticleController extends Controller
     {
         return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where('category_id', $category_id)->get());
     }
+
     public function byPeriod($period)
     {
-        if (strcmp($period, "week") === 0) {
+        if (strcmp($period, 'week') === 0) {
             return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->whereBetween(
                 'created_at',
                 [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
             )->get());
-        } elseif (strcmp($period, "month") === 0) {
+        } elseif (strcmp($period, 'month') === 0) {
             return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->where('created_at', '>=', Carbon::now()->subdays(30))->get());
-        } elseif (strcmp($period, "year") === 0) {
+        } elseif (strcmp($period, 'year') === 0) {
             return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('id', 'desc')->whereYear('created_at', date('Y'))->get());
         } else {
         }
     }
+
     public function byViews($popularity)
     {
-        if (strcmp($popularity, "most") === 0)
+        if (strcmp($popularity, 'most') === 0) {
             return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('views', 'desc')->get());
-        elseif (strcmp($popularity, "least") === 0)
+        } elseif (strcmp($popularity, 'least') === 0) {
             return response()->json(Article::with(['category', 'hpro', 'views'])->orderBy('views', 'asc')->get());
+        }
     }
 
     public function store(ArticleRequest $request)
@@ -110,15 +115,14 @@ class ArticleController extends Controller
         $article = new Article();
 
         if ($request->file()) {
-
             $image_name = $request->file('featuredImage')->getRealPath();
             //the upload method handles the uploading of the file and can accept attributes to define what should happen to the image
 
             //Also note you could set a default height for all the images and Cloudinary does a good job of handling and rendering the image.
-            Cloudder::upload($image_name, null, array(
-                "folder" => "ortoprotesia/articles/headers",  "overwrite" => FALSE,
-                "resource_type" => "image", "responsive" => TRUE, "transformation" => array("quality" => "70", "width" => "250", "height" => "250", "crop" => "scale")
-            ));
+            Cloudder::upload($image_name, null, [
+                'folder' => 'ortoprotesia/articles/headers',  'overwrite' => false,
+                'resource_type' => 'image', 'responsive' => true, 'transformation' => ['quality' => '70', 'width' => '250', 'height' => '250', 'crop' => 'scale'],
+            ]);
 
             //Cloudinary returns the publicId of the media uploaded which we'll store in our database for ease of access when displaying it.
 
@@ -128,7 +132,7 @@ class ArticleController extends Controller
             $height = 250;
 
             //The show method returns the URL of the media file on Cloudinary
-            $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height, "crop" => "scale", "quality" => 70, "secure" => "true"]);
+            $image_url = Cloudder::show(Cloudder::getPublicId(), ['width' => $width, 'height' => $height, 'crop' => 'scale', 'quality' => 70, 'secure' => 'true']);
 
             //In a situation where the user has already uploaded a file we could use the delete method to remove the media and upload a new one.
             // if ($public_id != null) {
@@ -152,22 +156,20 @@ class ArticleController extends Controller
             return response()->json(['success' => 'Article posted successfully.']);
         }
     }
+
     public function update(ArticleRequest $request, $id)
     {
-
-
         $article = Article::find($id);
 
         if ($request->file()) {
-
             $image_name = $request->file('featuredImage')->getRealPath();
             //the upload method handles the uploading of the file and can accept attributes to define what should happen to the image
 
             //Also note you could set a default height for all the images and Cloudinary does a good job of handling and rendering the image.
-            Cloudder::upload($image_name, null, array(
-                "folder" => "ortoprotesia/articles/headers",  "overwrite" => FALSE,
-                "resource_type" => "image", "responsive" => TRUE, "transformation" => array("quality" => "70", "width" => "250", "height" => "250", "crop" => "scale")
-            ));
+            Cloudder::upload($image_name, null, [
+                'folder' => 'ortoprotesia/articles/headers',  'overwrite' => false,
+                'resource_type' => 'image', 'responsive' => true, 'transformation' => ['quality' => '70', 'width' => '250', 'height' => '250', 'crop' => 'scale'],
+            ]);
 
             //Cloudinary returns the publicId of the media uploaded which we'll store in our database for ease of access when displaying it.
 
@@ -177,7 +179,7 @@ class ArticleController extends Controller
             $height = 250;
 
             //The show method returns the URL of the media file on Cloudinary
-            $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height, "crop" => "scale", "quality" => 70, "secure" => "true"]);
+            $image_url = Cloudder::show(Cloudder::getPublicId(), ['width' => $width, 'height' => $height, 'crop' => 'scale', 'quality' => 70, 'secure' => 'true']);
 
             //In a situation where the user has already uploaded a file we could use the delete method to remove the media and upload a new one.
             if ($public_id != null) {
@@ -207,13 +209,12 @@ class ArticleController extends Controller
         return response()->noContent();
     }
 
-
     public function articlesViewsPerDay($hp)
     {
         $articles = Article::where('health_professional_id', $hp)
             ->whereBetween('articles.created_at', [now()->subDays(15), now()])
             ->join('article_views', 'articles.id', '=', 'article_views.article_id')
-            ->select(DB::raw("(count(article_views.id)) as count"), DB::raw("(DATE_FORMAT(article_views.created_at, '%d-%m-%Y')) as days"))
+            ->select(DB::raw('(count(article_views.id)) as count'), DB::raw("(DATE_FORMAT(article_views.created_at, '%d-%m-%Y')) as days"))
             ->orderBy('article_views.created_at', 'desc')
             ->groupBy(DB::raw("DATE_FORMAT(article_views.created_at, '%d-%m-%Y')"))
             ->get();

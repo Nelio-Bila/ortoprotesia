@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\Adress;
-use App\Models\Identification;
 use App\Traits\Uuids;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Process extends Model
 {
     use HasFactory, Uuids;
 
-    protected $fillable = ['id', 'user_id', "address_id", "identification_id", "maritalState", "genre", "race", "profession", "workPlace", "naturality", "phoneNumber", "fatherName", "motherName"];
+    protected $fillable = ['id', 'user_id', 'address_id', 'identification_id', 'maritalState', 'genre', 'race', 'profession', 'workPlace', 'naturality', 'phoneNumber', 'fatherName', 'motherName'];
 
     public function identification()
     {
@@ -23,6 +21,7 @@ class Process extends Model
     {
         return $this->belongsTo(Adress::class);
     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

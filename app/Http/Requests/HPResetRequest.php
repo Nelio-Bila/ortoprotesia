@@ -26,7 +26,7 @@ class HPResetRequest extends FormRequest
         return [
             'token' => 'required',
             'password' => 'required',
-            'password_confirm' => 'required|same:password'
+            'password_confirm' => 'required|same:password',
         ];
     }
 
