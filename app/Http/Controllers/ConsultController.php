@@ -13,6 +13,11 @@ class ConsultController extends Controller
         return response()->json(Consult::with(['consultSession'])->orderBy('id', 'desc')->get());
     }
 
+    public function myConsults($process_id)
+    {
+        return response()->json(Consult::with(['consultSession'])->where('process_id', $process_id)->orderBy('id', 'desc')->get());
+    }
+
     public function store(ConsultRegisterRequest $request)
     {
         try {

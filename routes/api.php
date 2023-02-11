@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ConsultSessionController;
-use App\Http\Controllers\DistrictController;
-use App\Http\Controllers\ForgotController;
-use App\Http\Controllers\HealthProfessionalController;
-use App\Http\Controllers\ImageController;
-use App\Http\Controllers\NoticeController;
-use App\Http\Controllers\ProcessController;
-use App\Http\Controllers\ProvinceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ForgotController;
+use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ConsultController;
+use App\Http\Controllers\ProcessController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\ConsultSessionController;
+use App\Http\Controllers\HealthProfessionalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,6 +142,7 @@ Route::delete('consultsession/destroy/{id}', [ConsultSessionController::class, '
 
 // Consults
 Route::get('consults', [ConsultController::class, 'index']);
+Route::get('myconsults/{process_id}', [ConsultController::class, 'myConsults']);
 Route::post('consult/register', [ConsultController::class, 'store']);
 Route::get('consult/{id}', [ConsultController::class, 'show']);
 Route::put('consult/{id}', [ConsultController::class, 'update']);

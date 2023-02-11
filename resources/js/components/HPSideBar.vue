@@ -77,8 +77,10 @@
       </router-link>
       <router-link
         class="nav-link text-white"
-        :class="currentLink === 'consults' ? 'active-link' : 'text-white'"
-        to="/hp"
+        :class="
+          currentLink === 'consultsessions' ? 'active-link' : 'text-white'
+        "
+        to="/consultsessions"
         v-if="useUser?.user?.is_admin"
       >
         <h5><i class="fa-solid fa-calendar-check me-2"></i> Consultas</h5>

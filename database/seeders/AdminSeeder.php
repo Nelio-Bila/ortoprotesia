@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
             'name' => 'Nélio',
             'surname' => 'Bila',
             'birthdate' => Carbon::createFromDate('1993', '08', '5'),
-            'email' => 'neliobila@gmail.com',
+            'email' => 'neliobilla@gmail.com',
             'password' => Hash::make('123456'),
             'created_at' => now(),
         ]);

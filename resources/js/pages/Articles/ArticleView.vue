@@ -74,7 +74,7 @@
                 />
               </div>
               <div class="col text-start">
-                <h4 class="fw-bolder">{{ article.title }}</h4>
+                <h6 class="fw-bolder">{{ article.title }}</h6>
                 <p class="text-small m-0">
                   <i class="fa-solid fa-user-nurse mx-2"></i>
                   <small
@@ -125,7 +125,7 @@
                 />
               </div>
               <div class="col text-start">
-                <h4 class="fw-bolder">{{ article.title }}</h4>
+                <h6 class="fw-bolder">{{ article.title }}</h6>
                 <p class="text-small m-0">
                   <i class="fa-solid fa-user-nurse mx-2"></i>
                   <small

@@ -46,6 +46,10 @@ import CategoriesCreate from "../pages/hp/Categories/CategoriesCreate.vue";
 import ConsultCreate from "../pages/Consult/ConsultCreate.vue";
 import ConsultIndex from "../pages/Consult/ConsultIndex.vue";
 
+import ConsultSessionIndex from "../pages/Admin/Consult_Sessions/ConsultSessionIndex.vue";
+import ConsultSessionCreate from "../pages/Admin/Consult_Sessions/ConsultSessionCreate.vue";
+import ConsultSessionEdit from "../pages/Admin/Consult_Sessions/ConsultSessionEdit.vue";
+
 import ProcessCreate from "../pages/Process/ProcessCreate.vue";
 import ProcessEdit from "../pages/Process/ProcessEdit.vue";
 import ProcessDetails from "../pages/Process/ProcessDetails.vue";
@@ -223,6 +227,25 @@ const routes = [
         component: CategoriesEdit,
         props: true,
         meta: { requiresAdminAuth: true, requiresHPAuth: true },
+    },
+    {
+        path: "/consultsessions",
+        name: "consultsessions.index",
+        component: ConsultSessionIndex,
+        meta: { requiresAdminAuth: true },
+    },
+    {
+        path: "/consultsessions/create",
+        name: "consultsessions.create",
+        component: ConsultSessionCreate,
+        meta: { requiresAdminAuth: true },
+    },
+    {
+        path: "/consultsessions/:id/edit",
+        name: "consultsessions.edit",
+        component: ConsultSessionEdit,
+        props: true,
+        meta: { requiresAdminAuth: true },
     },
     {
         path: "/consult/create",
