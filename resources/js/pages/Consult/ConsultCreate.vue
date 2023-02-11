@@ -9,11 +9,6 @@
         </div>
 
         <ul class="list-unstyled components">
-          <!-- <li class="active">
-            <router-link to="/process/create" class="nav-link text-white"
-              >Marcação de consulta</router-link
-            >
-          </li> -->
           <li class="active">
             <router-link to="/process" class="nav-link text-white"
               >Dados do processo</router-link
@@ -45,91 +40,44 @@
         >
           <i class="fas fa-align-left fa-2xl"></i>
         </div>
-        <!-- <div class="container align-items-center justify-content-center"> -->
         <div class="row m-2">
           <div class="col mx-auto">
             <form @submit.prevent="handleSubmit">
               <h3 class="text-center">Marcação de consulta</h3>
-              <div v-if="errors_exist">
-                <div
-                  v-for="(field, k) in validationErrors"
-                  :key="k"
-                  class="
-                    alert alert-danger
-                    d-flex
-                    align-items-center
-                    alert-dismissible
-                    fade
-                    show
-                  "
-                  role="alert"
-                >
-                  <svg
-                    class="bi flex-shrink-0 me-2"
-                    width="24"
-                    height="24"
-                    role="img"
-                    aria-label="Danger:"
-                  >
-                    <use xlink:href="#exclamation-triangle-fill" />
-                  </svg>
-                  <div v-for="error in field" :key="error">{{ error }}</div>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <div class="row mb-3 border py-2">
+              <div class="row">
                 <div class="col">
-                  <label for="province">Tipo de consulta</label>
-                  <select
-                    id="type"
-                    @blur="v$.consult.type.$touch"
-                    class="form-select"
-                    :class="{
-                      'is-invalid': v$.consult.type.$error,
-                      'is-valid': !v$.consult.type.$invalid,
-                    }"
-                    aria-label="Selecção de estado civil"
-                    v-model="v$.consult.type.$model"
-                  >
-                    <option selected disabled>
-                      Selecione o tipo de consulta
-                    </option>
-                    <option value="Próteses">Próteses</option>
-                    <option value="Ortoteses">Ortoteses</option>
-                  </select>
-                  <span class="invalid-feedback" v-if="v$.consult.type.$error">
-                    {{ v$.consult.type.$errors[0].$message }}
-                  </span>
-                </div>
-                <div class="col">
-                  <label for="province">Data a realizar-se</label>
-                  <input
-                    id="date"
-                    @blur="v$.consult.date.$touch"
-                    type="date"
-                    class="form-control"
-                    :class="{
-                      'is-invalid': v$.consult.date.$error,
-                      'is-valid': !v$.consult.date.$invalid,
-                    }"
-                    placeholder="Telefone"
-                    v-model="v$.consult.date.$model"
-                  />
-                  <span class="invalid-feedback" v-if="v$.consult.date.$error">
-                    {{ v$.consult.date.$errors[0].$message }}
-                  </span>
+                  <div class="form-group mb-3">
+                    <label for="consult_session_id">Selecione a consulta</label>
+                    <select
+                      @blur="v$.consult_session_id.$touch"
+                      class="form-select"
+                      :class="{
+                        'is-invalid': v$.consult_session_id.$error,
+                        'is-valid': !v$.consult_session_id.$invalid,
+                      }"
+                      v-model="form.consult_session_id"
+                    >
+                      <option
+                        :value="consultSessions.id"
+                        v-for="consult_session in consultSessions"
+                        :key="consult_session.id"
+                      >
+                        {{ consult_session.type }} ({{ consult_session.date }})
+                      </option>
+                    </select>
+
+                    <span
+                      class="invalid-feedback"
+                      v-for="error of v$.consult_session_id.$errors"
+                      :key="error.$uid"
+                    >
+                      {{ error.$message }}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <button
-                class="btn btn-primary btn-block mb-3"
-                :disabled="processing"
-              >
+              <button class="btn btn-primary btn-block btn-lg">
                 <span
                   v-if="processing"
                   class="spinner-border spinner-border-sm mx-2"
@@ -138,7 +86,8 @@
                 ></span>
                 <span v-if="processing">Processando...</span>
 
-                <span v-if="!processing">Submeter</span>
+                <i v-if="!processing" class="fa-solid fa-plus mx-2"></i>
+                <span v-if="!processing">Salvar</span>
               </button>
             </form>
           </div>
@@ -151,6 +100,70 @@
 </template>
 
 <script>
+import { reactive, computed, ref, onMounted, nextTick } from "vue";
+import useVuelidate from "@vuelidate/core";
+import { required, minLength, helpers } from "@vuelidate/validators";
+import { useUserStore } from "../../stores/UserStore";
+
+import useConsults from "../../composables/consults";
+import useConsultSessions from "../../composables/consultSessions";
+
+export default {
+  setup() {
+    const form = reactive({
+      process_id: "",
+      consult_session_id: "",
+    });
+
+    const { processing, errors, storeConsult } = useConsults();
+    const { consultSessions, getConsultSessions } = useConsultSessions();
+
+    onMounted(() => {
+      getConsultSessions();
+    });
+
+    const rules = computed(() => ({
+      process_id: {},
+      consult_session_id: {
+        required: helpers.withMessage("Por favor indique a data", required),
+      },
+    }));
+
+    const v$ = useVuelidate(rules, form);
+
+    const toggleSideMenu = () => {
+      document.getElementById("sidebar").classList.toggle("active");
+    };
+
+    const saveConsult = async () => {
+      const useUser = useUserStore();
+
+      form.process_id = useUser.user.process_id;
+
+      v$._value.$validate();
+      if (!v$._value.$invalid) {
+        await storeConsult({ ...form });
+      } else {
+        processing.value = false;
+      }
+    };
+
+    return {
+      processing,
+      errors,
+      saveConsult,
+      consultSessions,
+      v$,
+      form,
+      toggleSideMenu,
+    };
+  },
+  components: {},
+};
+</script>
+
+
+<!-- <script>
 import axios from "axios";
 import useValidate from "@vuelidate/core";
 import {
@@ -170,8 +183,8 @@ export default {
     return {
       v$: useValidate(),
       consult: {
-        type: "",
-        date: "",
+        process_id: "",
+        consult_session_id: "",
       },
       processing: false,
       errors_exist: false,
@@ -230,4 +243,4 @@ export default {
   },
   components: { NavBar, Footer },
 };
-</script>
+</script> -->
