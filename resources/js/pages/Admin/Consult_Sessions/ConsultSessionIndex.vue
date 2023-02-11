@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex" id="wrapper">
-    <HPSideBar currentLink="categories" />
+    <HPSideBar currentLink="consultsessions" />
 
     <!-- Page Content -->
     <main id="page-content-wrapper">
@@ -22,7 +22,6 @@
               <th>Tipo</th>
               <th>Data prevista</th>
               <th>Realizada</th>
-              <th>Activa</th>
               <th>Criada aos</th>
               <th v-if="useUser?.user?.is_admin">Acções</th>
             </tr>
@@ -35,11 +34,10 @@
               <tr>
                 <td>{{ consultSession.type }}</td>
                 <td>{{ consultSession.date }}</td>
-                <td>{{ consultSession.accomplished }}</td>
                 <td class="text-center">
                   <i
                     class="fa-sharp fa-solid fa-check"
-                    v-if="!consultSession.deleted_at"
+                    v-if="!consultSession.accomplished"
                   ></i>
                   <i class="fa-sharp fa-solid fa-xmark" v-else></i>
                 </td>

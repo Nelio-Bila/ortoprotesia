@@ -20,7 +20,6 @@ class ConsultSessionController extends Controller
                 'id' => Str::uuid()->toString(),
                 'type' => $request->type,
                 'date' => $request->date,
-                'accomplished' => $request->accomplished,
                 'admin_id' => $request->admin_id,
             ]);
 

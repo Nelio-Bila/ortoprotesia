@@ -60,14 +60,14 @@
         }}</span>
       </div>
       <div class="card-body">
-        <h4 class="card-title">{{ article.title }}</h4>
+        <h6 class="card-title">{{ article.title }}</h6>
         <small class="text-muted cat">
           <i class="far fa-clock text-primary mr-2"></i>
           {{ article.createdDateHumanReadable }}
           <i class="fas fa-user text-primary"></i> {{ article.hpro.name }}
           {{ article.hpro.surname }}
         </small>
-        <p class="card-text"></p>
+        <!-- <p class="card-text"></p> -->
 
         <!-- <router-link :to="`/articles/${article.id}`" class="btn btn-primary"
           >Ler mais...</router-link
@@ -115,12 +115,12 @@ body {
 }
 
 .card-title {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
 }
 
 .cat {
   display: inline-block;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 }
 
 .fa-users {

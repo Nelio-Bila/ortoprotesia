@@ -62,22 +62,47 @@
 
         <form @submit.prevent="saveConsultSession">
           <div class="form-group mb-3">
-            <label for="name">Nome da categoria</label>
-            <input
-              @blur="v$.name.$touch"
-              type="text"
-              class="form-control"
+            <!-- 'type', 'date', 'accomplished', 'admin_id' -->
+            <label for="name">Tipo de consulta</label>
+            <select
+              @blur="v$.type.$touch"
+              class="form-select"
               :class="{
-                'is-invalid': v$.name.$error,
-                'is-valid': !v$.name.$invalid,
+                'is-invalid': v$.type.$error,
+                'is-valid': !v$.type.$invalid,
               }"
-              placeholder="Ex.: Próteses"
-              v-model="form.name"
+              v-model="form.type"
+            >
+              <option disabled selected>Selecione o tipo</option>
+              <option value="Proteses">Próteses</option>
+              <option value="Proteses">Órtoteses</option>
+            </select>
+
+            <span
+              class="invalid-feedback"
+              v-for="error of v$.type.$errors"
+              :key="error.$uid"
+            >
+              {{ error.$message }}
+            </span>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="name">Data a realizar-se</label>
+            <input
+              type="date"
+              @blur="v$.date.$touch"
+              class="form-select"
+              :class="{
+                'is-invalid': v$.date.$error,
+                'is-valid': !v$.date.$invalid,
+              }"
+              v-model="form.date"
             />
 
             <span
               class="invalid-feedback"
-              v-for="error of v$.name.$errors"
+              v-for="error of v$.date.$errors"
               :key="error.$uid"
             >
               {{ error.$message }}
@@ -106,6 +131,7 @@
 import { reactive, computed, ref, onMounted, nextTick } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, helpers } from "@vuelidate/validators";
+import { useUserStore } from "../../../stores/UserStore";
 
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
@@ -114,28 +140,33 @@ import useConsultSessions from "../../../composables/consultSessions";
 export default {
   setup() {
     const form = reactive({
-      name: "",
+      type: "",
+      date: "",
+      admin_id: "",
     });
 
-    // const { processing, errors, storeCategory } = useCategories();
     const { processing, errors, storeConsultSession } = useConsultSessions();
 
     const rules = computed(() => ({
-      name: {
-        required: helpers.withMessage("Por favor preencha o nome", required),
-        minLength: helpers.withMessage(
-          "Por favor preencha um nome válido",
-          minLength(2)
-        ),
+      type: {
+        required: helpers.withMessage("Por favor selecione o tipo", required),
       },
+      date: {
+        required: helpers.withMessage("Por favor indique a data", required),
+      },
+      admin_id: {},
     }));
 
     const v$ = useVuelidate(rules, form);
 
-    const saveCategory = async () => {
+    const saveConsultSession = async () => {
+      const useUser = useUserStore();
+
+      form.admin_id = useUser.user.id;
+
       v$._value.$validate();
       if (!v$._value.$invalid) {
-        await storeCategory({ ...form });
+        await storeConsultSession({ ...form });
       } else {
         processing.value = false;
       }
@@ -144,7 +175,7 @@ export default {
     return {
       processing,
       errors,
-      saveCategory,
+      saveConsultSession,
       v$,
       form,
     };

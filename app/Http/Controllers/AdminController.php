@@ -92,8 +92,7 @@ class AdminController extends Controller
     {
         try {
             if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
-                /** @var User $user */
-                // $user = Auth::user();
+                /** @var Admin $admin */
                 $user = Auth::guard('admin')->user();
                 $token = $user->createToken('admin-token')->accessToken;
 
@@ -154,14 +153,14 @@ class AdminController extends Controller
     {
         $token = $request->input('token');
 
-        if (! $passwordResets = DB::table('password_resets')->where('token', $token)->first()) {
+        if (!$passwordResets = DB::table('password_resets')->where('token', $token)->first()) {
             return response([
                 'message' => 'Token invalido!',
             ], 400);
         }
 
-        /** @var User $user */
-        if (! $user = Admin::where('email', $passwordResets->email)->first()) {
+        /** @var Admin $admin */
+        if (!$user = Admin::where('email', $passwordResets->email)->first()) {
             return response([
                 'message' => 'Usuario inexistente',
             ], 404);
