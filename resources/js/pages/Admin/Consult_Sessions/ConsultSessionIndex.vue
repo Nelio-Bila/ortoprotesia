@@ -48,7 +48,7 @@
                   <router-link
                     class="btn btn-sm btn-warning mx-2"
                     :to="{
-                      name: 'categories.edit',
+                      name: 'consultsessions.edit',
                       params: { id: consultSession.id },
                     }"
                     >Editar</router-link
