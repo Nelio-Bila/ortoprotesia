@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex" id="wrapper">
-    <HPSideBar currentLink="categories" />
+    <HPSideBar currentLink="consultsessions" />
 
     <!-- Page Content -->
     <main id="page-content-wrapper">
@@ -63,7 +63,7 @@
         <form @submit.prevent="saveConsultSession">
           <div class="form-group mb-3">
             <!-- 'type', 'date', 'accomplished', 'admin_id' -->
-            <label for="name">Tipo de consulta</label>
+            <label for="type">Tipo de consulta</label>
             <select
               @blur="v$.type.$touch"
               class="form-select"
@@ -88,7 +88,7 @@
           </div>
 
           <div class="form-group mb-3">
-            <label for="name">Data a realizar-se</label>
+            <label for="date">Data a realizar-se</label>
             <input
               type="date"
               @blur="v$.date.$touch"

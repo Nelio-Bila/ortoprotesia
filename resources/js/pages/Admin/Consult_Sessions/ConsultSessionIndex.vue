@@ -48,6 +48,14 @@
                   <router-link
                     class="btn btn-sm btn-warning mx-2"
                     :to="{
+                      name: 'consultsessions.view',
+                      params: { id: consultSession.id },
+                    }"
+                    >Vizualizar</router-link
+                  >
+                  <router-link
+                    class="btn btn-sm btn-warning mx-2"
+                    :to="{
                       name: 'consultsessions.edit',
                       params: { id: consultSession.id },
                     }"

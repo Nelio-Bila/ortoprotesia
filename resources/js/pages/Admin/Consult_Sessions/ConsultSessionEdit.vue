@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex" id="wrapper">
-    <HPSideBar currentLink="categories" />
+    <HPSideBar currentLink="consultsessions" />
 
     <!-- Page Content -->
     <main id="page-content-wrapper">
@@ -21,15 +21,17 @@
             border-bottom
           "
         >
-          <h1 class="h2">Editar Categoria</h1>
+          <h1 class="h2">Editar Sessão de consultas</h1>
         </div>
         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <router-link to="/categories">Categorias</router-link>
+              <router-link to="/consultsessions"
+                >Sessões de consultas</router-link
+              >
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-              Editar categoria
+              Editar Sessão de consultas
             </li>
           </ol>
         </nav>
@@ -67,23 +69,38 @@
           </div>
         </div>
 
-        <form @submit.prevent="saveCategory" enctype="multipart/form-data">
+        <form @submit.prevent="saveConsultSession">
           <div class="form-group mb-3">
-            <label for="name">Nome da categoria</label>
-            <input
-              @blur="v$.name.$touch"
-              type="text"
-              class="form-control"
+            <select
+              @blur="v$.type.$touch"
+              class="form-select"
               :class="{
-                'is-invalid': v$.name.$error,
-                'is-valid': !v$.name.$invalid,
+                'is-invalid': v$.type.$error,
+                'is-valid': !v$.type.$invalid,
               }"
-              placeholder="Ex.: Próteses"
-              v-model="category.name"
+              v-model="consultSession.type"
+            >
+              <option value="Proteses">Próteses</option>
+              <option value="Proteses">Órtoteses</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="date">Data a realizar-se</label>
+            <input
+              type="date"
+              @blur="v$.date.$touch"
+              class="form-select"
+              :class="{
+                'is-invalid': v$.date.$error,
+                'is-valid': !v$.date.$invalid,
+              }"
+              v-model="consultSession.date"
             />
+
             <span
               class="invalid-feedback"
-              v-for="error of v$.name.$errors"
+              v-for="error of v$.date.$errors"
               :key="error.$uid"
             >
               {{ error.$message }}
@@ -114,40 +131,45 @@ import useVuelidate from "@vuelidate/core";
 import { required, minLength, helpers, minValue } from "@vuelidate/validators";
 import { useRoute } from "vue-router";
 
-import useCategories from "../../../composables/categories";
 import HPNavBar from "../../../components/HPNavBar.vue";
 import HPSideBar from "../../../components/HPSideBar.vue";
+import useConsultSessions from "../../../composables/consultSessions";
 
 const route = useRoute();
-const { processing, errors, category, getCategory, updateCategory } =
-  useCategories();
+
+const {
+  processing,
+  errors,
+  consultSession,
+  getConsultSession,
+  updateConsultSession,
+} = useConsultSessions();
 
 onMounted(() => {
-  getCategory(route.params.id);
+  getConsultSession(route.params.id);
 });
 
-const saveCategory = async () => {
+const saveConsultSession = async () => {
   v$._value.$validate();
   if (!v$._value.$invalid) {
-    await updateCategory(route.params.id, { ...category.value });
+    await updateConsultSession(route.params.id, { ...consultSession.value });
   } else {
     processing.value = false;
   }
 };
 
 const rules = computed(() => ({
-  name: {
+  type: {
     required: helpers.withMessage("Por favor preencha o nome", required),
-    minLength: helpers.withMessage(
-      "Por favor preencha um nome válido",
-      minLength(2)
-    ),
-    minValue: minLength(2),
   },
-  deleted_at: {},
+  date: {
+    required: helpers.withMessage("Por favor preencha a data", required),
+  },
+  accomplished: {},
+  admin_id: {},
   created_at: {},
   updated_at: {},
 }));
 
-const v$ = useVuelidate(rules, category);
+const v$ = useVuelidate(rules, consultSession);
 </script>

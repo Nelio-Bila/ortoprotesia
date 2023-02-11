@@ -49,6 +49,7 @@ import ConsultIndex from "../pages/Consult/ConsultIndex.vue";
 import ConsultSessionIndex from "../pages/Admin/Consult_Sessions/ConsultSessionIndex.vue";
 import ConsultSessionCreate from "../pages/Admin/Consult_Sessions/ConsultSessionCreate.vue";
 import ConsultSessionEdit from "../pages/Admin/Consult_Sessions/ConsultSessionEdit.vue";
+import ConsultSessionView from "../pages/Admin/Consult_Sessions/ConsultSessionView.vue";
 
 import ProcessCreate from "../pages/Process/ProcessCreate.vue";
 import ProcessEdit from "../pages/Process/ProcessEdit.vue";
@@ -244,6 +245,13 @@ const routes = [
         path: "/consultsessions/:id/edit",
         name: "consultsessions.edit",
         component: ConsultSessionEdit,
+        props: true,
+        meta: { requiresAdminAuth: true },
+    },
+    {
+        path: "/consultsessions/:id/view",
+        name: "consultsessions.view",
+        component: ConsultSessionView,
         props: true,
         meta: { requiresAdminAuth: true },
     },
