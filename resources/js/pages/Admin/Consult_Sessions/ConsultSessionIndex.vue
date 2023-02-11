@@ -63,7 +63,7 @@
                   >
                   <button
                     class="btn btn-sm btn-danger"
-                    @click="deleteConsultSession(consultSession.id)"
+                    @click="destroyConsultSession(consultSession.id)"
                   >
                     Eliminar
                   </button>
@@ -135,7 +135,7 @@ export default {
     };
     return {
       consultSessions,
-      deleteConsultSession,
+      destroyConsultSession,
       useUser,
     };
   },

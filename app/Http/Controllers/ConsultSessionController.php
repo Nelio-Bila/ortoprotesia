@@ -53,7 +53,7 @@ class ConsultSessionController extends Controller
     public function show($id)
     {
         try {
-            $consultSession = ConsultSession::find($id);
+            $consultSession = ConsultSession::with(['consults'])->find($id);
 
             return response()->json($consultSession);
         } catch (\Exception $exception) {

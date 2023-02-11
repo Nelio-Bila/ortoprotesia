@@ -61,52 +61,57 @@
         </div>
 
         <form @submit.prevent="saveConsultSession">
-          <div class="form-group mb-3">
-            <!-- 'type', 'date', 'accomplished', 'admin_id' -->
-            <label for="type">Tipo de consulta</label>
-            <select
-              @blur="v$.type.$touch"
-              class="form-select"
-              :class="{
-                'is-invalid': v$.type.$error,
-                'is-valid': !v$.type.$invalid,
-              }"
-              v-model="form.type"
-            >
-              <option disabled selected>Selecione o tipo</option>
-              <option value="Proteses">Próteses</option>
-              <option value="Proteses">Órtoteses</option>
-            </select>
+          <div class="row">
+            <div class="col">
+              <div class="form-group mb-3">
+                <!-- 'type', 'date', 'accomplished', 'admin_id' -->
+                <label for="type">Tipo de consulta</label>
+                <select
+                  @blur="v$.type.$touch"
+                  class="form-select"
+                  :class="{
+                    'is-invalid': v$.type.$error,
+                    'is-valid': !v$.type.$invalid,
+                  }"
+                  v-model="form.type"
+                >
+                  <option disabled selected>Selecione o tipo</option>
+                  <option value="Proteses">Próteses</option>
+                  <option value="Proteses">Órtoteses</option>
+                </select>
 
-            <span
-              class="invalid-feedback"
-              v-for="error of v$.type.$errors"
-              :key="error.$uid"
-            >
-              {{ error.$message }}
-            </span>
-          </div>
+                <span
+                  class="invalid-feedback"
+                  v-for="error of v$.type.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group mb-3">
+                <label for="date">Data a realizar-se</label>
+                <input
+                  type="date"
+                  @blur="v$.date.$touch"
+                  class="form-control"
+                  :class="{
+                    'is-invalid': v$.date.$error,
+                    'is-valid': !v$.date.$invalid,
+                  }"
+                  v-model="form.date"
+                />
 
-          <div class="form-group mb-3">
-            <label for="date">Data a realizar-se</label>
-            <input
-              type="date"
-              @blur="v$.date.$touch"
-              class="form-select"
-              :class="{
-                'is-invalid': v$.date.$error,
-                'is-valid': !v$.date.$invalid,
-              }"
-              v-model="form.date"
-            />
-
-            <span
-              class="invalid-feedback"
-              v-for="error of v$.date.$errors"
-              :key="error.$uid"
-            >
-              {{ error.$message }}
-            </span>
+                <span
+                  class="invalid-feedback"
+                  v-for="error of v$.date.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
+              </div>
+            </div>
           </div>
 
           <button class="btn btn-primary btn-block btn-lg">

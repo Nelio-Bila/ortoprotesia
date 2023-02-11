@@ -70,7 +70,7 @@ export default function useConsultSessions() {
         }
     };
 
-    const destroyConsultSession = async (id) => {
+    const deleteConsultSession = async (id) => {
         processing.value = true;
 
         await axios.delete("/consultsession/destroy/" + id);
@@ -86,6 +86,6 @@ export default function useConsultSessions() {
         getConsultSession,
         storeConsultSession,
         updateConsultSession,
-        destroyConsultSession,
+        deleteConsultSession,
     };
 }
