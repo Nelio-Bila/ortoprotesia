@@ -38,7 +38,7 @@
                     class="btn btn-sm btn-warning mx-2"
                     :to="{
                       name: 'process.edit',
-                      params: { id: hpro.id },
+                      params: { id: process.id },
                     }"
                     >Editar</router-link
                   >

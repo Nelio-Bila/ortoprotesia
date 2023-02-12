@@ -15,11 +15,6 @@
             >
           </li>
           <li>
-            <router-link to="/consults" class="nav-link text-white"
-              >Consultas</router-link
-            >
-          </li>
-          <li>
             <router-link to="/consult/create" class="nav-link text-white"
               >Nova consulta</router-link
             >

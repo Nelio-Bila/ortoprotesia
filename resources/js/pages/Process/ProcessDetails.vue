@@ -20,7 +20,12 @@
             >
           </li>
           <li>
-            <router-link to="/consults" class="nav-link text-white"
+            <router-link
+              class="nav-link text-white"
+              :to="{
+                name: 'consult.index',
+                params: { id: process.id },
+              }"
               >Consultas</router-link
             >
           </li>

@@ -23,6 +23,20 @@ export default function useConsults() {
             });
     };
 
+    const getMyConsults = async (process_id) => {
+        processing.value = true;
+        await axios
+            .get("/myconsults/" + process_id)
+            .then((response) => {
+                consults.value = response.data;
+                processing.value = false;
+            })
+            .catch((ex) => {
+                consults.value = [];
+                processing.value = false;
+            });
+    };
+
     const getConsult = async (id) => {
         processing.value = true;
 
@@ -83,6 +97,7 @@ export default function useConsults() {
         errors,
         processing,
         getConsults,
+        getMyConsults,
         getConsult,
         storeConsult,
         updateConsult,

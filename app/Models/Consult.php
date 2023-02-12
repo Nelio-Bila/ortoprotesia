@@ -14,12 +14,12 @@ class Consult extends Model
 
     public function process()
     {
-        return $this->belongsTo(Process::class);
+        return $this->belongsTo(Process::class, 'process_id', 'id');
     }
 
     public function consultSession()
     {
-        return $this->belongsTo(ConsultSession::class);
+        return $this->belongsTo(ConsultSession::class, 'consult_session_id', 'id');
     }
 
     protected $dates = ['created_at', 'updated_at'];

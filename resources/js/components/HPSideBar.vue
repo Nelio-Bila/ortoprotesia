@@ -129,6 +129,7 @@ li:hover {
 
 .nav-link {
   font-size: 1.25em;
+  padding: 7px;
 }
 
 .nav-link:active,

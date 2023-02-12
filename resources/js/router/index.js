@@ -262,9 +262,10 @@ const routes = [
         meta: { requiresAdminAuth: true },
     },
     {
-        path: "/consults",
+        path: "/consults/:id?",
         name: "consult.index",
         component: ConsultIndex,
+        props: true,
         meta: { requiresAdminAuth: true },
     },
     {
