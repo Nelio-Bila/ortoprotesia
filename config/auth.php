@@ -71,6 +71,10 @@ return [
             'provider' => 'admins',
             'hash' => false,
         ],
+        'forum' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
     ],
 
     /*
