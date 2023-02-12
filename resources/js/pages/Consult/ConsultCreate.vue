@@ -42,12 +42,15 @@
         </div>
         <div class="row m-2">
           <div class="col mx-auto">
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="saveConsult">
               <h3 class="text-center">Marcação de consulta</h3>
+              <!-- Consult session -->
               <div class="row">
                 <div class="col">
                   <div class="form-group mb-3">
-                    <label for="consult_session_id">Selecione a consulta</label>
+                    <label for="consult_session_id"
+                      >Selecione o tipo e a data da consulta</label
+                    >
                     <select
                       @blur="v$.consult_session_id.$touch"
                       class="form-select"
@@ -58,7 +61,7 @@
                       v-model="form.consult_session_id"
                     >
                       <option
-                        :value="consultSessions.id"
+                        :value="consult_session.id"
                         v-for="consult_session in consultSessions"
                         :key="consult_session.id"
                       >
@@ -69,6 +72,36 @@
                     <span
                       class="invalid-feedback"
                       v-for="error of v$.consult_session_id.$errors"
+                      :key="error.$uid"
+                    >
+                      {{ error.$message }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Story -->
+              <div class="row">
+                <div class="col">
+                  <div class="form-group mb-3">
+                    <label for="story"
+                      >Descreva o que lhe faz marcar esta consulta</label
+                    >
+                    <textarea
+                      @blur="v$.story.$touch"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': v$.story.$error,
+                        'is-valid': !v$.story.$invalid,
+                      }"
+                      v-model="form.story"
+                      placeholder="Sintomas e sinais"
+                    >
+                    </textarea>
+
+                    <span
+                      class="invalid-feedback"
+                      v-for="error of v$.story.$errors"
                       :key="error.$uid"
                     >
                       {{ error.$message }}
@@ -94,35 +127,41 @@
         </div>
       </div>
     </div>
-    <!-- </div> -->
-    <Footer />
   </div>
 </template>
 
 <script>
-import { reactive, computed, ref, onMounted, nextTick } from "vue";
+import { reactive, computed, ref, onMounted } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, helpers } from "@vuelidate/validators";
 import { useUserStore } from "../../stores/UserStore";
+import axios from "axios";
 
+import NavBar from "../../components/NavBar.vue";
 import useConsults from "../../composables/consults";
 import useConsultSessions from "../../composables/consultSessions";
+import useProcesses from "../../composables/processes";
 
 export default {
   setup() {
     const form = reactive({
+      story: "",
       process_id: "",
       consult_session_id: "",
     });
 
     const { processing, errors, storeConsult } = useConsults();
     const { consultSessions, getConsultSessions } = useConsultSessions();
+    const { process, getProcess } = useProcesses();
 
     onMounted(() => {
       getConsultSessions();
     });
 
     const rules = computed(() => ({
+      story: {
+        required: helpers.withMessage("Por favor indique a história", required),
+      },
       process_id: {},
       consult_session_id: {
         required: helpers.withMessage("Por favor indique a data", required),
@@ -138,7 +177,14 @@ export default {
     const saveConsult = async () => {
       const useUser = useUserStore();
 
-      form.process_id = useUser.user.process_id;
+      await axios
+        .get("/process/" + useUser.user.id)
+        .then((response) => {
+          form.process_id = response.data.id;
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
 
       v$._value.$validate();
       if (!v$._value.$invalid) {
@@ -158,7 +204,7 @@ export default {
       toggleSideMenu,
     };
   },
-  components: {},
+  components: { NavBar },
 };
 </script>
 

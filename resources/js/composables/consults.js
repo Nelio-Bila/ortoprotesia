@@ -43,7 +43,7 @@ export default function useConsults() {
 
         errors.value = "";
         try {
-            await axios.post("/consults/register", data);
+            await axios.post("/consult/register", data);
             await router.push("/consults");
             processing.value = false;
         } catch (e) {
@@ -59,7 +59,7 @@ export default function useConsults() {
 
         errors.value = "";
         try {
-            await axios.put("/consults/" + id, consult.value);
+            await axios.put("/consult/" + id, consult.value);
             await router.push("/consults");
             processing.value = false;
         } catch (e) {
@@ -73,7 +73,7 @@ export default function useConsults() {
     const destroyConsult = async (id) => {
         processing.value = true;
 
-        await axios.delete("/consults/" + id);
+        await axios.delete("/consult/" + id);
         processing.value = false;
     };
 

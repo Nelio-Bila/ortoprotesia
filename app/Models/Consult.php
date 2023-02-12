@@ -10,7 +10,7 @@ class Consult extends Model
 {
     use HasFactory, Uuids;
 
-    protected $fillable = ['id', 'process_id', 'accomplished', 'consult_session_id'];
+    protected $fillable = ['id', 'story', 'process_id', 'accomplished', 'consult_session_id'];
 
     public function process()
     {

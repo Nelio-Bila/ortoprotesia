@@ -25,6 +25,7 @@ class ConsultRegisterRequest extends FormRequest
     {
         return [
             'consult_session_id' => ['required'],
+            'story' => ['required', 'string'],
         ];
     }
 
@@ -32,6 +33,8 @@ class ConsultRegisterRequest extends FormRequest
     {
         return [
             'consult_session_id.required' => 'Por favor, preencha a data',
+            'story.required' => 'Por favor, preencha a sua história',
+            'story.string' => 'Por favor, preencha uma história válida',
         ];
     }
 }

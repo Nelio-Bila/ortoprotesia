@@ -80,12 +80,10 @@
             <div class="col">
               <div class="card-body">
                 <h5 class="card-title">
-                  {{ consult_session.process.user.name }}
+                  {{ consult_session?.process?.user?.name }}
                 </h5>
                 <p class="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
+                  {{ consult_session.story }}
                 </p>
                 <p class="card-text">
                   <small class="text-muted">{{

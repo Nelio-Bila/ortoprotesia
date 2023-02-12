@@ -23,8 +23,8 @@ class ConsultController extends Controller
         try {
             $consult = Consult::create([
                 'id' => Str::uuid()->toString(),
+                'story' => $request->story,
                 'process_id' => $request->process_id,
-                'accomplished' => $request->accomplished,
                 'consult_session_id' => $request->consult_session_id,
             ]);
 
@@ -40,6 +40,7 @@ class ConsultController extends Controller
     {
         try {
             $consult = Consult::find($id);
+            $consult->story = $request->story;
             $consult->process_id = $request->process_id;
             $consult->accomplished = $request->accomplished;
             $consult->consult_session_id = $request->consult_session_id;
